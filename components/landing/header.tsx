@@ -20,7 +20,7 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur-md">
       <div className="container mx-auto max-w-7xl">
         <div className="flex h-16 items-center justify-between px-4">
-          <a
+          <Link
             href="/"
             className="flex items-center gap-2 hover:opacity-80 transition-opacity"
           >
@@ -32,7 +32,7 @@ export function Header() {
               className="h-8 w-auto"
               priority
             />
-          </a>
+          </Link>
 
           <nav className="hidden md:flex items-center gap-8">
             {navItems.map((item) => (

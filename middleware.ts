@@ -1,16 +1,8 @@
-import { type NextRequest, NextResponse } from 'next/server'
-import { updateSession } from './lib/supabase/middleware'
+import { type NextRequest } from 'next/server'
+import { updateSession } from './lib/supabase/proxy'
 
 export async function middleware(request: NextRequest) {
-  const { supabaseResponse, user } = await updateSession(request)
-
-  if (request.nextUrl.pathname.startsWith('/dashboard') && !user) {
-    const url = request.nextUrl.clone()
-    url.pathname = '/login'
-    return NextResponse.redirect(url)
-  }
-
-  return supabaseResponse
+  return await updateSession(request)
 }
 
 export const config = {
