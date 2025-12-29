@@ -37,17 +37,53 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser()
 
-  // Redirect to login only if accessing protected routes (like dashboard/back office)
-  if (
-    !user &&
-    !request.nextUrl.pathname.startsWith('/login') &&
-    !request.nextUrl.pathname.startsWith('/auth') &&
-    request.nextUrl.pathname.startsWith('/dashboard')
-  ) {
-    // no user, potentially respond by redirecting the user to the login page
+  const isBackofficeRoute = request.nextUrl.pathname.startsWith('/dashboard') ||
+                             request.nextUrl.pathname.startsWith('/users') ||
+                             request.nextUrl.pathname.startsWith('/moderation') ||
+                             request.nextUrl.pathname.startsWith('/subscriptions') ||
+                             request.nextUrl.pathname.startsWith('/analytics') ||
+                             request.nextUrl.pathname.startsWith('/support') ||
+                             request.nextUrl.pathname.startsWith('/settings')
+
+  const isLoginPage = request.nextUrl.pathname.startsWith('/login')
+  const isAuthRoute = request.nextUrl.pathname.startsWith('/auth')
+
+  if (!user && isBackofficeRoute && !isLoginPage && !isAuthRoute) {
     const url = request.nextUrl.clone()
     url.pathname = '/login'
     return NextResponse.redirect(url)
+  }
+
+  if (user && isBackofficeRoute && !isLoginPage) {
+    const { data: adminUser } = await supabase
+      .from('admin_users')
+      .select('id, role, is_active')
+      .eq('id', user.id)
+      .eq('is_active', true)
+      .single()
+
+    if (!adminUser) {
+      await supabase.auth.signOut()
+      const url = request.nextUrl.clone()
+      url.pathname = '/login'
+      url.searchParams.set('error', 'unauthorized')
+      return NextResponse.redirect(url)
+    }
+  }
+
+  if (user && isLoginPage) {
+    const { data: adminUser } = await supabase
+      .from('admin_users')
+      .select('id')
+      .eq('id', user.id)
+      .eq('is_active', true)
+      .single()
+
+    if (adminUser) {
+      const url = request.nextUrl.clone()
+      url.pathname = '/dashboard'
+      return NextResponse.redirect(url)
+    }
   }
 
   // IMPORTANT: You *must* return the supabaseResponse object as it is. If you're
