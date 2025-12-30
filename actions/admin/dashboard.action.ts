@@ -58,8 +58,10 @@ export async function getDashboardKPIs(): Promise<DashboardKPIs> {
     lastMonthUsersResult,
     matchesTodayResult,
     matchesYesterdayResult,
-    monthlyRevenueResult,
-    lastMonthRevenueResult,
+    monthlySubRevenueResult,
+    lastMonthSubRevenueResult,
+    monthlyMicroRevenueResult,
+    lastMonthMicroRevenueResult,
     pendingReportsResult,
   ] = await Promise.all([
     supabase
@@ -80,14 +82,28 @@ export async function getDashboardKPIs(): Promise<DashboardKPIs> {
       .select("id", { count: "exact", head: true })
       .gte("created_at", startOfYesterday.toISOString())
       .lt("created_at", startOfToday.toISOString()),
-    // Revenue: use created_at for subscriptions created this month
+    // Subscription revenue this month
     supabase
       .from("subscriptions")
       .select("amount_paid")
       .gte("created_at", startOfMonth.toISOString()),
+    // Subscription revenue last month
     supabase
       .from("subscriptions")
       .select("amount_paid")
+      .gte("created_at", startOfLastMonth.toISOString())
+      .lt("created_at", startOfMonth.toISOString()),
+    // Micro-purchases revenue this month
+    supabase
+      .from("micro_purchases")
+      .select("price_paid")
+      .eq("status", "completed")
+      .gte("created_at", startOfMonth.toISOString()),
+    // Micro-purchases revenue last month
+    supabase
+      .from("micro_purchases")
+      .select("price_paid")
+      .eq("status", "completed")
       .gte("created_at", startOfLastMonth.toISOString())
       .lt("created_at", startOfMonth.toISOString()),
     supabase
@@ -108,8 +124,15 @@ export async function getDashboardKPIs(): Promise<DashboardKPIs> {
     ? Math.round(((matchesToday - matchesYesterday) / matchesYesterday) * 100)
     : 0
 
-  const monthlyRevenue = monthlyRevenueResult.data?.reduce((sum, s) => sum + (s.amount_paid || 0), 0) ?? 0
-  const lastMonthRevenue = lastMonthRevenueResult.data?.reduce((sum, s) => sum + (s.amount_paid || 0), 0) ?? 0
+  // Total revenue = subscriptions + micro-purchases
+  const monthlySubRevenue = monthlySubRevenueResult.data?.reduce((sum, s) => sum + (s.amount_paid || 0), 0) ?? 0
+  const monthlyMicroRevenue = monthlyMicroRevenueResult.data?.reduce((sum, m) => sum + (m.price_paid || 0), 0) ?? 0
+  const monthlyRevenue = monthlySubRevenue + monthlyMicroRevenue
+
+  const lastMonthSubRevenue = lastMonthSubRevenueResult.data?.reduce((sum, s) => sum + (s.amount_paid || 0), 0) ?? 0
+  const lastMonthMicroRevenue = lastMonthMicroRevenueResult.data?.reduce((sum, m) => sum + (m.price_paid || 0), 0) ?? 0
+  const lastMonthRevenue = lastMonthSubRevenue + lastMonthMicroRevenue
+
   const revenueChange = lastMonthRevenue > 0
     ? Math.round(((monthlyRevenue - lastMonthRevenue) / lastMonthRevenue) * 100)
     : 0

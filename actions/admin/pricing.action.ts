@@ -318,6 +318,10 @@ export async function getAllPricingHistory(
 export async function getPricingStats(): Promise<PricingStats> {
   const supabase = createAdminClient()
 
+  // Use current calendar month (same as dashboard)
+  const now = new Date()
+  const startOfMonth = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1, 0, 0, 0))
+
   // Get counts from pricing_config
   const { data: subscriptions } = await supabase
     .from('pricing_config')
@@ -339,21 +343,17 @@ export async function getPricingStats(): Promise<PricingStats> {
     .select('id', { count: 'exact' })
     .eq('is_active', false)
 
-  // Get revenue from subscriptions and micro_purchases (last 30 days)
-  const thirtyDaysAgo = new Date()
-  thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30)
-
+  // Get revenue from subscriptions and micro_purchases (current month - same as dashboard)
   const { data: subRevenue } = await supabase
     .from('subscriptions')
     .select('amount_paid')
-    .eq('status', 'active')
-    .gte('created_at', thirtyDaysAgo.toISOString())
+    .gte('created_at', startOfMonth.toISOString())
 
   const { data: microRevenue } = await supabase
     .from('micro_purchases')
     .select('price_paid')
     .eq('status', 'completed')
-    .gte('created_at', thirtyDaysAgo.toISOString())
+    .gte('created_at', startOfMonth.toISOString())
 
   const subscriptionRevenue = subRevenue?.reduce((sum, s) => sum + (s.amount_paid || 0), 0) ?? 0
   const consumableRevenue = microRevenue?.reduce((sum, m) => sum + (m.price_paid || 0), 0) ?? 0
