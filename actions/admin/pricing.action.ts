@@ -45,10 +45,12 @@ export type PricingHistory = {
 }
 
 export type PricingStats = {
-  totalSubscriptions: number
-  totalConsumables: number
+  // Catalog stats
+  totalProducts: number
   activeProducts: number
-  inactiveProducts: number
+  // Real sales stats
+  totalSubscriptions: number
+  totalMicroPurchases: number
   subscriptionRevenue: number
   consumableRevenue: number
 }
@@ -322,47 +324,55 @@ export async function getPricingStats(): Promise<PricingStats> {
   const now = new Date()
   const startOfMonth = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1, 0, 0, 0))
 
-  // Get counts from pricing_config
-  const { data: subscriptions } = await supabase
-    .from('pricing_config')
-    .select('id', { count: 'exact' })
-    .eq('product_type', 'subscription')
+  const [
+    productsResult,
+    activeProductsResult,
+    subscriptionsResult,
+    microPurchasesResult,
+    subRevenueResult,
+    microRevenueResult,
+  ] = await Promise.all([
+    // Total products in catalog
+    supabase
+      .from('pricing_config')
+      .select('id', { count: 'exact', head: true }),
+    // Active products in catalog
+    supabase
+      .from('pricing_config')
+      .select('id', { count: 'exact', head: true })
+      .eq('is_active', true),
+    // Real subscriptions count (this month)
+    supabase
+      .from('subscriptions')
+      .select('id', { count: 'exact', head: true })
+      .gte('created_at', startOfMonth.toISOString()),
+    // Real micro purchases count (this month)
+    supabase
+      .from('micro_purchases')
+      .select('id', { count: 'exact', head: true })
+      .eq('status', 'completed')
+      .gte('created_at', startOfMonth.toISOString()),
+    // Subscription revenue (this month)
+    supabase
+      .from('subscriptions')
+      .select('amount_paid')
+      .gte('created_at', startOfMonth.toISOString()),
+    // Micro purchases revenue (this month)
+    supabase
+      .from('micro_purchases')
+      .select('price_paid')
+      .eq('status', 'completed')
+      .gte('created_at', startOfMonth.toISOString()),
+  ])
 
-  const { data: consumables } = await supabase
-    .from('pricing_config')
-    .select('id', { count: 'exact' })
-    .eq('product_type', 'consumable')
-
-  const { data: active } = await supabase
-    .from('pricing_config')
-    .select('id', { count: 'exact' })
-    .eq('is_active', true)
-
-  const { data: inactive } = await supabase
-    .from('pricing_config')
-    .select('id', { count: 'exact' })
-    .eq('is_active', false)
-
-  // Get revenue from subscriptions and micro_purchases (current month - same as dashboard)
-  const { data: subRevenue } = await supabase
-    .from('subscriptions')
-    .select('amount_paid')
-    .gte('created_at', startOfMonth.toISOString())
-
-  const { data: microRevenue } = await supabase
-    .from('micro_purchases')
-    .select('price_paid')
-    .eq('status', 'completed')
-    .gte('created_at', startOfMonth.toISOString())
-
-  const subscriptionRevenue = subRevenue?.reduce((sum, s) => sum + (s.amount_paid || 0), 0) ?? 0
-  const consumableRevenue = microRevenue?.reduce((sum, m) => sum + (m.price_paid || 0), 0) ?? 0
+  const subscriptionRevenue = subRevenueResult.data?.reduce((sum, s) => sum + (s.amount_paid || 0), 0) ?? 0
+  const consumableRevenue = microRevenueResult.data?.reduce((sum, m) => sum + (m.price_paid || 0), 0) ?? 0
 
   return {
-    totalSubscriptions: subscriptions?.length ?? 0,
-    totalConsumables: consumables?.length ?? 0,
-    activeProducts: active?.length ?? 0,
-    inactiveProducts: inactive?.length ?? 0,
+    totalProducts: productsResult.count ?? 0,
+    activeProducts: activeProductsResult.count ?? 0,
+    totalSubscriptions: subscriptionsResult.count ?? 0,
+    totalMicroPurchases: microPurchasesResult.count ?? 0,
     subscriptionRevenue,
     consumableRevenue,
   }

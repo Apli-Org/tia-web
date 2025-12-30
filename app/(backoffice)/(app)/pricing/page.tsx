@@ -30,52 +30,52 @@ async function PricingStats() {
     <div className="grid gap-4 md:grid-cols-4">
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">Abonnements</CardTitle>
+          <CardTitle className="text-sm font-medium">Abonnements du mois</CardTitle>
           <CreditCard className="h-4 w-4 text-blue-600" />
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold">{stats.totalSubscriptions}</div>
           <p className="text-xs text-muted-foreground">
-            tarifs configurés
+            {formatPrice(stats.subscriptionRevenue)} de revenus
           </p>
         </CardContent>
       </Card>
 
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">Microtransactions</CardTitle>
-          <Package className="h-4 w-4 text-purple-600" />
+          <CardTitle className="text-sm font-medium">Achats du mois</CardTitle>
+          <Sparkles className="h-4 w-4 text-purple-600" />
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">{stats.totalConsumables}</div>
+          <div className="text-2xl font-bold">{stats.totalMicroPurchases}</div>
           <p className="text-xs text-muted-foreground">
-            produits configurés
+            {formatPrice(stats.consumableRevenue)} de revenus
           </p>
         </CardContent>
       </Card>
 
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">Revenus Abo (30j)</CardTitle>
+          <CardTitle className="text-sm font-medium">Revenus du mois</CardTitle>
           <TrendingUp className="h-4 w-4 text-green-600" />
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">{formatPrice(stats.subscriptionRevenue)}</div>
+          <div className="text-2xl font-bold">{formatPrice(stats.subscriptionRevenue + stats.consumableRevenue)}</div>
           <p className="text-xs text-muted-foreground">
-            abonnements actifs
+            abo + microtransactions
           </p>
         </CardContent>
       </Card>
 
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">Revenus Micro (30j)</CardTitle>
-          <Sparkles className="h-4 w-4 text-amber-600" />
+          <CardTitle className="text-sm font-medium">Catalogue</CardTitle>
+          <Package className="h-4 w-4 text-slate-600" />
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">{formatPrice(stats.consumableRevenue)}</div>
+          <div className="text-2xl font-bold">{stats.activeProducts}/{stats.totalProducts}</div>
           <p className="text-xs text-muted-foreground">
-            achats in-app
+            produits actifs
           </p>
         </CardContent>
       </Card>
