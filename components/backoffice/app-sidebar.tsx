@@ -12,6 +12,7 @@ import {
   Settings,
   LogOut,
   ChevronUp,
+  UsersRound,
 } from "lucide-react"
 
 import {
@@ -47,6 +48,11 @@ const navItems = [
     title: "Utilisateurs",
     url: "/users",
     icon: Users,
+  },
+  {
+    title: "Personnel",
+    url: "/staff",
+    icon: UsersRound,
   },
   {
     title: "Modération",

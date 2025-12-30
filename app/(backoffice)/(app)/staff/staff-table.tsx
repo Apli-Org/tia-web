@@ -1,0 +1,115 @@
+import { Shield, ShieldCheck, UserCog, Headphones, MoreHorizontal } from "lucide-react"
+
+import { Badge } from "@/components/ui/badge"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import { getStaffMembers, type AdminRole, roleLabels } from "@/actions/admin/staff.action"
+import { StaffActions } from "./staff-actions"
+
+type StaffTableProps = {
+  role?: AdminRole
+  status?: "active" | "inactive"
+  search?: string
+}
+
+const roleIcons: Record<AdminRole, React.ReactNode> = {
+  super_admin: <Shield className="h-4 w-4" />,
+  admin: <ShieldCheck className="h-4 w-4" />,
+  moderator: <UserCog className="h-4 w-4" />,
+  support: <Headphones className="h-4 w-4" />,
+}
+
+const roleColors: Record<AdminRole, string> = {
+  super_admin: "bg-red-100 text-red-700 border-red-200",
+  admin: "bg-purple-100 text-purple-700 border-purple-200",
+  moderator: "bg-blue-100 text-blue-700 border-blue-200",
+  support: "bg-green-100 text-green-700 border-green-200",
+}
+
+function formatDate(dateString: string | null) {
+  if (!dateString) return "Jamais"
+  return new Intl.DateTimeFormat("fr-FR", {
+    dateStyle: "medium",
+    timeStyle: "short",
+  }).format(new Date(dateString))
+}
+
+function getInitials(name: string | null, email: string): string {
+  if (name) {
+    return name
+      .split(" ")
+      .map((n) => n[0])
+      .join("")
+      .toUpperCase()
+      .slice(0, 2)
+  }
+  return email.slice(0, 2).toUpperCase()
+}
+
+export async function StaffTable({ role, status, search }: StaffTableProps) {
+  const staff = await getStaffMembers({ role, status, search })
+
+  if (staff.length === 0) {
+    return (
+      <Card>
+        <CardContent className="py-10 text-center text-muted-foreground">
+          Aucun membre du personnel trouvé
+        </CardContent>
+      </Card>
+    )
+  }
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>
+          {staff.length} membre{staff.length > 1 ? "s" : ""} du personnel
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div className="space-y-4">
+          {staff.map((member) => (
+            <div
+              key={member.id}
+              className={`flex items-center gap-4 p-4 rounded-lg border ${
+                !member.is_active ? "opacity-50 bg-muted/50" : "bg-card"
+              }`}
+            >
+              <Avatar className="h-12 w-12">
+                <AvatarFallback className="bg-primary/10 text-primary">
+                  {getInitials(member.full_name, member.email)}
+                </AvatarFallback>
+              </Avatar>
+
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2">
+                  <p className="font-medium truncate">
+                    {member.full_name || "Sans nom"}
+                  </p>
+                  {!member.is_active && (
+                    <Badge variant="outline" className="text-xs">
+                      Inactif
+                    </Badge>
+                  )}
+                </div>
+                <p className="text-sm text-muted-foreground truncate">
+                  {member.email}
+                </p>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Dernière connexion: {formatDate(member.last_login)}
+                </p>
+              </div>
+
+              <Badge className={`${roleColors[member.role]} flex items-center gap-1`}>
+                {roleIcons[member.role]}
+                {roleLabels[member.role]}
+              </Badge>
+
+              <StaffActions member={member} />
+            </div>
+          ))}
+        </div>
+      </CardContent>
+    </Card>
+  )
+}

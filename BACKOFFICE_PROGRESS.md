@@ -173,17 +173,17 @@ Phase 11: ░░░░░░░░░░░░░░░░░░░░   0% ⏳ 
 
 ### Fichiers créés
 
-| Fichier                                              | Type             | Description                        |
-| ---------------------------------------------------- | ---------------- | ---------------------------------- |
-| `actions/admin/users.action.ts`                      | Server Action    | CRUD utilisateurs + export CSV     |
-| `app/(backoffice)/(app)/users/page.tsx`              | Server Component | Page liste avec stats              |
-| `app/(backoffice)/(app)/users/users-table.tsx`       | Server Component | Tableau paginé                     |
-| `app/(backoffice)/(app)/users/users-filters.tsx`     | Client Component | Filtres et recherche (sticky)      |
-| `app/(backoffice)/(app)/users/user-actions.tsx`      | Client Component | Menu actions (bannir, supprimer)   |
-| `app/(backoffice)/(app)/users/user-detail-modal.tsx` | Client Component | Modal détail utilisateur           |
-| `app/(backoffice)/(app)/users/pagination.tsx`        | Client Component | Pagination avec loading spinner    |
-| `app/(backoffice)/(app)/users/loading.tsx`           | Loading UI       | Skeleton animé pendant chargement  |
-| `components/backoffice/page-transition.tsx`          | Client Component | Transitions fluides entre pages    |
+| Fichier                                              | Type             | Description                       |
+| ---------------------------------------------------- | ---------------- | --------------------------------- |
+| `actions/admin/users.action.ts`                      | Server Action    | CRUD utilisateurs + export CSV    |
+| `app/(backoffice)/(app)/users/page.tsx`              | Server Component | Page liste avec stats             |
+| `app/(backoffice)/(app)/users/users-table.tsx`       | Server Component | Tableau paginé                    |
+| `app/(backoffice)/(app)/users/users-filters.tsx`     | Client Component | Filtres et recherche (sticky)     |
+| `app/(backoffice)/(app)/users/user-actions.tsx`      | Client Component | Menu actions (bannir, supprimer)  |
+| `app/(backoffice)/(app)/users/user-detail-modal.tsx` | Client Component | Modal détail utilisateur          |
+| `app/(backoffice)/(app)/users/pagination.tsx`        | Client Component | Pagination avec loading spinner   |
+| `app/(backoffice)/(app)/users/loading.tsx`           | Loading UI       | Skeleton animé pendant chargement |
+| `components/backoffice/page-transition.tsx`          | Client Component | Transitions fluides entre pages   |
 
 ### Fonctionnalités implémentées
 
@@ -225,23 +225,23 @@ Phase 11: ░░░░░░░░░░░░░░░░░░░░   0% ⏳ 
 
 ### Migrations créées
 
-| Table             | Description                                    |
-| ----------------- | ---------------------------------------------- |
-| `pricing_config`  | Configuration des prix (abonnements + micro)   |
-| `pricing_history` | Historique immutable des changements de prix   |
+| Table             | Description                                  |
+| ----------------- | -------------------------------------------- |
+| `pricing_config`  | Configuration des prix (abonnements + micro) |
+| `pricing_history` | Historique immutable des changements de prix |
 
 ### Fichiers créés
 
-| Fichier                                                    | Type             | Description                    |
-| ---------------------------------------------------------- | ---------------- | ------------------------------ |
-| `actions/admin/pricing.action.ts`                          | Server Action    | CRUD prix + historique         |
-| `app/(backoffice)/(app)/pricing/page.tsx`                  | Server Component | Page principale tarification   |
-| `app/(backoffice)/(app)/pricing/subscriptions/page.tsx`    | Server Component | Liste abonnements              |
-| `app/(backoffice)/(app)/pricing/subscriptions/subscription-grid.tsx` | Client Component | Grille tarifs par tier |
-| `app/(backoffice)/(app)/pricing/consumables/page.tsx`      | Server Component | Liste microtransactions        |
-| `app/(backoffice)/(app)/pricing/consumables/consumable-grid.tsx` | Client Component | Grille produits consommables |
-| `app/(backoffice)/(app)/pricing/history/page.tsx`          | Server Component | Historique des modifications   |
-| `app/(backoffice)/(app)/pricing/pricing-edit-modal.tsx`    | Client Component | Modal édition de prix          |
+| Fichier                                                              | Type             | Description                  |
+| -------------------------------------------------------------------- | ---------------- | ---------------------------- |
+| `actions/admin/pricing.action.ts`                                    | Server Action    | CRUD prix + historique       |
+| `app/(backoffice)/(app)/pricing/page.tsx`                            | Server Component | Page principale tarification |
+| `app/(backoffice)/(app)/pricing/subscriptions/page.tsx`              | Server Component | Liste abonnements            |
+| `app/(backoffice)/(app)/pricing/subscriptions/subscription-grid.tsx` | Client Component | Grille tarifs par tier       |
+| `app/(backoffice)/(app)/pricing/consumables/page.tsx`                | Server Component | Liste microtransactions      |
+| `app/(backoffice)/(app)/pricing/consumables/consumable-grid.tsx`     | Client Component | Grille produits consommables |
+| `app/(backoffice)/(app)/pricing/history/page.tsx`                    | Server Component | Historique des modifications |
+| `app/(backoffice)/(app)/pricing/pricing-edit-modal.tsx`              | Client Component | Modal édition de prix        |
 
 ### Fonctionnalités implémentées
 
@@ -254,11 +254,6 @@ Phase 11: ░░░░░░░░░░░░░░░░░░░░   0% ⏳ 
 - ✅ Badge "Populaire" pour les offres mises en avant
 - ✅ Historique des modifications avec audit trail
 - ✅ Navigation avec breadcrumbs
-
-### Données initiales (seed)
-
-- 9 tarifs abonnements (3 tiers × 3 durées)
-- 9 tarifs microtransactions (3 types × 3 packs)
 
 ### Server Actions
 
@@ -291,12 +286,12 @@ Phase 11: ░░░░░░░░░░░░░░░░░░░░   0% ⏳ 
 
 ### Rôles à gérer
 
-| Rôle | Permissions |
-|------|-------------|
-| `super_admin` | Accès total, gestion du personnel |
-| `admin` | Gestion utilisateurs, modération, tarifs |
-| `moderator` | Modération contenu, signalements |
-| `support` | Tickets support, consultation utilisateurs |
+| Rôle          | Permissions                                |
+| ------------- | ------------------------------------------ |
+| `super_admin` | Accès total, gestion du personnel          |
+| `admin`       | Gestion utilisateurs, modération, tarifs   |
+| `moderator`   | Modération contenu, signalements           |
+| `support`     | Tickets support, consultation utilisateurs |
 
 ---
 
@@ -479,15 +474,15 @@ Aucune issue connue pour le moment.
 
 ### Permissions par rôle
 
-| Action | super_admin | admin | moderator | support |
-|--------|-------------|-------|-----------|---------|
-| Voir personnel | ✅ | ❌ | ❌ | ❌ |
-| Créer personnel | ✅ | ❌ | ❌ | ❌ |
-| Modifier personnel | ✅ | ❌ | ❌ | ❌ |
-| Gérer utilisateurs | ✅ | ✅ | ❌ | 👁️ |
-| Modération | ✅ | ✅ | ✅ | ❌ |
-| Tarification | ✅ | ✅ | ❌ | ❌ |
-| Support tickets | ✅ | ✅ | ❌ | ✅ |
+| Action             | super_admin | admin | moderator | support |
+| ------------------ | ----------- | ----- | --------- | ------- |
+| Voir personnel     | ✅          | ❌    | ❌        | ❌      |
+| Créer personnel    | ✅          | ❌    | ❌        | ❌      |
+| Modifier personnel | ✅          | ❌    | ❌        | ❌      |
+| Gérer utilisateurs | ✅          | ✅    | ❌        | 👁️      |
+| Modération         | ✅          | ✅    | ✅        | ❌      |
+| Tarification       | ✅          | ✅    | ❌        | ❌      |
+| Support tickets    | ✅          | ✅    | ❌        | ✅      |
 
 ---
 
