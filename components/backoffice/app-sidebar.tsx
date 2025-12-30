@@ -8,6 +8,7 @@ import {
   Users,
   Shield,
   CreditCard,
+  Tag,
   Settings,
   LogOut,
   ChevronUp,
@@ -53,6 +54,11 @@ const navItems = [
     icon: Shield,
   },
   {
+    title: "Tarification",
+    url: "/pricing",
+    icon: Tag,
+  },
+  {
     title: "Abonnements",
     url: "/subscriptions",
     icon: CreditCard,
@@ -95,7 +101,7 @@ export function AppSidebar() {
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton
                     asChild
-                    isActive={pathname === item.url}
+                    isActive={pathname === item.url || pathname.startsWith(item.url + "/")}
                     tooltip={item.title}
                   >
                     <Link href={item.url}>

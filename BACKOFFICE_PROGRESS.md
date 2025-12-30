@@ -1,8 +1,8 @@
 # TIA Back Office - Progression du Développement
 
 **Dernière mise à jour :** 30 décembre 2025
-**Version :** 1.2.0
-**Statut global :** Phase 5 terminée ✅
+**Version :** 1.3.0
+**Statut global :** Phase 6 terminée ✅
 
 ---
 
@@ -10,7 +10,7 @@
 
 Ce document suit la progression du développement du back office TIA selon les phases définies dans [SPEC_LANDING_BACKOFFICE.md](./SPEC_LANDING_BACKOFFICE.md).
 
-### Progression globale : 50% (5/10 phases)
+### Progression globale : 60% (6/10 phases)
 
 ```
 Phase 1:  ████████████████████ 100% ✅ Base de données
@@ -18,7 +18,7 @@ Phase 2:  ████████████████████ 100% ✅ 
 Phase 3:  ████████████████████ 100% ✅ Layout & Navigation
 Phase 4:  ████████████████████ 100% ✅ Dashboard avec données réelles
 Phase 5:  ████████████████████ 100% ✅ Gestion Utilisateurs
-Phase 6:  ░░░░░░░░░░░░░░░░░░░░   0% ⏳ Gestion des Prix (Abonnements & Microtransactions)
+Phase 6:  ████████████████████ 100% ✅ Gestion des Prix (Abonnements & Microtransactions)
 Phase 7:  ░░░░░░░░░░░░░░░░░░░░   0% ⏳ Système de Modération
 Phase 8:  ░░░░░░░░░░░░░░░░░░░░   0% ⏳ Abonnements & Analytics
 Phase 9:  ░░░░░░░░░░░░░░░░░░░░   0% ⏳ Support & Paramètres
@@ -216,31 +216,61 @@ Phase 10: ░░░░░░░░░░░░░░░░░░░░   0% ⏳ 
 
 ---
 
-## ⏳ Phase 6 : Gestion des Prix (À VENIR)
+## ✅ Phase 6 : Gestion des Prix (TERMINÉE)
 
-**Statut :** ⏳ Non commencée
+**Date de début :** 30 décembre 2025
+**Date de fin :** 30 décembre 2025
+**Statut :** ✅ Complétée
 
-### Base de données à créer
+### Migrations créées
 
-- [ ] Table `pricing_config` - Configuration des prix (abonnements, microtransactions)
-- [ ] Table `pricing_history` - Historique des changements de prix
+| Table             | Description                                    |
+| ----------------- | ---------------------------------------------- |
+| `pricing_config`  | Configuration des prix (abonnements + micro)   |
+| `pricing_history` | Historique immutable des changements de prix   |
 
-### Tâches prévues
+### Fichiers créés
 
-- [ ] Page liste des tarifs (abonnements Silver/Gold/Elite)
-- [ ] Page microtransactions (Super Likes, Boosts, etc.)
-- [ ] Formulaire modification des prix
-- [ ] Historique des modifications
-- [ ] Prévisualisation avant publication
-- [ ] Activation/désactivation des offres
+| Fichier                                                    | Type             | Description                    |
+| ---------------------------------------------------------- | ---------------- | ------------------------------ |
+| `actions/admin/pricing.action.ts`                          | Server Action    | CRUD prix + historique         |
+| `app/(backoffice)/(app)/pricing/page.tsx`                  | Server Component | Page principale tarification   |
+| `app/(backoffice)/(app)/pricing/subscriptions/page.tsx`    | Server Component | Liste abonnements              |
+| `app/(backoffice)/(app)/pricing/subscriptions/subscription-grid.tsx` | Client Component | Grille tarifs par tier |
+| `app/(backoffice)/(app)/pricing/consumables/page.tsx`      | Server Component | Liste microtransactions        |
+| `app/(backoffice)/(app)/pricing/consumables/consumable-grid.tsx` | Client Component | Grille produits consommables |
+| `app/(backoffice)/(app)/pricing/history/page.tsx`          | Server Component | Historique des modifications   |
+| `app/(backoffice)/(app)/pricing/pricing-edit-modal.tsx`    | Client Component | Modal édition de prix          |
 
-### Fonctionnalités
+### Fonctionnalités implémentées
 
-- [ ] CRUD prix abonnements (mensuel, trimestriel, annuel)
-- [ ] CRUD prix microtransactions
-- [ ] Gestion des promotions/réductions
-- [ ] Versioning des prix (historique)
-- [ ] Logs des modifications admin
+- ✅ Dashboard prix avec stats (revenus 30j, produits actifs/inactifs)
+- ✅ Gestion abonnements Silver/Gold/Elite (mensuel, trimestriel, annuel)
+- ✅ Gestion microtransactions (TIA Hearts, Boosts, Révélations)
+- ✅ Modification des prix avec modal
+- ✅ Activation/désactivation des offres (switch)
+- ✅ Affichage des réductions (prix barré + pourcentage)
+- ✅ Badge "Populaire" pour les offres mises en avant
+- ✅ Historique des modifications avec audit trail
+- ✅ Navigation avec breadcrumbs
+
+### Données initiales (seed)
+
+- 9 tarifs abonnements (3 tiers × 3 durées)
+- 9 tarifs microtransactions (3 types × 3 packs)
+
+### Server Actions
+
+- `getSubscriptionPricing()` - Liste tarifs abonnements
+- `getConsumablePricing()` - Liste tarifs microtransactions
+- `getPricingById()` - Détail d'un tarif
+- `updatePricing()` - Modifier un tarif (avec historique)
+- `createPricing()` - Créer un nouveau tarif
+- `togglePricingStatus()` - Activer/désactiver
+- `deletePricing()` - Soft delete
+- `getPricingHistory()` - Historique d'un tarif
+- `getAllPricingHistory()` - Historique global paginé
+- `getPricingStats()` - Statistiques revenus
 
 ---
 
@@ -305,7 +335,8 @@ tia-web/
 │   └── admin/
 │       ├── auth.action.ts       ✅ Actions d'authentification
 │       ├── dashboard.action.ts  ✅ Requêtes dashboard Supabase
-│       └── users.action.ts      ✅ CRUD utilisateurs
+│       ├── users.action.ts      ✅ CRUD utilisateurs
+│       └── pricing.action.ts    ✅ CRUD prix + historique
 ├── app/
 │   ├── (backoffice)/
 │   │   ├── layout.tsx           ✅ Layout principal
@@ -316,14 +347,25 @@ tia-web/
 │   │       ├── dashboard/
 │   │       │   ├── page.tsx             ✅ Dashboard avec vraies données
 │   │       │   └── dashboard-charts.tsx ✅ Graphiques Recharts
-│   │       └── users/
-│   │           ├── page.tsx             ✅ Liste utilisateurs
-│   │           ├── users-table.tsx      ✅ Tableau paginé
-│   │           ├── users-filters.tsx    ✅ Filtres sticky avec loading
-│   │           ├── user-actions.tsx     ✅ Actions (bannir, supprimer)
-│   │           ├── user-detail-modal.tsx ✅ Modal détail
-│   │           ├── pagination.tsx       ✅ Pagination avec spinner
-│   │           └── loading.tsx          ✅ Skeleton UI
+│   │       ├── users/
+│   │       │   ├── page.tsx             ✅ Liste utilisateurs
+│   │       │   ├── users-table.tsx      ✅ Tableau paginé
+│   │       │   ├── users-filters.tsx    ✅ Filtres sticky avec loading
+│   │       │   ├── user-actions.tsx     ✅ Actions (bannir, supprimer)
+│   │       │   ├── user-detail-modal.tsx ✅ Modal détail
+│   │       │   ├── pagination.tsx       ✅ Pagination avec spinner
+│   │       │   └── loading.tsx          ✅ Skeleton UI
+│   │       └── pricing/
+│   │           ├── page.tsx             ✅ Dashboard tarification
+│   │           ├── pricing-edit-modal.tsx ✅ Modal édition prix
+│   │           ├── subscriptions/
+│   │           │   ├── page.tsx         ✅ Liste abonnements
+│   │           │   └── subscription-grid.tsx ✅ Grille par tier
+│   │           ├── consumables/
+│   │           │   ├── page.tsx         ✅ Liste microtransactions
+│   │           │   └── consumable-grid.tsx ✅ Grille par type
+│   │           └── history/
+│   │               └── page.tsx         ✅ Historique modifications
 │   └── (landing)/               ✅ Déjà implémenté
 ├── components/
 │   ├── backoffice/
