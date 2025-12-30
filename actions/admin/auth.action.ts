@@ -22,12 +22,17 @@ export async function loginAdmin(
       password,
     })
 
-  if (authError || !authData.user) {
+  if (authError || !authData.user || !authData.session) {
     return {
       success: false,
       error: 'Email ou mot de passe incorrect',
     }
   }
+
+  await supabase.auth.setSession({
+    access_token: authData.session.access_token,
+    refresh_token: authData.session.refresh_token,
+  })
 
   const { data: adminUser, error: adminError } = await supabase
     .from('admin_users')

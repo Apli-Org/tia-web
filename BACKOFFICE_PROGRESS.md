@@ -1,8 +1,8 @@
 # TIA Back Office - Progression du Développement
 
-**Dernière mise à jour :** 29 décembre 2025
-**Version :** 1.0.0
-**Statut global :** Phase 2 terminée ✅
+**Dernière mise à jour :** 30 décembre 2025
+**Version :** 1.2.0
+**Statut global :** Phase 5 terminée ✅
 
 ---
 
@@ -10,18 +10,19 @@
 
 Ce document suit la progression du développement du back office TIA selon les phases définies dans [SPEC_LANDING_BACKOFFICE.md](./SPEC_LANDING_BACKOFFICE.md).
 
-### Progression globale : 22% (2/9 phases)
+### Progression globale : 50% (5/10 phases)
 
 ```
-Phase 1: ████████████████████ 100% ✅ Base de données
-Phase 2: ████████████████████ 100% ✅ Authentification Admin
-Phase 3: ░░░░░░░░░░░░░░░░░░░░   0% ⏳ Layout & Navigation
-Phase 4: ░░░░░░░░░░░░░░░░░░░░   0% ⏳ Dashboard avec données réelles
-Phase 5: ░░░░░░░░░░░░░░░░░░░░   0% ⏳ Gestion Utilisateurs
-Phase 6: ░░░░░░░░░░░░░░░░░░░░   0% ⏳ Système de Modération
-Phase 7: ░░░░░░░░░░░░░░░░░░░░   0% ⏳ Abonnements & Analytics
-Phase 8: ░░░░░░░░░░░░░░░░░░░░   0% ⏳ Support & Paramètres
-Phase 9: ░░░░░░░░░░░░░░░░░░░░   0% ⏳ Tests & Optimisation
+Phase 1:  ████████████████████ 100% ✅ Base de données
+Phase 2:  ████████████████████ 100% ✅ Authentification Admin
+Phase 3:  ████████████████████ 100% ✅ Layout & Navigation
+Phase 4:  ████████████████████ 100% ✅ Dashboard avec données réelles
+Phase 5:  ████████████████████ 100% ✅ Gestion Utilisateurs
+Phase 6:  ░░░░░░░░░░░░░░░░░░░░   0% ⏳ Gestion des Prix (Abonnements & Microtransactions)
+Phase 7:  ░░░░░░░░░░░░░░░░░░░░   0% ⏳ Système de Modération
+Phase 8:  ░░░░░░░░░░░░░░░░░░░░   0% ⏳ Abonnements & Analytics
+Phase 9:  ░░░░░░░░░░░░░░░░░░░░   0% ⏳ Support & Paramètres
+Phase 10: ░░░░░░░░░░░░░░░░░░░░   0% ⏳ Tests & Optimisation
 ```
 
 ---
@@ -34,14 +35,14 @@ Phase 9: ░░░░░░░░░░░░░░░░░░░░   0% ⏳ T
 
 ### Migrations créées
 
-| Table | Fichier | Statut | Description |
-|-------|---------|--------|-------------|
-| `admin_users` | Migration Supabase | ✅ | Gestion des administrateurs avec rôles |
-| `admin_activity_logs` | Migration Supabase | ✅ | Journal d'audit immutable |
-| `support_tickets` | Migration Supabase | ✅ | Système de tickets de support |
-| `ticket_messages` | Migration Supabase | ✅ | Messages des tickets |
-| `verification_requests` | Migration Supabase | ✅ | Demandes de vérification CIN |
-| `reported_content` | Migration Supabase | ✅ | Signalements de contenu |
+| Table                   | Fichier            | Statut | Description                            |
+| ----------------------- | ------------------ | ------ | -------------------------------------- |
+| `admin_users`           | Migration Supabase | ✅     | Gestion des administrateurs avec rôles |
+| `admin_activity_logs`   | Migration Supabase | ✅     | Journal d'audit immutable              |
+| `support_tickets`       | Migration Supabase | ✅     | Système de tickets de support          |
+| `ticket_messages`       | Migration Supabase | ✅     | Messages des tickets                   |
+| `verification_requests` | Migration Supabase | ✅     | Demandes de vérification CIN           |
+| `reported_content`      | Migration Supabase | ✅     | Signalements de contenu                |
 
 ### Fonctionnalités implémentées
 
@@ -69,12 +70,12 @@ Phase 9: ░░░░░░░░░░░░░░░░░░░░   0% ⏳ T
 
 ### Composants créés
 
-| Fichier | Type | Description |
-|---------|------|-------------|
-| `actions/admin/auth.ts` | Server Action | Actions d'authentification (login, logout) |
-| `lib/auth/roles.ts` | Utility | Helpers pour vérification des rôles admin |
-| `components/backoffice/login-form.tsx` | Client Component | Formulaire de connexion avec validation |
-| `app/(backoffice)/login/page.tsx` | Server Component | Page de login (SSR) |
+| Fichier                                | Type             | Description                                |
+| -------------------------------------- | ---------------- | ------------------------------------------ |
+| `actions/admin/auth.ts`                | Server Action    | Actions d'authentification (login, logout) |
+| `lib/auth/roles.ts`                    | Utility          | Helpers pour vérification des rôles admin  |
+| `components/backoffice/login-form.tsx` | Client Component | Formulaire de connexion avec validation    |
+| `app/(backoffice)/login/page.tsx`      | Server Component | Page de login (SSR)                        |
 
 ### Fonctionnalités implémentées
 
@@ -103,65 +104,147 @@ Phase 9: ░░░░░░░░░░░░░░░░░░░░   0% ⏳ T
 
 ---
 
-## ⏳ Phase 3 : Layout & Navigation (À VENIR)
+## ✅ Phase 3 : Layout & Navigation (TERMINÉE)
 
-**Statut :** ⏳ Non commencée
+**Date de début :** 30 décembre 2025
+**Date de fin :** 30 décembre 2025
+**Statut :** ✅ Complétée
 
-### Tâches prévues
+### Composants créés
 
-- [ ] Créer composant Sidebar avec navigation
-- [ ] Créer Header avec recherche, notifications, user menu
-- [ ] Mettre à jour layout back office
-- [ ] Implémenter navigation responsive (mobile)
-- [ ] Ajouter indicateurs d'état actif
+| Fichier                                 | Type             | Description                       |
+| --------------------------------------- | ---------------- | --------------------------------- |
+| `components/backoffice/app-sidebar.tsx` | Client Component | Sidebar avec navigation et logout |
+| `components/ui/sidebar.tsx`             | UI Component     | Composant sidebar shadcn/ui       |
+| `app/(backoffice)/(app)/layout.tsx`     | Server Component | Layout avec SidebarProvider       |
 
-### Composants à créer
+### Fonctionnalités implémentées
 
-- `components/backoffice/sidebar.tsx` (Client)
-- `components/backoffice/header.tsx` (Client)
-- `components/backoffice/user-nav.tsx` (Client)
-- `app/(backoffice)/layout.tsx` (mise à jour)
-
----
-
-## ⏳ Phase 4 : Dashboard avec Données Réelles (À VENIR)
-
-**Statut :** ⏳ Non commencée
-
-### Tâches prévues
-
-- [ ] Créer requêtes Supabase pour KPIs
-- [ ] Remplacer données mockées par vraies données
-- [ ] Ajouter graphiques Recharts
-- [ ] Implémenter auto-refresh
-- [ ] Ajouter loading skeletons
-
-### Métriques à implémenter
-
-- Utilisateurs actifs (DAU/MAU)
-- Matches du jour
-- Revenus du mois (MRR)
-- Signalements en attente
-- Graphique de croissance
-- Graphique d'engagement
+- ✅ Sidebar collapsible avec icônes
+- ✅ Navigation: Dashboard, Utilisateurs, Modération, Abonnements
+- ✅ Footer avec avatar et dropdown (Paramètres, Déconnexion)
+- ✅ Active state sur les liens de navigation
+- ✅ Logo TIA dans le header
+- ✅ Responsive (sidebar collapsible sur mobile)
 
 ---
 
-## ⏳ Phase 5 : Gestion Utilisateurs (À VENIR)
+## ✅ Phase 4 : Dashboard avec Données Réelles (TERMINÉE)
 
-**Statut :** ⏳ Non commencée
+**Date de début :** 30 décembre 2025
+**Date de fin :** 30 décembre 2025
+**Statut :** ✅ Complétée
 
-### Tâches prévues
+### Fichiers créés/modifiés
 
-- [ ] Page liste des utilisateurs avec filtres
-- [ ] Détail utilisateur (modal/page)
-- [ ] Actions : Bannir, Supprimer, Réinitialiser
-- [ ] Export CSV
-- [ ] Recherche et pagination
+| Fichier                                                 | Type             | Description                        |
+| ------------------------------------------------------- | ---------------- | ---------------------------------- |
+| `actions/admin/dashboard.action.ts`                     | Server Action    | Requêtes KPIs depuis Supabase      |
+| `app/(backoffice)/(app)/dashboard/page.tsx`             | Server Component | Page dashboard avec vraies données |
+| `app/(backoffice)/(app)/dashboard/dashboard-charts.tsx` | Client Component | Graphiques Recharts                |
+
+### Fonctionnalités implémentées
+
+- ✅ KPI: Utilisateurs actifs (total + évolution vs mois dernier)
+- ✅ KPI: Matchs du jour (count + évolution vs hier)
+- ✅ KPI: Revenus du mois en MGA (MRR + évolution)
+- ✅ KPI: Signalements en attente
+- ✅ Graphique: Croissance utilisateurs sur 6 mois
+- ✅ Graphique: Matchs par mois
+- ✅ Tableau: Activité récente (signalements, abonnements, inscriptions)
+- ✅ Loading skeletons avec Suspense
+- ✅ Format monétaire MGA
+
+### Requêtes Supabase
+
+- `getDashboardKPIs()` - Récupère les 4 KPIs principaux
+- `getGrowthData()` - Données graphique croissance (6 mois)
+- `getRecentActivity()` - 5 dernières actions (signalements, abonnements, inscriptions)
+- `getTierDistribution()` - Répartition des tiers (Base/Silver/Gold/Elite)
 
 ---
 
-## ⏳ Phase 6 : Système de Modération (À VENIR)
+## ✅ Phase 5 : Gestion Utilisateurs (TERMINÉE)
+
+**Date de début :** 30 décembre 2025
+**Date de fin :** 30 décembre 2025
+**Statut :** ✅ Complétée
+
+### Fichiers créés
+
+| Fichier                                              | Type             | Description                        |
+| ---------------------------------------------------- | ---------------- | ---------------------------------- |
+| `actions/admin/users.action.ts`                      | Server Action    | CRUD utilisateurs + export CSV     |
+| `app/(backoffice)/(app)/users/page.tsx`              | Server Component | Page liste avec stats              |
+| `app/(backoffice)/(app)/users/users-table.tsx`       | Server Component | Tableau paginé                     |
+| `app/(backoffice)/(app)/users/users-filters.tsx`     | Client Component | Filtres et recherche (sticky)      |
+| `app/(backoffice)/(app)/users/user-actions.tsx`      | Client Component | Menu actions (bannir, supprimer)   |
+| `app/(backoffice)/(app)/users/user-detail-modal.tsx` | Client Component | Modal détail utilisateur           |
+| `app/(backoffice)/(app)/users/pagination.tsx`        | Client Component | Pagination avec loading spinner    |
+| `app/(backoffice)/(app)/users/loading.tsx`           | Loading UI       | Skeleton animé pendant chargement  |
+| `components/backoffice/page-transition.tsx`          | Client Component | Transitions fluides entre pages    |
+
+### Fonctionnalités implémentées
+
+- ✅ Liste des utilisateurs avec tableau paginé (20/page)
+- ✅ Stats: Total, Actifs, Premium, Bannis
+- ✅ Filtres: Tier, Statut, Vérification, Genre
+- ✅ Recherche par nom ou email
+- ✅ Modal détail utilisateur avec onglets (Info, Photos, Abonnement)
+- ✅ Actions: Bannir (durée + raison), Débannir, Supprimer
+- ✅ Export CSV avec filtres appliqués
+- ✅ Pagination avec navigation
+
+### UX/UI Améliorations
+
+- ✅ Transitions fluides entre pages (Framer Motion)
+- ✅ Loading skeleton pendant le chargement
+- ✅ Spinner sur boutons pendant les actions
+- ✅ Filtres sticky (restent visibles au scroll)
+- ✅ Scroll automatique en haut lors de navigation/filtrage
+- ✅ Tous les contrôles désactivés pendant le chargement
+
+### Server Actions
+
+- `getUsers()` - Liste paginée avec filtres
+- `getUserById()` - Détail utilisateur + abonnement
+- `getUserStats()` - Statistiques globales
+- `banUser()` - Bannir avec durée et raison
+- `unbanUser()` - Débannir
+- `deleteUser()` - Soft delete (30 jours)
+- `exportUsersCSV()` - Export CSV
+
+---
+
+## ⏳ Phase 6 : Gestion des Prix (À VENIR)
+
+**Statut :** ⏳ Non commencée
+
+### Base de données à créer
+
+- [ ] Table `pricing_config` - Configuration des prix (abonnements, microtransactions)
+- [ ] Table `pricing_history` - Historique des changements de prix
+
+### Tâches prévues
+
+- [ ] Page liste des tarifs (abonnements Silver/Gold/Elite)
+- [ ] Page microtransactions (Super Likes, Boosts, etc.)
+- [ ] Formulaire modification des prix
+- [ ] Historique des modifications
+- [ ] Prévisualisation avant publication
+- [ ] Activation/désactivation des offres
+
+### Fonctionnalités
+
+- [ ] CRUD prix abonnements (mensuel, trimestriel, annuel)
+- [ ] CRUD prix microtransactions
+- [ ] Gestion des promotions/réductions
+- [ ] Versioning des prix (historique)
+- [ ] Logs des modifications admin
+
+---
+
+## ⏳ Phase 7 : Système de Modération (À VENIR)
 
 **Statut :** ⏳ Non commencée
 
@@ -174,7 +257,7 @@ Phase 9: ░░░░░░░░░░░░░░░░░░░░   0% ⏳ T
 
 ---
 
-## ⏳ Phase 7 : Abonnements & Analytics (À VENIR)
+## ⏳ Phase 8 : Abonnements & Analytics (À VENIR)
 
 **Statut :** ⏳ Non commencée
 
@@ -187,7 +270,7 @@ Phase 9: ░░░░░░░░░░░░░░░░░░░░   0% ⏳ T
 
 ---
 
-## ⏳ Phase 8 : Support & Paramètres (À VENIR)
+## ⏳ Phase 9 : Support & Paramètres (À VENIR)
 
 **Statut :** ⏳ Non commencée
 
@@ -200,7 +283,7 @@ Phase 9: ░░░░░░░░░░░░░░░░░░░░   0% ⏳ T
 
 ---
 
-## ⏳ Phase 9 : Tests & Optimisation (À VENIR)
+## ⏳ Phase 10 : Tests & Optimisation (À VENIR)
 
 **Statut :** ⏳ Non commencée
 
@@ -220,18 +303,33 @@ Phase 9: ░░░░░░░░░░░░░░░░░░░░   0% ⏳ T
 tia-web/
 ├── actions/
 │   └── admin/
-│       └── auth.ts              ✅ Actions d'authentification
+│       ├── auth.action.ts       ✅ Actions d'authentification
+│       ├── dashboard.action.ts  ✅ Requêtes dashboard Supabase
+│       └── users.action.ts      ✅ CRUD utilisateurs
 ├── app/
 │   ├── (backoffice)/
-│   │   ├── layout.tsx           🔄 À mettre à jour (Phase 3)
+│   │   ├── layout.tsx           ✅ Layout principal
 │   │   ├── login/
 │   │   │   └── page.tsx         ✅ Page de login (SSR)
-│   │   └── dashboard/
-│   │       └── page.tsx         🔄 À mettre à jour (Phase 4)
+│   │   └── (app)/
+│   │       ├── layout.tsx       ✅ Layout avec sidebar + transitions
+│   │       ├── dashboard/
+│   │       │   ├── page.tsx             ✅ Dashboard avec vraies données
+│   │       │   └── dashboard-charts.tsx ✅ Graphiques Recharts
+│   │       └── users/
+│   │           ├── page.tsx             ✅ Liste utilisateurs
+│   │           ├── users-table.tsx      ✅ Tableau paginé
+│   │           ├── users-filters.tsx    ✅ Filtres sticky avec loading
+│   │           ├── user-actions.tsx     ✅ Actions (bannir, supprimer)
+│   │           ├── user-detail-modal.tsx ✅ Modal détail
+│   │           ├── pagination.tsx       ✅ Pagination avec spinner
+│   │           └── loading.tsx          ✅ Skeleton UI
 │   └── (landing)/               ✅ Déjà implémenté
 ├── components/
 │   ├── backoffice/
-│   │   └── login-form.tsx       ✅ Formulaire de connexion
+│   │   ├── app-sidebar.tsx      ✅ Sidebar navigation
+│   │   ├── login-form.tsx       ✅ Formulaire de connexion
+│   │   └── page-transition.tsx  ✅ Transitions Framer Motion
 │   ├── landing/                 ✅ Déjà implémenté
 │   └── ui/                      ✅ shadcn/ui components
 ├── lib/
@@ -241,7 +339,9 @@ tia-web/
 │   └── supabase/
 │       ├── server.ts            ✅ Client serveur
 │       ├── client.ts            ✅ Client navigateur
+│       ├── admin.ts             ✅ Client admin (service_role)
 │       └── proxy.ts             ✅ Middleware avec vérification admin
+├── next.config.ts               ✅ Config images Supabase Storage
 └── middleware.ts                ✅ Protection des routes
 ```
 
@@ -252,6 +352,7 @@ tia-web/
 ### Credentials de Test
 
 **Super Admin :**
+
 - Email : `admin@tia.app`
 - Note : Le mot de passe doit être créé dans Supabase Auth Dashboard
 
@@ -260,6 +361,7 @@ tia-web/
 - Landing Page : `/`
 - Login Back Office : `/login`
 - Dashboard : `/dashboard` (protégé)
+- Utilisateurs : `/users` (protégé)
 
 ### Environnement
 
@@ -294,15 +396,25 @@ Aucune issue connue pour le moment.
 
 ---
 
-## 🚀 Prochaine Phase : Layout & Navigation
+## 🚀 Prochaine Phase : Gestion des Prix
 
 **Priorité :** Haute
-**Estimation :** 1-2 jours
 
-Créer la structure de navigation du back office avec sidebar et header.
+### Base de données
+
+1. Créer table `pricing_config` (type, nom, prix, devise, durée, actif, etc.)
+2. Créer table `pricing_history` (historique des changements)
+
+### Tâches à implémenter
+
+1. Page liste des tarifs abonnements (Silver/Gold/Elite)
+2. Page microtransactions (Super Likes, Boosts, Rewinds, etc.)
+3. Formulaire création/modification des prix
+4. Historique des modifications avec versioning
+5. Activation/désactivation des offres
+6. Gestion des promotions temporaires
 
 ---
 
-**Auteur :** Claude (Anthropic)
 **Projet :** TIA - Back Office
-**Framework :** Next.js 16 + Supabase + shadcn/ui
+**Framework :** Next.js 16 + Supabase + shadcn/ui + Framer Motion

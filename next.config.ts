@@ -7,6 +7,9 @@ const nextConfig: NextConfig = {
       {
         hostname: "placehold.co",
       },
+      {
+        hostname: "ibxifmqovisdyrzpemyv.supabase.co",
+      },
     ],
     dangerouslyAllowSVG: true,
   },
