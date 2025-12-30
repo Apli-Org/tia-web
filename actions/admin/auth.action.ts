@@ -1,6 +1,7 @@
 'use server'
 
 import { createClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 
@@ -34,7 +35,10 @@ export async function loginAdmin(
     refresh_token: authData.session.refresh_token,
   })
 
-  const { data: adminUser, error: adminError } = await supabase
+  // Use admin client to bypass RLS and verify admin status
+  const adminClient = createAdminClient()
+
+  const { data: adminUser, error: adminError } = await adminClient
     .from('admin_users')
     .select('*')
     .eq('id', authData.user.id)
@@ -50,12 +54,14 @@ export async function loginAdmin(
     }
   }
 
-  await supabase
+  // Update last_login using admin client
+  await adminClient
     .from('admin_users')
     .update({ last_login: new Date().toISOString() })
     .eq('id', adminUser.id)
 
-  await supabase.from('admin_activity_logs').insert({
+  // Log the login action
+  await adminClient.from('admin_activity_logs').insert({
     admin_id: adminUser.id,
     action: 'admin_login',
     details: {
