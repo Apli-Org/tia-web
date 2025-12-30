@@ -10,7 +10,7 @@
 
 Ce document suit la progression du développement du back office TIA selon les phases définies dans [SPEC_LANDING_BACKOFFICE.md](./SPEC_LANDING_BACKOFFICE.md).
 
-### Progression globale : 60% (6/10 phases)
+### Progression globale : 55% (6/11 phases)
 
 ```
 Phase 1:  ████████████████████ 100% ✅ Base de données
@@ -19,10 +19,11 @@ Phase 3:  ████████████████████ 100% ✅ 
 Phase 4:  ████████████████████ 100% ✅ Dashboard avec données réelles
 Phase 5:  ████████████████████ 100% ✅ Gestion Utilisateurs
 Phase 6:  ████████████████████ 100% ✅ Gestion des Prix (Abonnements & Microtransactions)
-Phase 7:  ░░░░░░░░░░░░░░░░░░░░   0% ⏳ Système de Modération
-Phase 8:  ░░░░░░░░░░░░░░░░░░░░   0% ⏳ Abonnements & Analytics
-Phase 9:  ░░░░░░░░░░░░░░░░░░░░   0% ⏳ Support & Paramètres
-Phase 10: ░░░░░░░░░░░░░░░░░░░░   0% ⏳ Tests & Optimisation
+Phase 7:  ░░░░░░░░░░░░░░░░░░░░   0% ⏳ Gestion du Personnel (Modérateurs & Rôles)
+Phase 8:  ░░░░░░░░░░░░░░░░░░░░   0% ⏳ Système de Modération
+Phase 9:  ░░░░░░░░░░░░░░░░░░░░   0% ⏳ Abonnements & Analytics
+Phase 10: ░░░░░░░░░░░░░░░░░░░░   0% ⏳ Support & Paramètres
+Phase 11: ░░░░░░░░░░░░░░░░░░░░   0% ⏳ Tests & Optimisation
 ```
 
 ---
@@ -274,7 +275,32 @@ Phase 10: ░░░░░░░░░░░░░░░░░░░░   0% ⏳ 
 
 ---
 
-## ⏳ Phase 7 : Système de Modération (À VENIR)
+## ⏳ Phase 7 : Gestion du Personnel (À VENIR)
+
+**Statut :** ⏳ Non commencée
+
+### Tâches prévues
+
+- [ ] Liste des membres du personnel (modérateurs, admins)
+- [ ] Page détail d'un membre du personnel
+- [ ] Création de nouveaux comptes modérateurs/admins
+- [ ] Modification des informations du personnel
+- [ ] Gestion des rôles (super_admin, admin, moderator, support)
+- [ ] Activation/désactivation des comptes
+- [ ] Historique des actions par membre
+
+### Rôles à gérer
+
+| Rôle | Permissions |
+|------|-------------|
+| `super_admin` | Accès total, gestion du personnel |
+| `admin` | Gestion utilisateurs, modération, tarifs |
+| `moderator` | Modération contenu, signalements |
+| `support` | Tickets support, consultation utilisateurs |
+
+---
+
+## ⏳ Phase 8 : Système de Modération (À VENIR)
 
 **Statut :** ⏳ Non commencée
 
@@ -287,7 +313,7 @@ Phase 10: ░░░░░░░░░░░░░░░░░░░░   0% ⏳ 
 
 ---
 
-## ⏳ Phase 8 : Abonnements & Analytics (À VENIR)
+## ⏳ Phase 9 : Abonnements & Analytics (À VENIR)
 
 **Statut :** ⏳ Non commencée
 
@@ -300,20 +326,19 @@ Phase 10: ░░░░░░░░░░░░░░░░░░░░   0% ⏳ 
 
 ---
 
-## ⏳ Phase 9 : Support & Paramètres (À VENIR)
+## ⏳ Phase 10 : Support & Paramètres (À VENIR)
 
 **Statut :** ⏳ Non commencée
 
 ### Tâches prévues
 
 - [ ] Système de tickets
-- [ ] Page gestion admins
 - [ ] Configuration app
 - [ ] Logs d'activité
 
 ---
 
-## ⏳ Phase 10 : Tests & Optimisation (À VENIR)
+## ⏳ Phase 11 : Tests & Optimisation (À VENIR)
 
 **Statut :** ⏳ Non commencée
 
@@ -438,23 +463,31 @@ Aucune issue connue pour le moment.
 
 ---
 
-## 🚀 Prochaine Phase : Gestion des Prix
+## 🚀 Prochaine Phase : Gestion du Personnel
 
 **Priorité :** Haute
 
-### Base de données
+### Fonctionnalités à implémenter
 
-1. Créer table `pricing_config` (type, nom, prix, devise, durée, actif, etc.)
-2. Créer table `pricing_history` (historique des changements)
+1. Liste des membres du personnel avec tableau paginé
+2. Modal/Page détail d'un membre (infos, rôle, historique)
+3. Formulaire création nouveau membre
+4. Modification des informations et rôle
+5. Activation/désactivation des comptes
+6. Filtres par rôle et statut
+7. Historique des actions par membre
 
-### Tâches à implémenter
+### Permissions par rôle
 
-1. Page liste des tarifs abonnements (Silver/Gold/Elite)
-2. Page microtransactions (Super Likes, Boosts, Rewinds, etc.)
-3. Formulaire création/modification des prix
-4. Historique des modifications avec versioning
-5. Activation/désactivation des offres
-6. Gestion des promotions temporaires
+| Action | super_admin | admin | moderator | support |
+|--------|-------------|-------|-----------|---------|
+| Voir personnel | ✅ | ❌ | ❌ | ❌ |
+| Créer personnel | ✅ | ❌ | ❌ | ❌ |
+| Modifier personnel | ✅ | ❌ | ❌ | ❌ |
+| Gérer utilisateurs | ✅ | ✅ | ❌ | 👁️ |
+| Modération | ✅ | ✅ | ✅ | ❌ |
+| Tarification | ✅ | ✅ | ❌ | ❌ |
+| Support tickets | ✅ | ✅ | ❌ | ✅ |
 
 ---
 
