@@ -100,24 +100,45 @@ export function PricingEditModal({
               />
             </div>
 
+            <div className="grid gap-2">
+              <Label htmlFor="price">Prix actuel (Ar)</Label>
+              <Input
+                id="price"
+                type="number"
+                value={price}
+                onChange={(e) => setPrice(e.target.value)}
+                min="0"
+                step="100"
+              />
+            </div>
+
             <div className="grid grid-cols-2 gap-4">
               <div className="grid gap-2">
-                <Label htmlFor="price">Prix (Ar)</Label>
+                <Label htmlFor="discount">Réduction (%)</Label>
                 <Input
-                  id="price"
+                  id="discount"
                   type="number"
-                  value={price}
-                  onChange={(e) => setPrice(e.target.value)}
+                  value={discountPercent || ""}
+                  onChange={(e) => {
+                    const discount = parseInt(e.target.value) || 0
+                    if (discount > 0 && discount < 100) {
+                      const calculatedOriginal = Math.round(parseInt(price) / (1 - discount / 100))
+                      setOriginalPrice(calculatedOriginal.toString())
+                    } else if (discount === 0) {
+                      setOriginalPrice("")
+                    }
+                  }}
+                  placeholder="0"
                   min="0"
-                  step="100"
+                  max="99"
                 />
               </div>
 
               <div className="grid gap-2">
                 <Label htmlFor="originalPrice">
-                  Prix original (Ar)
+                  Prix barré (Ar)
                   {discountPercent > 0 && (
-                    <span className="ml-2 text-xs text-green-600">
+                    <span className="ml-2 text-xs text-green-600 font-medium">
                       -{discountPercent}%
                     </span>
                   )}
@@ -127,12 +148,20 @@ export function PricingEditModal({
                   type="number"
                   value={originalPrice}
                   onChange={(e) => setOriginalPrice(e.target.value)}
-                  placeholder="Pour afficher une réduction"
+                  placeholder="Optionnel"
                   min="0"
                   step="100"
                 />
               </div>
             </div>
+
+            {discountPercent > 0 && (
+              <p className="text-sm text-muted-foreground">
+                Affiché: <span className="line-through">{parseInt(originalPrice).toLocaleString()} Ar</span>{" "}
+                <span className="font-medium text-foreground">{parseInt(price).toLocaleString()} Ar</span>{" "}
+                <span className="text-green-600">(-{discountPercent}%)</span>
+              </p>
+            )}
 
             <div className="grid gap-2">
               <Label htmlFor="features">
