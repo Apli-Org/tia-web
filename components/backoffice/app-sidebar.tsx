@@ -36,42 +36,71 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
-import { logoutAdmin } from "@/actions/admin/auth.action"
+import { logoutAdmin, type CurrentAdmin } from "@/actions/admin/auth.action"
 
-const navItems = [
+type NavItem = {
+  title: string
+  url: string
+  icon: typeof LayoutDashboard
+  roles: string[] // roles allowed to see this item
+}
+
+const navItems: NavItem[] = [
   {
     title: "Dashboard",
     url: "/dashboard",
     icon: LayoutDashboard,
+    roles: ["super_admin", "admin", "moderator", "support"],
   },
   {
     title: "Utilisateurs",
     url: "/users",
     icon: Users,
+    roles: ["super_admin", "admin", "support"], // support can view only
   },
   {
     title: "Personnel",
     url: "/staff",
     icon: UsersRound,
+    roles: ["super_admin"], // only super_admin
   },
   {
     title: "Modération",
     url: "/moderation",
     icon: Shield,
+    roles: ["super_admin", "admin", "moderator"],
   },
   {
     title: "Tarification",
     url: "/pricing",
     icon: Tag,
+    roles: ["super_admin", "admin"],
   },
   {
     title: "Abonnements",
     url: "/subscriptions",
     icon: CreditCard,
+    roles: ["super_admin", "admin"],
   },
 ]
 
-export function AppSidebar() {
+type AppSidebarProps = {
+  admin: CurrentAdmin | null
+}
+
+function getInitials(name: string | null, email: string): string {
+  if (name) {
+    return name
+      .split(" ")
+      .map((n) => n[0])
+      .join("")
+      .toUpperCase()
+      .slice(0, 2)
+  }
+  return email.slice(0, 2).toUpperCase()
+}
+
+export function AppSidebar({ admin }: AppSidebarProps) {
   const pathname = usePathname()
 
   return (
@@ -103,20 +132,22 @@ export function AppSidebar() {
           <SidebarGroupLabel>Navigation</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {navItems.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton
-                    asChild
-                    isActive={pathname === item.url || pathname.startsWith(item.url + "/")}
-                    tooltip={item.title}
-                  >
-                    <Link href={item.url}>
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
+              {navItems
+                .filter((item) => admin && item.roles.includes(admin.role))
+                .map((item) => (
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton
+                      asChild
+                      isActive={pathname === item.url || pathname.startsWith(item.url + "/")}
+                      tooltip={item.title}
+                    >
+                      <Link href={item.url}>
+                        <item.icon />
+                        <span>{item.title}</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
@@ -133,13 +164,15 @@ export function AppSidebar() {
                 >
                   <Avatar className="size-8">
                     <AvatarFallback className="bg-primary/10 text-primary">
-                      AD
+                      {admin ? getInitials(admin.full_name, admin.email) : "?"}
                     </AvatarFallback>
                   </Avatar>
                   <div className="grid flex-1 text-left text-sm leading-tight">
-                    <span className="truncate font-semibold">Admin</span>
+                    <span className="truncate font-semibold">
+                      {admin?.full_name || "Admin"}
+                    </span>
                     <span className="truncate text-xs text-muted-foreground">
-                      admin@tia.app
+                      {admin?.email || "Non connecté"}
                     </span>
                   </div>
                   <ChevronUp className="ml-auto size-4" />

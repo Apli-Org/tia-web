@@ -98,3 +98,30 @@ export async function logoutAdmin() {
   revalidatePath('/')
   redirect('/login')
 }
+
+export type CurrentAdmin = {
+  id: string
+  email: string
+  full_name: string | null
+  role: string
+}
+
+export async function getCurrentAdmin(): Promise<CurrentAdmin | null> {
+  const supabase = await createClient()
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+
+  if (!user) return null
+
+  const adminClient = createAdminClient()
+  const { data: adminUser } = await adminClient
+    .from('admin_users')
+    .select('id, email, full_name, role')
+    .eq('id', user.id)
+    .eq('is_active', true)
+    .single()
+
+  return adminUser
+}

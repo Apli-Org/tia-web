@@ -31,9 +31,11 @@ type EditStaffModalProps = {
   member: StaffMember
   open: boolean
   onClose: () => void
+  adminId: string
+  isSelf?: boolean
 }
 
-export function EditStaffModal({ member, open, onClose }: EditStaffModalProps) {
+export function EditStaffModal({ member, open, onClose, adminId, isSelf }: EditStaffModalProps) {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -45,11 +47,10 @@ export function EditStaffModal({ member, open, onClose }: EditStaffModalProps) {
     setIsLoading(true)
     setError(null)
 
-    // TODO: Get actual admin ID from session
     const result = await updateStaffMember(
       member.id,
       { full_name: fullName, role },
-      "e562125b-c92d-4173-b089-9d8e27a70615"
+      adminId
     )
 
     if (result.success) {
@@ -89,7 +90,11 @@ export function EditStaffModal({ member, open, onClose }: EditStaffModalProps) {
 
             <div className="grid gap-2">
               <Label htmlFor="role">Rôle</Label>
-              <Select value={role} onValueChange={(v) => setRole(v as AdminRole)}>
+              <Select
+                value={role}
+                onValueChange={(v) => setRole(v as AdminRole)}
+                disabled={isSelf}
+              >
                 <SelectTrigger>
                   <SelectValue placeholder="Sélectionner un rôle" />
                 </SelectTrigger>
@@ -100,6 +105,11 @@ export function EditStaffModal({ member, open, onClose }: EditStaffModalProps) {
                   <SelectItem value="support">Support</SelectItem>
                 </SelectContent>
               </Select>
+              {isSelf && (
+                <p className="text-xs text-muted-foreground">
+                  Vous ne pouvez pas modifier votre propre rôle
+                </p>
+              )}
             </div>
           </div>
 

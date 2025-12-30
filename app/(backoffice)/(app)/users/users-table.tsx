@@ -23,6 +23,7 @@ import { Pagination } from "./pagination"
 type UsersTableProps = {
   page: number
   filters: UsersFilter
+  canModify: boolean
 }
 
 function getTierBadge(tier: string | null) {
@@ -92,7 +93,7 @@ function calculateAge(birthdate: string | null): number | null {
   return age
 }
 
-export async function UsersTable({ page, filters }: UsersTableProps) {
+export async function UsersTable({ page, filters, canModify }: UsersTableProps) {
   const { users, total, totalPages } = await getUsers(page, 20, filters)
 
   return (
@@ -168,7 +169,7 @@ export async function UsersTable({ page, filters }: UsersTableProps) {
                       {new Date(user.created_at).toLocaleDateString("fr-FR")}
                     </TableCell>
                     <TableCell>
-                      <UserActions user={user} />
+                      <UserActions user={user} canModify={canModify} />
                     </TableCell>
                   </TableRow>
                 ))}

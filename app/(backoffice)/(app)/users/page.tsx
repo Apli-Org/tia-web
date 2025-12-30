@@ -1,4 +1,5 @@
 import { Suspense } from "react"
+import { redirect } from "next/navigation"
 import {
   Users,
   UserCheck,
@@ -17,6 +18,7 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
 import { getUserStats } from "@/actions/admin/users.action"
+import { getCurrentAdmin } from "@/actions/admin/auth.action"
 import { UsersTable } from "./users-table"
 import { UsersFilters } from "./users-filters"
 
@@ -122,6 +124,15 @@ export default async function UsersPage({
 }: {
   searchParams: SearchParams
 }) {
+  // Check permission - super_admin, admin, support can access
+  const admin = await getCurrentAdmin()
+  if (!admin || !["super_admin", "admin", "support"].includes(admin.role)) {
+    redirect("/dashboard")
+  }
+
+  // Support can only view, not modify
+  const canModify = admin.role === "super_admin" || admin.role === "admin"
+
   const params = await searchParams
   const page = parseInt(params.page || "1")
   const filters = {
@@ -166,7 +177,7 @@ export default async function UsersPage({
         </div>
 
         <Suspense fallback={<UsersTableSkeleton />}>
-          <UsersTable page={page} filters={filters} />
+          <UsersTable page={page} filters={filters} canModify={canModify} />
         </Suspense>
       </main>
     </>

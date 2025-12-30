@@ -1,15 +1,18 @@
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/backoffice/app-sidebar"
 import { PageTransition } from "@/components/backoffice/page-transition"
+import { getCurrentAdmin } from "@/actions/admin/auth.action"
 
-export default function AppLayout({
+export default async function AppLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const admin = await getCurrentAdmin()
+
   return (
     <SidebarProvider>
-      <AppSidebar />
+      <AppSidebar admin={admin} />
       <SidebarInset>
         <PageTransition>{children}</PageTransition>
       </SidebarInset>

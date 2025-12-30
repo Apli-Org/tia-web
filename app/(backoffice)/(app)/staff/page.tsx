@@ -1,4 +1,5 @@
 import { Suspense } from "react"
+import { redirect } from "next/navigation"
 import { Users, Shield, UserCog, Headphones } from "lucide-react"
 
 import { SidebarTrigger } from "@/components/ui/sidebar"
@@ -12,6 +13,7 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
 import { getStaffStats } from "@/actions/admin/staff.action"
+import { getCurrentAdmin } from "@/actions/admin/auth.action"
 import { StaffTable } from "./staff-table"
 import { StaffFilters } from "./staff-filters"
 import { CreateStaffButton } from "./create-staff-button"
@@ -124,6 +126,12 @@ export default async function StaffPage({
 }: {
   searchParams: SearchParams
 }) {
+  // Check permission - only super_admin can access
+  const admin = await getCurrentAdmin()
+  if (!admin || admin.role !== "super_admin") {
+    redirect("/dashboard")
+  }
+
   const params = await searchParams
 
   return (
@@ -149,7 +157,7 @@ export default async function StaffPage({
                 Gérez les modérateurs, administrateurs et équipe support
               </p>
             </div>
-            <CreateStaffButton />
+            <CreateStaffButton adminId={admin.id} />
           </div>
 
           <Suspense fallback={<StatsSkeleton />}>
@@ -163,6 +171,7 @@ export default async function StaffPage({
               role={params.role as "super_admin" | "admin" | "moderator" | "support" | undefined}
               status={params.status as "active" | "inactive" | undefined}
               search={params.search}
+              currentAdminId={admin.id}
             />
           </Suspense>
         </div>

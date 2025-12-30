@@ -24,7 +24,11 @@ import {
 } from "@/components/ui/select"
 import { createStaffMember, type AdminRole } from "@/actions/admin/staff.action"
 
-export function CreateStaffButton() {
+type CreateStaffButtonProps = {
+  adminId: string
+}
+
+export function CreateStaffButton({ adminId }: CreateStaffButtonProps) {
   const [open, setOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -47,10 +51,9 @@ export function CreateStaffButton() {
     setIsLoading(true)
     setError(null)
 
-    // TODO: Get actual admin ID from session
     const result = await createStaffMember(
       { email, password, full_name: fullName, role },
-      "e562125b-c92d-4173-b089-9d8e27a70615"
+      adminId
     )
 
     if (result.success) {

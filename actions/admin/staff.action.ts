@@ -2,9 +2,42 @@
 
 import { createAdminClient } from '@/lib/supabase/admin'
 import { revalidatePath } from 'next/cache'
+import type { AdminRole } from '@/lib/staff-utils'
 
-// Types
-export type AdminRole = 'super_admin' | 'admin' | 'moderator' | 'support'
+// Re-export the type for convenience
+export type { AdminRole } from '@/lib/staff-utils'
+
+// Helper to verify admin has permission
+async function verifyPermission(adminId: string, requiredRole: AdminRole = 'super_admin'): Promise<{ allowed: boolean; error?: string }> {
+  const supabase = createAdminClient()
+
+  const { data: admin } = await supabase
+    .from('admin_users')
+    .select('role, is_active')
+    .eq('id', adminId)
+    .single()
+
+  if (!admin) {
+    return { allowed: false, error: 'Admin non trouvé' }
+  }
+
+  if (!admin.is_active) {
+    return { allowed: false, error: 'Compte désactivé' }
+  }
+
+  const roleHierarchy: Record<AdminRole, number> = {
+    super_admin: 4,
+    admin: 3,
+    moderator: 2,
+    support: 1,
+  }
+
+  if (roleHierarchy[admin.role as AdminRole] < roleHierarchy[requiredRole]) {
+    return { allowed: false, error: 'Permission insuffisante' }
+  }
+
+  return { allowed: true }
+}
 
 export type StaffMember = {
   id: string
@@ -31,14 +64,6 @@ export type StaffFilters = {
   role?: AdminRole
   status?: 'active' | 'inactive'
   search?: string
-}
-
-// Role labels in French
-export const roleLabels: Record<AdminRole, string> = {
-  super_admin: 'Super Admin',
-  admin: 'Administrateur',
-  moderator: 'Modérateur',
-  support: 'Support',
 }
 
 // Get all staff members with filters
@@ -136,6 +161,12 @@ export async function createStaffMember(
   },
   createdBy: string
 ): Promise<{ success: boolean; error?: string; id?: string }> {
+  // Verify permission - only super_admin can create staff
+  const permission = await verifyPermission(createdBy, 'super_admin')
+  if (!permission.allowed) {
+    return { success: false, error: permission.error }
+  }
+
   const supabase = createAdminClient()
 
   // Check if email already exists in admin_users
@@ -201,6 +232,12 @@ export async function updateStaffMember(
   },
   updatedBy: string
 ): Promise<{ success: boolean; error?: string }> {
+  // Verify permission - only super_admin can update staff
+  const permission = await verifyPermission(updatedBy, 'super_admin')
+  if (!permission.allowed) {
+    return { success: false, error: permission.error }
+  }
+
   const supabase = createAdminClient()
 
   // Get current data for logging
@@ -255,6 +292,12 @@ export async function toggleStaffStatus(
   isActive: boolean,
   toggledBy: string
 ): Promise<{ success: boolean; error?: string }> {
+  // Verify permission - only super_admin can toggle staff status
+  const permission = await verifyPermission(toggledBy, 'super_admin')
+  if (!permission.allowed) {
+    return { success: false, error: permission.error }
+  }
+
   const supabase = createAdminClient()
 
   // Get current data
@@ -351,6 +394,12 @@ export async function resetStaffPassword(
   newPassword: string,
   resetBy: string
 ): Promise<{ success: boolean; error?: string }> {
+  // Verify permission - only super_admin can reset passwords
+  const permission = await verifyPermission(resetBy, 'super_admin')
+  if (!permission.allowed) {
+    return { success: false, error: permission.error }
+  }
+
   const supabase = createAdminClient()
 
   const { error } = await supabase.auth.admin.updateUserById(id, {

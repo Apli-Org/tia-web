@@ -27,20 +27,23 @@ import { ResetPasswordModal } from "./reset-password-modal"
 
 type StaffActionsProps = {
   member: StaffMember
+  currentAdminId: string
 }
 
-export function StaffActions({ member }: StaffActionsProps) {
+export function StaffActions({ member, currentAdminId }: StaffActionsProps) {
   const [isEditOpen, setIsEditOpen] = useState(false)
   const [isResetOpen, setIsResetOpen] = useState(false)
   const [isToggling, setIsToggling] = useState(false)
 
+  const isSelf = member.id === currentAdminId
+
   const handleToggleStatus = async () => {
+    if (isSelf) return
     setIsToggling(true)
-    // TODO: Get actual admin ID from session
     const result = await toggleStaffStatus(
       member.id,
       !member.is_active,
-      "e562125b-c92d-4173-b089-9d8e27a70615"
+      currentAdminId
     )
     if (!result.success) {
       alert(result.error)
@@ -69,23 +72,27 @@ export function StaffActions({ member }: StaffActionsProps) {
             <KeyRound className="h-4 w-4 mr-2" />
             Réinitialiser mot de passe
           </DropdownMenuItem>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem
-            onClick={handleToggleStatus}
-            className={member.is_active ? "text-orange-600" : "text-green-600"}
-          >
-            {member.is_active ? (
-              <>
-                <PowerOff className="h-4 w-4 mr-2" />
-                Désactiver
-              </>
-            ) : (
-              <>
-                <Power className="h-4 w-4 mr-2" />
-                Activer
-              </>
-            )}
-          </DropdownMenuItem>
+          {!isSelf && (
+            <>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                onClick={handleToggleStatus}
+                className={member.is_active ? "text-orange-600" : "text-green-600"}
+              >
+                {member.is_active ? (
+                  <>
+                    <PowerOff className="h-4 w-4 mr-2" />
+                    Désactiver
+                  </>
+                ) : (
+                  <>
+                    <Power className="h-4 w-4 mr-2" />
+                    Activer
+                  </>
+                )}
+              </DropdownMenuItem>
+            </>
+          )}
         </DropdownMenuContent>
       </DropdownMenu>
 
@@ -93,12 +100,15 @@ export function StaffActions({ member }: StaffActionsProps) {
         member={member}
         open={isEditOpen}
         onClose={() => setIsEditOpen(false)}
+        adminId={currentAdminId}
+        isSelf={isSelf}
       />
 
       <ResetPasswordModal
         member={member}
         open={isResetOpen}
         onClose={() => setIsResetOpen(false)}
+        adminId={currentAdminId}
       />
     </>
   )

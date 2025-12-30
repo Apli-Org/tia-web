@@ -2,6 +2,8 @@
 
 import { createAdminClient } from "@/lib/supabase/admin"
 import { revalidatePath } from "next/cache"
+import { getCurrentAdmin } from "./auth.action"
+import { hasPermission, type AdminRole } from "@/lib/staff-utils"
 
 export type UserListItem = {
   id: string
@@ -152,6 +154,12 @@ export async function getUserById(userId: string) {
 }
 
 export async function banUser(userId: string, durationDays: number, reason: string) {
+  // Permission check - only admin and super_admin can ban users
+  const currentAdmin = await getCurrentAdmin()
+  if (!currentAdmin || !hasPermission(currentAdmin.role as AdminRole, "admin")) {
+    throw new Error("Permission refusée")
+  }
+
   const supabase = createAdminClient()
 
   const bannedUntil = new Date()
@@ -183,6 +191,12 @@ export async function banUser(userId: string, durationDays: number, reason: stri
 }
 
 export async function unbanUser(userId: string) {
+  // Permission check - only admin and super_admin can unban users
+  const currentAdmin = await getCurrentAdmin()
+  if (!currentAdmin || !hasPermission(currentAdmin.role as AdminRole, "admin")) {
+    throw new Error("Permission refusée")
+  }
+
   const supabase = createAdminClient()
 
   const { error } = await supabase
@@ -210,6 +224,12 @@ export async function unbanUser(userId: string) {
 }
 
 export async function deleteUser(userId: string) {
+  // Permission check - only admin and super_admin can delete users
+  const currentAdmin = await getCurrentAdmin()
+  if (!currentAdmin || !hasPermission(currentAdmin.role as AdminRole, "admin")) {
+    throw new Error("Permission refusée")
+  }
+
   const supabase = createAdminClient()
 
   // Soft delete - mark as inactive and schedule deletion

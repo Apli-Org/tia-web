@@ -1,15 +1,17 @@
-import { Shield, ShieldCheck, UserCog, Headphones, MoreHorizontal } from "lucide-react"
+import { Shield, ShieldCheck, UserCog, Headphones } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
-import { getStaffMembers, type AdminRole, roleLabels } from "@/actions/admin/staff.action"
+import { getStaffMembers, type AdminRole } from "@/actions/admin/staff.action"
+import { roleLabels } from "@/lib/staff-utils"
 import { StaffActions } from "./staff-actions"
 
 type StaffTableProps = {
   role?: AdminRole
   status?: "active" | "inactive"
   search?: string
+  currentAdminId: string
 }
 
 const roleIcons: Record<AdminRole, React.ReactNode> = {
@@ -46,7 +48,7 @@ function getInitials(name: string | null, email: string): string {
   return email.slice(0, 2).toUpperCase()
 }
 
-export async function StaffTable({ role, status, search }: StaffTableProps) {
+export async function StaffTable({ role, status, search, currentAdminId }: StaffTableProps) {
   const staff = await getStaffMembers({ role, status, search })
 
   if (staff.length === 0) {
@@ -86,6 +88,11 @@ export async function StaffTable({ role, status, search }: StaffTableProps) {
                   <p className="font-medium truncate">
                     {member.full_name || "Sans nom"}
                   </p>
+                  {member.id === currentAdminId && (
+                    <Badge variant="secondary" className="text-xs">
+                      Vous
+                    </Badge>
+                  )}
                   {!member.is_active && (
                     <Badge variant="outline" className="text-xs">
                       Inactif
@@ -105,7 +112,7 @@ export async function StaffTable({ role, status, search }: StaffTableProps) {
                 {roleLabels[member.role]}
               </Badge>
 
-              <StaffActions member={member} />
+              <StaffActions member={member} currentAdminId={currentAdminId} />
             </div>
           ))}
         </div>

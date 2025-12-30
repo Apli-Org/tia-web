@@ -20,12 +20,14 @@ type ResetPasswordModalProps = {
   member: StaffMember
   open: boolean
   onClose: () => void
+  adminId: string
 }
 
 export function ResetPasswordModal({
   member,
   open,
   onClose,
+  adminId,
 }: ResetPasswordModalProps) {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -58,11 +60,10 @@ export function ResetPasswordModal({
 
     setIsLoading(true)
 
-    // TODO: Get actual admin ID from session
     const result = await resetStaffPassword(
       member.id,
       password,
-      "e562125b-c92d-4173-b089-9d8e27a70615"
+      adminId
     )
 
     if (result.success) {

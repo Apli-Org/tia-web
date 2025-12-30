@@ -39,9 +39,10 @@ import { UserDetailModal } from "./user-detail-modal"
 
 type UserActionsProps = {
   user: UserListItem
+  canModify: boolean
 }
 
-export function UserActions({ user }: UserActionsProps) {
+export function UserActions({ user, canModify }: UserActionsProps) {
   const [isPending, startTransition] = useTransition()
   const [showDetail, setShowDetail] = useState(false)
   const [showBanDialog, setShowBanDialog] = useState(false)
@@ -85,32 +86,36 @@ export function UserActions({ user }: UserActionsProps) {
             <Eye className="mr-2 h-4 w-4" />
             Voir détails
           </DropdownMenuItem>
-          <DropdownMenuSeparator />
-          {isBanned ? (
-            <DropdownMenuItem
-              onClick={handleUnban}
-              disabled={isPending}
-              className="text-green-600"
-            >
-              <Unlock className="mr-2 h-4 w-4" />
-              Débannir
-            </DropdownMenuItem>
-          ) : (
-            <DropdownMenuItem
-              onClick={() => setShowBanDialog(true)}
-              className="text-amber-600"
-            >
-              <Ban className="mr-2 h-4 w-4" />
-              Bannir
-            </DropdownMenuItem>
+          {canModify && (
+            <>
+              <DropdownMenuSeparator />
+              {isBanned ? (
+                <DropdownMenuItem
+                  onClick={handleUnban}
+                  disabled={isPending}
+                  className="text-green-600"
+                >
+                  <Unlock className="mr-2 h-4 w-4" />
+                  Débannir
+                </DropdownMenuItem>
+              ) : (
+                <DropdownMenuItem
+                  onClick={() => setShowBanDialog(true)}
+                  className="text-amber-600"
+                >
+                  <Ban className="mr-2 h-4 w-4" />
+                  Bannir
+                </DropdownMenuItem>
+              )}
+              <DropdownMenuItem
+                onClick={() => setShowDeleteDialog(true)}
+                className="text-red-600"
+              >
+                <Trash2 className="mr-2 h-4 w-4" />
+                Supprimer
+              </DropdownMenuItem>
+            </>
           )}
-          <DropdownMenuItem
-            onClick={() => setShowDeleteDialog(true)}
-            className="text-red-600"
-          >
-            <Trash2 className="mr-2 h-4 w-4" />
-            Supprimer
-          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
 
