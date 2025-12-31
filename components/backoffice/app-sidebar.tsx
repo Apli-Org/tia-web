@@ -3,6 +3,7 @@
 import {
   ChevronUp,
   CreditCard,
+  Headphones,
   LayoutDashboard,
   LogOut,
   Settings,
@@ -81,6 +82,12 @@ const navItems: NavItem[] = [
     url: "/pricing/subscriptions",
     icon: CreditCard,
     action: "view_pricing",
+  },
+  {
+    title: "Support",
+    url: "/support",
+    icon: Headphones,
+    action: "view_tickets",
   },
 ];
 
@@ -189,9 +196,11 @@ export function AppSidebar({ admin }: AppSidebarProps) {
                 align="end"
                 sideOffset={4}
               >
-                <DropdownMenuItem>
-                  <Settings className="mr-2 size-4" />
-                  Paramètres
+                <DropdownMenuItem asChild>
+                  <Link href="/settings">
+                    <Settings className="mr-2 size-4" />
+                    Paramètres
+                  </Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem

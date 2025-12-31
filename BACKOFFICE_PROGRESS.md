@@ -1,8 +1,8 @@
 # TIA Back Office - Progression du Développement
 
 **Dernière mise à jour :** 31 décembre 2025
-**Version :** 1.5.0
-**Statut global :** Phase 8 terminée ✅
+**Version :** 1.6.0
+**Statut global :** Phase 9 terminée ✅
 
 ---
 
@@ -10,7 +10,7 @@
 
 Ce document suit la progression du développement du back office TIA selon les phases définies dans [SPEC_LANDING_BACKOFFICE.md](./SPEC_LANDING_BACKOFFICE.md).
 
-### Progression globale : 73% (8/11 phases)
+### Progression globale : 82% (9/11 phases)
 
 ```
 Phase 1:  ████████████████████ 100% ✅ Base de données
@@ -21,8 +21,8 @@ Phase 5:  ████████████████████ 100% ✅ 
 Phase 6:  ████████████████████ 100% ✅ Gestion des Prix (Abonnements & Microtransactions)
 Phase 7:  ████████████████████ 100% ✅ Gestion du Personnel (Rôles & Permissions)
 Phase 8:  ████████████████████ 100% ✅ Système de Modération
-Phase 9:  ░░░░░░░░░░░░░░░░░░░░   0% ⏳ Abonnements & Analytics
-Phase 10: ░░░░░░░░░░░░░░░░░░░░   0% ⏳ Support & Paramètres
+Phase 9:  ████████████████████ 100% ✅ Support & Paramètres
+Phase 10: ░░░░░░░░░░░░░░░░░░░░   0% ⏳ Analytics & Export
 Phase 11: ░░░░░░░░░░░░░░░░░░░░   0% ⏳ Tests & Optimisation
 ```
 
@@ -362,27 +362,27 @@ Phase 11: ░░░░░░░░░░░░░░░░░░░░   0% ⏳ 
 
 ### Fichiers créés
 
-| Fichier                                                            | Type             | Description                       |
-| ------------------------------------------------------------------ | ---------------- | --------------------------------- |
-| `actions/admin/moderation-types.ts`                                | Types            | Types partagés pour modération    |
-| `actions/admin/verifications.action.ts`                            | Server Action    | CRUD vérifications CIN            |
-| `actions/admin/reports.action.ts`                                  | Server Action    | CRUD signalements                 |
-| `app/(backoffice)/(app)/moderation/page.tsx`                       | Server Component | Dashboard modération              |
-| `app/(backoffice)/(app)/moderation/loading.tsx`                    | Loading UI       | Skeleton chargement               |
-| `app/(backoffice)/(app)/moderation/verifications/page.tsx`         | Server Component | Liste vérifications CIN           |
-| `app/(backoffice)/(app)/moderation/verifications/verifications-table.tsx` | Server Component | Tableau vérifications        |
-| `app/(backoffice)/(app)/moderation/verifications/verifications-filters.tsx` | Client Component | Filtres vérifications      |
-| `app/(backoffice)/(app)/moderation/verifications/verification-actions.tsx` | Client Component | Actions vérification         |
-| `app/(backoffice)/(app)/moderation/verifications/pagination.tsx`   | Client Component | Pagination                        |
-| `app/(backoffice)/(app)/moderation/photos/page.tsx`                | Server Component | Liste photos signalées            |
-| `app/(backoffice)/(app)/moderation/photos/photos-table.tsx`        | Server Component | Grille photos                     |
-| `app/(backoffice)/(app)/moderation/messages/page.tsx`              | Server Component | Liste messages signalés           |
-| `app/(backoffice)/(app)/moderation/messages/messages-table.tsx`    | Server Component | Tableau messages                  |
-| `app/(backoffice)/(app)/moderation/profiles/page.tsx`              | Server Component | Liste profils signalés            |
-| `app/(backoffice)/(app)/moderation/profiles/profiles-table.tsx`    | Server Component | Tableau profils                   |
-| `app/(backoffice)/(app)/moderation/_components/report-actions.tsx` | Client Component | Menu actions signalement          |
-| `app/(backoffice)/(app)/moderation/_components/reports-filters.tsx`| Client Component | Filtres partagés                  |
-| `app/(backoffice)/(app)/moderation/_components/reports-pagination.tsx` | Client Component | Pagination partagée           |
+| Fichier                                                                     | Type             | Description                    |
+| --------------------------------------------------------------------------- | ---------------- | ------------------------------ |
+| `actions/admin/moderation-types.ts`                                         | Types            | Types partagés pour modération |
+| `actions/admin/verifications.action.ts`                                     | Server Action    | CRUD vérifications CIN         |
+| `actions/admin/reports.action.ts`                                           | Server Action    | CRUD signalements              |
+| `app/(backoffice)/(app)/moderation/page.tsx`                                | Server Component | Dashboard modération           |
+| `app/(backoffice)/(app)/moderation/loading.tsx`                             | Loading UI       | Skeleton chargement            |
+| `app/(backoffice)/(app)/moderation/verifications/page.tsx`                  | Server Component | Liste vérifications CIN        |
+| `app/(backoffice)/(app)/moderation/verifications/verifications-table.tsx`   | Server Component | Tableau vérifications          |
+| `app/(backoffice)/(app)/moderation/verifications/verifications-filters.tsx` | Client Component | Filtres vérifications          |
+| `app/(backoffice)/(app)/moderation/verifications/verification-actions.tsx`  | Client Component | Actions vérification           |
+| `app/(backoffice)/(app)/moderation/verifications/pagination.tsx`            | Client Component | Pagination                     |
+| `app/(backoffice)/(app)/moderation/photos/page.tsx`                         | Server Component | Liste photos signalées         |
+| `app/(backoffice)/(app)/moderation/photos/photos-table.tsx`                 | Server Component | Grille photos                  |
+| `app/(backoffice)/(app)/moderation/messages/page.tsx`                       | Server Component | Liste messages signalés        |
+| `app/(backoffice)/(app)/moderation/messages/messages-table.tsx`             | Server Component | Tableau messages               |
+| `app/(backoffice)/(app)/moderation/profiles/page.tsx`                       | Server Component | Liste profils signalés         |
+| `app/(backoffice)/(app)/moderation/profiles/profiles-table.tsx`             | Server Component | Tableau profils                |
+| `app/(backoffice)/(app)/moderation/_components/report-actions.tsx`          | Client Component | Menu actions signalement       |
+| `app/(backoffice)/(app)/moderation/_components/reports-filters.tsx`         | Client Component | Filtres partagés               |
+| `app/(backoffice)/(app)/moderation/_components/reports-pagination.tsx`      | Client Component | Pagination partagée            |
 
 ### Fonctionnalités implémentées
 
@@ -410,24 +410,25 @@ Phase 11: ░░░░░░░░░░░░░░░░░░░░   0% ⏳ 
 
 ### Types de signalement
 
-| Type     | Raisons disponibles                                                |
-| -------- | ------------------------------------------------------------------ |
-| Profile  | Faux profil, Spam, Harcèlement, Contenu haineux, Autre             |
-| Photo    | Nudité, Violence, Mineur, Faux profil, Autre                       |
-| Message  | Harcèlement, Spam, Violence, Contenu haineux, Autre                |
+| Type    | Raisons disponibles                                    |
+| ------- | ------------------------------------------------------ |
+| Profile | Faux profil, Spam, Harcèlement, Contenu haineux, Autre |
+| Photo   | Nudité, Violence, Mineur, Faux profil, Autre           |
+| Message | Harcèlement, Spam, Violence, Contenu haineux, Autre    |
 
 ### Actions de modération
 
-| Action   | Description                                           |
-| -------- | ----------------------------------------------------- |
-| Approuver| Marquer comme faux signalement                        |
-| Supprimer| Supprimer le contenu signalé                          |
-| Avertir  | Envoyer un avertissement à l'utilisateur              |
-| Bannir   | Bannir l'utilisateur (durée configurable)             |
+| Action    | Description                               |
+| --------- | ----------------------------------------- |
+| Approuver | Marquer comme faux signalement            |
+| Supprimer | Supprimer le contenu signalé              |
+| Avertir   | Envoyer un avertissement à l'utilisateur  |
+| Bannir    | Bannir l'utilisateur (durée configurable) |
 
 ### Server Actions
 
 **Vérifications (`verifications.action.ts`) :**
+
 - `getVerificationStats()` - Stats par statut
 - `getVerificationRequests()` - Liste paginée avec filtres
 - `getVerificationById()` - Détail vérification
@@ -435,6 +436,7 @@ Phase 11: ░░░░░░░░░░░░░░░░░░░░   0% ⏳ 
 - `rejectVerification()` - Rejeter avec raison
 
 **Signalements (`reports.action.ts`) :**
+
 - `getModerationStats()` - Stats globales dashboard
 - `getReportedContent()` - Liste paginée tous types
 - `getReportsByType()` - Liste par type de contenu
@@ -444,19 +446,119 @@ Phase 11: ░░░░░░░░░░░░░░░░░░░░   0% ⏳ 
 
 ---
 
-## ⏳ Phase 9 : Support & Paramètres (À VENIR)
+## ✅ Phase 9 : Support & Paramètres (TERMINÉE)
+
+**Date de début :** 31 décembre 2025
+**Date de fin :** 31 décembre 2025
+**Statut :** ✅ Complétée
+
+### Fichiers créés
+
+| Fichier                                                                | Type             | Description                     |
+| ---------------------------------------------------------------------- | ---------------- | ------------------------------- |
+| `actions/admin/support/types.ts`                                       | Types            | Types tickets et messages       |
+| `actions/admin/support/stats.action.ts`                                | Server Action    | Statistiques support            |
+| `actions/admin/support/tickets.action.ts`                              | Server Action    | CRUD tickets                    |
+| `actions/admin/support/messages.action.ts`                             | Server Action    | Gestion messages                |
+| `actions/admin/support/index.ts`                                       | Barrel Export    | Export centralisé               |
+| `actions/admin/settings/types.ts`                                      | Types            | Types logs d'activité           |
+| `actions/admin/settings/logs.action.ts`                                | Server Action    | CRUD logs                       |
+| `actions/admin/settings/index.ts`                                      | Barrel Export    | Export centralisé               |
+| `app/(backoffice)/(app)/support/page.tsx`                              | Server Component | Dashboard support               |
+| `app/(backoffice)/(app)/support/loading.tsx`                           | Loading UI       | Skeleton chargement             |
+| `app/(backoffice)/(app)/support/tickets/page.tsx`                      | Server Component | Liste tickets                   |
+| `app/(backoffice)/(app)/support/tickets/tickets-table.tsx`             | Server Component | Tableau tickets                 |
+| `app/(backoffice)/(app)/support/tickets/tickets-filters.tsx`           | Client Component | Filtres tickets                 |
+| `app/(backoffice)/(app)/support/tickets/ticket-actions.tsx`            | Client Component | Menu actions                    |
+| `app/(backoffice)/(app)/support/tickets/pagination.tsx`                | Client Component | Pagination                      |
+| `app/(backoffice)/(app)/support/tickets/[id]/page.tsx`                 | Server Component | Détail ticket                   |
+| `app/(backoffice)/(app)/support/tickets/[id]/ticket-header.tsx`        | Client Component | En-tête avec actions            |
+| `app/(backoffice)/(app)/support/tickets/[id]/ticket-conversation.tsx`  | Client Component | Conversation chat               |
+| `app/(backoffice)/(app)/settings/page.tsx`                             | Server Component | Hub paramètres                  |
+| `app/(backoffice)/(app)/settings/loading.tsx`                          | Loading UI       | Skeleton chargement             |
+| `app/(backoffice)/(app)/settings/logs/page.tsx`                        | Server Component | Journal d'activité              |
+| `app/(backoffice)/(app)/settings/logs/logs-table.tsx`                  | Server Component | Tableau logs                    |
+| `app/(backoffice)/(app)/settings/logs/logs-filters.tsx`                | Client Component | Filtres logs                    |
+| `app/(backoffice)/(app)/settings/logs/pagination.tsx`                  | Client Component | Pagination                      |
+
+### Fonctionnalités implémentées
+
+- ✅ **Dashboard Support** (`/support`)
+  - Stats: Tickets en attente, en cours, résolus, non assignés
+  - Temps moyen de résolution
+  - Liens rapides vers les vues filtrées
+- ✅ **Liste des tickets** (`/support/tickets`)
+  - Tableau paginé avec filtres (statut, priorité, catégorie, assignation)
+  - Recherche par sujet ou email
+  - Actions rapides: Assigner, changer statut/priorité
+- ✅ **Détail ticket** (`/support/tickets/[id]`)
+  - Affichage conversation style chat
+  - Modification statut, priorité, assignation
+  - Envoi de réponses (admin ou système)
+- ✅ **Hub Paramètres** (`/settings`)
+  - Résumé activité (aujourd'hui, semaine, total)
+  - Liens vers les sections
+- ✅ **Journal d'activité** (`/settings/logs`)
+  - Liste paginée avec filtres (admin, action, dates)
+  - Recherche textuelle
+  - Labels lisibles pour les actions
+- ✅ **Navigation mise à jour**
+  - Support ajouté à la sidebar (action: `view_tickets`)
+  - Paramètres accessible via dropdown utilisateur
+
+### Architecture des actions (Split)
+
+Les actions sont organisées en modules séparés pour plus de clarté:
+
+```
+actions/admin/
+├── support/
+│   ├── types.ts          # Types partagés
+│   ├── stats.action.ts   # getSupportStats()
+│   ├── tickets.action.ts # CRUD tickets
+│   ├── messages.action.ts # CRUD messages
+│   └── index.ts          # Barrel export
+└── settings/
+    ├── types.ts          # Types + actionLabels
+    ├── logs.action.ts    # CRUD logs
+    └── index.ts          # Barrel export
+```
+
+### Server Actions - Support
+
+- `getSupportStats()` - Statistiques globales
+- `getTickets()` - Liste paginée avec filtres
+- `getTicketById()` - Détail d'un ticket
+- `updateTicketStatus()` - Changer statut
+- `updateTicketPriority()` - Changer priorité
+- `assignTicket()` - Assigner à un admin
+- `getTicketMessages()` - Messages d'un ticket
+- `addTicketMessage()` - Ajouter une réponse
+- `getAssignableAdmins()` - Admins disponibles
+
+### Server Actions - Settings
+
+- `getActivityStats()` - Stats globales logs
+- `getActivityLogs()` - Liste paginée avec filtres
+- `getAdminsForFilter()` - Admins pour filtre
+- `getDistinctActions()` - Actions uniques
+
+---
+
+## ⏳ Phase 10 : Analytics & Export (À VENIR)
 
 **Statut :** ⏳ Non commencée
 
 ### Tâches prévues
 
-- [ ] Système de tickets
-- [ ] Configuration app
-- [ ] Logs d'activité
+- [ ] Dashboard analytics avancé
+- [ ] Graphiques de tendances
+- [ ] Export de données (CSV, Excel)
+- [ ] Rapports automatisés
 
 ---
 
-## ⏳ Phase 10 : Tests & Optimisation (À VENIR)
+## ⏳ Phase 11 : Tests & Optimisation (À VENIR)
 
 **Statut :** ⏳ Non commencée
 
@@ -484,7 +586,17 @@ tia-web/
 │       ├── roles.action.ts      ✅ CRUD rôles + permissions
 │       ├── moderation-types.ts  ✅ Types partagés modération
 │       ├── verifications.action.ts ✅ CRUD vérifications CIN
-│       └── reports.action.ts    ✅ CRUD signalements
+│       ├── reports.action.ts    ✅ CRUD signalements
+│       ├── support/             ✅ Module support (split)
+│       │   ├── types.ts
+│       │   ├── stats.action.ts
+│       │   ├── tickets.action.ts
+│       │   ├── messages.action.ts
+│       │   └── index.ts
+│       └── settings/            ✅ Module paramètres (split)
+│           ├── types.ts
+│           ├── logs.action.ts
+│           └── index.ts
 ├── app/
 │   ├── (backoffice)/
 │   │   ├── layout.tsx           ✅ Layout principal
@@ -549,6 +661,27 @@ tia-web/
 │   │           └── profiles/
 │   │               ├── page.tsx             ✅ Liste profils
 │   │               └── profiles-table.tsx   ✅ Tableau profils
+│   │       ├── support/
+│   │       │   ├── page.tsx                 ✅ Dashboard support
+│   │       │   ├── loading.tsx              ✅ Skeleton
+│   │       │   └── tickets/
+│   │       │       ├── page.tsx             ✅ Liste tickets
+│   │       │       ├── tickets-table.tsx    ✅ Tableau tickets
+│   │       │       ├── tickets-filters.tsx  ✅ Filtres
+│   │       │       ├── ticket-actions.tsx   ✅ Menu actions
+│   │       │       ├── pagination.tsx       ✅ Pagination
+│   │       │       └── [id]/
+│   │       │           ├── page.tsx         ✅ Détail ticket
+│   │       │           ├── ticket-header.tsx ✅ En-tête
+│   │       │           └── ticket-conversation.tsx ✅ Chat
+│   │       └── settings/
+│   │           ├── page.tsx                 ✅ Hub paramètres
+│   │           ├── loading.tsx              ✅ Skeleton
+│   │           └── logs/
+│   │               ├── page.tsx             ✅ Journal activité
+│   │               ├── logs-table.tsx       ✅ Tableau logs
+│   │               ├── logs-filters.tsx     ✅ Filtres
+│   │               └── pagination.tsx       ✅ Pagination
 │   └── (landing)/               ✅ Déjà implémenté
 ├── components/
 │   ├── backoffice/
@@ -579,7 +712,7 @@ tia-web/
 **Super Admin :**
 
 - Email : `admin@tia.app`
-- Note : Le mot de passe doit être créé dans Supabase Auth Dashboard
+- Mdp : `tiaadmin`
 
 ### URLs
 
@@ -595,6 +728,11 @@ tia-web/
 - Photos signalées : `/moderation/photos` (protégé, action: view_reports)
 - Messages signalés : `/moderation/messages` (protégé, action: view_reports)
 - Profils signalés : `/moderation/profiles` (protégé, action: view_reports)
+- Support : `/support` (protégé, action: view_tickets)
+- Tickets : `/support/tickets` (protégé, action: view_tickets)
+- Détail ticket : `/support/tickets/[id]` (protégé, action: view_tickets)
+- Paramètres : `/settings` (protégé)
+- Journal d'activité : `/settings/logs` (protégé)
 
 ### Environnement
 
@@ -629,23 +767,23 @@ Aucune issue connue pour le moment.
 
 ---
 
-## 🚀 Prochaine Phase : Support & Paramètres
+## 🚀 Prochaine Phase : Analytics & Export
 
-**Priorité :** Haute
+**Priorité :** Moyenne
 
 ### Fonctionnalités à implémenter
 
-1. Système de tickets de support
-2. Configuration de l'application
-3. Logs d'activité admin
+1. Dashboard analytics avancé avec graphiques de tendances
+2. Export de données (CSV, Excel)
+3. Rapports automatisés et programmés
+4. Métriques de performance
 
 ### Pages à créer
 
-- `/support` - Dashboard tickets de support
-- `/support/tickets` - Liste des tickets
-- `/support/tickets/[id]` - Détail d'un ticket
-- `/settings` - Paramètres de l'application
-- `/settings/logs` - Logs d'activité
+- `/analytics` - Dashboard analytics
+- `/analytics/users` - Métriques utilisateurs
+- `/analytics/revenue` - Métriques revenus
+- `/analytics/reports` - Rapports personnalisés
 
 ---
 
