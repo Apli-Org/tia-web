@@ -2,7 +2,7 @@
 
 import { useRouter, useSearchParams } from "next/navigation"
 import { Search, X } from "lucide-react"
-import { useState, useTransition } from "react"
+import { useState, useTransition, useEffect } from "react"
 
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -13,16 +13,26 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { getAllRoles, type AdminRole } from "@/actions/admin/roles.action"
 
 export function StaffFilters() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [isPending, startTransition] = useTransition()
+  const [roles, setRoles] = useState<AdminRole[]>([])
 
   const [search, setSearch] = useState(searchParams.get("search") ?? "")
 
   const currentRole = searchParams.get("role") ?? ""
   const currentStatus = searchParams.get("status") ?? ""
+
+  useEffect(() => {
+    async function fetchRoles() {
+      const fetchedRoles = await getAllRoles()
+      setRoles(fetchedRoles)
+    }
+    fetchRoles()
+  }, [])
 
   const updateFilters = (key: string, value: string) => {
     const params = new URLSearchParams(searchParams.toString())
@@ -74,15 +84,16 @@ export function StaffFilters() {
         onValueChange={(value) => updateFilters("role", value)}
         disabled={isPending}
       >
-        <SelectTrigger className="w-[160px]">
+        <SelectTrigger className="w-[180px]">
           <SelectValue placeholder="Rôle" />
         </SelectTrigger>
         <SelectContent>
           <SelectItem value="all">Tous les rôles</SelectItem>
-          <SelectItem value="super_admin">Super Admin</SelectItem>
-          <SelectItem value="admin">Administrateur</SelectItem>
-          <SelectItem value="moderator">Modérateur</SelectItem>
-          <SelectItem value="support">Support</SelectItem>
+          {roles.map((role) => (
+            <SelectItem key={role.id} value={role.code}>
+              {role.name}
+            </SelectItem>
+          ))}
         </SelectContent>
       </Select>
 

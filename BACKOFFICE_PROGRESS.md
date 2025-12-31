@@ -1,8 +1,8 @@
 # TIA Back Office - Progression du Développement
 
-**Dernière mise à jour :** 30 décembre 2025
-**Version :** 1.3.0
-**Statut global :** Phase 6 terminée ✅
+**Dernière mise à jour :** 31 décembre 2025
+**Version :** 1.4.0
+**Statut global :** Phase 7 terminée ✅
 
 ---
 
@@ -10,7 +10,7 @@
 
 Ce document suit la progression du développement du back office TIA selon les phases définies dans [SPEC_LANDING_BACKOFFICE.md](./SPEC_LANDING_BACKOFFICE.md).
 
-### Progression globale : 55% (6/11 phases)
+### Progression globale : 64% (7/11 phases)
 
 ```
 Phase 1:  ████████████████████ 100% ✅ Base de données
@@ -19,7 +19,7 @@ Phase 3:  ████████████████████ 100% ✅ 
 Phase 4:  ████████████████████ 100% ✅ Dashboard avec données réelles
 Phase 5:  ████████████████████ 100% ✅ Gestion Utilisateurs
 Phase 6:  ████████████████████ 100% ✅ Gestion des Prix (Abonnements & Microtransactions)
-Phase 7:  ░░░░░░░░░░░░░░░░░░░░   0% ⏳ Gestion du Personnel (Modérateurs & Rôles)
+Phase 7:  ████████████████████ 100% ✅ Gestion du Personnel (Rôles & Permissions)
 Phase 8:  ░░░░░░░░░░░░░░░░░░░░   0% ⏳ Système de Modération
 Phase 9:  ░░░░░░░░░░░░░░░░░░░░   0% ⏳ Abonnements & Analytics
 Phase 10: ░░░░░░░░░░░░░░░░░░░░   0% ⏳ Support & Paramètres
@@ -270,28 +270,87 @@ Phase 11: ░░░░░░░░░░░░░░░░░░░░   0% ⏳ 
 
 ---
 
-## ⏳ Phase 7 : Gestion du Personnel (À VENIR)
+## ✅ Phase 7 : Gestion du Personnel et Permissions (TERMINÉE)
 
-**Statut :** ⏳ Non commencée
+**Date de début :** 31 décembre 2025
+**Date de fin :** 31 décembre 2025
+**Statut :** ✅ Complétée
 
-### Tâches prévues
+### Migrations créées
 
-- [ ] Liste des membres du personnel (modérateurs, admins)
-- [ ] Page détail d'un membre du personnel
-- [ ] Création de nouveaux comptes modérateurs/admins
-- [ ] Modification des informations du personnel
-- [ ] Gestion des rôles (super_admin, admin, moderator, support)
-- [ ] Activation/désactivation des comptes
-- [ ] Historique des actions par membre
+| Table                | Description                                  |
+| -------------------- | -------------------------------------------- |
+| `admin_roles`        | Rôles dynamiques avec code, nom, description |
+| `admin_actions`      | Actions/permissions disponibles              |
+| `admin_role_actions` | Table de jonction rôle-action                |
 
-### Rôles à gérer
+### Fichiers créés
 
-| Rôle          | Permissions                                |
-| ------------- | ------------------------------------------ |
-| `super_admin` | Accès total, gestion du personnel          |
-| `admin`       | Gestion utilisateurs, modération, tarifs   |
-| `moderator`   | Modération contenu, signalements           |
-| `support`     | Tickets support, consultation utilisateurs |
+| Fichier                                                     | Type             | Description                       |
+| ----------------------------------------------------------- | ---------------- | --------------------------------- |
+| `actions/admin/roles.action.ts`                             | Server Action    | CRUD rôles + vérification actions |
+| `app/(backoffice)/(app)/staff/page.tsx`                     | Server Component | Page liste personnel              |
+| `app/(backoffice)/(app)/staff/staff-table.tsx`              | Server Component | Tableau personnel                 |
+| `app/(backoffice)/(app)/staff/staff-filters.tsx`            | Client Component | Filtres dynamiques                |
+| `app/(backoffice)/(app)/staff/staff-actions.tsx`            | Client Component | Menu actions personnel            |
+| `app/(backoffice)/(app)/staff/create-staff-button.tsx`      | Client Component | Création nouveau membre           |
+| `app/(backoffice)/(app)/staff/edit-staff-modal.tsx`         | Client Component | Modification membre               |
+| `app/(backoffice)/(app)/staff/reset-password-modal.tsx`     | Client Component | Réinitialisation mot de passe     |
+| `app/(backoffice)/(app)/staff/roles/page.tsx`               | Server Component | Page gestion des rôles            |
+| `app/(backoffice)/(app)/staff/roles/roles-table.tsx`        | Server Component | Tableau des rôles                 |
+| `app/(backoffice)/(app)/staff/roles/role-row.tsx`           | Client Component | Ligne rôle interactive            |
+| `app/(backoffice)/(app)/staff/roles/create-role-button.tsx` | Client Component | Création nouveau rôle             |
+| `app/(backoffice)/(app)/staff/roles/edit-role-modal.tsx`    | Client Component | Édition rôle + permissions        |
+
+### Fonctionnalités implémentées
+
+- ✅ **Système de permissions par actions** (vs rôles statiques)
+- ✅ Liste du personnel avec stats (total, actifs, par rôle)
+- ✅ Filtres dynamiques par rôle et statut
+- ✅ Création de nouveaux membres du personnel
+- ✅ Modification des informations et rôle
+- ✅ Activation/désactivation des comptes
+- ✅ Réinitialisation de mot de passe
+- ✅ Page gestion des rôles (`/staff/roles`)
+- ✅ CRUD rôles (créer, modifier, supprimer)
+- ✅ Attribution des actions aux rôles (checkboxes par catégorie)
+- ✅ Protection des rôles système (super_admin non supprimable)
+- ✅ Sidebar basée sur actions (pas sur rôles)
+
+### Architecture des permissions
+
+**Modèle de données :**
+
+- `admin_roles` : Rôles dynamiques (super_admin est système)
+- `admin_actions` : 17 actions prédéfinies par catégorie
+- `admin_role_actions` : Table de jonction pour assigner actions aux rôles
+
+**Catégories d'actions :**
+| Catégorie | Actions |
+| ------------ | ---------------------------------------------------- |
+| Dashboard | `view_dashboard` |
+| Users | `view_users`, `manage_users`, `ban_users`, `delete_users` |
+| Staff | `view_staff`, `manage_staff`, `reset_passwords` |
+| Roles | `manage_roles` |
+| Moderation | `view_reports`, `moderate_content` |
+| Pricing | `view_pricing`, `manage_pricing` |
+| Support | `view_tickets`, `manage_tickets` |
+| Analytics | `view_analytics`, `export_data` |
+
+### Server Actions
+
+- `getAllRoles()` - Liste tous les rôles avec nombre de membres
+- `getRoleWithActions()` - Détail d'un rôle avec ses actions
+- `createRole()` - Créer un nouveau rôle avec actions
+- `updateRole()` - Modifier rôle et ses actions
+- `deleteRole()` - Supprimer rôle (si non-système et sans membres)
+- `checkAdminAction()` - Vérifier si un admin a une action
+- `getAdminActions()` - Liste des actions d'un admin
+- `getStaffMembers()` - Liste personnel avec filtres
+- `createStaffMember()` - Créer compte personnel
+- `updateStaffMember()` - Modifier membre
+- `toggleStaffStatus()` - Activer/désactiver
+- `resetStaffPassword()` - Réinitialiser mot de passe
 
 ---
 
@@ -305,23 +364,11 @@ Phase 11: ░░░░░░░░░░░░░░░░░░░░   0% ⏳ 
 - [ ] Page photos signalées
 - [ ] Page messages signalés
 - [ ] Système de notifications
+- [ ] profil signalé
 
 ---
 
-## ⏳ Phase 9 : Abonnements & Analytics (À VENIR)
-
-**Statut :** ⏳ Non commencée
-
-### Tâches prévues
-
-- [ ] Page transactions
-- [ ] Page abonnements actifs
-- [ ] Page remboursements
-- [ ] Dashboard analytics avancé
-
----
-
-## ⏳ Phase 10 : Support & Paramètres (À VENIR)
+## ⏳ Phase 9 : Support & Paramètres (À VENIR)
 
 **Statut :** ⏳ Non commencée
 
@@ -333,7 +380,7 @@ Phase 11: ░░░░░░░░░░░░░░░░░░░░   0% ⏳ 
 
 ---
 
-## ⏳ Phase 11 : Tests & Optimisation (À VENIR)
+## ⏳ Phase 10 : Tests & Optimisation (À VENIR)
 
 **Statut :** ⏳ Non commencée
 
@@ -356,7 +403,9 @@ tia-web/
 │       ├── auth.action.ts       ✅ Actions d'authentification
 │       ├── dashboard.action.ts  ✅ Requêtes dashboard Supabase
 │       ├── users.action.ts      ✅ CRUD utilisateurs
-│       └── pricing.action.ts    ✅ CRUD prix + historique
+│       ├── pricing.action.ts    ✅ CRUD prix + historique
+│       ├── staff.action.ts      ✅ CRUD personnel
+│       └── roles.action.ts      ✅ CRUD rôles + permissions
 ├── app/
 │   ├── (backoffice)/
 │   │   ├── layout.tsx           ✅ Layout principal
@@ -375,17 +424,30 @@ tia-web/
 │   │       │   ├── user-detail-modal.tsx ✅ Modal détail
 │   │       │   ├── pagination.tsx       ✅ Pagination avec spinner
 │   │       │   └── loading.tsx          ✅ Skeleton UI
-│   │       └── pricing/
-│   │           ├── page.tsx             ✅ Dashboard tarification
-│   │           ├── pricing-edit-modal.tsx ✅ Modal édition prix
-│   │           ├── subscriptions/
-│   │           │   ├── page.tsx         ✅ Liste abonnements
-│   │           │   └── subscription-grid.tsx ✅ Grille par tier
-│   │           ├── consumables/
-│   │           │   ├── page.tsx         ✅ Liste microtransactions
-│   │           │   └── consumable-grid.tsx ✅ Grille par type
-│   │           └── history/
-│   │               └── page.tsx         ✅ Historique modifications
+│   │       ├── pricing/
+│   │       │   ├── page.tsx             ✅ Dashboard tarification
+│   │       │   ├── pricing-edit-modal.tsx ✅ Modal édition prix
+│   │       │   ├── subscriptions/
+│   │       │   │   ├── page.tsx         ✅ Liste abonnements
+│   │       │   │   └── subscription-grid.tsx ✅ Grille par tier
+│   │       │   ├── consumables/
+│   │       │   │   ├── page.tsx         ✅ Liste microtransactions
+│   │       │   │   └── consumable-grid.tsx ✅ Grille par type
+│   │       │   └── history/
+│   │       │       └── page.tsx         ✅ Historique modifications
+│   │       └── staff/
+│   │           ├── page.tsx             ✅ Liste personnel
+│   │           ├── staff-table.tsx      ✅ Tableau personnel
+│   │           ├── staff-filters.tsx    ✅ Filtres dynamiques
+│   │           ├── staff-actions.tsx    ✅ Menu actions
+│   │           ├── create-staff-button.tsx ✅ Création membre
+│   │           ├── edit-staff-modal.tsx ✅ Modification membre
+│   │           └── roles/
+│   │               ├── page.tsx         ✅ Gestion rôles
+│   │               ├── roles-table.tsx  ✅ Tableau rôles
+│   │               ├── role-row.tsx     ✅ Ligne interactive
+│   │               ├── create-role-button.tsx ✅ Création rôle
+│   │               └── edit-role-modal.tsx ✅ Édition rôle
 │   └── (landing)/               ✅ Déjà implémenté
 ├── components/
 │   ├── backoffice/
@@ -424,6 +486,9 @@ tia-web/
 - Login Back Office : `/login`
 - Dashboard : `/dashboard` (protégé)
 - Utilisateurs : `/users` (protégé)
+- Personnel : `/staff` (protégé, action: manage_staff)
+- Rôles : `/staff/roles` (protégé, action: manage_roles)
+- Tarification : `/pricing` (protégé, action: view_pricing)
 
 ### Environnement
 
@@ -458,31 +523,26 @@ Aucune issue connue pour le moment.
 
 ---
 
-## 🚀 Prochaine Phase : Gestion du Personnel
+## 🚀 Prochaine Phase : Système de Modération
 
 **Priorité :** Haute
 
 ### Fonctionnalités à implémenter
 
-1. Liste des membres du personnel avec tableau paginé
-2. Modal/Page détail d'un membre (infos, rôle, historique)
-3. Formulaire création nouveau membre
-4. Modification des informations et rôle
-5. Activation/désactivation des comptes
-6. Filtres par rôle et statut
-7. Historique des actions par membre
+1. Page vérification CIN (demandes de vérification d'identité)
+2. Page photos signalées (revue et action sur contenus)
+3. Page messages signalés
+4. Workflow d'approbation/rejet avec raisons
+5. Système de notifications pour nouveaux signalements
+6. Page de profil signalé
 
-### Permissions par rôle
+### Pages à créer
 
-| Action             | super_admin | admin | moderator | support |
-| ------------------ | ----------- | ----- | --------- | ------- |
-| Voir personnel     | ✅          | ❌    | ❌        | ❌      |
-| Créer personnel    | ✅          | ❌    | ❌        | ❌      |
-| Modifier personnel | ✅          | ❌    | ❌        | ❌      |
-| Gérer utilisateurs | ✅          | ✅    | ❌        | 👁️      |
-| Modération         | ✅          | ✅    | ✅        | ❌      |
-| Tarification       | ✅          | ✅    | ❌        | ❌      |
-| Support tickets    | ✅          | ✅    | ❌        | ✅      |
+- `/moderation` - Dashboard modération avec stats
+- `/moderation/verifications` - Demandes de vérification CIN
+- `/moderation/photos` - Photos signalées
+- `/moderation/messages` - Messages signalés
+- `/moderation/profil` - Profil signalé
 
 ---
 

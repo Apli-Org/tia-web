@@ -1,31 +1,16 @@
-import { Shield, ShieldCheck, UserCog, Headphones } from "lucide-react"
+import { Shield } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
-import { getStaffMembers, type AdminRole } from "@/actions/admin/staff.action"
-import { roleLabels } from "@/lib/staff-utils"
+import { getStaffMembers } from "@/actions/admin/staff.action"
 import { StaffActions } from "./staff-actions"
 
 type StaffTableProps = {
-  role?: AdminRole
+  role?: string
   status?: "active" | "inactive"
   search?: string
   currentAdminId: string
-}
-
-const roleIcons: Record<AdminRole, React.ReactNode> = {
-  super_admin: <Shield className="h-4 w-4" />,
-  admin: <ShieldCheck className="h-4 w-4" />,
-  moderator: <UserCog className="h-4 w-4" />,
-  support: <Headphones className="h-4 w-4" />,
-}
-
-const roleColors: Record<AdminRole, string> = {
-  super_admin: "bg-red-100 text-red-700 border-red-200",
-  admin: "bg-purple-100 text-purple-700 border-purple-200",
-  moderator: "bg-blue-100 text-blue-700 border-blue-200",
-  support: "bg-green-100 text-green-700 border-green-200",
 }
 
 function formatDate(dateString: string | null) {
@@ -46,6 +31,16 @@ function getInitials(name: string | null, email: string): string {
       .slice(0, 2)
   }
   return email.slice(0, 2).toUpperCase()
+}
+
+function getRoleColor(roleCode: string): string {
+  const colors: Record<string, string> = {
+    super_admin: "bg-red-100 text-red-700 border-red-200",
+    admin: "bg-purple-100 text-purple-700 border-purple-200",
+    moderator: "bg-blue-100 text-blue-700 border-blue-200",
+    support: "bg-green-100 text-green-700 border-green-200",
+  }
+  return colors[roleCode] || "bg-gray-100 text-gray-700 border-gray-200"
 }
 
 export async function StaffTable({ role, status, search, currentAdminId }: StaffTableProps) {
@@ -107,9 +102,9 @@ export async function StaffTable({ role, status, search, currentAdminId }: Staff
                 </p>
               </div>
 
-              <Badge className={`${roleColors[member.role]} flex items-center gap-1`}>
-                {roleIcons[member.role]}
-                {roleLabels[member.role]}
+              <Badge className={`${getRoleColor(member.role)} flex items-center gap-1`}>
+                <Shield className="h-3 w-3" />
+                {member.role_name || member.role}
               </Badge>
 
               <StaffActions member={member} currentAdminId={currentAdminId} />

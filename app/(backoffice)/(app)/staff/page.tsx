@@ -1,6 +1,7 @@
 import { Suspense } from "react"
 import { redirect } from "next/navigation"
-import { Users, Shield, UserCog, Headphones } from "lucide-react"
+import Link from "next/link"
+import { Users, Shield, UserCog, Headphones, Key } from "lucide-react"
 
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import { Separator } from "@/components/ui/separator"
@@ -12,8 +13,10 @@ import {
 } from "@/components/ui/breadcrumb"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
+import { Button } from "@/components/ui/button"
 import { getStaffStats } from "@/actions/admin/staff.action"
 import { getCurrentAdmin } from "@/actions/admin/auth.action"
+import { checkAdminAction } from "@/actions/admin/roles.action"
 import { StaffTable } from "./staff-table"
 import { StaffFilters } from "./staff-filters"
 import { CreateStaffButton } from "./create-staff-button"
@@ -126,12 +129,17 @@ export default async function StaffPage({
 }: {
   searchParams: SearchParams
 }) {
-  // Check permission - only super_admin can access
   const admin = await getCurrentAdmin()
-  if (!admin || admin.role !== "super_admin") {
+  if (!admin) {
+    redirect("/login")
+  }
+
+  const canManageStaff = await checkAdminAction(admin.id, "manage_staff")
+  if (!canManageStaff) {
     redirect("/dashboard")
   }
 
+  const canManageRoles = await checkAdminAction(admin.id, "manage_roles")
   const params = await searchParams
 
   return (
@@ -157,7 +165,17 @@ export default async function StaffPage({
                 Gérez les modérateurs, administrateurs et équipe support
               </p>
             </div>
-            <CreateStaffButton adminId={admin.id} />
+            <div className="flex items-center gap-2">
+              {canManageRoles && (
+                <Button variant="outline" asChild>
+                  <Link href="/staff/roles">
+                    <Key className="mr-2 h-4 w-4" />
+                    Gérer les rôles
+                  </Link>
+                </Button>
+              )}
+              <CreateStaffButton adminId={admin.id} />
+            </div>
           </div>
 
           <Suspense fallback={<StatsSkeleton />}>
@@ -168,7 +186,7 @@ export default async function StaffPage({
 
           <Suspense fallback={<TableSkeleton />}>
             <StaffTable
-              role={params.role as "super_admin" | "admin" | "moderator" | "support" | undefined}
+              role={params.role}
               status={params.status as "active" | "inactive" | undefined}
               search={params.search}
               currentAdminId={admin.id}

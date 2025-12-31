@@ -2,47 +2,22 @@
 
 import { createAdminClient } from '@/lib/supabase/admin'
 import { revalidatePath } from 'next/cache'
-import type { AdminRole } from '@/lib/staff-utils'
+import { checkAdminAction } from './roles.action'
 
-// Re-export the type for convenience
-export type { AdminRole } from '@/lib/staff-utils'
-
-// Helper to verify admin has permission
-async function verifyPermission(adminId: string, requiredRole: AdminRole = 'super_admin'): Promise<{ allowed: boolean; error?: string }> {
-  const supabase = createAdminClient()
-
-  const { data: admin } = await supabase
-    .from('admin_users')
-    .select('role, is_active')
-    .eq('id', adminId)
-    .single()
-
-  if (!admin) {
-    return { allowed: false, error: 'Admin non trouvé' }
-  }
-
-  if (!admin.is_active) {
-    return { allowed: false, error: 'Compte désactivé' }
-  }
-
-  const roleHierarchy: Record<AdminRole, number> = {
-    super_admin: 4,
-    admin: 3,
-    moderator: 2,
-    support: 1,
-  }
-
-  if (roleHierarchy[admin.role as AdminRole] < roleHierarchy[requiredRole]) {
+async function verifyActionPermission(adminId: string, actionCode: string): Promise<{ allowed: boolean; error?: string }> {
+  const hasPermission = await checkAdminAction(adminId, actionCode)
+  if (!hasPermission) {
     return { allowed: false, error: 'Permission insuffisante' }
   }
-
   return { allowed: true }
 }
 
 export type StaffMember = {
   id: string
   email: string
-  role: AdminRole
+  role: string
+  role_id: string | null
+  role_name: string | null
   full_name: string | null
   is_active: boolean
   created_at: string
@@ -52,16 +27,12 @@ export type StaffMember = {
 export type StaffStats = {
   total: number
   active: number
-  byRole: {
-    super_admin: number
-    admin: number
-    moderator: number
-    support: number
-  }
+  byRole: Record<string, number>
 }
 
 export type StaffFilters = {
-  role?: AdminRole
+  role?: string       // Role code (e.g., 'super_admin')
+  role_id?: string    // Role UUID
   status?: 'active' | 'inactive'
   search?: string
 }
@@ -72,11 +43,15 @@ export async function getStaffMembers(filters?: StaffFilters): Promise<StaffMemb
 
   let query = supabase
     .from('admin_users')
-    .select('*')
-    .order('role')
+    .select(`
+      id, email, role, role_id, full_name, is_active, created_at, last_login,
+      admin_roles (name)
+    `)
     .order('full_name')
 
-  if (filters?.role) {
+  if (filters?.role_id) {
+    query = query.eq('role_id', filters.role_id)
+  } else if (filters?.role) {
     query = query.eq('role', filters.role)
   }
 
@@ -97,7 +72,17 @@ export async function getStaffMembers(filters?: StaffFilters): Promise<StaffMemb
     return []
   }
 
-  return data as StaffMember[]
+  return data.map((member) => ({
+    id: member.id,
+    email: member.email,
+    role: member.role,
+    role_id: member.role_id,
+    role_name: (member.admin_roles as any)?.name || member.role,
+    full_name: member.full_name,
+    is_active: member.is_active ?? true,
+    created_at: member.created_at ?? '',
+    last_login: member.last_login,
+  }))
 }
 
 // Get staff member by ID
@@ -106,7 +91,10 @@ export async function getStaffById(id: string): Promise<StaffMember | null> {
 
   const { data, error } = await supabase
     .from('admin_users')
-    .select('*')
+    .select(`
+      id, email, role, role_id, full_name, is_active, created_at, last_login,
+      admin_roles (name)
+    `)
     .eq('id', id)
     .single()
 
@@ -115,7 +103,17 @@ export async function getStaffById(id: string): Promise<StaffMember | null> {
     return null
   }
 
-  return data as StaffMember
+  return {
+    id: data.id,
+    email: data.email,
+    role: data.role,
+    role_id: data.role_id,
+    role_name: (data.admin_roles as any)?.name || data.role,
+    full_name: data.full_name,
+    is_active: data.is_active ?? true,
+    created_at: data.created_at ?? '',
+    last_login: data.last_login,
+  }
 }
 
 // Get staff statistics
@@ -124,28 +122,30 @@ export async function getStaffStats(): Promise<StaffStats> {
 
   const { data, error } = await supabase
     .from('admin_users')
-    .select('role, is_active')
+    .select(`
+      is_active,
+      role,
+      admin_roles (code, name)
+    `)
 
   if (error) {
     console.error('Error fetching staff stats:', error)
     return {
       total: 0,
       active: 0,
-      byRole: { super_admin: 0, admin: 0, moderator: 0, support: 0 },
+      byRole: {},
     }
   }
 
   const stats: StaffStats = {
     total: data.length,
     active: data.filter(s => s.is_active).length,
-    byRole: { super_admin: 0, admin: 0, moderator: 0, support: 0 },
+    byRole: {},
   }
 
   for (const member of data) {
-    const role = member.role as AdminRole
-    if (role in stats.byRole) {
-      stats.byRole[role]++
-    }
+    const roleCode = (member.admin_roles as any)?.code || member.role || 'unknown'
+    stats.byRole[roleCode] = (stats.byRole[roleCode] || 0) + 1
   }
 
   return stats
@@ -157,19 +157,27 @@ export async function createStaffMember(
     email: string
     password: string
     full_name: string
-    role: AdminRole
+    role_id: string
   },
   createdBy: string
 ): Promise<{ success: boolean; error?: string; id?: string }> {
-  // Verify permission - only super_admin can create staff
-  const permission = await verifyPermission(createdBy, 'super_admin')
+  const permission = await verifyActionPermission(createdBy, 'manage_staff')
   if (!permission.allowed) {
     return { success: false, error: permission.error }
   }
 
   const supabase = createAdminClient()
 
-  // Check if email already exists in admin_users
+  const { data: role } = await supabase
+    .from('admin_roles')
+    .select('code, name')
+    .eq('id', data.role_id)
+    .single()
+
+  if (!role) {
+    return { success: false, error: 'Rôle non trouvé' }
+  }
+
   const { data: existing } = await supabase
     .from('admin_users')
     .select('id')
@@ -180,7 +188,6 @@ export async function createStaffMember(
     return { success: false, error: 'Cet email est déjà utilisé' }
   }
 
-  // Create user in Supabase Auth
   const { data: authUser, error: authError } = await supabase.auth.admin.createUser({
     email: data.email,
     password: data.password,
@@ -191,32 +198,30 @@ export async function createStaffMember(
     return { success: false, error: authError.message }
   }
 
-  // Create entry in admin_users
   const { data: newMember, error: insertError } = await supabase
     .from('admin_users')
     .insert({
       id: authUser.user.id,
       email: data.email,
       full_name: data.full_name,
-      role: data.role,
+      role: role.code,
+      role_id: data.role_id,
       is_active: true,
     })
     .select('id')
     .single()
 
   if (insertError) {
-    // Rollback: delete auth user if admin_users insert fails
     await supabase.auth.admin.deleteUser(authUser.user.id)
     return { success: false, error: insertError.message }
   }
 
-  // Log the action
   await supabase.from('admin_activity_logs').insert({
     admin_id: createdBy,
     action: 'create_staff',
     target_type: 'admin_user',
     target_id: newMember.id,
-    details: { email: data.email, role: data.role },
+    details: { email: data.email, role: role.name },
   })
 
   revalidatePath('/staff')
@@ -228,22 +233,20 @@ export async function updateStaffMember(
   id: string,
   updates: {
     full_name?: string
-    role?: AdminRole
+    role_id?: string
   },
   updatedBy: string
 ): Promise<{ success: boolean; error?: string }> {
-  // Verify permission - only super_admin can update staff
-  const permission = await verifyPermission(updatedBy, 'super_admin')
+  const permission = await verifyActionPermission(updatedBy, 'manage_staff')
   if (!permission.allowed) {
     return { success: false, error: permission.error }
   }
 
   const supabase = createAdminClient()
 
-  // Get current data for logging
   const { data: current } = await supabase
     .from('admin_users')
-    .select('*')
+    .select('*, admin_roles(code, is_system)')
     .eq('id', id)
     .single()
 
@@ -251,29 +254,59 @@ export async function updateStaffMember(
     return { success: false, error: 'Membre non trouvé' }
   }
 
-  // Prevent demoting the last super_admin
-  if (current.role === 'super_admin' && updates.role && updates.role !== 'super_admin') {
-    const { count } = await supabase
-      .from('admin_users')
-      .select('id', { count: 'exact', head: true })
-      .eq('role', 'super_admin')
-      .eq('is_active', true)
+  const dbUpdates: Record<string, unknown> = {}
+  if (updates.full_name !== undefined) {
+    dbUpdates.full_name = updates.full_name
+  }
 
-    if (count && count <= 1) {
-      return { success: false, error: 'Impossible de rétrograder le dernier Super Admin' }
+  if (updates.role_id !== undefined) {
+    const isCurrentSuperAdmin = (current.admin_roles as any)?.code === 'super_admin'
+
+    if (isCurrentSuperAdmin) {
+      const { data: newRole } = await supabase
+        .from('admin_roles')
+        .select('code')
+        .eq('id', updates.role_id)
+        .single()
+
+      if (newRole?.code !== 'super_admin') {
+        const { count } = await supabase
+          .from('admin_users')
+          .select('id', { count: 'exact', head: true })
+          .eq('role', 'super_admin')
+          .eq('is_active', true)
+
+        if (count && count <= 1) {
+          return { success: false, error: 'Impossible de rétrograder le dernier Super Admin' }
+        }
+      }
     }
+
+    const { data: role } = await supabase
+      .from('admin_roles')
+      .select('code')
+      .eq('id', updates.role_id)
+      .single()
+
+    if (role) {
+      dbUpdates.role_id = updates.role_id
+      dbUpdates.role = role.code
+    }
+  }
+
+  if (Object.keys(dbUpdates).length === 0) {
+    return { success: true }
   }
 
   const { error } = await supabase
     .from('admin_users')
-    .update(updates)
+    .update(dbUpdates)
     .eq('id', id)
 
   if (error) {
     return { success: false, error: error.message }
   }
 
-  // Log the action
   await supabase.from('admin_activity_logs').insert({
     admin_id: updatedBy,
     action: 'update_staff',
@@ -292,15 +325,13 @@ export async function toggleStaffStatus(
   isActive: boolean,
   toggledBy: string
 ): Promise<{ success: boolean; error?: string }> {
-  // Verify permission - only super_admin can toggle staff status
-  const permission = await verifyPermission(toggledBy, 'super_admin')
+  const permission = await verifyActionPermission(toggledBy, 'manage_staff')
   if (!permission.allowed) {
     return { success: false, error: permission.error }
   }
 
   const supabase = createAdminClient()
 
-  // Get current data
   const { data: current } = await supabase
     .from('admin_users')
     .select('role, is_active')
@@ -311,7 +342,6 @@ export async function toggleStaffStatus(
     return { success: false, error: 'Membre non trouvé' }
   }
 
-  // Prevent deactivating the last active super_admin
   if (current.role === 'super_admin' && !isActive) {
     const { count } = await supabase
       .from('admin_users')
@@ -394,8 +424,7 @@ export async function resetStaffPassword(
   newPassword: string,
   resetBy: string
 ): Promise<{ success: boolean; error?: string }> {
-  // Verify permission - only super_admin can reset passwords
-  const permission = await verifyPermission(resetBy, 'super_admin')
+  const permission = await verifyActionPermission(resetBy, 'reset_passwords')
   if (!permission.allowed) {
     return { success: false, error: permission.error }
   }
@@ -410,7 +439,6 @@ export async function resetStaffPassword(
     return { success: false, error: error.message }
   }
 
-  // Log the action
   await supabase.from('admin_activity_logs').insert({
     admin_id: resetBy,
     action: 'reset_password',

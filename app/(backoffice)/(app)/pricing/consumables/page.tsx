@@ -1,4 +1,5 @@
 import { Suspense } from "react"
+import { redirect } from "next/navigation"
 import Link from "next/link"
 import { Sparkles, ChevronLeft } from "lucide-react"
 
@@ -15,6 +16,8 @@ import {
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
 import { getConsumablePricing } from "@/actions/admin/pricing.action"
+import { getCurrentAdmin } from "@/actions/admin/auth.action"
+import { checkAdminAction } from "@/actions/admin/roles.action"
 import { ConsumableGrid } from "./consumable-grid"
 
 async function ConsumablesContent() {
@@ -77,7 +80,17 @@ function ConsumablesSkeleton() {
   )
 }
 
-export default function ConsumablesPage() {
+export default async function ConsumablesPage() {
+  const admin = await getCurrentAdmin()
+  if (!admin) {
+    redirect("/login")
+  }
+
+  const canViewPricing = await checkAdminAction(admin.id, "view_pricing")
+  if (!canViewPricing) {
+    redirect("/dashboard")
+  }
+
   return (
     <>
       <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">

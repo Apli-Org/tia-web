@@ -1,20 +1,29 @@
-"use client"
+"use client";
 
-import Image from "next/image"
-import Link from "next/link"
-import { usePathname } from "next/navigation"
 import {
-  LayoutDashboard,
-  Users,
-  Shield,
-  CreditCard,
-  Tag,
-  Settings,
-  LogOut,
   ChevronUp,
+  CreditCard,
+  LayoutDashboard,
+  LogOut,
+  Settings,
+  Shield,
+  Tag,
+  Users,
   UsersRound,
-} from "lucide-react"
+} from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
+import { logoutAdmin, type CurrentAdmin } from "@/actions/admin/auth.action";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import {
   Sidebar,
   SidebarContent,
@@ -27,66 +36,57 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
-} from "@/components/ui/sidebar"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { Avatar, AvatarFallback } from "@/components/ui/avatar"
-import { logoutAdmin, type CurrentAdmin } from "@/actions/admin/auth.action"
+} from "@/components/ui/sidebar";
 
 type NavItem = {
-  title: string
-  url: string
-  icon: typeof LayoutDashboard
-  roles: string[] // roles allowed to see this item
-}
+  title: string;
+  url: string;
+  icon: typeof LayoutDashboard;
+  action: string;
+};
 
 const navItems: NavItem[] = [
   {
     title: "Dashboard",
     url: "/dashboard",
     icon: LayoutDashboard,
-    roles: ["super_admin", "admin", "moderator", "support"],
+    action: "view_dashboard",
   },
   {
     title: "Utilisateurs",
     url: "/users",
     icon: Users,
-    roles: ["super_admin", "admin", "support"], // support can view only
+    action: "view_users",
   },
   {
     title: "Personnel",
     url: "/staff",
     icon: UsersRound,
-    roles: ["super_admin"], // only super_admin
+    action: "view_staff",
   },
   {
     title: "Modération",
     url: "/moderation",
     icon: Shield,
-    roles: ["super_admin", "admin", "moderator"],
+    action: "view_reports",
   },
   {
     title: "Tarification",
     url: "/pricing",
     icon: Tag,
-    roles: ["super_admin", "admin"],
+    action: "view_pricing",
   },
   {
     title: "Abonnements",
-    url: "/subscriptions",
+    url: "/pricing/subscriptions",
     icon: CreditCard,
-    roles: ["super_admin", "admin"],
+    action: "view_pricing",
   },
-]
+];
 
 type AppSidebarProps = {
-  admin: CurrentAdmin | null
-}
+  admin: CurrentAdmin | null;
+};
 
 function getInitials(name: string | null, email: string): string {
   if (name) {
@@ -95,13 +95,13 @@ function getInitials(name: string | null, email: string): string {
       .map((n) => n[0])
       .join("")
       .toUpperCase()
-      .slice(0, 2)
+      .slice(0, 2);
   }
-  return email.slice(0, 2).toUpperCase()
+  return email.slice(0, 2).toUpperCase();
 }
 
 export function AppSidebar({ admin }: AppSidebarProps) {
-  const pathname = usePathname()
+  const pathname = usePathname();
 
   return (
     <Sidebar collapsible="icon">
@@ -119,7 +119,9 @@ export function AppSidebar({ admin }: AppSidebarProps) {
                 />
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-semibold">TIA</span>
-                  <span className="truncate text-xs text-muted-foreground">Back Office</span>
+                  <span className="truncate text-xs text-muted-foreground">
+                    Back Office
+                  </span>
                 </div>
               </Link>
             </SidebarMenuButton>
@@ -133,12 +135,15 @@ export function AppSidebar({ admin }: AppSidebarProps) {
           <SidebarGroupContent>
             <SidebarMenu>
               {navItems
-                .filter((item) => admin && item.roles.includes(admin.role))
+                .filter((item) => admin?.actions?.includes(item.action))
                 .map((item) => (
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton
                       asChild
-                      isActive={pathname === item.url || pathname.startsWith(item.url + "/")}
+                      isActive={
+                        pathname === item.url ||
+                        pathname.startsWith(item.url + "/")
+                      }
                       tooltip={item.title}
                     >
                       <Link href={item.url}>
@@ -204,5 +209,5 @@ export function AppSidebar({ admin }: AppSidebarProps) {
 
       <SidebarRail />
     </Sidebar>
-  )
+  );
 }

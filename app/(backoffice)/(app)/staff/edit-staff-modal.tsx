@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Loader2 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -23,9 +23,9 @@ import {
 } from "@/components/ui/select"
 import {
   type StaffMember,
-  type AdminRole,
   updateStaffMember,
 } from "@/actions/admin/staff.action"
+import { getAllRoles, type AdminRole } from "@/actions/admin/roles.action"
 
 type EditStaffModalProps = {
   member: StaffMember
@@ -38,9 +38,23 @@ type EditStaffModalProps = {
 export function EditStaffModal({ member, open, onClose, adminId, isSelf }: EditStaffModalProps) {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [roles, setRoles] = useState<AdminRole[]>([])
 
   const [fullName, setFullName] = useState(member.full_name ?? "")
-  const [role, setRole] = useState<AdminRole>(member.role)
+  const [roleId, setRoleId] = useState<string>(member.role_id ?? "")
+
+  useEffect(() => {
+    async function fetchRoles() {
+      const fetchedRoles = await getAllRoles()
+      setRoles(fetchedRoles)
+    }
+    fetchRoles()
+  }, [])
+
+  useEffect(() => {
+    setFullName(member.full_name ?? "")
+    setRoleId(member.role_id ?? "")
+  }, [member])
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -49,7 +63,7 @@ export function EditStaffModal({ member, open, onClose, adminId, isSelf }: EditS
 
     const result = await updateStaffMember(
       member.id,
-      { full_name: fullName, role },
+      { full_name: fullName, role_id: roleId },
       adminId
     )
 
@@ -91,18 +105,19 @@ export function EditStaffModal({ member, open, onClose, adminId, isSelf }: EditS
             <div className="grid gap-2">
               <Label htmlFor="role">Rôle</Label>
               <Select
-                value={role}
-                onValueChange={(v) => setRole(v as AdminRole)}
+                value={roleId}
+                onValueChange={setRoleId}
                 disabled={isSelf}
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Sélectionner un rôle" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="super_admin">Super Admin</SelectItem>
-                  <SelectItem value="admin">Administrateur</SelectItem>
-                  <SelectItem value="moderator">Modérateur</SelectItem>
-                  <SelectItem value="support">Support</SelectItem>
+                  {roles.map((role) => (
+                    <SelectItem key={role.id} value={role.id}>
+                      {role.name}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
               {isSelf && (

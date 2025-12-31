@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { UserPlus, Loader2 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -22,7 +22,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { createStaffMember, type AdminRole } from "@/actions/admin/staff.action"
+import { createStaffMember } from "@/actions/admin/staff.action"
+import { getAllRoles, type AdminRole } from "@/actions/admin/roles.action"
 
 type CreateStaffButtonProps = {
   adminId: string
@@ -32,17 +33,29 @@ export function CreateStaffButton({ adminId }: CreateStaffButtonProps) {
   const [open, setOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [roles, setRoles] = useState<AdminRole[]>([])
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [fullName, setFullName] = useState("")
-  const [role, setRole] = useState<AdminRole>("moderator")
+  const [roleId, setRoleId] = useState<string>("")
+
+  useEffect(() => {
+    async function fetchRoles() {
+      const fetchedRoles = await getAllRoles()
+      setRoles(fetchedRoles)
+      const defaultRole = fetchedRoles.find((r) => r.code === "moderator")
+      if (defaultRole) setRoleId(defaultRole.id)
+    }
+    fetchRoles()
+  }, [])
 
   const resetForm = () => {
     setEmail("")
     setPassword("")
     setFullName("")
-    setRole("moderator")
+    const defaultRole = roles.find((r) => r.code === "moderator")
+    setRoleId(defaultRole?.id ?? "")
     setError(null)
   }
 
@@ -51,8 +64,14 @@ export function CreateStaffButton({ adminId }: CreateStaffButtonProps) {
     setIsLoading(true)
     setError(null)
 
+    if (!roleId) {
+      setError("Veuillez sélectionner un rôle")
+      setIsLoading(false)
+      return
+    }
+
     const result = await createStaffMember(
-      { email, password, full_name: fullName, role },
+      { email, password, full_name: fullName, role_id: roleId },
       adminId
     )
 
@@ -131,15 +150,16 @@ export function CreateStaffButton({ adminId }: CreateStaffButtonProps) {
 
             <div className="grid gap-2">
               <Label htmlFor="role">Rôle</Label>
-              <Select value={role} onValueChange={(v) => setRole(v as AdminRole)}>
+              <Select value={roleId} onValueChange={setRoleId}>
                 <SelectTrigger>
                   <SelectValue placeholder="Sélectionner un rôle" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="super_admin">Super Admin</SelectItem>
-                  <SelectItem value="admin">Administrateur</SelectItem>
-                  <SelectItem value="moderator">Modérateur</SelectItem>
-                  <SelectItem value="support">Support</SelectItem>
+                  {roles.map((role) => (
+                    <SelectItem key={role.id} value={role.id}>
+                      {role.name}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>
@@ -154,7 +174,7 @@ export function CreateStaffButton({ adminId }: CreateStaffButtonProps) {
             >
               Annuler
             </Button>
-            <Button type="submit" disabled={isLoading}>
+            <Button type="submit" disabled={isLoading || !roleId}>
               {isLoading && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
               Créer
             </Button>

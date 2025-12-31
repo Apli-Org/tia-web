@@ -1,4 +1,5 @@
 import { Suspense } from "react"
+import { redirect } from "next/navigation"
 import Link from "next/link"
 import { History, ChevronLeft, ArrowUp, ArrowDown, Plus, Power, Trash2 } from "lucide-react"
 
@@ -17,6 +18,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Skeleton } from "@/components/ui/skeleton"
 import { getAllPricingHistory } from "@/actions/admin/pricing.action"
+import { getCurrentAdmin } from "@/actions/admin/auth.action"
+import { checkAdminAction } from "@/actions/admin/roles.action"
 import { formatPrice } from "@/lib/pricing-utils"
 
 type SearchParams = Promise<{
@@ -221,6 +224,16 @@ export default async function PricingHistoryPage({
 }: {
   searchParams: SearchParams
 }) {
+  const admin = await getCurrentAdmin()
+  if (!admin) {
+    redirect("/login")
+  }
+
+  const canViewPricing = await checkAdminAction(admin.id, "view_pricing")
+  if (!canViewPricing) {
+    redirect("/dashboard")
+  }
+
   const params = await searchParams
   const page = parseInt(params.page ?? "1")
 

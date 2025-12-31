@@ -1,4 +1,5 @@
 import { Suspense } from "react"
+import { redirect } from "next/navigation"
 import Link from "next/link"
 import {
   CreditCard,
@@ -21,6 +22,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Skeleton } from "@/components/ui/skeleton"
 import { Button } from "@/components/ui/button"
 import { getPricingStats } from "@/actions/admin/pricing.action"
+import { getCurrentAdmin } from "@/actions/admin/auth.action"
+import { checkAdminAction } from "@/actions/admin/roles.action"
 import { formatPrice } from "@/lib/pricing-utils"
 
 async function PricingStats() {
@@ -102,7 +105,17 @@ function StatsSkeleton() {
   )
 }
 
-export default function PricingPage() {
+export default async function PricingPage() {
+  const admin = await getCurrentAdmin()
+  if (!admin) {
+    redirect("/login")
+  }
+
+  const canViewPricing = await checkAdminAction(admin.id, "view_pricing")
+  if (!canViewPricing) {
+    redirect("/dashboard")
+  }
+
   return (
     <>
       <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">

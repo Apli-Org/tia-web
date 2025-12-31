@@ -104,6 +104,8 @@ export type CurrentAdmin = {
   email: string
   full_name: string | null
   role: string
+  role_id: string | null
+  actions: string[]
 }
 
 export async function getCurrentAdmin(): Promise<CurrentAdmin | null> {
@@ -118,10 +120,30 @@ export async function getCurrentAdmin(): Promise<CurrentAdmin | null> {
   const adminClient = createAdminClient()
   const { data: adminUser } = await adminClient
     .from('admin_users')
-    .select('id, email, full_name, role')
+    .select(`
+      id, email, full_name, role, role_id,
+      admin_roles (
+        admin_role_actions (
+          admin_actions (code)
+        )
+      )
+    `)
     .eq('id', user.id)
     .eq('is_active', true)
     .single()
 
-  return adminUser
+  if (!adminUser) return null
+
+  const actions = (adminUser.admin_roles as any)?.admin_role_actions?.map(
+    (ra: any) => ra.admin_actions?.code
+  ).filter(Boolean) || []
+
+  return {
+    id: adminUser.id,
+    email: adminUser.email,
+    full_name: adminUser.full_name,
+    role: adminUser.role,
+    role_id: adminUser.role_id,
+    actions,
+  }
 }

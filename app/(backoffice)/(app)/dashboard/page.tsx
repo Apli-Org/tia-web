@@ -1,4 +1,5 @@
 import { Suspense } from "react"
+import { redirect } from "next/navigation"
 import { Area, AreaChart, CartesianGrid, XAxis } from "recharts"
 import {
   Users,
@@ -18,6 +19,8 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
 } from "@/components/ui/breadcrumb"
+import { getCurrentAdmin } from "@/actions/admin/auth.action"
+import { checkAdminAction } from "@/actions/admin/roles.action"
 import {
   Card,
   CardContent,
@@ -264,7 +267,17 @@ function RecentActivitySkeleton() {
   )
 }
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
+  const admin = await getCurrentAdmin()
+  if (!admin) {
+    redirect("/login")
+  }
+
+  const canViewDashboard = await checkAdminAction(admin.id, "view_dashboard")
+  if (!canViewDashboard) {
+    redirect("/login")
+  }
+
   return (
     <>
       <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">

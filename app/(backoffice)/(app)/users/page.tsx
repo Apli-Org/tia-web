@@ -19,6 +19,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
 import { getUserStats } from "@/actions/admin/users.action"
 import { getCurrentAdmin } from "@/actions/admin/auth.action"
+import { checkAdminAction } from "@/actions/admin/roles.action"
 import { UsersTable } from "./users-table"
 import { UsersFilters } from "./users-filters"
 
@@ -124,14 +125,19 @@ export default async function UsersPage({
 }: {
   searchParams: SearchParams
 }) {
-  // Check permission - super_admin, admin, support can access
+  // Check permission
   const admin = await getCurrentAdmin()
-  if (!admin || !["super_admin", "admin", "support"].includes(admin.role)) {
+  if (!admin) {
+    redirect("/login")
+  }
+
+  const canViewUsers = await checkAdminAction(admin.id, "view_users")
+  if (!canViewUsers) {
     redirect("/dashboard")
   }
 
-  // Support can only view, not modify
-  const canModify = admin.role === "super_admin" || admin.role === "admin"
+  // Check if user can modify (manage_users action)
+  const canModify = await checkAdminAction(admin.id, "manage_users")
 
   const params = await searchParams
   const page = parseInt(params.page || "1")
