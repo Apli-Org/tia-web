@@ -12,7 +12,7 @@ export function Header() {
 
   const navItems = [
     { href: "#features", label: "Fonctionnalités" },
-    { href: "#pricing", label: "Tarifs" },
+    { href: "#testimonials", label: "Testimonials", isLink: false },
     { href: "#faq", label: "FAQ" },
   ];
 
@@ -20,8 +20,8 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur-md">
       <div className="container mx-auto max-w-7xl">
         <div className="flex h-16 items-center justify-between px-4">
-          <Link
-            href="/"
+          <a
+            href="#hero"
             className="flex items-center gap-2 hover:opacity-80 transition-opacity"
           >
             <Image
@@ -32,18 +32,28 @@ export function Header() {
               className="h-8 w-auto"
               priority
             />
-          </Link>
+          </a>
 
           <nav className="hidden md:flex items-center gap-8">
-            {navItems.map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
-              >
-                {item.label}
-              </a>
-            ))}
+            {navItems.map((item) =>
+              item.isLink ? (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
+                >
+                  {item.label}
+                </Link>
+              ) : (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
+                >
+                  {item.label}
+                </a>
+              )
+            )}
           </nav>
 
           <div className="flex items-center gap-4">
@@ -76,25 +86,27 @@ export function Header() {
               </SheetTrigger>
               <SheetContent side="right" className="w-[300px] sm:w-[400px]">
                 <nav className="flex flex-col gap-4 mt-8">
-                  {navItems.map((item) => (
-                    <a
-                      key={item.href}
-                      href={item.href}
-                      onClick={() => setOpen(false)}
-                      className="text-lg font-medium hover:text-primary transition-colors"
-                    >
-                      {item.label}
-                    </a>
-                  ))}
-                  <Button
-                    variant="ghost"
-                    asChild
-                    className="justify-start px-0"
-                  >
-                    <a href="/login" onClick={() => setOpen(false)}>
-                      Connexion
-                    </a>
-                  </Button>
+                  {navItems.map((item) =>
+                    item.isLink ? (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        onClick={() => setOpen(false)}
+                        className="text-lg font-medium hover:text-primary transition-colors"
+                      >
+                        {item.label}
+                      </Link>
+                    ) : (
+                      <a
+                        key={item.href}
+                        href={item.href}
+                        onClick={() => setOpen(false)}
+                        className="text-lg font-medium hover:text-primary transition-colors"
+                      >
+                        {item.label}
+                      </a>
+                    )
+                  )}
                   <Button asChild className="mt-4">
                     <a href="#download" onClick={() => setOpen(false)}>
                       Télécharger

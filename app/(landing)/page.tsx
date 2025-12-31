@@ -1,13 +1,13 @@
 "use client";
 
+import { CTA } from "@/components/landing/cta";
+import { FAQ } from "@/components/landing/faq";
+import { Features } from "@/components/landing/features";
+import { Footer } from "@/components/landing/footer";
 import { Header } from "@/components/landing/header";
 import { Hero } from "@/components/landing/hero";
-import { Features } from "@/components/landing/features";
-import { AppPreview } from "@/components/landing/app-preview";
-import { Pricing } from "@/components/landing/pricing";
-import { FAQ } from "@/components/landing/faq";
-import { CTA } from "@/components/landing/cta";
-import { Footer } from "@/components/landing/footer";
+import { HowItWorks } from "@/components/landing/how-it-works";
+import { Testimonials } from "@/components/landing/testimonials";
 
 export default function LandingPage() {
   return (
@@ -16,8 +16,8 @@ export default function LandingPage() {
       <main>
         <Hero />
         <Features />
-        <AppPreview />
-        <Pricing />
+        <HowItWorks />
+        <Testimonials />
         <FAQ />
         <CTA />
       </main>
