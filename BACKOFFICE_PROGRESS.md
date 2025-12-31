@@ -1,8 +1,8 @@
 # TIA Back Office - Progression du Développement
 
 **Dernière mise à jour :** 31 décembre 2025
-**Version :** 1.4.0
-**Statut global :** Phase 7 terminée ✅
+**Version :** 1.5.0
+**Statut global :** Phase 8 terminée ✅
 
 ---
 
@@ -10,7 +10,7 @@
 
 Ce document suit la progression du développement du back office TIA selon les phases définies dans [SPEC_LANDING_BACKOFFICE.md](./SPEC_LANDING_BACKOFFICE.md).
 
-### Progression globale : 64% (7/11 phases)
+### Progression globale : 73% (8/11 phases)
 
 ```
 Phase 1:  ████████████████████ 100% ✅ Base de données
@@ -20,7 +20,7 @@ Phase 4:  ████████████████████ 100% ✅ 
 Phase 5:  ████████████████████ 100% ✅ Gestion Utilisateurs
 Phase 6:  ████████████████████ 100% ✅ Gestion des Prix (Abonnements & Microtransactions)
 Phase 7:  ████████████████████ 100% ✅ Gestion du Personnel (Rôles & Permissions)
-Phase 8:  ░░░░░░░░░░░░░░░░░░░░   0% ⏳ Système de Modération
+Phase 8:  ████████████████████ 100% ✅ Système de Modération
 Phase 9:  ░░░░░░░░░░░░░░░░░░░░   0% ⏳ Abonnements & Analytics
 Phase 10: ░░░░░░░░░░░░░░░░░░░░   0% ⏳ Support & Paramètres
 Phase 11: ░░░░░░░░░░░░░░░░░░░░   0% ⏳ Tests & Optimisation
@@ -354,17 +354,93 @@ Phase 11: ░░░░░░░░░░░░░░░░░░░░   0% ⏳ 
 
 ---
 
-## ⏳ Phase 8 : Système de Modération (À VENIR)
+## ✅ Phase 8 : Système de Modération (TERMINÉE)
 
-**Statut :** ⏳ Non commencée
+**Date de début :** 31 décembre 2025
+**Date de fin :** 31 décembre 2025
+**Statut :** ✅ Complétée
 
-### Tâches prévues
+### Fichiers créés
 
-- [ ] Page vérification CIN
-- [ ] Page photos signalées
-- [ ] Page messages signalés
-- [ ] Système de notifications
-- [ ] profil signalé
+| Fichier                                                            | Type             | Description                       |
+| ------------------------------------------------------------------ | ---------------- | --------------------------------- |
+| `actions/admin/moderation-types.ts`                                | Types            | Types partagés pour modération    |
+| `actions/admin/verifications.action.ts`                            | Server Action    | CRUD vérifications CIN            |
+| `actions/admin/reports.action.ts`                                  | Server Action    | CRUD signalements                 |
+| `app/(backoffice)/(app)/moderation/page.tsx`                       | Server Component | Dashboard modération              |
+| `app/(backoffice)/(app)/moderation/loading.tsx`                    | Loading UI       | Skeleton chargement               |
+| `app/(backoffice)/(app)/moderation/verifications/page.tsx`         | Server Component | Liste vérifications CIN           |
+| `app/(backoffice)/(app)/moderation/verifications/verifications-table.tsx` | Server Component | Tableau vérifications        |
+| `app/(backoffice)/(app)/moderation/verifications/verifications-filters.tsx` | Client Component | Filtres vérifications      |
+| `app/(backoffice)/(app)/moderation/verifications/verification-actions.tsx` | Client Component | Actions vérification         |
+| `app/(backoffice)/(app)/moderation/verifications/pagination.tsx`   | Client Component | Pagination                        |
+| `app/(backoffice)/(app)/moderation/photos/page.tsx`                | Server Component | Liste photos signalées            |
+| `app/(backoffice)/(app)/moderation/photos/photos-table.tsx`        | Server Component | Grille photos                     |
+| `app/(backoffice)/(app)/moderation/messages/page.tsx`              | Server Component | Liste messages signalés           |
+| `app/(backoffice)/(app)/moderation/messages/messages-table.tsx`    | Server Component | Tableau messages                  |
+| `app/(backoffice)/(app)/moderation/profiles/page.tsx`              | Server Component | Liste profils signalés            |
+| `app/(backoffice)/(app)/moderation/profiles/profiles-table.tsx`    | Server Component | Tableau profils                   |
+| `app/(backoffice)/(app)/moderation/_components/report-actions.tsx` | Client Component | Menu actions signalement          |
+| `app/(backoffice)/(app)/moderation/_components/reports-filters.tsx`| Client Component | Filtres partagés                  |
+| `app/(backoffice)/(app)/moderation/_components/reports-pagination.tsx` | Client Component | Pagination partagée           |
+
+### Fonctionnalités implémentées
+
+- ✅ **Dashboard modération** avec stats globales (vérifications, photos, messages, profils)
+- ✅ **Vérifications CIN** (`/moderation/verifications`)
+  - Liste paginée avec filtres par statut
+  - Stats: En attente, Approuvées, Rejetées, Total
+  - Actions: Approuver, Rejeter avec raison
+  - Aperçu photo CIN sans floutage
+- ✅ **Photos signalées** (`/moderation/photos`)
+  - Grille de photos avec aperçu direct
+  - Stats: En attente, Supprimées, Avertis, Bannis
+  - Filtres par statut et raison
+  - Actions: Approuver, Supprimer, Avertir, Bannir
+- ✅ **Messages signalés** (`/moderation/messages`)
+  - Liste avec contenu du message
+  - Stats: En attente, Supprimés, Avertis, Bannis
+  - Filtres par statut et raison
+- ✅ **Profils signalés** (`/moderation/profiles`)
+  - Liste avec avatar et infos utilisateur
+  - Stats: En attente, Supprimés, Avertis, Bannis
+  - Filtres par statut et raison
+- ✅ **Bouton retour** sur chaque sous-page
+- ✅ **Permissions** vérifiées (`view_reports`, `moderate_content`)
+
+### Types de signalement
+
+| Type     | Raisons disponibles                                                |
+| -------- | ------------------------------------------------------------------ |
+| Profile  | Faux profil, Spam, Harcèlement, Contenu haineux, Autre             |
+| Photo    | Nudité, Violence, Mineur, Faux profil, Autre                       |
+| Message  | Harcèlement, Spam, Violence, Contenu haineux, Autre                |
+
+### Actions de modération
+
+| Action   | Description                                           |
+| -------- | ----------------------------------------------------- |
+| Approuver| Marquer comme faux signalement                        |
+| Supprimer| Supprimer le contenu signalé                          |
+| Avertir  | Envoyer un avertissement à l'utilisateur              |
+| Bannir   | Bannir l'utilisateur (durée configurable)             |
+
+### Server Actions
+
+**Vérifications (`verifications.action.ts`) :**
+- `getVerificationStats()` - Stats par statut
+- `getVerificationRequests()` - Liste paginée avec filtres
+- `getVerificationById()` - Détail vérification
+- `approveVerification()` - Approuver + marquer user vérifié
+- `rejectVerification()` - Rejeter avec raison
+
+**Signalements (`reports.action.ts`) :**
+- `getModerationStats()` - Stats globales dashboard
+- `getReportedContent()` - Liste paginée tous types
+- `getReportsByType()` - Liste par type de contenu
+- `getReportById()` - Détail signalement
+- `reviewReport()` - Traiter avec action
+- `getReportStats()` - Stats par type
 
 ---
 
@@ -405,7 +481,10 @@ tia-web/
 │       ├── users.action.ts      ✅ CRUD utilisateurs
 │       ├── pricing.action.ts    ✅ CRUD prix + historique
 │       ├── staff.action.ts      ✅ CRUD personnel
-│       └── roles.action.ts      ✅ CRUD rôles + permissions
+│       ├── roles.action.ts      ✅ CRUD rôles + permissions
+│       ├── moderation-types.ts  ✅ Types partagés modération
+│       ├── verifications.action.ts ✅ CRUD vérifications CIN
+│       └── reports.action.ts    ✅ CRUD signalements
 ├── app/
 │   ├── (backoffice)/
 │   │   ├── layout.tsx           ✅ Layout principal
@@ -435,7 +514,7 @@ tia-web/
 │   │       │   │   └── consumable-grid.tsx ✅ Grille par type
 │   │       │   └── history/
 │   │       │       └── page.tsx         ✅ Historique modifications
-│   │       └── staff/
+│   │       ├── staff/
 │   │           ├── page.tsx             ✅ Liste personnel
 │   │           ├── staff-table.tsx      ✅ Tableau personnel
 │   │           ├── staff-filters.tsx    ✅ Filtres dynamiques
@@ -448,6 +527,28 @@ tia-web/
 │   │               ├── role-row.tsx     ✅ Ligne interactive
 │   │               ├── create-role-button.tsx ✅ Création rôle
 │   │               └── edit-role-modal.tsx ✅ Édition rôle
+│   │       └── moderation/
+│   │           ├── page.tsx             ✅ Dashboard modération
+│   │           ├── loading.tsx          ✅ Skeleton chargement
+│   │           ├── _components/
+│   │           │   ├── report-actions.tsx   ✅ Menu actions
+│   │           │   ├── reports-filters.tsx  ✅ Filtres partagés
+│   │           │   └── reports-pagination.tsx ✅ Pagination
+│   │           ├── verifications/
+│   │           │   ├── page.tsx             ✅ Liste vérifications
+│   │           │   ├── verifications-table.tsx ✅ Tableau
+│   │           │   ├── verifications-filters.tsx ✅ Filtres
+│   │           │   ├── verification-actions.tsx ✅ Actions
+│   │           │   └── pagination.tsx       ✅ Pagination
+│   │           ├── photos/
+│   │           │   ├── page.tsx             ✅ Liste photos
+│   │           │   └── photos-table.tsx     ✅ Grille photos
+│   │           ├── messages/
+│   │           │   ├── page.tsx             ✅ Liste messages
+│   │           │   └── messages-table.tsx   ✅ Tableau messages
+│   │           └── profiles/
+│   │               ├── page.tsx             ✅ Liste profils
+│   │               └── profiles-table.tsx   ✅ Tableau profils
 │   └── (landing)/               ✅ Déjà implémenté
 ├── components/
 │   ├── backoffice/
@@ -489,6 +590,11 @@ tia-web/
 - Personnel : `/staff` (protégé, action: manage_staff)
 - Rôles : `/staff/roles` (protégé, action: manage_roles)
 - Tarification : `/pricing` (protégé, action: view_pricing)
+- Modération : `/moderation` (protégé, action: view_reports)
+- Vérifications CIN : `/moderation/verifications` (protégé, action: view_reports)
+- Photos signalées : `/moderation/photos` (protégé, action: view_reports)
+- Messages signalés : `/moderation/messages` (protégé, action: view_reports)
+- Profils signalés : `/moderation/profiles` (protégé, action: view_reports)
 
 ### Environnement
 
@@ -523,28 +629,25 @@ Aucune issue connue pour le moment.
 
 ---
 
-## 🚀 Prochaine Phase : Système de Modération
+## 🚀 Prochaine Phase : Support & Paramètres
 
 **Priorité :** Haute
 
 ### Fonctionnalités à implémenter
 
-1. Page vérification CIN (demandes de vérification d'identité)
-2. Page photos signalées (revue et action sur contenus)
-3. Page messages signalés
-4. Workflow d'approbation/rejet avec raisons
-5. Système de notifications pour nouveaux signalements
-6. Page de profil signalé
+1. Système de tickets de support
+2. Configuration de l'application
+3. Logs d'activité admin
 
 ### Pages à créer
 
-- `/moderation` - Dashboard modération avec stats
-- `/moderation/verifications` - Demandes de vérification CIN
-- `/moderation/photos` - Photos signalées
-- `/moderation/messages` - Messages signalés
-- `/moderation/profil` - Profil signalé
+- `/support` - Dashboard tickets de support
+- `/support/tickets` - Liste des tickets
+- `/support/tickets/[id]` - Détail d'un ticket
+- `/settings` - Paramètres de l'application
+- `/settings/logs` - Logs d'activité
 
 ---
 
 **Projet :** TIA - Back Office
-**Framework :** Next.js 16 + Supabase + shadcn/ui + Framer Motion
+**Framework :** Next.js 16 + Supabase + shadcn/ui + Framer Motion + date-fns
