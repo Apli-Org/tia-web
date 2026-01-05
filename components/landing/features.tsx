@@ -36,9 +36,7 @@ export function Features() {
       <div className="container mx-auto max-w-7xl px-4 relative z-10">
         <div
           className={`text-center mb-16 md:mb-20 transition-all duration-700 ${
-            isVisible
-              ? "opacity-100 translate-y-0"
-              : "opacity-0 translate-y-8"
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
           <span className="inline-block px-4 py-2 bg-primary/10 text-primary rounded-full mb-4 font-semibold text-sm">
@@ -56,7 +54,7 @@ export function Features() {
           {features.map((feature, index) => (
             <div
               key={index}
-              className={`group relative bg-gradient-to-br from-white to-gray-50/50 rounded-3xl border border-gray-200/80 backdrop-blur-sm transition-all duration-500 ease-out hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 hover:border-primary/30 ${
+              className={`group relative bg-linear-to-br from-white to-gray-50/50 rounded-3xl border border-gray-200/80 backdrop-blur-sm transition-all duration-500 ease-out hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 hover:border-primary/30 ${
                 isVisible
                   ? "opacity-100 translate-y-0"
                   : "opacity-0 translate-y-12"
@@ -84,7 +82,7 @@ export function Features() {
                 </div>
               </div>
 
-              <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-primary/0 via-primary/0 to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+              <div className="absolute inset-0 rounded-3xl bg-linear-to-br from-primary/0 via-primary/0 to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
             </div>
           ))}
         </div>
