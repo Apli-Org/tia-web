@@ -104,27 +104,11 @@ export function Footer() {
               </li>
               <li>
                 <a
-                  href="#pricing"
-                  className="text-gray-400 hover:text-white transition-colors"
-                >
-                  Tarifs
-                </a>
-              </li>
-              <li>
-                <a
                   href="#faq"
                   className="text-gray-400 hover:text-white transition-colors"
                 >
                   FAQ
                 </a>
-              </li>
-              <li>
-                <Link
-                  href="/login"
-                  className="text-gray-400 hover:text-white transition-colors"
-                >
-                  Connexion
-                </Link>
               </li>
             </ul>
           </div>
