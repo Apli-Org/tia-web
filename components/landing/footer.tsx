@@ -52,9 +52,7 @@ export function Footer() {
   ];
 
   const legalLinks = [
-    { name: "CGU", href: "/cgu" },
     { name: "Politique de confidentialité", href: "/privacy" },
-    { name: "Mentions légales", href: "/legal" },
   ];
 
   return (
@@ -140,7 +138,7 @@ export function Footer() {
                   href="mailto:support@tia.app"
                   className="text-gray-400 hover:text-white transition-colors"
                 >
-                  support@tia.app
+                  ali@tia-meet.com
                 </a>
               </li>
               {legalLinks.map((link) => (
@@ -160,7 +158,7 @@ export function Footer() {
         {/* Bottom bar */}
         <div className="mt-12 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-gray-400 text-sm">
-            © 2025 TIA. Tous droits réservés.
+            © {new Date().getFullYear()} TIA. Tous droits réservés.
           </p>
           <p className="text-gray-500 text-sm">
             Made with ❤️ By Bubble Go Madagascar

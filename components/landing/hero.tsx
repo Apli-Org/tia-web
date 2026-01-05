@@ -56,34 +56,38 @@ export function Hero() {
         ></div>
       </div>
 
-      <div className="container mx-auto max-w-7xl px-4 flex flex-col lg:flex-row items-center py-20 gap-12 lg:gap-16">
+      <div className="container mx-auto max-w-7xl px-4 flex flex-col lg:flex-row items-center py-12 sm:py-16 md:py-20 gap-8 sm:gap-12 lg:gap-16">
         {/* Left side - Text content */}
-        <div className="lg:w-1/2 mb-10 lg:mb-0 z-10 space-y-8">
+        <div className="lg:w-1/2 mb-8 sm:mb-10 lg:mb-0 z-10 space-y-6 sm:space-y-8 text-center lg:text-left">
           {/* Badge */}
-          <div
-            className={`inline-flex items-center gap-2 px-5 py-2.5 bg-linear-to-r from-primary/15 to-pink-100 rounded-full transition-all duration-1000 ${
-              isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-            }`}
-          >
-            <Sparkles className="w-4 h-4 text-primary animate-pulse" />
-            <span className="font-semibold text-sm text-primary">
-              La révolution des rencontres
-            </span>
+          <div className="flex justify-center lg:justify-start">
+            <div
+              className={`inline-flex items-center gap-2 px-5 py-2.5 bg-linear-to-r from-primary/15 to-pink-100 rounded-full transition-all duration-1000 ${
+                isLoaded
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-0 translate-y-4"
+              }`}
+            >
+              <Sparkles className="w-4 h-4 text-primary animate-pulse" />
+              <span className="font-semibold text-sm text-primary">
+                La révolution des rencontres
+              </span>
+            </div>
           </div>
 
           {/* Main headline */}
           <h1
-            className={`text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] transition-all duration-1000 delay-100 ${
+            className={`text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight sm:leading-[1.1] transition-all duration-1000 delay-100 ${
               isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
           >
-            Rencontrez l&apos;âme sœur{" "}
+            Swipez vers{" "}
             <span className="relative inline-block">
               <span className="bg-linear-to-r from-primary via-pink-500 to-purple-500 bg-clip-text text-transparent animate-gradient">
-                grâce à l&apos;IA
+                votre avenir à deux
               </span>
               <svg
-                className="absolute -bottom-2 left-0 w-full"
+                className="absolute -bottom-1 sm:-bottom-2 left-0 w-full"
                 viewBox="0 0 200 12"
                 fill="none"
               >
@@ -107,7 +111,7 @@ export function Hero() {
 
           {/* Subheadline */}
           <p
-            className={`text-xl md:text-2xl text-gray-600 leading-relaxed max-w-xl transition-all duration-1000 delay-200 ${
+            className={`text-base sm:text-sm md:text-xl lg:text-2xl text-gray-600 leading-relaxed max-w-xl mx-auto lg:mx-0 transition-all duration-1000 delay-200 ${
               isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
           >
@@ -119,23 +123,23 @@ export function Hero() {
 
           {/* CTA buttons */}
           <div
-            className={`flex flex-col sm:flex-row gap-4 transition-all duration-1000 delay-300 ${
+            className={`flex flex-col sm:flex-row gap-4 transition-all duration-1000 delay-300 justify-center lg:justify-start ${
               isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
             role="group"
             aria-label="Actions principales"
           >
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
               <div className="relative group cursor-pointer transform hover:scale-105 transition-transform duration-300">
                 <Image
                   src="/images/logo/google-play-badge.png"
                   alt="Bientôt sur Google Play"
                   width={160}
                   height={60}
-                  className="h-14 object-contain grayscale opacity-70 transition-all duration-300"
+                  className="h-12 sm:h-14 object-contain grayscale opacity-70 transition-all duration-300"
                 />
                 <div className="absolute inset-0 flex items-center justify-center bg-black/40 rounded-lg">
-                  <span className="text-white text-sm font-medium">
+                  <span className="text-white text-xs sm:text-sm font-medium">
                     Bientôt disponible
                   </span>
                 </div>
@@ -151,10 +155,10 @@ export function Hero() {
                   alt="Bientôt sur App Store"
                   width={160}
                   height={60}
-                  className="h-14 object-contain grayscale opacity-70 transition-all duration-300"
+                  className="h-12 sm:h-14 object-contain grayscale opacity-70 transition-all duration-300"
                 />
                 <div className="absolute inset-0 flex items-center justify-center bg-black/40 rounded-lg">
-                  <span className="text-white text-sm font-medium">
+                  <span className="text-white text-xs sm:text-sm font-medium">
                     Bientôt disponible
                   </span>
                 </div>
@@ -168,45 +172,55 @@ export function Hero() {
 
           {/* Social proof */}
           <div
-            className={`transition-all duration-1000 delay-500 ${
+            className={`transition-all duration-1000 delay-500 flex justify-center lg:justify-start ${
               isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
           >
             <div
-              className="inline-flex items-center bg-white/80 backdrop-blur-sm p-4 rounded-2xl shadow-lg border border-gray-100"
+              className="inline-flex items-center bg-white/80 backdrop-blur-sm p-3 sm:p-4 rounded-2xl shadow-lg border border-gray-100"
               role="complementary"
               aria-label="Intérêt de la communauté"
             >
-              <div className="flex items-center gap-6">
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
-                    <Users className="h-4 w-4 text-blue-600" />
+              <div className="flex items-center gap-3 sm:gap-6">
+                <div className="flex items-center gap-1.5 sm:gap-2">
+                  <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-blue-100 flex items-center justify-center">
+                    <Users className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-blue-600" />
                   </div>
                   <div>
-                    <span className="text-lg font-bold text-gray-900">2k+</span>
-                    <p className="text-xs text-gray-500">Intéressés</p>
+                    <span className="text-base sm:text-lg font-bold text-gray-900">
+                      2k+
+                    </span>
+                    <p className="text-[10px] sm:text-xs text-gray-500">
+                      Intéressés
+                    </p>
                   </div>
                 </div>
                 <div className="w-px h-8 bg-gray-200"></div>
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center">
-                    <HeartIcon className="h-4 w-4 text-red-500" />
+                <div className="flex items-center gap-1.5 sm:gap-2">
+                  <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-red-100 flex items-center justify-center">
+                    <HeartIcon className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-red-500" />
                   </div>
                   <div>
-                    <span className="text-lg font-bold text-gray-900">IA</span>
-                    <p className="text-xs text-gray-500">Powered</p>
+                    <span className="text-base sm:text-lg font-bold text-gray-900">
+                      IA
+                    </span>
+                    <p className="text-[10px] sm:text-xs text-gray-500">
+                      Powered
+                    </p>
                   </div>
                 </div>
                 <div className="w-px h-8 bg-gray-200"></div>
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center">
-                    <Clock className="h-4 w-4 text-amber-600" />
+                <div className="flex items-center gap-1.5 sm:gap-2">
+                  <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-amber-100 flex items-center justify-center">
+                    <Clock className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-amber-600" />
                   </div>
                   <div>
-                    <span className="text-lg font-bold text-gray-900">
+                    <span className="text-base sm:text-lg font-bold text-gray-900">
                       2026
                     </span>
-                    <p className="text-xs text-gray-500">Lancement</p>
+                    <p className="text-[10px] sm:text-xs text-gray-500">
+                      Lancement
+                    </p>
                   </div>
                 </div>
               </div>

@@ -1,39 +1,25 @@
 "use client";
 
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
-import { Heart, MessageSquare, Shield, Sparkles } from "lucide-react";
 
 export function Features() {
   const { ref: sectionRef, isVisible } = useScrollAnimation({ threshold: 0.2 });
 
   const features = [
     {
-      icon: Heart,
       title: "Swipe Immersif",
       description:
         "Une expérience de découverte inspirée de TikTok, fluide et addictive",
-      linear: "from-pink-500 to-rose-500",
     },
     {
-      icon: Sparkles,
       title: "Matchs Intelligents",
       description:
         "Notre IA analyse vos préférences pour des suggestions toujours plus pertinentes",
-      linear: "from-purple-500 to-pink-500",
     },
     {
-      icon: MessageSquare,
-      title: "Messages IA",
-      description:
-        "L'IA vous suggère des messages d'ouverture uniques basés sur les profils",
-      linear: "from-blue-500 to-purple-500",
-    },
-    {
-      icon: Shield,
       title: "Sécurité Garantie",
       description:
         "Vérification d'identité et modération pour une expérience sûre",
-      linear: "from-green-500 to-emerald-500",
     },
   ];
 
@@ -66,11 +52,11 @@ export function Features() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {features.map((feature, index) => (
             <div
               key={index}
-              className={`group relative bg-white rounded-2xl p-6 md:p-8 border border-gray-100 ${
+              className={`group relative bg-gradient-to-br from-white to-gray-50/50 rounded-3xl border border-gray-200/80 backdrop-blur-sm transition-all duration-500 ease-out hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 hover:border-primary/30 ${
                 isVisible
                   ? "opacity-100 translate-y-0"
                   : "opacity-0 translate-y-12"
@@ -82,25 +68,23 @@ export function Features() {
                 transitionDelay: isVisible ? `${index * 100 + 200}ms` : "0ms",
               }}
             >
-              {/* Card with smooth hover */}
-              <div className="relative z-10 h-full transition-transform duration-300 ease-out group-hover:-translate-y-1">
-                <div
-                  className={`w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-linear-to-br ${feature.linear} flex items-center justify-center mb-5 md:mb-6 shadow-lg transition-transform duration-300 ease-out group-hover:scale-110`}
-                >
-                  <feature.icon className="w-7 h-7 md:w-8 md:h-8 text-white" />
+              <div className="relative p-10 md:p-12">
+                <div className="absolute top-10 right-10 text-7xl font-bold text-gray-100 group-hover:text-primary/10 transition-colors duration-500">
+                  {index + 1}
                 </div>
-                <h3 className="text-xl md:text-2xl font-bold mb-3 md:mb-4 text-gray-900">
-                  {feature.title}
-                </h3>
-                <p className="text-gray-600 leading-relaxed text-sm md:text-base">
-                  {feature.description}
-                </p>
+
+                <div className="relative z-10">
+                  <h3 className="text-2xl md:text-3xl font-bold mb-5 text-gray-900 group-hover:text-primary transition-colors duration-300">
+                    {feature.title}
+                  </h3>
+
+                  <p className="text-gray-600 leading-relaxed text-base md:text-lg">
+                    {feature.description}
+                  </p>
+                </div>
               </div>
 
-              {/* Background effects */}
-              <div className="absolute inset-0 rounded-2xl shadow-lg transition-shadow duration-300 ease-out group-hover:shadow-2xl pointer-events-none"></div>
-              <div className="absolute inset-0 rounded-2xl border border-transparent transition-colors duration-300 ease-out group-hover:border-primary/30 pointer-events-none"></div>
-              <div className="absolute inset-0 bg-linear-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-out rounded-2xl pointer-events-none"></div>
+              <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-primary/0 via-primary/0 to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
             </div>
           ))}
         </div>

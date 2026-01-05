@@ -15,10 +15,12 @@ import {
 } from "@/components/ui/breadcrumb"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
-import { getSubscriptionPricing } from "@/actions/admin/pricing.action"
+import { getSubscriptionPricing, getTestMode } from "@/actions/admin/pricing.action"
 import { getCurrentAdmin } from "@/actions/admin/auth.action"
 import { checkAdminAction } from "@/actions/admin/roles.action"
 import { SubscriptionGrid } from "./subscription-grid"
+import { TestModeToggle } from "./test-mode-toggle"
+import { TestModeBanner } from "./test-mode-banner"
 
 async function SubscriptionsContent() {
   const pricing = await getSubscriptionPricing()
@@ -88,6 +90,8 @@ export default async function SubscriptionsPage() {
     redirect("/dashboard")
   }
 
+  const testModeEnabled = await getTestMode()
+
   return (
     <>
       <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
@@ -126,7 +130,10 @@ export default async function SubscriptionsPage() {
                 Configurez les prix des abonnements Silver, Gold et Elite
               </p>
             </div>
+            <TestModeToggle initialEnabled={testModeEnabled} adminId={admin.id} />
           </div>
+
+          <TestModeBanner enabled={testModeEnabled} />
 
           <Suspense fallback={<SubscriptionsSkeleton />}>
             <SubscriptionsContent />

@@ -5,10 +5,13 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 export function Header() {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+  const isLandingPage = pathname === "/";
 
   const navItems = [
     { href: "#features", label: "Fonctionnalités" },
@@ -20,8 +23,8 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur-md">
       <div className="container mx-auto max-w-7xl">
         <div className="flex h-16 items-center justify-between px-4">
-          <a
-            href="#hero"
+          <Link
+            href={isLandingPage ? "#hero" : "/"}
             className="flex items-center gap-2 hover:opacity-80 transition-opacity"
           >
             <Image
@@ -32,14 +35,14 @@ export function Header() {
               className="h-8 w-auto"
               priority
             />
-          </a>
+          </Link>
 
           <nav className="hidden md:flex items-center gap-8">
             {navItems.map((item) =>
               item.isLink ? (
                 <Link
                   key={item.href}
-                  href={item.href}
+                  href={isLandingPage ? item.href : `/${item.href}`}
                   className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
                 >
                   {item.label}
@@ -47,7 +50,7 @@ export function Header() {
               ) : (
                 <a
                   key={item.href}
-                  href={item.href}
+                  href={isLandingPage ? item.href : `/${item.href}`}
                   className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
                 >
                   {item.label}
@@ -90,7 +93,7 @@ export function Header() {
                     item.isLink ? (
                       <Link
                         key={item.href}
-                        href={item.href}
+                        href={isLandingPage ? item.href : `/${item.href}`}
                         onClick={() => setOpen(false)}
                         className="text-lg font-medium hover:text-primary transition-colors"
                       >
@@ -99,7 +102,7 @@ export function Header() {
                     ) : (
                       <a
                         key={item.href}
-                        href={item.href}
+                        href={isLandingPage ? item.href : `/${item.href}`}
                         onClick={() => setOpen(false)}
                         className="text-lg font-medium hover:text-primary transition-colors"
                       >

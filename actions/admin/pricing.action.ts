@@ -378,3 +378,48 @@ export async function getPricingStats(): Promise<PricingStats> {
   }
 }
 
+export async function getTestMode(): Promise<boolean> {
+  const supabase = createAdminClient()
+
+  const { data, error } = await supabase
+    .from('app_config')
+    .select('value')
+    .eq('key', 'test_mode_enabled')
+    .single()
+
+  if (error) {
+    console.error('Error fetching test mode:', error)
+    return false
+  }
+
+  return data?.value ?? false
+}
+
+export async function toggleTestMode(
+  enabled: boolean,
+  adminId: string
+): Promise<{ success: boolean; error?: string }> {
+  const supabase = createAdminClient()
+
+  const { error } = await supabase
+    .from('app_config')
+    .update({ value: enabled })
+    .eq('key', 'test_mode_enabled')
+
+  if (error) {
+    return { success: false, error: error.message }
+  }
+
+  await supabase.from('admin_activity_logs').insert({
+    admin_id: adminId,
+    action: enabled ? 'test_mode_enabled' : 'test_mode_disabled',
+    details: { test_mode_enabled: enabled },
+  })
+
+  revalidatePath('/pricing')
+  revalidatePath('/pricing/subscriptions')
+  revalidatePath('/pricing/consumables')
+
+  return { success: true }
+}
+
