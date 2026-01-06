@@ -1,5 +1,6 @@
 import { Suspense } from "react"
 import { redirect } from "next/navigation"
+import Link from "next/link"
 import { Area, AreaChart, CartesianGrid, XAxis } from "recharts"
 import {
   Users,
@@ -300,9 +301,11 @@ export default async function DashboardPage() {
               Vue d&apos;ensemble de la plateforme TIA
             </p>
           </div>
-          <Button>
-            <ArrowUpRight className="mr-2 h-4 w-4" />
-            Voir les rapports
+          <Button asChild>
+            <Link href="https://bo.vanilla-pay.net/pro/login" target="_blank" rel="noopener noreferrer">
+              <ArrowUpRight className="mr-2 h-4 w-4" />
+              Voir les rapports
+            </Link>
           </Button>
         </div>
 
