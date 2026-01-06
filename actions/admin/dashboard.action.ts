@@ -217,7 +217,7 @@ export async function getRecentActivity(): Promise<RecentActivity[]> {
 
   const activities: RecentActivity[] = []
 
-  const [reportsResult, subscriptionsResult, usersResult] = await Promise.all([
+  const [reportsResult, subscriptionsResult, usersResult, microPurchasesResult] = await Promise.all([
     supabase
       .from("reported_content")
       .select(`
@@ -236,6 +236,7 @@ export async function getRecentActivity(): Promise<RecentActivity[]> {
         tier,
         status,
         created_at,
+        amount_paid,
         user:user_id(firstName)
       `)
       .eq("status", "active")
@@ -244,6 +245,22 @@ export async function getRecentActivity(): Promise<RecentActivity[]> {
     supabase
       .from("users")
       .select("id, firstName, created_at")
+      .order("created_at", { ascending: false })
+      .limit(3),
+    supabase
+      .from("micro_purchases")
+      .select(`
+        id,
+        product_type,
+        product_name,
+        quantity,
+        price_paid,
+        status,
+        created_at,
+        user:user_id(firstName)
+      `)
+      .eq("status", "completed")
+      .neq("product_type", "subscription")
       .order("created_at", { ascending: false })
       .limit(3),
   ])
@@ -266,14 +283,31 @@ export async function getRecentActivity(): Promise<RecentActivity[]> {
   if (subscriptionsResult.data) {
     for (const sub of subscriptionsResult.data) {
       const user = sub.user as unknown as { firstName: string } | null
+      const tierName = translateTier(sub.tier)
       activities.push({
         id: sub.id,
         user: user?.firstName ?? "Utilisateur",
-        action: "Abonnement Premium",
-        target: `Plan ${sub.tier?.toUpperCase()}`,
+        action: `Abonnement ${tierName}`,
+        target: `${sub.amount_paid?.toLocaleString("fr-FR")} MGA`,
         status: "Complété",
         time: getRelativeTime(sub.created_at),
         created_at: sub.created_at ?? "",
+      })
+    }
+  }
+
+  if (microPurchasesResult.data) {
+    for (const purchase of microPurchasesResult.data) {
+      const user = purchase.user as unknown as { firstName: string } | null
+      const consumableName = translateConsumable(purchase.product_type)
+      activities.push({
+        id: purchase.id,
+        user: user?.firstName ?? "Utilisateur",
+        action: `Achat ${consumableName}`,
+        target: `${purchase.quantity}x - ${purchase.price_paid?.toLocaleString("fr-FR")} MGA`,
+        status: "Complété",
+        time: getRelativeTime(purchase.created_at),
+        created_at: purchase.created_at ?? "",
       })
     }
   }
@@ -321,6 +355,24 @@ function translateStatus(status: string): string {
     user_banned: "Banni",
   }
   return translations[status] ?? status
+}
+
+function translateTier(tier: string | null): string {
+  const translations: Record<string, string> = {
+    silver: "Silver",
+    gold: "Gold",
+    elite: "Elite",
+  }
+  return translations[tier ?? ""] ?? "Premium"
+}
+
+function translateConsumable(type: string): string {
+  const translations: Record<string, string> = {
+    tia_heart: "TIA Hearts",
+    boost: "Boost",
+    reveal_like: "Révélation",
+  }
+  return translations[type] ?? type
 }
 
 function getRelativeTime(dateString: string): string {
