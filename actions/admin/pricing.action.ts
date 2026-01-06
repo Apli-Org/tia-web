@@ -346,22 +346,24 @@ export async function getPricingStats(): Promise<PricingStats> {
       .from('subscriptions')
       .select('id', { count: 'exact', head: true })
       .gte('created_at', startOfMonth.toISOString()),
-    // Real micro purchases count (this month)
+    // Real micro purchases count (this month) - excluding subscriptions
     supabase
       .from('micro_purchases')
       .select('id', { count: 'exact', head: true })
       .eq('status', 'completed')
+      .neq('product_type', 'subscription')
       .gte('created_at', startOfMonth.toISOString()),
     // Subscription revenue (this month)
     supabase
       .from('subscriptions')
       .select('amount_paid')
       .gte('created_at', startOfMonth.toISOString()),
-    // Micro purchases revenue (this month)
+    // Micro purchases revenue (this month) - excluding subscriptions
     supabase
       .from('micro_purchases')
       .select('price_paid')
       .eq('status', 'completed')
+      .neq('product_type', 'subscription')
       .gte('created_at', startOfMonth.toISOString()),
   ])
 

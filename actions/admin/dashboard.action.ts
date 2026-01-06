@@ -93,17 +93,19 @@ export async function getDashboardKPIs(): Promise<DashboardKPIs> {
       .select("amount_paid")
       .gte("created_at", startOfLastMonth.toISOString())
       .lt("created_at", startOfMonth.toISOString()),
-    // Micro-purchases revenue this month
+    // Micro-purchases revenue this month (excluding subscriptions)
     supabase
       .from("micro_purchases")
       .select("price_paid")
       .eq("status", "completed")
+      .neq("product_type", "subscription")
       .gte("created_at", startOfMonth.toISOString()),
-    // Micro-purchases revenue last month
+    // Micro-purchases revenue last month (excluding subscriptions)
     supabase
       .from("micro_purchases")
       .select("price_paid")
       .eq("status", "completed")
+      .neq("product_type", "subscription")
       .gte("created_at", startOfLastMonth.toISOString())
       .lt("created_at", startOfMonth.toISOString()),
     supabase
