@@ -53,6 +53,7 @@ export function Footer() {
 
   const legalLinks = [
     { name: "Politique de confidentialité", href: "/privacy" },
+    { name: "Protection des enfants", href: "/child-safety" },
   ];
 
   return (
