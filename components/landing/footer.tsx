@@ -145,9 +145,7 @@ export function Footer() {
           <p className="text-gray-400 text-sm">
             © {new Date().getFullYear()} TIA. Tous droits réservés.
           </p>
-          <p className="text-gray-500 text-sm">
-            Made with ❤️ By Bubble Go Madagascar
-          </p>
+          <p className="text-gray-500 text-sm">Made with ❤️ by APli</p>
         </div>
       </div>
     </footer>

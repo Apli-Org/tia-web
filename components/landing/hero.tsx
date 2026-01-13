@@ -244,7 +244,7 @@ export function Hero() {
             <div className="relative z-80 hover:scale-[1.02] transition-transform duration-500 animate-float">
               <MobileFrame>
                 <Image
-                  src="/images/screen/6.jpg"
+                  src="/images/screen/8.jpg"
                   alt="TIA App - Interface de découverte"
                   width={300}
                   height={600}

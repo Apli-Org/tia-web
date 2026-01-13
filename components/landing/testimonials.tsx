@@ -9,32 +9,25 @@ export function Testimonials() {
 
   const testimonials = [
     {
-      name: "Sophie",
+      name: "Nirina",
       age: 28,
-      avatar: "/images/avatars/avatar-1.jpg",
+      avatar: "/images/avatars/1.jpg",
       quote:
         "J'attends TIA avec impatience ! L'idée d'avoir une IA qui m'aide à briser la glace, c'est exactement ce qu'il me fallait.",
     },
     {
-      name: "Marc",
+      name: "Judi",
       age: 32,
-      avatar: "/images/avatars/avatar-2.jpg",
+      avatar: "/images/avatars/3.jpg",
       quote:
         "Les apps de rencontres actuelles me lassent. TIA a l'air vraiment différent avec son approche IA. Vivement le lancement !",
     },
     {
-      name: "Léa",
+      name: "Hanta",
       age: 25,
-      avatar: "/images/avatars/avatar-3.jpg",
+      avatar: "/images/avatars/2.jpg",
       quote:
         "Le concept de swipe façon TikTok + IA pour les matchs ? Je suis inscrite sur la liste d'attente depuis le premier jour !",
-    },
-    {
-      name: "Thomas",
-      age: 30,
-      avatar: "/images/avatars/avatar-4.jpg",
-      quote:
-        "Enfin une app qui promet de comprendre vraiment ce qu'on recherche. J'ai hâte de tester TIA en 2026 !",
     },
   ];
 
@@ -65,7 +58,7 @@ export function Testimonials() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {testimonials.map((testimonial, index) => (
             <div
               key={index}

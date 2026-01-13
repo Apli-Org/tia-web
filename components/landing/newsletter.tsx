@@ -1,0 +1,139 @@
+"use client";
+
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { useScrollAnimation } from "@/hooks/use-scroll-animation";
+import { Check, Mail, Sparkles } from "lucide-react";
+import { subscribeToNewsletter } from "@/actions/newsletter.action";
+
+export function Newsletter() {
+  const { ref: sectionRef, isVisible } = useScrollAnimation({ threshold: 0.2 });
+  const [email, setEmail] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [error, setError] = useState("");
+
+  const isEmailValid = email.includes("@");
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!isEmailValid || !email) return;
+
+    setIsSubmitting(true);
+    setError("");
+
+    try {
+      const result = await subscribeToNewsletter(email);
+
+      if (!result.success) {
+        setError(result.error || "Une erreur est survenue. Veuillez réessayer.");
+        return;
+      }
+
+      setIsSuccess(true);
+      setEmail("");
+
+      setTimeout(() => {
+        setIsSuccess(false);
+      }, 5000);
+    } catch (err) {
+      setError("Une erreur est survenue. Veuillez réessayer.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <section
+      id="newsletter"
+      ref={sectionRef}
+      className="py-24 md:py-32 bg-linear-to-br from-primary/5 via-white to-pink-50 relative overflow-hidden"
+    >
+      {/* Decorative elements */}
+      <div className="absolute top-0 right-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl"></div>
+      <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-pink-200/30 rounded-full blur-3xl"></div>
+
+      <div className="container mx-auto max-w-7xl px-4 relative z-10">
+        <div
+          className={`text-center mb-12 transition-all duration-700 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+          }`}
+        >
+          <span className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary rounded-full mb-4 font-semibold text-sm">
+            <Sparkles className="w-4 h-4" />
+            Restez informé
+          </span>
+          <h2 className="text-4xl md:text-6xl font-bold mb-6 bg-linear-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
+            Soyez les premiers informés
+          </h2>
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
+            Inscrivez-vous à notre newsletter et recevez des nouvelles exclusives sur le lancement de TIA
+          </p>
+        </div>
+
+        <div
+          className={`max-w-2xl mx-auto transition-all duration-700 delay-200 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
+          }`}
+        >
+          {isSuccess ? (
+            <div className="bg-green-50 border-2 border-green-500 rounded-3xl p-8 md:p-12 text-center">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-green-500 rounded-full mb-4">
+                <Check className="w-8 h-8 text-white" />
+              </div>
+              <h3 className="text-2xl font-bold text-green-900 mb-2">
+                Merci de votre inscription !
+              </h3>
+              <p className="text-green-700">
+                Vous recevrez bientôt des nouvelles exclusives sur TIA
+              </p>
+            </div>
+          ) : (
+            <div className="bg-white rounded-3xl p-8 md:p-12 shadow-2xl border border-gray-100">
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="space-y-2">
+                  <label
+                    htmlFor="email"
+                    className="flex items-center gap-2 text-sm font-medium text-gray-700"
+                  >
+                    <Mail className="w-4 h-4 text-primary" />
+                    Adresse email
+                  </label>
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="votre@email.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="h-14 text-base"
+                    disabled={isSubmitting}
+                    aria-invalid={email && !isEmailValid ? true : undefined}
+                  />
+                  {error && (
+                    <p className="text-sm text-destructive">
+                      {error}
+                    </p>
+                  )}
+                </div>
+
+                <Button
+                  type="submit"
+                  className="w-full h-14 text-base font-semibold bg-linear-to-r from-primary to-pink-500 hover:from-primary/90 hover:to-pink-500/90 transition-all shadow-lg hover:shadow-xl"
+                  disabled={!email || !isEmailValid || isSubmitting}
+                >
+                  {isSubmitting ? "Inscription en cours..." : "S'inscrire à la newsletter"}
+                </Button>
+
+                <p className="text-xs text-center text-gray-500 leading-relaxed">
+                  En vous inscrivant, vous acceptez de recevoir nos actualités.
+                  Vous pourrez vous désinscrire à tout moment.
+                </p>
+              </form>
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
+  );
+}

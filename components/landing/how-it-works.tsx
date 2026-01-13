@@ -5,7 +5,9 @@ import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import Image from "next/image";
 
 export function HowItWorks() {
-  const { ref: sectionRef, isVisible } = useScrollAnimation({ threshold: 0.15 });
+  const { ref: sectionRef, isVisible } = useScrollAnimation({
+    threshold: 0.15,
+  });
 
   const steps = [
     {
@@ -19,14 +21,14 @@ export function HowItWorks() {
       number: "02",
       title: "Découvrez & Swipez",
       description: "Parcourez des profils compatibles et likez en un geste",
-      image: "/images/screen/2.jpg",
+      image: "/images/screen/9.jpg",
     },
     {
       number: "03",
       title: "Matchez & Discutez",
       description:
         "Démarrez la conversation avec des suggestions IA personnalisées",
-      image: "/images/screen/1.jpg",
+      image: "/images/screen/10.jpg",
     },
   ];
 
@@ -42,9 +44,7 @@ export function HowItWorks() {
       <div className="container mx-auto max-w-7xl px-4 relative z-10">
         <div
           className={`text-center mb-16 md:mb-20 transition-all duration-700 ${
-            isVisible
-              ? "opacity-100 translate-y-0"
-              : "opacity-0 translate-y-8"
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
           <span className="inline-block px-4 py-2 bg-primary/10 text-primary rounded-full mb-4 font-semibold text-sm">
