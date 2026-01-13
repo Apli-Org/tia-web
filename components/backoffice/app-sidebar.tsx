@@ -6,6 +6,7 @@ import {
   Headphones,
   LayoutDashboard,
   LogOut,
+  Mail,
   Settings,
   Shield,
   Tag,
@@ -82,6 +83,12 @@ const navItems: NavItem[] = [
     url: "/pricing/subscriptions",
     icon: CreditCard,
     action: "view_pricing",
+  },
+  {
+    title: "Newsletter",
+    url: "/newsletter",
+    icon: Mail,
+    action: "send_newsletter",
   },
   {
     title: "Support",
