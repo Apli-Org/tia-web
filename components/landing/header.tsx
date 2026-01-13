@@ -60,11 +60,11 @@ export function Header() {
           </nav>
 
           <div className="flex items-center gap-4">
-            <Link
-              href="#"
+            <a
+              href={isLandingPage ? "#newsletter" : "/#newsletter"}
               className="transition-transform hover:scale-105 duration-300"
             >
-              <button className="bg-primary text-white py-2 px-4 rounded-lg flex items-center gap-2 hover:bg-primary-dark transition-all duration-300 cursor-pointer">
+              <button type="button" className="bg-primary text-white py-2 px-4 rounded-lg flex items-center gap-2 hover:bg-primary-dark transition-all duration-300 cursor-pointer">
                 <svg
                   className="w-5 h-5"
                   viewBox="0 0 24 24"
@@ -78,7 +78,7 @@ export function Header() {
                 </svg>
                 Télécharger
               </button>
-            </Link>
+            </a>
 
             <Sheet open={open} onOpenChange={setOpen}>
               <SheetTrigger asChild className="md:hidden">
@@ -111,7 +111,7 @@ export function Header() {
                     )
                   )}
                   <Button asChild className="mt-4">
-                    <a href="#download" onClick={() => setOpen(false)}>
+                    <a href={isLandingPage ? "#newsletter" : "/#newsletter"} onClick={() => setOpen(false)}>
                       Télécharger
                     </a>
                   </Button>
