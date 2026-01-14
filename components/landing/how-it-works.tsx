@@ -3,34 +3,42 @@
 import MobileFrame from "@/components/mobile-frame";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import Image from "next/image";
+import type { HowItWorksContent } from "@/lib/types/landing.types";
 
-export function HowItWorks() {
+// Default content
+const defaultSteps = [
+  {
+    number: "01",
+    title: "Créez votre profil",
+    description:
+      "Ajoutez vos photos, centres d'intérêt et laissez notre IA vous aider",
+    image: "/images/screen/4.jpg",
+  },
+  {
+    number: "02",
+    title: "Découvrez & Swipez",
+    description: "Parcourez des profils compatibles et likez en un geste",
+    image: "/images/screen/9.jpg",
+  },
+  {
+    number: "03",
+    title: "Matchez & Discutez",
+    description:
+      "Démarrez la conversation avec des suggestions IA personnalisées",
+    image: "/images/screen/10.jpg",
+  },
+];
+
+interface HowItWorksProps {
+  content?: HowItWorksContent | null;
+}
+
+export function HowItWorks({ content }: HowItWorksProps) {
   const { ref: sectionRef, isVisible } = useScrollAnimation({
     threshold: 0.15,
   });
 
-  const steps = [
-    {
-      number: "01",
-      title: "Créez votre profil",
-      description:
-        "Ajoutez vos photos, centres d'intérêt et laissez notre IA vous aider",
-      image: "/images/screen/4.jpg",
-    },
-    {
-      number: "02",
-      title: "Découvrez & Swipez",
-      description: "Parcourez des profils compatibles et likez en un geste",
-      image: "/images/screen/9.jpg",
-    },
-    {
-      number: "03",
-      title: "Matchez & Discutez",
-      description:
-        "Démarrez la conversation avec des suggestions IA personnalisées",
-      image: "/images/screen/10.jpg",
-    },
-  ];
+  const steps = content?.steps || defaultSteps;
 
   return (
     <section

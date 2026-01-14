@@ -4,6 +4,7 @@ import {
   ChevronUp,
   CreditCard,
   Headphones,
+  Layout,
   LayoutDashboard,
   LogOut,
   Mail,
@@ -89,6 +90,12 @@ const navItems: NavItem[] = [
     url: "/newsletter",
     icon: Mail,
     action: "send_newsletter",
+  },
+  {
+    title: "Landing Page",
+    url: "/landing",
+    icon: Layout,
+    action: "manage_landing_page",
   },
   {
     title: "Support",

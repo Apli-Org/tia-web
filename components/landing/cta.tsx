@@ -3,9 +3,41 @@
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { Clock, HeartIcon, Users } from "lucide-react";
 import Image from "next/image";
+import type { CTAContent } from "@/lib/types/landing.types";
 
-export function CTA() {
+// Default content
+const defaultContent = {
+  badgeText: "Rejoignez-nous",
+  headline: "Prêt à trouver",
+  headlineHighlight: "l'amour ?",
+  subheadline: "Téléchargez TIA dès maintenant et commencez votre aventure",
+  googlePlayBadge: "/images/logo/google-play-badge.png",
+  appStoreBadge: "/images/logo/app-store-badge.png",
+  googlePlayTooltip: "Application en cours d'approbation sur le Google Play Store",
+  appStoreTooltip: "Application en cours de développement pour iOS",
+  stats: {
+    users: "2k+",
+    usersLabel: "Intéressés",
+    status: "Bientôt",
+  },
+};
+
+interface CTAProps {
+  content?: CTAContent | null;
+}
+
+export function CTA({ content }: CTAProps) {
   const { ref: sectionRef, isVisible } = useScrollAnimation({ threshold: 0.2 });
+
+  const badgeText = content?.badgeText || defaultContent.badgeText;
+  const headline = content?.headline || defaultContent.headline;
+  const headlineHighlight = content?.headlineHighlight || defaultContent.headlineHighlight;
+  const subheadline = content?.subheadline || defaultContent.subheadline;
+  const googlePlayBadge = content?.googlePlayBadge || defaultContent.googlePlayBadge;
+  const appStoreBadge = content?.appStoreBadge || defaultContent.appStoreBadge;
+  const googlePlayTooltip = content?.googlePlayTooltip || defaultContent.googlePlayTooltip;
+  const appStoreTooltip = content?.appStoreTooltip || defaultContent.appStoreTooltip;
+  const stats = content?.stats || defaultContent.stats;
 
   return (
     <section
@@ -25,7 +57,7 @@ export function CTA() {
                 : "opacity-0 translate-y-4"
             }`}
           >
-            <span className="text-sm font-semibold">Rejoignez-nous</span>
+            <span className="text-sm font-semibold">{badgeText}</span>
           </div>
 
           <h2
@@ -35,9 +67,9 @@ export function CTA() {
                 : "opacity-0 translate-y-8"
             }`}
           >
-            Prêt à trouver <br />
+            {headline} <br />
             <span className="bg-linear-to-r from-primary to-pink-400 bg-clip-text text-transparent">
-              l&apos;amour ?
+              {headlineHighlight}
             </span>
           </h2>
 
@@ -48,7 +80,7 @@ export function CTA() {
                 : "opacity-0 translate-y-8"
             }`}
           >
-            Téléchargez TIA dès maintenant et commencez votre aventure
+            {subheadline}
           </p>
 
           <div
@@ -60,7 +92,7 @@ export function CTA() {
           >
             <div className="relative group cursor-pointer transform hover:scale-105 transition-transform duration-300">
               <Image
-                src="/images/logo/google-play-badge.png"
+                src={googlePlayBadge}
                 alt="Bientôt sur Google Play"
                 width={160}
                 height={60}
@@ -72,13 +104,13 @@ export function CTA() {
                 </span>
               </div>
               <div className="absolute opacity-0 group-hover:opacity-100 transition-opacity duration-300 -top-12 left-1/2 -translate-x-1/2 w-52 p-2 bg-gray-900 text-white text-xs rounded-lg text-center shadow-lg">
-                Application en cours d&apos;approbation sur le Google Play Store
+                {googlePlayTooltip}
                 <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-gray-900 rotate-45"></div>
               </div>
             </div>
             <div className="relative group cursor-pointer transform hover:scale-105 transition-transform duration-300">
               <Image
-                src="/images/logo/app-store-badge.png"
+                src={appStoreBadge}
                 alt="Bientôt sur App Store"
                 width={160}
                 height={60}
@@ -90,7 +122,7 @@ export function CTA() {
                 </span>
               </div>
               <div className="absolute opacity-0 group-hover:opacity-100 transition-opacity duration-300 -top-12 left-1/2 -translate-x-1/2 w-52 p-2 bg-gray-900 text-white text-xs rounded-lg text-center shadow-lg">
-                Application en cours de développement pour iOS
+                {appStoreTooltip}
                 <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-gray-900 rotate-45"></div>
               </div>
             </div>
@@ -106,17 +138,17 @@ export function CTA() {
             <div className="flex items-center space-x-3">
               <div className="flex items-center">
                 <Users className="h-4 w-4 text-blue-500 mr-1" />
-                <span className="text-sm font-medium text-white">2k+</span>
+                <span className="text-sm font-medium text-white">{stats.users}</span>
               </div>
               <div className="flex items-center">
                 <HeartIcon className="h-4 w-4 text-red-500 mr-1" />
                 <span className="text-sm font-medium text-white">
-                  Intéressés
+                  {stats.usersLabel}
                 </span>
               </div>
               <div className="flex items-center">
                 <Clock className="h-4 w-4 text-amber-500 mr-1" />
-                <span className="text-sm font-medium text-white">Bientôt</span>
+                <span className="text-sm font-medium text-white">{stats.status}</span>
               </div>
             </div>
           </div>

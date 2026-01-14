@@ -4,13 +4,65 @@ import MobileFrame from "@/components/mobile-frame";
 import { Clock, Heart, HeartIcon, Sparkles, Users } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import type { HeroContent } from "@/lib/types/landing.types";
 
-export function Hero() {
+// Default content
+const defaultContent = {
+  badge: "La révolution des rencontres",
+  headline: "Swipez vers",
+  headlineHighlight: "votre avenir à deux",
+  subheadline: "TIA révolutionne les rencontres avec une expérience",
+  subheadlineKeywords: ["immersive", "sécurisée", "intelligente"],
+  phoneImage: "/images/screen/8.jpg",
+  floatingBadges: [
+    { text: "Match!", icon: "heart", position: "top-right" },
+    { text: "IA Active", icon: "sparkles", position: "left" },
+    { text: "Super Like", icon: "emoji", position: "right" },
+  ],
+  socialProof: [
+    { value: "2k+", label: "Intéressés", icon: "users" },
+    { value: "IA", label: "Powered", icon: "heart" },
+    { value: "2026", label: "Lancement", icon: "clock" },
+  ],
+  appStoreBadges: {
+    googlePlay: {
+      image: "/images/logo/google-play-badge.png",
+      tooltip: "Application en cours d'approbation sur le Google Play Store",
+    },
+    appStore: {
+      image: "/images/logo/app-store-badge.png",
+      tooltip: "Application en cours de développement pour iOS",
+    },
+  },
+  scrollIndicatorText: "Découvrir",
+};
+
+interface HeroProps {
+  content?: HeroContent | null;
+}
+
+export function Hero({ content }: HeroProps) {
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     setIsLoaded(true);
   }, []);
+
+  const badge = content?.badge || defaultContent.badge;
+  const headline = content?.headline || defaultContent.headline;
+  const headlineHighlight = content?.headlineHighlight || defaultContent.headlineHighlight;
+  const subheadline = content?.subheadline || defaultContent.subheadline;
+  const subheadlineKeywords = (content?.subheadlineKeywords?.length ? content.subheadlineKeywords : null) || defaultContent.subheadlineKeywords;
+  const phoneImage = content?.phoneImage || defaultContent.phoneImage;
+  const floatingBadges = (content?.floatingBadges?.length ? content.floatingBadges : null) || defaultContent.floatingBadges;
+  const socialProof = (content?.socialProof?.length ? content.socialProof : null) || defaultContent.socialProof;
+  const scrollIndicatorText = content?.scrollIndicatorText || defaultContent.scrollIndicatorText;
+
+  // Handle appStoreBadges with proper fallback for empty images
+  const googlePlayImage = content?.appStoreBadges?.googlePlay?.image || defaultContent.appStoreBadges.googlePlay.image;
+  const googlePlayTooltip = content?.appStoreBadges?.googlePlay?.tooltip || defaultContent.appStoreBadges.googlePlay.tooltip;
+  const appStoreImage = content?.appStoreBadges?.appStore?.image || defaultContent.appStoreBadges.appStore.image;
+  const appStoreTooltip = content?.appStoreBadges?.appStore?.tooltip || defaultContent.appStoreBadges.appStore.tooltip;
 
   return (
     <section
@@ -70,7 +122,7 @@ export function Hero() {
             >
               <Sparkles className="w-4 h-4 text-primary animate-pulse" />
               <span className="font-semibold text-sm text-primary">
-                La révolution des rencontres
+                {badge}
               </span>
             </div>
           </div>
@@ -81,10 +133,10 @@ export function Hero() {
               isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
           >
-            Swipez vers{" "}
+            {headline}{" "}
             <span className="relative inline-block">
               <span className="bg-linear-to-r from-primary via-pink-500 to-purple-500 bg-clip-text text-transparent animate-gradient">
-                votre avenir à deux
+                {headlineHighlight}
               </span>
               <svg
                 className="absolute -bottom-1 sm:-bottom-2 left-0 w-full"
@@ -115,10 +167,17 @@ export function Hero() {
               isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
           >
-            TIA révolutionne les rencontres avec une expérience{" "}
-            <span className="font-semibold text-gray-800">immersive</span>,{" "}
-            <span className="font-semibold text-gray-800">sécurisée</span> et{" "}
-            <span className="font-semibold text-primary">intelligente</span>.
+            {subheadline}{" "}
+            {subheadlineKeywords.map((keyword, index) => (
+              <span key={`keyword-${index}`}>
+                <span className={index === subheadlineKeywords.length - 1 ? "font-semibold text-primary" : "font-semibold text-gray-800"}>
+                  {keyword}
+                </span>
+                {index < subheadlineKeywords.length - 2 && ", "}
+                {index === subheadlineKeywords.length - 2 && " et "}
+                {index === subheadlineKeywords.length - 1 && "."}
+              </span>
+            ))}
           </p>
 
           {/* CTA buttons */}
@@ -130,43 +189,46 @@ export function Hero() {
             aria-label="Actions principales"
           >
             <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
-              <div className="relative group cursor-pointer transform hover:scale-105 transition-transform duration-300">
-                <Image
-                  src="/images/logo/google-play-badge.png"
-                  alt="Bientôt sur Google Play"
-                  width={160}
-                  height={60}
-                  className="h-12 sm:h-14 object-contain grayscale opacity-70 transition-all duration-300"
-                />
-                <div className="absolute inset-0 flex items-center justify-center bg-black/40 rounded-lg">
-                  <span className="text-white text-xs sm:text-sm font-medium">
-                    Bientôt disponible
-                  </span>
+              {googlePlayImage && (
+                <div className="relative group cursor-pointer transform hover:scale-105 transition-transform duration-300">
+                  <Image
+                    src={googlePlayImage}
+                    alt="Bientôt sur Google Play"
+                    width={160}
+                    height={60}
+                    className="h-12 sm:h-14 object-contain grayscale opacity-70 transition-all duration-300"
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center bg-black/40 rounded-lg">
+                    <span className="text-white text-xs sm:text-sm font-medium">
+                      Bientôt disponible
+                    </span>
+                  </div>
+                  <div className="absolute opacity-0 group-hover:opacity-100 transition-opacity duration-300 -top-12 left-1/2 -translate-x-1/2 w-52 p-2 bg-gray-900 text-white text-xs rounded-lg text-center shadow-lg">
+                    {googlePlayTooltip}
+                    <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-gray-900 rotate-45"></div>
+                  </div>
                 </div>
-                <div className="absolute opacity-0 group-hover:opacity-100 transition-opacity duration-300 -top-12 left-1/2 -translate-x-1/2 w-52 p-2 bg-gray-900 text-white text-xs rounded-lg text-center shadow-lg">
-                  Application en cours d&apos;approbation sur le Google Play
-                  Store
-                  <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-gray-900 rotate-45"></div>
+              )}
+              {appStoreImage && (
+                <div className="relative group cursor-pointer transform hover:scale-105 transition-transform duration-300">
+                  <Image
+                    src={appStoreImage}
+                    alt="Bientôt sur App Store"
+                    width={160}
+                    height={60}
+                    className="h-12 sm:h-14 object-contain grayscale opacity-70 transition-all duration-300"
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center bg-black/40 rounded-lg">
+                    <span className="text-white text-xs sm:text-sm font-medium">
+                      Bientôt disponible
+                    </span>
+                  </div>
+                  <div className="absolute opacity-0 group-hover:opacity-100 transition-opacity duration-300 -top-12 left-1/2 -translate-x-1/2 w-52 p-2 bg-gray-900 text-white text-xs rounded-lg text-center shadow-lg">
+                    {appStoreTooltip}
+                    <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-gray-900 rotate-45"></div>
+                  </div>
                 </div>
-              </div>
-              <div className="relative group cursor-pointer transform hover:scale-105 transition-transform duration-300">
-                <Image
-                  src="/images/logo/app-store-badge.png"
-                  alt="Bientôt sur App Store"
-                  width={160}
-                  height={60}
-                  className="h-12 sm:h-14 object-contain grayscale opacity-70 transition-all duration-300"
-                />
-                <div className="absolute inset-0 flex items-center justify-center bg-black/40 rounded-lg">
-                  <span className="text-white text-xs sm:text-sm font-medium">
-                    Bientôt disponible
-                  </span>
-                </div>
-                <div className="absolute opacity-0 group-hover:opacity-100 transition-opacity duration-300 -top-12 left-1/2 -translate-x-1/2 w-52 p-2 bg-gray-900 text-white text-xs rounded-lg text-center shadow-lg">
-                  Application en cours de développement pour iOS
-                  <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-gray-900 rotate-45"></div>
-                </div>
-              </div>
+              )}
             </div>
           </div>
 
@@ -182,47 +244,27 @@ export function Hero() {
               aria-label="Intérêt de la communauté"
             >
               <div className="flex items-center gap-3 sm:gap-6">
-                <div className="flex items-center gap-1.5 sm:gap-2">
-                  <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-blue-100 flex items-center justify-center">
-                    <Users className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-blue-600" />
+                {socialProof.map((item, index) => (
+                  <div key={`social-${index}`} className="flex items-center gap-1.5 sm:gap-2">
+                    {index > 0 && <div className="w-px h-8 bg-gray-200 mr-3 sm:mr-6"></div>}
+                    <div className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center ${
+                      item.icon === 'users' ? 'bg-blue-100' :
+                      item.icon === 'heart' ? 'bg-red-100' : 'bg-amber-100'
+                    }`}>
+                      {item.icon === 'users' && <Users className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-blue-600" />}
+                      {item.icon === 'heart' && <HeartIcon className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-red-500" />}
+                      {item.icon === 'clock' && <Clock className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-amber-600" />}
+                    </div>
+                    <div>
+                      <span className="text-base sm:text-lg font-bold text-gray-900">
+                        {item.value}
+                      </span>
+                      <p className="text-[10px] sm:text-xs text-gray-500">
+                        {item.label}
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <span className="text-base sm:text-lg font-bold text-gray-900">
-                      2k+
-                    </span>
-                    <p className="text-[10px] sm:text-xs text-gray-500">
-                      Intéressés
-                    </p>
-                  </div>
-                </div>
-                <div className="w-px h-8 bg-gray-200"></div>
-                <div className="flex items-center gap-1.5 sm:gap-2">
-                  <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-red-100 flex items-center justify-center">
-                    <HeartIcon className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-red-500" />
-                  </div>
-                  <div>
-                    <span className="text-base sm:text-lg font-bold text-gray-900">
-                      IA
-                    </span>
-                    <p className="text-[10px] sm:text-xs text-gray-500">
-                      Powered
-                    </p>
-                  </div>
-                </div>
-                <div className="w-px h-8 bg-gray-200"></div>
-                <div className="flex items-center gap-1.5 sm:gap-2">
-                  <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-amber-100 flex items-center justify-center">
-                    <Clock className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-amber-600" />
-                  </div>
-                  <div>
-                    <span className="text-base sm:text-lg font-bold text-gray-900">
-                      2026
-                    </span>
-                    <p className="text-[10px] sm:text-xs text-gray-500">
-                      Lancement
-                    </p>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
           </div>
@@ -244,7 +286,7 @@ export function Hero() {
             <div className="relative z-80 hover:scale-[1.02] transition-transform duration-500 animate-float">
               <MobileFrame>
                 <Image
-                  src="/images/screen/8.jpg"
+                  src={phoneImage}
                   alt="TIA App - Interface de découverte"
                   width={300}
                   height={600}
@@ -254,36 +296,42 @@ export function Hero() {
               </MobileFrame>
 
               {/* Floating badges around phone */}
-              <div className="absolute -top-4 -right-4 z-80 bg-white rounded-2xl p-3 shadow-xl animate-float border border-gray-100">
-                <div className="flex items-center gap-2">
-                  <Heart className="w-5 h-5 text-primary fill-primary" />
-                  <span className="text-sm font-bold text-gray-800">
-                    Match!
-                  </span>
+              {floatingBadges[0] && (
+                <div className="absolute -top-4 -right-4 z-80 bg-white rounded-2xl p-3 shadow-xl animate-float border border-gray-100">
+                  <div className="flex items-center gap-2">
+                    <Heart className="w-5 h-5 text-primary fill-primary" />
+                    <span className="text-sm font-bold text-gray-800">
+                      {floatingBadges[0].text}
+                    </span>
+                  </div>
                 </div>
-              </div>
+              )}
 
-              <div
-                className="absolute top-1/4 -left-8 z-80 bg-white rounded-2xl p-3 shadow-xl animate-float border border-gray-100"
-                style={{ animationDelay: "-1.5s" }}
-              >
-                <div className="flex items-center gap-2">
-                  <Sparkles className="w-5 h-5 text-purple-500" />
-                  <span className="text-sm font-bold text-gray-800">
-                    IA Active
-                  </span>
+              {floatingBadges[1] && (
+                <div
+                  className="absolute top-1/4 -left-8 z-80 bg-white rounded-2xl p-3 shadow-xl animate-float border border-gray-100"
+                  style={{ animationDelay: "-1.5s" }}
+                >
+                  <div className="flex items-center gap-2">
+                    <Sparkles className="w-5 h-5 text-purple-500" />
+                    <span className="text-sm font-bold text-gray-800">
+                      {floatingBadges[1].text}
+                    </span>
+                  </div>
                 </div>
-              </div>
+              )}
 
-              <div
-                className="absolute bottom-1/4 -right-6 z-80 bg-linear-to-r from-primary to-pink-500 rounded-2xl p-3 shadow-xl animate-float"
-                style={{ animationDelay: "-3s" }}
-              >
-                <div className="flex items-center gap-2 text-white">
-                  <span className="text-lg">💕</span>
-                  <span className="text-sm font-bold">Super Like</span>
+              {floatingBadges[2] && (
+                <div
+                  className="absolute bottom-1/4 -right-6 z-80 bg-linear-to-r from-primary to-pink-500 rounded-2xl p-3 shadow-xl animate-float"
+                  style={{ animationDelay: "-3s" }}
+                >
+                  <div className="flex items-center gap-2 text-white">
+                    <span className="text-lg">💕</span>
+                    <span className="text-sm font-bold">{floatingBadges[2].text}</span>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
 
             {/* Decorative rings (static) */}
@@ -299,7 +347,7 @@ export function Hero() {
           isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
         }`}
       >
-        <span className="text-sm text-gray-400">Découvrir</span>
+        <span className="text-sm text-gray-400">{scrollIndicatorText}</span>
         <div className="w-6 h-10 border-2 border-gray-300 rounded-full flex justify-center p-1">
           <div className="w-1.5 h-3 bg-primary rounded-full animate-bounce"></div>
         </div>

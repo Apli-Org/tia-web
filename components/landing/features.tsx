@@ -1,27 +1,41 @@
 "use client";
 
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
+import type { FeaturesContent } from "@/lib/types/landing.types";
 
-export function Features() {
+// Default content (fallback if CMS content not available)
+const defaultFeatures = [
+  {
+    number: "01",
+    title: "Swipe Immersif",
+    description:
+      "Une expérience de découverte inspirée de TikTok, fluide et addictive",
+    icon: "sparkles" as const,
+  },
+  {
+    number: "02",
+    title: "Matchs Intelligents",
+    description:
+      "Notre IA analyse vos préférences pour des suggestions toujours plus pertinentes",
+    icon: "brain" as const,
+  },
+  {
+    number: "03",
+    title: "Sécurité Garantie",
+    description:
+      "Vérification d'identité et modération pour une expérience sûre",
+    icon: "shield" as const,
+  },
+];
+
+interface FeaturesProps {
+  content?: FeaturesContent | null;
+}
+
+export function Features({ content }: FeaturesProps) {
   const { ref: sectionRef, isVisible } = useScrollAnimation({ threshold: 0.2 });
 
-  const features = [
-    {
-      title: "Swipe Immersif",
-      description:
-        "Une expérience de découverte inspirée de TikTok, fluide et addictive",
-    },
-    {
-      title: "Matchs Intelligents",
-      description:
-        "Notre IA analyse vos préférences pour des suggestions toujours plus pertinentes",
-    },
-    {
-      title: "Sécurité Garantie",
-      description:
-        "Vérification d'identité et modération pour une expérience sûre",
-    },
-  ];
+  const features = content?.features || defaultFeatures;
 
   return (
     <section

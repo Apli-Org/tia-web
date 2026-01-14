@@ -6,13 +6,43 @@ import { Input } from "@/components/ui/input";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { Check, Mail, Sparkles } from "lucide-react";
 import { subscribeToNewsletter } from "@/actions/newsletter.action";
+import type { NewsletterContent } from "@/lib/types/landing.types";
 
-export function Newsletter() {
+// Default content
+const defaultContent = {
+  badgeText: "Restez informé",
+  headline: "Soyez les premiers informés",
+  subheadline: "Inscrivez-vous à notre newsletter et recevez des nouvelles exclusives sur le lancement de TIA",
+  inputLabel: "Adresse email",
+  inputPlaceholder: "votre@email.com",
+  submitButtonText: "S'inscrire à la newsletter",
+  submittingText: "Inscription en cours...",
+  successTitle: "Merci de votre inscription !",
+  successMessage: "Vous recevrez bientôt des nouvelles exclusives sur TIA",
+  disclaimer: "En vous inscrivant, vous acceptez de recevoir nos actualités. Vous pourrez vous désinscrire à tout moment.",
+};
+
+interface NewsletterProps {
+  content?: NewsletterContent | null;
+}
+
+export function Newsletter({ content }: NewsletterProps) {
   const { ref: sectionRef, isVisible } = useScrollAnimation({ threshold: 0.2 });
   const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState("");
+
+  const badgeText = content?.badgeText || defaultContent.badgeText;
+  const headline = content?.headline || defaultContent.headline;
+  const subheadline = content?.subheadline || defaultContent.subheadline;
+  const inputLabel = content?.inputLabel || defaultContent.inputLabel;
+  const inputPlaceholder = content?.inputPlaceholder || defaultContent.inputPlaceholder;
+  const submitButtonText = content?.submitButtonText || defaultContent.submitButtonText;
+  const submittingText = content?.submittingText || defaultContent.submittingText;
+  const successTitle = content?.successTitle || defaultContent.successTitle;
+  const successMessage = content?.successMessage || defaultContent.successMessage;
+  const disclaimer = content?.disclaimer || defaultContent.disclaimer;
 
   const isEmailValid = email.includes("@");
 
@@ -62,13 +92,13 @@ export function Newsletter() {
         >
           <span className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary rounded-full mb-4 font-semibold text-sm">
             <Sparkles className="w-4 h-4" />
-            Restez informé
+            {badgeText}
           </span>
           <h2 className="text-4xl md:text-6xl font-bold mb-6 bg-linear-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
-            Soyez les premiers informés
+            {headline}
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
-            Inscrivez-vous à notre newsletter et recevez des nouvelles exclusives sur le lancement de TIA
+            {subheadline}
           </p>
         </div>
 
@@ -83,10 +113,10 @@ export function Newsletter() {
                 <Check className="w-8 h-8 text-white" />
               </div>
               <h3 className="text-2xl font-bold text-green-900 mb-2">
-                Merci de votre inscription !
+                {successTitle}
               </h3>
               <p className="text-green-700">
-                Vous recevrez bientôt des nouvelles exclusives sur TIA
+                {successMessage}
               </p>
             </div>
           ) : (
@@ -98,12 +128,12 @@ export function Newsletter() {
                     className="flex items-center gap-2 text-sm font-medium text-gray-700"
                   >
                     <Mail className="w-4 h-4 text-primary" />
-                    Adresse email
+                    {inputLabel}
                   </label>
                   <Input
                     id="email"
                     type="email"
-                    placeholder="votre@email.com"
+                    placeholder={inputPlaceholder}
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className="h-14 text-base"
@@ -122,12 +152,11 @@ export function Newsletter() {
                   className="w-full h-14 text-base font-semibold bg-linear-to-r from-primary to-pink-500 hover:from-primary/90 hover:to-pink-500/90 transition-all shadow-lg hover:shadow-xl"
                   disabled={!email || !isEmailValid || isSubmitting}
                 >
-                  {isSubmitting ? "Inscription en cours..." : "S'inscrire à la newsletter"}
+                  {isSubmitting ? submittingText : submitButtonText}
                 </Button>
 
                 <p className="text-xs text-center text-gray-500 leading-relaxed">
-                  En vous inscrivant, vous acceptez de recevoir nos actualités.
-                  Vous pourrez vous désinscrire à tout moment.
+                  {disclaimer}
                 </p>
               </form>
             </div>

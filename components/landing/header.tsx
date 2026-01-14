@@ -7,17 +7,37 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import type { HeaderContent } from "@/lib/types/landing.types";
 
-export function Header() {
+// Default content
+const defaultContent = {
+  logo: "/images/TiaLogo.png",
+  navItems: [
+    { href: "#features", label: "Fonctionnalités" },
+    { href: "#testimonials", label: "Testimonials" },
+    { href: "#faq", label: "FAQ" },
+  ],
+  ctaButton: {
+    text: "Télécharger",
+    href: "#newsletter",
+  },
+};
+
+interface HeaderProps {
+  content?: HeaderContent | null;
+}
+
+export function Header({ content }: HeaderProps) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
   const isLandingPage = pathname === "/";
 
-  const navItems = [
-    { href: "#features", label: "Fonctionnalités" },
-    { href: "#testimonials", label: "Testimonials", isLink: false },
-    { href: "#faq", label: "FAQ" },
-  ];
+  const logo = content?.logo || defaultContent.logo;
+  const navItems = (content?.navItems?.length ? content.navItems : null) || defaultContent.navItems;
+  const ctaButton = {
+    text: content?.ctaButton?.text || defaultContent.ctaButton.text,
+    href: content?.ctaButton?.href || defaultContent.ctaButton.href,
+  };
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur-md">
@@ -27,41 +47,33 @@ export function Header() {
             href={isLandingPage ? "#hero" : "/"}
             className="flex items-center gap-2 hover:opacity-80 transition-opacity"
           >
-            <Image
-              src="/images/TiaLogo.png"
-              alt="TIA Logo"
-              width={120}
-              height={40}
-              className="h-8 w-auto"
-              priority
-            />
+            {logo && (
+              <Image
+                src={logo}
+                alt="TIA Logo"
+                width={120}
+                height={40}
+                className="h-8 w-auto"
+                priority
+              />
+            )}
           </Link>
 
           <nav className="hidden md:flex items-center gap-8">
-            {navItems.map((item) =>
-              item.isLink ? (
-                <Link
-                  key={item.href}
-                  href={isLandingPage ? item.href : `/${item.href}`}
-                  className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
-                >
-                  {item.label}
-                </Link>
-              ) : (
-                <a
-                  key={item.href}
-                  href={isLandingPage ? item.href : `/${item.href}`}
-                  className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
-                >
-                  {item.label}
-                </a>
-              )
-            )}
+            {navItems.map((item, index) => (
+              <a
+                key={`nav-${index}`}
+                href={isLandingPage ? item.href : `/${item.href}`}
+                className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
+              >
+                {item.label}
+              </a>
+            ))}
           </nav>
 
           <div className="flex items-center gap-4">
             <a
-              href={isLandingPage ? "#newsletter" : "/#newsletter"}
+              href={isLandingPage ? ctaButton.href : `/${ctaButton.href}`}
               className="transition-transform hover:scale-105 duration-300"
             >
               <button type="button" className="bg-primary text-white py-2 px-4 rounded-lg flex items-center gap-2 hover:bg-primary-dark transition-all duration-300 cursor-pointer">
@@ -76,7 +88,7 @@ export function Header() {
                     fill="currentColor"
                   />
                 </svg>
-                Télécharger
+                {ctaButton.text}
               </button>
             </a>
 
@@ -89,30 +101,19 @@ export function Header() {
               </SheetTrigger>
               <SheetContent side="right" className="w-[300px] sm:w-[400px]">
                 <nav className="flex flex-col gap-4 mt-8">
-                  {navItems.map((item) =>
-                    item.isLink ? (
-                      <Link
-                        key={item.href}
-                        href={isLandingPage ? item.href : `/${item.href}`}
-                        onClick={() => setOpen(false)}
-                        className="text-lg font-medium hover:text-primary transition-colors"
-                      >
-                        {item.label}
-                      </Link>
-                    ) : (
-                      <a
-                        key={item.href}
-                        href={isLandingPage ? item.href : `/${item.href}`}
-                        onClick={() => setOpen(false)}
-                        className="text-lg font-medium hover:text-primary transition-colors"
-                      >
-                        {item.label}
-                      </a>
-                    )
-                  )}
+                  {navItems.map((item, index) => (
+                    <a
+                      key={`mobile-nav-${index}`}
+                      href={isLandingPage ? item.href : `/${item.href}`}
+                      onClick={() => setOpen(false)}
+                      className="text-lg font-medium hover:text-primary transition-colors"
+                    >
+                      {item.label}
+                    </a>
+                  ))}
                   <Button asChild className="mt-4">
-                    <a href={isLandingPage ? "#newsletter" : "/#newsletter"} onClick={() => setOpen(false)}>
-                      Télécharger
+                    <a href={isLandingPage ? ctaButton.href : `/${ctaButton.href}`} onClick={() => setOpen(false)}>
+                      {ctaButton.text}
                     </a>
                   </Button>
                 </nav>

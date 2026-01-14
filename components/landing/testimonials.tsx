@@ -3,33 +3,42 @@
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { Clock } from "lucide-react";
 import Image from "next/image";
+import type { TestimonialsContent } from "@/lib/types/landing.types";
 
-export function Testimonials() {
+// Default content
+const defaultTestimonials = [
+  {
+    name: "Nirina",
+    age: 28,
+    avatar: "/images/avatars/1.jpg",
+    quote:
+      "J'attends TIA avec impatience ! L'idée d'avoir une IA qui m'aide à briser la glace, c'est exactement ce qu'il me fallait.",
+  },
+  {
+    name: "Judi",
+    age: 32,
+    avatar: "/images/avatars/3.jpg",
+    quote:
+      "Les apps de rencontres actuelles me lassent. TIA a l'air vraiment différent avec son approche IA. Vivement le lancement !",
+  },
+  {
+    name: "Hanta",
+    age: 25,
+    avatar: "/images/avatars/2.jpg",
+    quote:
+      "Le concept de swipe façon TikTok + IA pour les matchs ? Je suis inscrite sur la liste d'attente depuis le premier jour !",
+  },
+];
+
+interface TestimonialsProps {
+  content?: TestimonialsContent | null;
+}
+
+export function Testimonials({ content }: TestimonialsProps) {
   const { ref: sectionRef, isVisible } = useScrollAnimation({ threshold: 0.2 });
 
-  const testimonials = [
-    {
-      name: "Nirina",
-      age: 28,
-      avatar: "/images/avatars/1.jpg",
-      quote:
-        "J'attends TIA avec impatience ! L'idée d'avoir une IA qui m'aide à briser la glace, c'est exactement ce qu'il me fallait.",
-    },
-    {
-      name: "Judi",
-      age: 32,
-      avatar: "/images/avatars/3.jpg",
-      quote:
-        "Les apps de rencontres actuelles me lassent. TIA a l'air vraiment différent avec son approche IA. Vivement le lancement !",
-    },
-    {
-      name: "Hanta",
-      age: 25,
-      avatar: "/images/avatars/2.jpg",
-      quote:
-        "Le concept de swipe façon TikTok + IA pour les matchs ? Je suis inscrite sur la liste d'attente depuis le premier jour !",
-    },
-  ];
+  const testimonials = content?.testimonials || defaultTestimonials;
+  const badgeText = content?.badgeText || "Sur liste d'attente";
 
   return (
     <section

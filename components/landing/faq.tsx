@@ -7,36 +7,44 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
+import type { FAQContent } from "@/lib/types/landing.types";
 
-export function FAQ() {
+// Default content
+const defaultFaqs = [
+  {
+    question: "TIA est-elle vraiment gratuite ?",
+    answer: "Oui, la version Base est 100% gratuite. Vous pouvez upgrader pour débloquer des fonctionnalités premium comme les swipes illimités, les filtres avancés et le mode incognito.",
+  },
+  {
+    question: "Comment fonctionne la vérification d'identité ?",
+    answer: "Vous pouvez uploader votre pièce d'identité pour obtenir un badge certifié, garantissant votre authenticité aux autres utilisateurs.",
+  },
+  {
+    question: "Mes données sont-elles sécurisées ?",
+    answer: "Absolument. Nous utilisons un chiffrement de niveau bancaire et ne partageons jamais vos données personnelles avec des tiers.",
+  },
+  {
+    question: "Puis-je annuler mon abonnement à tout moment ?",
+    answer: "Oui, sans frais ni pénalités. Vous pouvez annuler votre abonnement premium à tout moment depuis les paramètres de l'application.",
+  },
+  {
+    question: "Sur quels appareils TIA est-elle disponible ?",
+    answer: "TIA sera disponible sur iOS (iPhone), Android, et bientôt le Web.",
+  },
+  {
+    question: "Comment fonctionne l'IA de TIA ?",
+    answer: "Notre IA analyse vos préférences, comportements et profils likés pour suggérer des matchs pertinents et générer des messages d'ouverture uniques.",
+  },
+];
+
+interface FAQProps {
+  content?: FAQContent | null;
+}
+
+export function FAQ({ content }: FAQProps) {
   const { ref: sectionRef, isVisible } = useScrollAnimation({ threshold: 0.1 });
 
-  const faqs = [
-    {
-      q: "TIA est-elle vraiment gratuite ?",
-      a: "Oui, la version Base est 100% gratuite. Vous pouvez upgrader pour débloquer des fonctionnalités premium comme les swipes illimités, les filtres avancés et le mode incognito.",
-    },
-    {
-      q: "Comment fonctionne la vérification d'identité ?",
-      a: "Vous pouvez uploader votre pièce d'identité pour obtenir un badge certifié, garantissant votre authenticité aux autres utilisateurs.",
-    },
-    {
-      q: "Mes données sont-elles sécurisées ?",
-      a: "Absolument. Nous utilisons un chiffrement de niveau bancaire et ne partageons jamais vos données personnelles avec des tiers.",
-    },
-    {
-      q: "Puis-je annuler mon abonnement à tout moment ?",
-      a: "Oui, sans frais ni pénalités. Vous pouvez annuler votre abonnement premium à tout moment depuis les paramètres de l'application.",
-    },
-    {
-      q: "Sur quels appareils TIA est-elle disponible ?",
-      a: "TIA sera disponible sur iOS (iPhone), Android, et bientôt le Web.",
-    },
-    {
-      q: "Comment fonctionne l'IA de TIA ?",
-      a: "Notre IA analyse vos préférences, comportements et profils likés pour suggérer des matchs pertinents et générer des messages d'ouverture uniques.",
-    },
-  ];
+  const faqs = content?.faqs || defaultFaqs;
 
   return (
     <section
@@ -82,10 +90,10 @@ export function FAQ() {
               }}
             >
               <AccordionTrigger className="text-left hover:no-underline font-semibold text-lg text-gray-900 py-6">
-                {item.q}
+                {item.question}
               </AccordionTrigger>
               <AccordionContent className="text-gray-600 text-base leading-relaxed pb-6">
-                {item.a}
+                {item.answer}
               </AccordionContent>
             </AccordionItem>
           ))}
