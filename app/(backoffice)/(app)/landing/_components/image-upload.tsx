@@ -4,7 +4,8 @@ import { useState, useRef } from 'react'
 import Image from 'next/image'
 import { Upload, X, Loader2, AlertCircle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { uploadLandingImage } from '@/actions/admin/landing.action'
+import { checkUploadPermission, logImageUpload } from '@/actions/admin/landing.action'
+import { createClient } from '@/lib/supabase/client'
 
 interface ImageUploadProps {
   value: string
@@ -28,22 +29,64 @@ export function ImageUpload({ value, onChange, adminId, label, className, phoneF
     setError(null)
 
     try {
-      const result = await uploadLandingImage(file, adminId)
-      if (result.success && result.url) {
-        onChange(result.url)
-      } else {
-        setError(result.error || 'Erreur lors du téléchargement')
+      // Validate file type
+      const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif']
+      if (!allowedTypes.includes(file.type)) {
+        setError(`Type de fichier non autorisé: ${file.type || 'inconnu'}`)
+        return
       }
+
+      // Validate file size (5MB max)
+      if (file.size > 5 * 1024 * 1024) {
+        setError('Fichier trop volumineux (max 5MB)')
+        return
+      }
+
+      // Check permission via server action
+      const permResult = await checkUploadPermission(adminId)
+      if (!permResult.success) {
+        setError(permResult.error || 'Permission refusée')
+        return
+      }
+
+      // Generate unique filename
+      const timestamp = Date.now()
+      const extension = file.name.split('.').pop()?.toLowerCase() || 'jpg'
+      const filename = `${timestamp}-${Math.random().toString(36).slice(2)}.${extension}`
+
+      // Direct upload to Supabase from client (bypasses Vercel serverless limits)
+      const supabase = createClient()
+      const { error: uploadError } = await supabase.storage
+        .from('landing-images')
+        .upload(filename, file, {
+          cacheControl: '3600',
+          upsert: false,
+        })
+
+      if (uploadError) {
+        console.error('Upload error:', uploadError)
+        if (uploadError.message?.includes('bucket') || uploadError.message?.includes('not found')) {
+          setError('Bucket de stockage non configuré')
+        } else if (uploadError.message?.includes('permission') || uploadError.message?.includes('authorized')) {
+          setError('Permission de stockage refusée')
+        } else {
+          setError(`Erreur: ${uploadError.message}`)
+        }
+        return
+      }
+
+      // Get public URL
+      const { data: urlData } = supabase.storage
+        .from('landing-images')
+        .getPublicUrl(filename)
+
+      // Log activity via server action
+      await logImageUpload(adminId, filename)
+
+      onChange(urlData.publicUrl)
     } catch (err) {
-      // Handle network errors (often caused by body size limits on Vercel)
       const error = err as Error
-      if (error.message?.includes('fetch') || error.message?.includes('network')) {
-        setError('Erreur réseau - le fichier est peut-être trop volumineux')
-      } else if (error.message?.includes('body') || error.message?.includes('size')) {
-        setError('Fichier trop volumineux pour le serveur (max 50MB)')
-      } else {
-        setError(`Erreur: ${error.message || 'Échec du téléchargement'}`)
-      }
+      setError(`Erreur: ${error.message || 'Échec du téléchargement'}`)
       console.error('Upload error:', error)
     } finally {
       setIsUploading(false)

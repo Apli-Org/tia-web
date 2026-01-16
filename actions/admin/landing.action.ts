@@ -269,70 +269,128 @@ export async function revertLandingSection(
 
 // Upload image to landing-images bucket
 export async function uploadLandingImage(
-  file: File,
-  adminId: string
+  formData: FormData
 ): Promise<{ success: boolean; url?: string; error?: string }> {
-  const supabase = createAdminClient()
+  try {
+    const file = formData.get('file') as File | null
+    const adminId = formData.get('adminId') as string | null
 
-  // Check permission
+    if (!file || !adminId) {
+      return { success: false, error: 'Fichier ou adminId manquant' }
+    }
+
+    const supabase = createAdminClient()
+
+    // Check permission
+    const hasPermission = await checkAdminAction(adminId, 'manage_landing_page')
+    if (!hasPermission) {
+      return { success: false, error: 'Permission insuffisante' }
+    }
+
+    // Validate file type
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif']
+    const fileType = file.type || ''
+    if (!fileType || !allowedTypes.includes(fileType)) {
+      // Try to detect type from extension if MIME type is missing
+      const ext = file.name.split('.').pop()?.toLowerCase()
+      const extToMime: Record<string, string> = {
+        'jpg': 'image/jpeg',
+        'jpeg': 'image/jpeg',
+        'png': 'image/png',
+        'webp': 'image/webp',
+        'gif': 'image/gif'
+      }
+      if (!ext || !extToMime[ext]) {
+        return { success: false, error: `Type de fichier non autorisé: ${fileType || 'inconnu'}` }
+      }
+    }
+
+    // Validate file size (5MB max)
+    if (file.size > 5 * 1024 * 1024) {
+      return { success: false, error: 'Fichier trop volumineux (max 5MB)' }
+    }
+
+    // Generate unique filename
+    const timestamp = Date.now()
+    const extension = file.name.split('.').pop()?.toLowerCase() || 'jpg'
+    const filename = `${timestamp}-${Math.random().toString(36).slice(2)}.${extension}`
+
+    // Convert File to ArrayBuffer then to Buffer for Vercel compatibility
+    let fileBuffer: Uint8Array
+    try {
+      const arrayBuffer = await file.arrayBuffer()
+      fileBuffer = new Uint8Array(arrayBuffer)
+    } catch (bufferError) {
+      console.error('Buffer conversion error:', bufferError)
+      return { success: false, error: 'Erreur de lecture du fichier' }
+    }
+
+    // Upload to storage
+    const { error: uploadError } = await supabase.storage
+      .from('landing-images')
+      .upload(filename, fileBuffer, {
+        cacheControl: '3600',
+        upsert: false,
+        contentType: file.type,
+      })
+
+    if (uploadError) {
+      console.error('Error uploading image:', uploadError)
+      // Return specific error message based on error type
+      let errorMessage = 'Erreur lors du téléchargement'
+      if (uploadError.message?.includes('exceeded')) {
+        errorMessage = 'Fichier trop volumineux pour le serveur'
+      } else if (uploadError.message?.includes('bucket') || uploadError.message?.includes('not found')) {
+        errorMessage = 'Bucket de stockage non configuré'
+      } else if (uploadError.message?.includes('permission') || uploadError.message?.includes('authorized')) {
+        errorMessage = 'Permission de stockage refusée'
+      } else if (uploadError.message) {
+        errorMessage = `Erreur: ${uploadError.message}`
+      }
+      return { success: false, error: errorMessage }
+    }
+
+    // Get public URL
+    const { data: urlData } = supabase.storage
+      .from('landing-images')
+      .getPublicUrl(filename)
+
+    // Log activity
+    await supabase.from('admin_activity_logs').insert({
+      admin_id: adminId,
+      action: 'landing_image_uploaded',
+      details: { filename },
+    })
+
+    return { success: true, url: urlData.publicUrl }
+  } catch (error) {
+    console.error('Upload error:', error)
+    return { success: false, error: 'Erreur inattendue lors du téléchargement' }
+  }
+}
+
+// Check upload permission (lightweight action for client-side upload)
+export async function checkUploadPermission(
+  adminId: string
+): Promise<{ success: boolean; error?: string }> {
   const hasPermission = await checkAdminAction(adminId, 'manage_landing_page')
   if (!hasPermission) {
     return { success: false, error: 'Permission insuffisante' }
   }
+  return { success: true }
+}
 
-  // Validate file type
-  const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif']
-  if (!allowedTypes.includes(file.type)) {
-    return { success: false, error: 'Type de fichier non autorisé' }
-  }
-
-  // Validate file size (5MB max)
-  if (file.size > 5 * 1024 * 1024) {
-    return { success: false, error: 'Fichier trop volumineux (max 5MB)' }
-  }
-
-  // Generate unique filename
-  const timestamp = Date.now()
-  const extension = file.name.split('.').pop()
-  const filename = `${timestamp}-${Math.random().toString(36).slice(2)}.${extension}`
-
-  // Upload to storage
-  const { error: uploadError } = await supabase.storage
-    .from('landing-images')
-    .upload(filename, file, {
-      cacheControl: '3600',
-      upsert: false,
-    })
-
-  if (uploadError) {
-    console.error('Error uploading image:', uploadError)
-    // Return specific error message based on error type
-    let errorMessage = 'Erreur lors du téléchargement'
-    if (uploadError.message?.includes('exceeded')) {
-      errorMessage = 'Fichier trop volumineux pour le serveur'
-    } else if (uploadError.message?.includes('bucket') || uploadError.message?.includes('not found')) {
-      errorMessage = 'Bucket de stockage non configuré'
-    } else if (uploadError.message?.includes('permission') || uploadError.message?.includes('authorized')) {
-      errorMessage = 'Permission de stockage refusée'
-    } else if (uploadError.message) {
-      errorMessage = `Erreur: ${uploadError.message}`
-    }
-    return { success: false, error: errorMessage }
-  }
-
-  // Get public URL
-  const { data: urlData } = supabase.storage
-    .from('landing-images')
-    .getPublicUrl(filename)
-
-  // Log activity
+// Log image upload activity
+export async function logImageUpload(
+  adminId: string,
+  filename: string
+): Promise<void> {
+  const supabase = createAdminClient()
   await supabase.from('admin_activity_logs').insert({
     admin_id: adminId,
     action: 'landing_image_uploaded',
     details: { filename },
   })
-
-  return { success: true, url: urlData.publicUrl }
 }
 
 // Delete image from landing-images bucket
