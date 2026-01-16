@@ -306,7 +306,18 @@ export async function uploadLandingImage(
 
   if (uploadError) {
     console.error('Error uploading image:', uploadError)
-    return { success: false, error: 'Erreur lors du téléchargement' }
+    // Return specific error message based on error type
+    let errorMessage = 'Erreur lors du téléchargement'
+    if (uploadError.message?.includes('exceeded')) {
+      errorMessage = 'Fichier trop volumineux pour le serveur'
+    } else if (uploadError.message?.includes('bucket') || uploadError.message?.includes('not found')) {
+      errorMessage = 'Bucket de stockage non configuré'
+    } else if (uploadError.message?.includes('permission') || uploadError.message?.includes('authorized')) {
+      errorMessage = 'Permission de stockage refusée'
+    } else if (uploadError.message) {
+      errorMessage = `Erreur: ${uploadError.message}`
+    }
+    return { success: false, error: errorMessage }
   }
 
   // Get public URL

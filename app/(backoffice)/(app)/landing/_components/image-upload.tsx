@@ -2,7 +2,7 @@
 
 import { useState, useRef } from 'react'
 import Image from 'next/image'
-import { Upload, X, Loader2 } from 'lucide-react'
+import { Upload, X, Loader2, AlertCircle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { uploadLandingImage } from '@/actions/admin/landing.action'
 
@@ -34,8 +34,17 @@ export function ImageUpload({ value, onChange, adminId, label, className, phoneF
       } else {
         setError(result.error || 'Erreur lors du téléchargement')
       }
-    } catch {
-      setError('Erreur lors du téléchargement')
+    } catch (err) {
+      // Handle network errors (often caused by body size limits on Vercel)
+      const error = err as Error
+      if (error.message?.includes('fetch') || error.message?.includes('network')) {
+        setError('Erreur réseau - le fichier est peut-être trop volumineux')
+      } else if (error.message?.includes('body') || error.message?.includes('size')) {
+        setError('Fichier trop volumineux pour le serveur (max 50MB)')
+      } else {
+        setError(`Erreur: ${error.message || 'Échec du téléchargement'}`)
+      }
+      console.error('Upload error:', error)
     } finally {
       setIsUploading(false)
       if (fileInputRef.current) {
@@ -169,7 +178,10 @@ export function ImageUpload({ value, onChange, adminId, label, className, phoneF
       )}
 
       {error && (
-        <p className="text-sm text-red-500 mt-1">{error}</p>
+        <div className="flex items-center gap-2 mt-2 p-3 bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 rounded-lg text-red-600 dark:text-red-400">
+          <AlertCircle className="h-4 w-4 flex-shrink-0" />
+          <p className="text-sm">{error}</p>
+        </div>
       )}
     </div>
   )
