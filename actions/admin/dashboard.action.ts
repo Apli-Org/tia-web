@@ -237,6 +237,7 @@ export async function getRecentActivity(): Promise<RecentActivity[]> {
         status,
         created_at,
         amount_paid,
+        user_id,
         user:user_id(firstName)
       `)
       .eq("status", "active")
@@ -283,11 +284,38 @@ export async function getRecentActivity(): Promise<RecentActivity[]> {
   if (subscriptionsResult.data) {
     for (const sub of subscriptionsResult.data) {
       const user = sub.user as unknown as { firstName: string } | null
-      const tierName = translateTier(sub.tier)
+      const currentTier = sub.tier
+      const tierName = translateTier(currentTier)
+
+      // Check if this is an upgrade by looking for previous subscriptions
+      let isUpgrade = false
+      let previousTierName = ""
+
+      if (sub.user_id) {
+        const { data: previousSubs } = await supabase
+          .from("subscriptions")
+          .select("tier, created_at")
+          .eq("user_id", sub.user_id)
+          .neq("id", sub.id)
+          .order("created_at", { ascending: false })
+          .limit(1)
+
+        if (previousSubs && previousSubs.length > 0) {
+          const previousTier = previousSubs[0].tier
+          // Check if current tier is higher than previous
+          if (previousTier !== currentTier && isTierUpgrade(previousTier, currentTier)) {
+            isUpgrade = true
+            previousTierName = translateTier(previousTier)
+          }
+        }
+      }
+
       activities.push({
         id: sub.id,
         user: user?.firstName ?? "Utilisateur",
-        action: `Abonnement ${tierName}`,
+        action: isUpgrade
+          ? `Upgrade ${previousTierName} → ${tierName}`
+          : `Abonnement ${tierName}`,
         target: `${sub.amount_paid?.toLocaleString("fr-FR")} MGA`,
         status: "Complété",
         time: getRelativeTime(sub.created_at),
@@ -364,6 +392,18 @@ function translateTier(tier: string | null): string {
     elite: "Elite",
   }
   return translations[tier ?? ""] ?? "Premium"
+}
+
+function isTierUpgrade(previousTier: string | null, currentTier: string | null): boolean {
+  const tierOrder: Record<string, number> = {
+    base: 0,
+    silver: 1,
+    gold: 2,
+    elite: 3,
+  }
+  const prevLevel = tierOrder[previousTier ?? "base"] ?? 0
+  const currLevel = tierOrder[currentTier ?? "base"] ?? 0
+  return currLevel > prevLevel
 }
 
 function translateConsumable(type: string): string {

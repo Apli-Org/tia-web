@@ -1,27 +1,12 @@
 "use client"
 
-import { motion } from "framer-motion"
-import { usePathname } from "next/navigation"
-
 type PageTransitionProps = {
   children: React.ReactNode
 }
 
 export function PageTransition({ children }: PageTransitionProps) {
-  const pathname = usePathname()
-
-  return (
-    <motion.div
-      key={pathname}
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -10 }}
-      transition={{
-        duration: 0.2,
-        ease: "easeInOut",
-      }}
-    >
-      {children}
-    </motion.div>
-  )
+  // Simplified: removed framer-motion animations that were causing
+  // navigation delays (200ms entrance + 200ms exit = 400ms blocked)
+  // Navigation feedback is now handled by NProgress bar
+  return <>{children}</>
 }

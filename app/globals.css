@@ -317,6 +317,36 @@
   animation: gradientShift 4s ease infinite;
 }
 
+@keyframes collapsible-down {
+  from {
+    height: 0;
+    opacity: 0;
+  }
+  to {
+    height: var(--radix-collapsible-content-height);
+    opacity: 1;
+  }
+}
+
+@keyframes collapsible-up {
+  from {
+    height: var(--radix-collapsible-content-height);
+    opacity: 1;
+  }
+  to {
+    height: 0;
+    opacity: 0;
+  }
+}
+
+.animate-collapsible-down {
+  animation: collapsible-down 0.3s ease-out;
+}
+
+.animate-collapsible-up {
+  animation: collapsible-up 0.2s ease-out;
+}
+
 @keyframes spin-slow {
   from {
     transform: rotate(0deg);
@@ -328,4 +358,38 @@
 
 .animate-spin-slow {
   animation: spin-slow 20s linear infinite;
+}
+
+/* NProgress - Navigation Progress Bar */
+#nprogress {
+  pointer-events: none;
+}
+
+#nprogress .bar {
+  background: oklch(0.577 0.245 12.5);
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+}
+
+#nprogress .peg {
+  display: block;
+  position: absolute;
+  right: 0px;
+  width: 100px;
+  height: 100%;
+  box-shadow: 0 0 10px oklch(0.577 0.245 12.5), 0 0 5px oklch(0.577 0.245 12.5);
+  opacity: 1;
+  transform: rotate(3deg) translate(0px, -4px);
+}
+
+.dark #nprogress .bar {
+  background: oklch(0.488 0.243 264.376);
+}
+
+.dark #nprogress .peg {
+  box-shadow: 0 0 10px oklch(0.488 0.243 264.376), 0 0 5px oklch(0.488 0.243 264.376);
 }

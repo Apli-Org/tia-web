@@ -202,11 +202,19 @@ async function RecentActivityTable() {
 
   return (
     <Card className="md:col-span-3">
-      <CardHeader>
-        <CardTitle>Activité récente</CardTitle>
-        <CardDescription>
-          Les dernières actions sur la plateforme
-        </CardDescription>
+      <CardHeader className="flex flex-row items-center justify-between">
+        <div>
+          <CardTitle>Activité récente</CardTitle>
+          <CardDescription>
+            Les dernières actions sur la plateforme
+          </CardDescription>
+        </div>
+        <Button variant="outline" size="sm" asChild>
+          <Link href="/activity">
+            Voir tout
+            <ArrowUpRight className="ml-1 h-4 w-4" />
+          </Link>
+        </Button>
       </CardHeader>
       <CardContent>
         {activities.length === 0 ? (
