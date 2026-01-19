@@ -21,6 +21,7 @@ import { checkAdminAction } from "@/actions/admin/roles.action"
 import { SubscriptionGrid } from "./subscription-grid"
 import { TestModeToggle } from "./test-mode-toggle"
 import { TestModeBanner } from "./test-mode-banner"
+import { RefreshButton } from "@/components/backoffice/refresh-button"
 
 async function SubscriptionsContent() {
   const pricing = await getSubscriptionPricing()
@@ -108,6 +109,7 @@ export default async function SubscriptionsPage() {
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
+        <RefreshButton />
       </header>
 
       <main className="flex-1 p-6">

@@ -22,6 +22,7 @@ import { getReportStats } from "@/actions/admin/reports.action"
 import { ProfilesTable } from "./profiles-table"
 import { ReportsFilters } from "../_components/reports-filters"
 import type { ReportStatus, ReportReason } from "@/actions/admin/moderation-types"
+import { RefreshButton } from "@/components/backoffice/refresh-button"
 
 type SearchParams = Promise<{
   status?: string
@@ -138,6 +139,7 @@ export default async function ProfilesPage({
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
+        <RefreshButton />
       </header>
 
       <main className="flex-1 p-6">

@@ -20,6 +20,7 @@ import { getLandingSection } from "@/actions/admin/landing.action"
 import { getCurrentAdmin } from "@/actions/admin/auth.action"
 import { checkAdminAction } from "@/actions/admin/roles.action"
 import { SECTION_METADATA, type SectionKey } from "@/lib/types/landing.types"
+import { RefreshButton } from "@/components/backoffice/refresh-button"
 
 import { HeroEditor } from "../_components/hero-editor"
 import { FeaturesEditor } from "../_components/features-editor"
@@ -140,6 +141,7 @@ export default async function SectionPage({ params }: PageProps) {
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
+        <RefreshButton />
       </header>
 
       <main className="flex-1 p-6">

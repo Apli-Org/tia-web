@@ -21,6 +21,7 @@ import { getAllPricingHistory } from "@/actions/admin/pricing.action"
 import { getCurrentAdmin } from "@/actions/admin/auth.action"
 import { checkAdminAction } from "@/actions/admin/roles.action"
 import { formatPrice } from "@/lib/pricing-utils"
+import { RefreshButton } from "@/components/backoffice/refresh-button"
 
 type SearchParams = Promise<{
   page?: string
@@ -253,6 +254,7 @@ export default async function PricingHistoryPage({
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
+        <RefreshButton />
       </header>
 
       <main className="flex-1 p-6">

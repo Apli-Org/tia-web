@@ -19,6 +19,7 @@ import { getConsumablePricing } from "@/actions/admin/pricing.action"
 import { getCurrentAdmin } from "@/actions/admin/auth.action"
 import { checkAdminAction } from "@/actions/admin/roles.action"
 import { ConsumableGrid } from "./consumable-grid"
+import { RefreshButton } from "@/components/backoffice/refresh-button"
 
 async function ConsumablesContent() {
   const pricing = await getConsumablePricing()
@@ -107,6 +108,7 @@ export default async function ConsumablesPage() {
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
+        <RefreshButton />
       </header>
 
       <main className="flex-1 p-6">

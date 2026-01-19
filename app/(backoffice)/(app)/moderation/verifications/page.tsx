@@ -21,6 +21,7 @@ import { checkAdminAction } from "@/actions/admin/roles.action"
 import { getVerificationStats } from "@/actions/admin/verifications.action"
 import { VerificationsTable } from "./verifications-table"
 import { VerificationsFilters } from "./verifications-filters"
+import { RefreshButton } from "@/components/backoffice/refresh-button"
 
 type SearchParams = Promise<{
   status?: string
@@ -155,6 +156,7 @@ export default async function VerificationsPage({
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
+        <RefreshButton />
       </header>
 
       <main className="flex-1 p-6">

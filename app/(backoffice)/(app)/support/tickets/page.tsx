@@ -22,6 +22,7 @@ import { getSupportStats, getAssignableAdmins, type TicketFilters } from "@/acti
 import { TicketsTable } from "./tickets-table"
 import { TicketsFilters } from "./tickets-filters"
 import { Pagination } from "./pagination"
+import { RefreshButton } from "@/components/backoffice/refresh-button"
 
 type SearchParams = Promise<{
   page?: string
@@ -159,6 +160,7 @@ export default async function TicketsPage({
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
+        <RefreshButton />
       </header>
 
       <main className="flex-1 p-6">

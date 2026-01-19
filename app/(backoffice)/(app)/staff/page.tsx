@@ -20,6 +20,7 @@ import { checkAdminAction } from "@/actions/admin/roles.action"
 import { StaffTable } from "./staff-table"
 import { StaffFilters } from "./staff-filters"
 import { CreateStaffButton } from "./create-staff-button"
+import { RefreshButton } from "@/components/backoffice/refresh-button"
 
 type SearchParams = Promise<{
   role?: string
@@ -154,6 +155,7 @@ export default async function StaffPage({
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
+        <RefreshButton />
       </header>
 
       <main className="flex-1 p-6">

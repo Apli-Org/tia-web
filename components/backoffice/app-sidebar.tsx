@@ -11,6 +11,7 @@ import {
   Settings,
   Shield,
   Tag,
+  Ticket,
   Users,
   UsersRound,
 } from "lucide-react";
@@ -84,6 +85,12 @@ const navItems: NavItem[] = [
     url: "/pricing/subscriptions",
     icon: CreditCard,
     action: "view_pricing",
+  },
+  {
+    title: "Codes Promo",
+    url: "/promo-codes",
+    icon: Ticket,
+    action: "manage_promo_codes",
   },
   {
     title: "Newsletter",

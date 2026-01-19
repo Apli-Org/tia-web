@@ -32,6 +32,7 @@ import { getAllLandingSections } from "@/actions/admin/landing.action"
 import { getCurrentAdmin } from "@/actions/admin/auth.action"
 import { checkAdminAction } from "@/actions/admin/roles.action"
 import type { SectionKey } from "@/lib/types/landing.types"
+import { RefreshButton } from "@/components/backoffice/refresh-button"
 
 const sectionIcons: Record<SectionKey, React.ReactNode> = {
   header: <Menu className="h-5 w-5" />,
@@ -211,6 +212,7 @@ export default async function LandingPage() {
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
+        <RefreshButton />
       </header>
 
       <main className="flex-1 p-6">

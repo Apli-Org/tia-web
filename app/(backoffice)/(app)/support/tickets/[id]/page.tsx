@@ -24,6 +24,7 @@ import {
 } from "@/actions/admin/support"
 import { TicketHeader } from "./ticket-header"
 import { TicketConversation } from "./ticket-conversation"
+import { RefreshButton } from "@/components/backoffice/refresh-button"
 
 type Params = Promise<{ id: string }>
 
@@ -91,6 +92,7 @@ export default async function TicketDetailPage({
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
+        <RefreshButton />
       </header>
 
       <main className="flex-1 p-6">

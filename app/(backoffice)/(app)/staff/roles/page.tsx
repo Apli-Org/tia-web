@@ -21,6 +21,7 @@ import { getRolesStats } from "@/actions/admin/roles.action"
 import { checkAdminAction } from "@/actions/admin/roles.action"
 import { RolesTable } from "./roles-table"
 import { CreateRoleButton } from "./create-role-button"
+import { RefreshButton } from "@/components/backoffice/refresh-button"
 
 async function RolesStats() {
   const stats = await getRolesStats()
@@ -144,6 +145,7 @@ export default async function RolesPage() {
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
+        <RefreshButton />
       </header>
 
       <main className="flex-1 p-6">

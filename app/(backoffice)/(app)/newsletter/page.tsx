@@ -16,6 +16,7 @@ import { checkAdminAction } from '@/actions/admin/roles.action'
 import { getNewsletterSubscriberCount } from '@/actions/admin/newsletter.action'
 import { NewsletterStats } from './newsletter-stats'
 import { NewsletterForm } from './newsletter-form'
+import { RefreshButton } from '@/components/backoffice/refresh-button'
 
 function StatsSkeleton() {
   return (
@@ -90,6 +91,7 @@ export default async function NewsletterPage() {
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
+        <RefreshButton />
       </header>
 
       <main className="flex-1 p-6">

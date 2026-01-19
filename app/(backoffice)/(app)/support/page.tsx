@@ -24,6 +24,7 @@ import { Badge } from "@/components/ui/badge"
 import { getCurrentAdmin } from "@/actions/admin/auth.action"
 import { checkAdminAction } from "@/actions/admin/roles.action"
 import { getSupportStats } from "@/actions/admin/support"
+import { RefreshButton } from "@/components/backoffice/refresh-button"
 
 async function SupportStats() {
   const stats = await getSupportStats()
@@ -169,6 +170,7 @@ export default async function SupportPage() {
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
+        <RefreshButton />
       </header>
 
       <main className="flex-1 p-6">

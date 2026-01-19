@@ -15,6 +15,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Skeleton } from "@/components/ui/skeleton"
 import { getCurrentAdmin } from "@/actions/admin/auth.action"
 import { getActivityStats } from "@/actions/admin/settings"
+import { RefreshButton } from "@/components/backoffice/refresh-button"
 
 async function ActivitySummary() {
   const stats = await getActivityStats()
@@ -104,6 +105,7 @@ export default async function SettingsPage() {
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
+        <RefreshButton />
       </header>
 
       <main className="flex-1 p-6">

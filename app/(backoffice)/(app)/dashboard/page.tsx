@@ -46,6 +46,7 @@ import {
   getRecentActivity,
 } from "@/actions/admin/dashboard.action"
 import { DashboardCharts } from "./dashboard-charts"
+import { RefreshButton } from "@/components/backoffice/refresh-button"
 
 function formatNumber(num: number): string {
   if (num >= 1000000) {
@@ -291,6 +292,7 @@ export default async function DashboardPage() {
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
+        <RefreshButton />
       </header>
 
       <main className="flex-1 space-y-6 p-6">

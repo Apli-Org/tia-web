@@ -26,6 +26,7 @@ import {
 import { LogsTable } from "./logs-table"
 import { LogsFilters } from "./logs-filters"
 import { Pagination } from "./pagination"
+import { RefreshButton } from "@/components/backoffice/refresh-button"
 
 type SearchParams = Promise<{
   page?: string
@@ -162,6 +163,7 @@ export default async function LogsPage({
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
+        <RefreshButton />
       </header>
 
       <main className="flex-1 p-6">
