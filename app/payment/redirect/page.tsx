@@ -3,24 +3,39 @@
 import { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 
+function getIsIOS() {
+  if (typeof window === "undefined") return false;
+  const userAgent = window.navigator.userAgent.toLowerCase();
+  return /iphone|ipad|ipod/.test(userAgent);
+}
+
 function PaymentRedirectContent() {
   const searchParams = useSearchParams();
-  const [deepLink, setDeepLink] = useState("");
+  const [appLink, setAppLink] = useState("");
   const [status, setStatus] = useState<"success" | "failed">("failed");
   const [showManualButton, setShowManualButton] = useState(false);
 
   useEffect(() => {
     const success = searchParams.get("success") === "true";
     const panier = searchParams.get("panier") || "";
+    const isIOS = getIsIOS();
 
     setStatus(success ? "success" : "failed");
 
-    const link = success
+    // iOS: Universal Link (HTTPS) - configuré dans apple-app-site-association
+    // Android: Custom scheme tiaapp://
+    const iosUniversalLink = success
+      ? `https://www.tia-meet.com/payment/redirect?success=true&panier=${encodeURIComponent(panier)}`
+      : `https://www.tia-meet.com/payment/redirect?success=false&panier=${encodeURIComponent(panier)}`;
+
+    const androidDeepLink = success
       ? `tiaapp://payment/success?panier=${encodeURIComponent(panier)}`
       : `tiaapp://payment/failed?panier=${encodeURIComponent(panier)}`;
 
-    setDeepLink(link);
+    const link = isIOS ? iosUniversalLink : androidDeepLink;
+    setAppLink(link);
 
+    // Tentative de redirection automatique
     window.location.href = link;
 
     const timeout = setTimeout(() => {
@@ -46,7 +61,7 @@ function PaymentRedirectContent() {
         </div>
 
         <h1 className="text-2xl font-bold text-gray-900 mb-3">
-          {status === "success" ? "Paiement réussi !" : "Paiement échoué"}
+          {status === "success" ? "Paiement effectué" : "Paiement échoué"}
         </h1>
 
         <p className="text-base text-gray-500 mb-8 leading-relaxed">
@@ -66,7 +81,7 @@ function PaymentRedirectContent() {
 
         {showManualButton && (
           <a
-            href={deepLink}
+            href={appLink}
             className="inline-block bg-gradient-to-r from-primary to-orange-500 text-white text-base font-semibold py-4 px-8 rounded-xl no-underline hover:scale-105 hover:shadow-lg hover:shadow-primary/30 transition-all duration-200"
           >
             {status === "success" ? "Ouvrir TIA" : "Retourner à TIA"}
