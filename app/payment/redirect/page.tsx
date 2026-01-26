@@ -1,37 +1,31 @@
 "use client";
 
-import { useEffect, Suspense } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
-
-function getIsIOS() {
-  if (typeof window === "undefined") return false;
-  const userAgent = window.navigator.userAgent.toLowerCase();
-  return /iphone|ipad|ipod/.test(userAgent);
-}
 
 function PaymentRedirectContent() {
   const searchParams = useSearchParams();
+  const [redirectAttempted, setRedirectAttempted] = useState(false);
 
   useEffect(() => {
+    // Éviter les redirections multiples
+    if (redirectAttempted) return;
+
     const success = searchParams.get("success") === "true";
     const panier = searchParams.get("panier") || "";
-    const isIOS = getIsIOS();
 
-    // iOS: Universal Link (HTTPS) - configuré dans apple-app-site-association
-    // Android: Custom scheme tiaapp://
-    const iosUniversalLink = success
-      ? `https://www.tia-meet.com/payment/redirect?success=true&panier=${encodeURIComponent(panier)}`
-      : `https://www.tia-meet.com/payment/redirect?success=false&panier=${encodeURIComponent(panier)}`;
-
-    const androidDeepLink = success
+    // Utiliser le custom scheme pour iOS et Android
+    // Le Universal Link est géré par le système iOS quand l'utilisateur arrive sur cette page
+    // Si on est ici, c'est que le Universal Link n'a pas ouvert l'app, donc on essaie le custom scheme
+    const deepLink = success
       ? `tiaapp://payment/success?panier=${encodeURIComponent(panier)}`
       : `tiaapp://payment/failed?panier=${encodeURIComponent(panier)}`;
 
-    const link = isIOS ? iosUniversalLink : androidDeepLink;
+    setRedirectAttempted(true);
 
-    // Tentative de redirection automatique
-    window.location.href = link;
-  }, [searchParams]);
+    // Tentative d'ouverture via custom scheme
+    window.location.href = deepLink;
+  }, [searchParams, redirectAttempted]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-50 via-pink-100 to-pink-200 p-5 font-sans">
