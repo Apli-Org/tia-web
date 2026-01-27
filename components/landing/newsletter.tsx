@@ -76,7 +76,7 @@ export function Newsletter({ content }: NewsletterProps) {
 
   return (
     <section
-      id="newsletter"
+      id="pre-inscription"
       ref={sectionRef}
       className="py-24 md:py-32 bg-linear-to-br from-primary/5 via-white to-pink-50 relative overflow-hidden"
     >

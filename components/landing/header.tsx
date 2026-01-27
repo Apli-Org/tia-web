@@ -19,7 +19,7 @@ const defaultContent = {
   ],
   ctaButton: {
     text: "Télécharger",
-    href: "#newsletter",
+    href: "#pre-inscription",
   },
 };
 
