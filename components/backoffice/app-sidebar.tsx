@@ -11,6 +11,7 @@ import {
   Loader2,
   LogOut,
   Mail,
+  Megaphone,
   Settings,
   Shield,
   Tag,
@@ -135,6 +136,13 @@ const navItems: NavItem[] = [
     url: "/newsletter",
     icon: Mail,
     action: "send_newsletter",
+    section: "communication",
+  },
+  {
+    title: "Publicités",
+    url: "/advertisements",
+    icon: Megaphone,
+    action: "view_advertisements",
     section: "communication",
   },
   {
