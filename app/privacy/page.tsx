@@ -466,9 +466,54 @@ export default function PrivacyPage() {
               </p>
             </section>
 
+            <section id="delete-data" className="mb-10">
+              <h2 className="text-3xl font-bold text-gray-900 mb-6 pb-3 border-b-2 border-primary/20">
+                10. Suppression des données utilisateur
+              </h2>
+              <p className="text-gray-600 mb-4">
+                Les utilisateur(ice)s peuvent demander la suppression de leurs
+                données personnelles à tout moment.
+              </p>
+              <p className="text-gray-600 mb-4">
+                Pour effectuer une demande, veuillez nous contacter à
+                l&apos;adresse suivante :
+              </p>
+              <div className="bg-gray-50 rounded-lg p-6 mb-4">
+                <p className="text-gray-700 flex items-center gap-2">
+                  <span>📧</span>
+                  <a
+                    href="mailto:ali@tia-meet.com"
+                    className="text-primary hover:underline font-medium"
+                  >
+                    ali@tia-meet.com
+                  </a>
+                </p>
+                <p className="text-gray-600 text-sm mt-2 italic">
+                  (en précisant l&apos;e-mail utilisé dans l&apos;application et
+                  l&apos;objet &quot;Demande de suppression de données&quot;)
+                </p>
+              </div>
+              <ul className="space-y-2">
+                <li className="flex items-start gap-2">
+                  <span className="text-primary mt-1">•</span>
+                  <span className="text-gray-700">
+                    La suppression des données sera effectuée dans un délai
+                    maximum de 30 jours.
+                  </span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-primary mt-1">•</span>
+                  <span className="text-gray-700">
+                    Certaines données peuvent être conservées temporairement si
+                    la loi l&apos;exige.
+                  </span>
+                </li>
+              </ul>
+            </section>
+
             <section className="mb-10">
               <h2 className="text-3xl font-bold text-gray-900 mb-6 pb-3 border-b-2 border-primary/20">
-                10. Protection des mineurs
+                11. Protection des mineurs
               </h2>
               <div className="bg-yellow-50 border-l-4 border-yellow-500 p-4 mb-4">
                 <p className="text-yellow-800 font-semibold">
@@ -483,7 +528,7 @@ export default function PrivacyPage() {
 
             <section className="mb-10">
               <h2 className="text-3xl font-bold text-gray-900 mb-6 pb-3 border-b-2 border-primary/20">
-                11. Cookies et technologies similaires
+                12. Cookies et technologies similaires
               </h2>
               <p className="text-gray-600 mb-4">
                 L&apos;Application peut utiliser des cookies ou technologies
@@ -515,7 +560,7 @@ export default function PrivacyPage() {
 
             <section className="mb-10">
               <h2 className="text-3xl font-bold text-gray-900 mb-6 pb-3 border-b-2 border-primary/20">
-                12. Modification de la politique
+                13. Modification de la politique
               </h2>
               <p className="text-gray-600 mb-4">
                 Cette Politique de Confidentialité peut être mise à jour à tout
@@ -529,7 +574,7 @@ export default function PrivacyPage() {
 
             <section className="mb-8">
               <h2 className="text-3xl font-bold text-gray-900 mb-6 pb-3 border-b-2 border-primary/20">
-                13. Contact
+                14. Contact
               </h2>
               <p className="text-gray-600 mb-6">
                 Pour toute question concernant cette Politique de
