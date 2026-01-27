@@ -15,6 +15,7 @@ const defaultContent = {
   navigationLinks: [
     { label: "Fonctionnalités", href: "#features" },
     { label: "FAQ", href: "#faq" },
+    { label: "Termes et Conditions", href: "/terms" },
   ],
   contactEmail: "ali@tia-meet.com",
   legalLinks: [
