@@ -224,7 +224,9 @@ export async function createAdvertisement(
     .insert({
       title: data.title,
       description: data.description || null,
-      image_url: data.image_url,
+      image_url: data.image_url || null,
+      video_url: data.video_url || null,
+      media_type: data.media_type,
       target_url: data.target_url || null,
       is_active: data.is_active ?? true,
       start_date: data.start_date || null,
@@ -526,4 +528,62 @@ export async function deleteAdvertisementImage(
   })
 
   return { success: true }
+}
+
+// Upload advertisement video
+export async function uploadAdvertisementVideo(
+  formData: FormData,
+  adminId: string
+): Promise<{ success: boolean; url?: string; error?: string }> {
+  const supabase = createAdminClient()
+
+  const file = formData.get('file') as File
+  if (!file) {
+    return { success: false, error: 'Aucun fichier fourni' }
+  }
+
+  // Validate file type
+  const allowedTypes = ['video/mp4', 'video/webm', 'video/ogg', 'video/quicktime']
+  if (!allowedTypes.includes(file.type)) {
+    return { success: false, error: 'Type de fichier non autorisé. Utilisez MP4, WebM, OGG ou MOV.' }
+  }
+
+  // Validate file size (max 50MB for videos)
+  if (file.size > 50 * 1024 * 1024) {
+    return { success: false, error: 'Fichier trop volumineux. Maximum 50MB.' }
+  }
+
+  // Generate unique filename
+  const ext = file.name.split('.').pop()
+  const filename = `videos/${crypto.randomUUID()}.${ext}`
+
+  // Convert file to buffer for Vercel compatibility
+  const arrayBuffer = await file.arrayBuffer()
+  const buffer = new Uint8Array(arrayBuffer)
+
+  const { error: uploadError } = await supabase.storage
+    .from('advertisements')
+    .upload(filename, buffer, {
+      contentType: file.type,
+      cacheControl: '3600',
+      upsert: false,
+    })
+
+  if (uploadError) {
+    console.error('Error uploading advertisement video:', uploadError)
+    return { success: false, error: uploadError.message }
+  }
+
+  const { data: { publicUrl } } = supabase.storage
+    .from('advertisements')
+    .getPublicUrl(filename)
+
+  // Log the upload
+  await supabase.from('admin_activity_logs').insert({
+    admin_id: adminId,
+    action: 'advertisement_video_uploaded',
+    details: { filename, url: publicUrl },
+  })
+
+  return { success: true, url: publicUrl }
 }

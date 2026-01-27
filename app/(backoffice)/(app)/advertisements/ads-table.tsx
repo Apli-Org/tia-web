@@ -1,4 +1,5 @@
 import Image from "next/image"
+import { ImageIcon, Video } from "lucide-react"
 import { getAdvertisements } from "@/actions/admin/advertisements.action"
 import type { AdvertisementFilters } from "@/lib/types/advertisements.types"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -79,8 +80,9 @@ export async function AdsTable({
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead className="w-24">Image</TableHead>
+                  <TableHead className="w-24">Média</TableHead>
                   <TableHead>Titre</TableHead>
+                  <TableHead>Type</TableHead>
                   <TableHead>Statut</TableHead>
                   <TableHead>Période</TableHead>
                   <TableHead className="text-right">Impressions</TableHead>
@@ -94,13 +96,25 @@ export async function AdsTable({
                   <TableRow key={ad.id}>
                     <TableCell>
                       <div className="relative h-16 w-24 overflow-hidden rounded-md border bg-muted">
-                        <Image
-                          src={ad.image_url}
-                          alt={ad.title}
-                          fill
-                          className="object-cover"
-                          unoptimized
-                        />
+                        {ad.media_type === "video" && ad.video_url ? (
+                          <video
+                            src={ad.video_url}
+                            className="w-full h-full object-cover"
+                            muted
+                          />
+                        ) : ad.image_url ? (
+                          <Image
+                            src={ad.image_url}
+                            alt={ad.title}
+                            fill
+                            className="object-cover"
+                            unoptimized
+                          />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center">
+                            <ImageIcon className="h-6 w-6 text-muted-foreground" />
+                          </div>
+                        )}
                       </div>
                     </TableCell>
                     <TableCell>
@@ -112,6 +126,21 @@ export async function AdsTable({
                           </span>
                         )}
                       </div>
+                    </TableCell>
+                    <TableCell>
+                      <Badge variant="outline" className="flex items-center gap-1 w-fit">
+                        {ad.media_type === "video" ? (
+                          <>
+                            <Video className="h-3 w-3" />
+                            Vidéo
+                          </>
+                        ) : (
+                          <>
+                            <ImageIcon className="h-3 w-3" />
+                            Image
+                          </>
+                        )}
+                      </Badge>
                     </TableCell>
                     <TableCell>{getStatusBadge(ad)}</TableCell>
                     <TableCell>

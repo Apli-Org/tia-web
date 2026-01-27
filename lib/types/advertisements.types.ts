@@ -1,8 +1,12 @@
+export type MediaType = 'image' | 'video'
+
 export interface Advertisement {
   id: string
   title: string
   description: string | null
-  image_url: string
+  image_url: string | null
+  video_url: string | null
+  media_type: MediaType
   target_url: string | null
   is_active: boolean
   start_date: string | null
@@ -68,7 +72,9 @@ export interface AdvertisementFilters {
 export interface CreateAdvertisementData {
   title: string
   description?: string
-  image_url: string
+  image_url?: string
+  video_url?: string
+  media_type: MediaType
   target_url?: string
   is_active?: boolean
   start_date?: string

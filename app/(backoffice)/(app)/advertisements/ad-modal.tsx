@@ -2,7 +2,7 @@
 
 import { useState, useTransition, useEffect, useRef } from "react"
 import Image from "next/image"
-import { Upload, X, Loader2, AlertCircle } from "lucide-react"
+import { Upload, X, Loader2, AlertCircle, ImageIcon, Video } from "lucide-react"
 
 import {
   Dialog,
@@ -17,12 +17,14 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Switch } from "@/components/ui/switch"
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import {
   createAdvertisement,
   updateAdvertisement,
   uploadAdvertisementImage,
+  uploadAdvertisementVideo,
 } from "@/actions/admin/advertisements.action"
-import type { Advertisement } from "@/lib/types/advertisements.types"
+import type { Advertisement, MediaType } from "@/lib/types/advertisements.types"
 import { toast } from "sonner"
 
 type AdModalProps = {
@@ -42,7 +44,9 @@ export function AdModal({ isOpen, onClose, adminId, ad }: AdModalProps) {
   // Form state
   const [title, setTitle] = useState("")
   const [description, setDescription] = useState("")
+  const [mediaType, setMediaType] = useState<MediaType>("image")
   const [imageUrl, setImageUrl] = useState("")
+  const [videoUrl, setVideoUrl] = useState("")
   const [targetUrl, setTargetUrl] = useState("")
   const [startDate, setStartDate] = useState("")
   const [endDate, setEndDate] = useState("")
@@ -53,7 +57,9 @@ export function AdModal({ isOpen, onClose, adminId, ad }: AdModalProps) {
       if (ad) {
         setTitle(ad.title)
         setDescription(ad.description || "")
-        setImageUrl(ad.image_url)
+        setMediaType(ad.media_type || "image")
+        setImageUrl(ad.image_url || "")
+        setVideoUrl(ad.video_url || "")
         setTargetUrl(ad.target_url || "")
         setStartDate(ad.start_date ? ad.start_date.slice(0, 10) : "")
         setEndDate(ad.end_date ? ad.end_date.slice(0, 10) : "")
@@ -61,7 +67,9 @@ export function AdModal({ isOpen, onClose, adminId, ad }: AdModalProps) {
       } else {
         setTitle("")
         setDescription("")
+        setMediaType("image")
         setImageUrl("")
+        setVideoUrl("")
         setTargetUrl("")
         setStartDate("")
         setEndDate("")
@@ -79,26 +87,50 @@ export function AdModal({ isOpen, onClose, adminId, ad }: AdModalProps) {
     setUploadError(null)
 
     try {
-      const allowedTypes = ["image/jpeg", "image/png", "image/webp", "image/gif"]
-      if (!allowedTypes.includes(file.type)) {
-        setUploadError("Type de fichier non autorisé. Utilisez JPEG, PNG, WebP ou GIF.")
-        return
-      }
+      if (mediaType === "image") {
+        const allowedTypes = ["image/jpeg", "image/png", "image/webp", "image/gif"]
+        if (!allowedTypes.includes(file.type)) {
+          setUploadError("Type de fichier non autorisé. Utilisez JPEG, PNG, WebP ou GIF.")
+          return
+        }
 
-      if (file.size > 5 * 1024 * 1024) {
-        setUploadError("Fichier trop volumineux (max 5MB)")
-        return
-      }
+        if (file.size > 5 * 1024 * 1024) {
+          setUploadError("Fichier trop volumineux (max 5MB)")
+          return
+        }
 
-      const formData = new FormData()
-      formData.append("file", file)
+        const formData = new FormData()
+        formData.append("file", file)
 
-      const result = await uploadAdvertisementImage(formData, adminId)
+        const result = await uploadAdvertisementImage(formData, adminId)
 
-      if (result.success && result.url) {
-        setImageUrl(result.url)
+        if (result.success && result.url) {
+          setImageUrl(result.url)
+        } else {
+          setUploadError(result.error || "Erreur lors du téléchargement")
+        }
       } else {
-        setUploadError(result.error || "Erreur lors du téléchargement")
+        const allowedTypes = ["video/mp4", "video/webm", "video/ogg", "video/quicktime"]
+        if (!allowedTypes.includes(file.type)) {
+          setUploadError("Type de fichier non autorisé. Utilisez MP4, WebM, OGG ou MOV.")
+          return
+        }
+
+        if (file.size > 50 * 1024 * 1024) {
+          setUploadError("Fichier trop volumineux (max 50MB)")
+          return
+        }
+
+        const formData = new FormData()
+        formData.append("file", file)
+
+        const result = await uploadAdvertisementVideo(formData, adminId)
+
+        if (result.success && result.url) {
+          setVideoUrl(result.url)
+        } else {
+          setUploadError(result.error || "Erreur lors du téléchargement")
+        }
       }
     } catch (err) {
       setUploadError("Erreur lors du téléchargement")
@@ -119,15 +151,22 @@ export function AdModal({ isOpen, onClose, adminId, ad }: AdModalProps) {
       return
     }
 
-    if (!imageUrl) {
+    if (mediaType === "image" && !imageUrl) {
       toast.error("L'image est requise")
+      return
+    }
+
+    if (mediaType === "video" && !videoUrl) {
+      toast.error("La vidéo est requise")
       return
     }
 
     const data = {
       title: title.trim(),
       description: description.trim() || undefined,
-      image_url: imageUrl,
+      media_type: mediaType,
+      image_url: mediaType === "image" ? imageUrl : undefined,
+      video_url: mediaType === "video" ? videoUrl : undefined,
       target_url: targetUrl.trim() || undefined,
       start_date: startDate ? new Date(startDate).toISOString() : undefined,
       end_date: endDate ? new Date(endDate).toISOString() : undefined,
@@ -197,16 +236,34 @@ export function AdModal({ isOpen, onClose, adminId, ad }: AdModalProps) {
           </div>
 
           <div className="space-y-2">
-            <Label>Image *</Label>
+            <Label>Type de média *</Label>
+            <Tabs value={mediaType} onValueChange={(v) => setMediaType(v as MediaType)}>
+              <TabsList className="grid w-full grid-cols-2">
+                <TabsTrigger value="image" className="flex items-center gap-2">
+                  <ImageIcon className="h-4 w-4" />
+                  Image
+                </TabsTrigger>
+                <TabsTrigger value="video" className="flex items-center gap-2">
+                  <Video className="h-4 w-4" />
+                  Vidéo
+                </TabsTrigger>
+              </TabsList>
+            </Tabs>
+          </div>
+
+          <div className="space-y-2">
+            <Label>{mediaType === "image" ? "Image *" : "Vidéo *"}</Label>
             <input
               ref={fileInputRef}
               type="file"
-              accept="image/jpeg,image/png,image/webp,image/gif"
+              accept={mediaType === "image"
+                ? "image/jpeg,image/png,image/webp,image/gif"
+                : "video/mp4,video/webm,video/ogg,video/quicktime"}
               onChange={handleFileSelect}
               className="hidden"
             />
 
-            {imageUrl ? (
+            {mediaType === "image" && imageUrl ? (
               <div className="relative group">
                 <div className="relative w-full h-40 rounded-lg overflow-hidden border bg-muted">
                   <Image
@@ -242,6 +299,41 @@ export function AdModal({ isOpen, onClose, adminId, ad }: AdModalProps) {
                   </Button>
                 </div>
               </div>
+            ) : mediaType === "video" && videoUrl ? (
+              <div className="relative group">
+                <div className="relative w-full h-40 rounded-lg overflow-hidden border bg-muted">
+                  <video
+                    src={videoUrl}
+                    className="w-full h-full object-cover"
+                    controls
+                    muted
+                  />
+                </div>
+                <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg flex items-center justify-center gap-2">
+                  <Button
+                    type="button"
+                    variant="secondary"
+                    size="sm"
+                    onClick={() => fileInputRef.current?.click()}
+                    disabled={isUploading}
+                  >
+                    {isUploading ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : (
+                      <Upload className="h-4 w-4" />
+                    )}
+                    <span className="ml-2">Changer</span>
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="destructive"
+                    size="sm"
+                    onClick={() => setVideoUrl("")}
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
+                </div>
+              </div>
             ) : (
               <div
                 onClick={() => fileInputRef.current?.click()}
@@ -251,12 +343,18 @@ export function AdModal({ isOpen, onClose, adminId, ad }: AdModalProps) {
                   <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
                 ) : (
                   <>
-                    <Upload className="h-8 w-8 text-muted-foreground mb-2" />
+                    {mediaType === "image" ? (
+                      <ImageIcon className="h-8 w-8 text-muted-foreground mb-2" />
+                    ) : (
+                      <Video className="h-8 w-8 text-muted-foreground mb-2" />
+                    )}
                     <span className="text-sm text-muted-foreground">
                       Cliquez pour télécharger
                     </span>
                     <span className="text-xs text-muted-foreground mt-1">
-                      JPEG, PNG, WebP ou GIF (max 5MB)
+                      {mediaType === "image"
+                        ? "JPEG, PNG, WebP ou GIF (max 5MB)"
+                        : "MP4, WebM, OGG ou MOV (max 50MB)"}
                     </span>
                   </>
                 )}
