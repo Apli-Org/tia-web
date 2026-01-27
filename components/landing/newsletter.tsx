@@ -10,12 +10,12 @@ import type { NewsletterContent } from "@/lib/types/landing.types";
 
 // Default content
 const defaultContent = {
-  badgeText: "Restez informé",
-  headline: "Soyez les premiers informés",
-  subheadline: "Inscrivez-vous à notre newsletter et recevez des nouvelles exclusives sur le lancement de TIA",
+  badgeText: "",
+  headline: "Il y a un moment parfait pour commencer. C'est maintenant.",
+  subheadline: "En vous pré-inscrivant dès maintenant, vous rejoignez les tout premiers utilisateurs de Tia. Accès anticipé, informations prioritaires et surprises réservées aux early users le jour J. Le bon moment, c'est maintenant.",
   inputLabel: "Adresse email",
   inputPlaceholder: "votre@email.com",
-  submitButtonText: "S'inscrire à la newsletter",
+  submitButtonText: "Je choisis Tia",
   submittingText: "Inscription en cours...",
   successTitle: "Merci de votre inscription !",
   successMessage: "Vous recevrez bientôt des nouvelles exclusives sur TIA",
@@ -95,9 +95,9 @@ export function Newsletter({ content }: NewsletterProps) {
             {badgeText}
           </span>
           <h2 className="text-4xl md:text-6xl font-bold mb-6 bg-linear-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
-            {headline}
+            Il y a un moment parfait pour commencer.<br />C'est maintenant.
           </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-xl text-gray-600 max-w-5xl mx-auto leading-relaxed">
             {subheadline}
           </p>
         </div>
