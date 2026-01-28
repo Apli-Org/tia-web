@@ -3,31 +3,38 @@
 import { Footer } from "@/components/landing/footer";
 import { Header } from "@/components/landing/header";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
-export default function ChildSafetyPage() {
+function ChildSafetyContent() {
+  const searchParams = useSearchParams();
+  const isEmbed = searchParams.get("embed") === "true";
+
   return (
     <div className="min-h-screen bg-linear-to-b from-gray-50 to-white">
-      <Header />
-      <main className="container mx-auto max-w-5xl px-4 py-12">
-        <Link
-          href="/"
-          className="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors mb-8 group"
-        >
-          <svg
-            className="w-5 h-5 transition-transform group-hover:-translate-x-1"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
+      {!isEmbed && <Header />}
+      <main className={`container mx-auto max-w-5xl px-4 ${isEmbed ? "py-4" : "py-12"}`}>
+        {!isEmbed && (
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors mb-8 group"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M15 19l-7-7 7-7"
-            />
-          </svg>
-          Retour
-        </Link>
+            <svg
+              className="w-5 h-5 transition-transform group-hover:-translate-x-1"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M15 19l-7-7 7-7"
+              />
+            </svg>
+            Retour
+          </Link>
+        )}
 
         <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
           <div className="bg-linear-to-r from-blue-500/10 via-indigo-50 to-purple-50 px-8 py-12 border-b border-gray-100">
@@ -329,7 +336,15 @@ export default function ChildSafetyPage() {
           </article>
         </div>
       </main>
-      <Footer />
+      {!isEmbed && <Footer />}
     </div>
+  );
+}
+
+export default function ChildSafetyPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Chargement...</div>}>
+      <ChildSafetyContent />
+    </Suspense>
   );
 }
