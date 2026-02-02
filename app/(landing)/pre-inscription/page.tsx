@@ -1,11 +1,11 @@
-import { Newsletter } from "@/components/landing/newsletter";
-import { Header } from "@/components/landing/header";
-import { Footer } from "@/components/landing/footer";
 import { getPublishedLandingContent } from "@/actions/landing-public.action";
+import { Footer } from "@/components/landing/footer";
+import { Header } from "@/components/landing/header";
+import { Newsletter } from "@/components/landing/newsletter";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Inscription - TIA | Rejoignez la communauté",
+  title: "Pre-inscription - TIA | Rejoignez la communauté",
   description:
     "Inscrivez-vous à la newsletter TIA pour recevoir les dernières actualités et offres exclusives.",
 };
