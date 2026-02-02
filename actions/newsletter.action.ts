@@ -10,7 +10,9 @@ export interface SubscribeResult {
 }
 
 export async function subscribeToNewsletter(
-  email: string
+  email: string,
+  numero: string,
+  prenom?: string
 ): Promise<SubscribeResult> {
   try {
     // Validate email format
@@ -22,12 +24,25 @@ export async function subscribeToNewsletter(
       };
     }
 
+    // Validate numero (required)
+    if (!numero || numero.trim().length < 8) {
+      return {
+        success: false,
+        error: 'Numéro de téléphone invalide',
+      };
+    }
+
     const supabase = createClient();
 
-    // Insert email into newsletter_subscribers table
+    // Insert subscriber into newsletter_subscribers table
     const { error: insertError } = await supabase
       .from('newsletter_subscribers')
-      .insert([{ email, subscribed_at: new Date().toISOString() }]);
+      .insert([{
+        email,
+        numero: numero.trim(),
+        prenom: prenom?.trim() || null,
+        subscribed_at: new Date().toISOString()
+      }]);
 
     if (insertError) {
       // Handle duplicate email error

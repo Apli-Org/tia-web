@@ -16,6 +16,7 @@ const defaultContent = {
     { href: "#features", label: "Fonctionnalités" },
     { href: "#testimonials", label: "Testimonials" },
     { href: "#faq", label: "FAQ" },
+    { href: "/inscription", label: "Pré-inscription" },
   ],
   ctaButton: {
     text: "Télécharger",
@@ -60,15 +61,19 @@ export function Header({ content }: HeaderProps) {
           </Link>
 
           <nav className="hidden md:flex items-center gap-8">
-            {navItems.map((item, index) => (
-              <a
-                key={`nav-${index}`}
-                href={isLandingPage ? item.href : `/${item.href}`}
-                className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
-              >
-                {item.label}
-              </a>
-            ))}
+            {navItems.map((item, index) => {
+              const isExternalLink = item.href.startsWith("/");
+              const href = isExternalLink ? item.href : (isLandingPage ? item.href : `/${item.href}`);
+              return (
+                <a
+                  key={`nav-${index}`}
+                  href={href}
+                  className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
+                >
+                  {item.label}
+                </a>
+              );
+            })}
           </nav>
 
           <div className="flex items-center gap-4">
@@ -101,16 +106,20 @@ export function Header({ content }: HeaderProps) {
               </SheetTrigger>
               <SheetContent side="right" className="w-[300px] sm:w-[400px]">
                 <nav className="flex flex-col gap-4 mt-8">
-                  {navItems.map((item, index) => (
-                    <a
-                      key={`mobile-nav-${index}`}
-                      href={isLandingPage ? item.href : `/${item.href}`}
-                      onClick={() => setOpen(false)}
-                      className="text-lg font-medium hover:text-primary transition-colors"
-                    >
-                      {item.label}
-                    </a>
-                  ))}
+                  {navItems.map((item, index) => {
+                    const isExternalLink = item.href.startsWith("/");
+                    const href = isExternalLink ? item.href : (isLandingPage ? item.href : `/${item.href}`);
+                    return (
+                      <a
+                        key={`mobile-nav-${index}`}
+                        href={href}
+                        onClick={() => setOpen(false)}
+                        className="text-lg font-medium hover:text-primary transition-colors"
+                      >
+                        {item.label}
+                      </a>
+                    );
+                  })}
                   <Button asChild className="mt-4">
                     <a href={isLandingPage ? ctaButton.href : `/${ctaButton.href}`} onClick={() => setOpen(false)}>
                       {ctaButton.text}

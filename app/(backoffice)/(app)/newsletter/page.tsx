@@ -16,6 +16,7 @@ import { checkAdminAction } from '@/actions/admin/roles.action'
 import { getNewsletterSubscriberCount } from '@/actions/admin/newsletter.action'
 import { NewsletterStats } from './newsletter-stats'
 import { NewsletterForm } from './newsletter-form'
+import { NewsletterExport } from './newsletter-export'
 import { RefreshButton } from '@/components/backoffice/refresh-button'
 
 function StatsSkeleton() {
@@ -96,11 +97,14 @@ export default async function NewsletterPage() {
 
       <main className="flex-1 p-6">
         <div className="space-y-6">
-          <div>
-            <h1 className="text-3xl font-bold tracking-tight">Newsletter</h1>
-            <p className="text-muted-foreground">
-              Envoyez des emails personnalisés à tous les abonnés
-            </p>
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-3xl font-bold tracking-tight">Newsletter</h1>
+              <p className="text-muted-foreground">
+                Envoyez des emails personnalisés à tous les abonnés
+              </p>
+            </div>
+            <NewsletterExport adminId={admin.id} />
           </div>
 
           <Suspense fallback={<StatsSkeleton />}>

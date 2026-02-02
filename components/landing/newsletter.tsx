@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
-import { Check, Mail, Sparkles } from "lucide-react";
+import { Check, Mail, Phone, Sparkles, User } from "lucide-react";
 import { subscribeToNewsletter } from "@/actions/newsletter.action";
 import type { NewsletterContent } from "@/lib/types/landing.types";
 
@@ -29,6 +29,8 @@ interface NewsletterProps {
 export function Newsletter({ content }: NewsletterProps) {
   const { ref: sectionRef, isVisible } = useScrollAnimation({ threshold: 0.2 });
   const [email, setEmail] = useState("");
+  const [numero, setNumero] = useState("");
+  const [prenom, setPrenom] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState("");
@@ -45,16 +47,18 @@ export function Newsletter({ content }: NewsletterProps) {
   const disclaimer = content?.disclaimer || defaultContent.disclaimer;
 
   const isEmailValid = email.includes("@");
+  const isNumeroValid = numero.trim().length >= 8;
+  const isFormValid = isEmailValid && isNumeroValid;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!isEmailValid || !email) return;
+    if (!isFormValid) return;
 
     setIsSubmitting(true);
     setError("");
 
     try {
-      const result = await subscribeToNewsletter(email);
+      const result = await subscribeToNewsletter(email, numero, prenom || undefined);
 
       if (!result.success) {
         setError(result.error || "Une erreur est survenue. Veuillez réessayer.");
@@ -63,6 +67,8 @@ export function Newsletter({ content }: NewsletterProps) {
 
       setIsSuccess(true);
       setEmail("");
+      setNumero("");
+      setPrenom("");
 
       setTimeout(() => {
         setIsSuccess(false);
@@ -124,6 +130,25 @@ export function Newsletter({ content }: NewsletterProps) {
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="space-y-2">
                   <label
+                    htmlFor="prenom"
+                    className="flex items-center gap-2 text-sm font-medium text-gray-700"
+                  >
+                    <User className="w-4 h-4 text-primary" />
+                    Prénom (optionnel)
+                  </label>
+                  <Input
+                    id="prenom"
+                    type="text"
+                    placeholder="Votre prénom"
+                    value={prenom}
+                    onChange={(e) => setPrenom(e.target.value)}
+                    className="h-14 text-base"
+                    disabled={isSubmitting}
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <label
                     htmlFor="email"
                     className="flex items-center gap-2 text-sm font-medium text-gray-700"
                   >
@@ -140,17 +165,38 @@ export function Newsletter({ content }: NewsletterProps) {
                     disabled={isSubmitting}
                     aria-invalid={email && !isEmailValid ? true : undefined}
                   />
-                  {error && (
-                    <p className="text-sm text-destructive">
-                      {error}
-                    </p>
-                  )}
                 </div>
+
+                <div className="space-y-2">
+                  <label
+                    htmlFor="numero"
+                    className="flex items-center gap-2 text-sm font-medium text-gray-700"
+                  >
+                    <Phone className="w-4 h-4 text-primary" />
+                    Numéro de téléphone
+                  </label>
+                  <Input
+                    id="numero"
+                    type="tel"
+                    placeholder="034 00 000 00"
+                    value={numero}
+                    onChange={(e) => setNumero(e.target.value)}
+                    className="h-14 text-base"
+                    disabled={isSubmitting}
+                    aria-invalid={numero && !isNumeroValid ? true : undefined}
+                  />
+                </div>
+
+                {error && (
+                  <p className="text-sm text-destructive text-center">
+                    {error}
+                  </p>
+                )}
 
                 <Button
                   type="submit"
                   className="w-full h-14 text-base font-semibold bg-linear-to-r from-primary to-pink-500 hover:from-primary/90 hover:to-pink-500/90 transition-all shadow-lg hover:shadow-xl"
-                  disabled={!email || !isEmailValid || isSubmitting}
+                  disabled={!isFormValid || isSubmitting}
                 >
                   {isSubmitting ? submittingText : submitButtonText}
                 </Button>

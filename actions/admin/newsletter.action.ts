@@ -154,3 +154,44 @@ export async function sendNewsletter(
     }
   }
 }
+
+export async function exportNewsletterSubscribersCSV(
+  adminId: string
+): Promise<{ success: boolean; data?: string; error?: string }> {
+  const hasPermission = await checkAdminAction(adminId, 'send_newsletter')
+  if (!hasPermission) {
+    return { success: false, error: 'Permission insuffisante' }
+  }
+
+  const supabase = createAdminClient()
+
+  const { data, error } = await supabase
+    .from('newsletter_subscribers')
+    .select('email, numero, prenom, subscribed_at')
+    .order('subscribed_at', { ascending: false })
+
+  if (error) {
+    console.error('Error exporting newsletter subscribers:', error)
+    return { success: false, error: 'Erreur lors de l\'export' }
+  }
+
+  const headers = [
+    'Email',
+    'Numéro',
+    'Prénom',
+    'Date d\'inscription',
+  ]
+
+  const rows = (data ?? []).map((subscriber) => [
+    subscriber.email,
+    subscriber.numero ?? '',
+    subscriber.prenom ?? '',
+    subscriber.subscribed_at
+      ? new Date(subscriber.subscribed_at).toLocaleDateString('fr-FR')
+      : '',
+  ])
+
+  const csv = [headers.join(','), ...rows.map((row) => row.join(','))].join('\n')
+
+  return { success: true, data: csv }
+}
