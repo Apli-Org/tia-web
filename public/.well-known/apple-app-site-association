@@ -4,7 +4,7 @@
     "details": [
       {
         "appID": "BK3ZRL5966.com.apli.tiaapp",  
-        "paths": ["/payment/*"]
+        "paths": ["/payment/redirect*"]
       }
     ]
   }
