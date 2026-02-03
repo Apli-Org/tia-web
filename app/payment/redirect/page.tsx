@@ -17,9 +17,8 @@ function PaymentRedirectContent() {
     // Utiliser le custom scheme pour iOS et Android
     // Le Universal Link est géré par le système iOS quand l'utilisateur arrive sur cette page
     // Si on est ici, c'est que le Universal Link n'a pas ouvert l'app, donc on essaie le custom scheme
-    const deepLink = success
-      ? `tiaapp://payment/success?panier=${encodeURIComponent(panier)}`
-      : `tiaapp://payment/failed?panier=${encodeURIComponent(panier)}`;
+    // On redirige vers payment-callback qui vérifie le statut de la transaction
+    const deepLink = `tiaapp://payment-callback?status=${success ? "success" : "failed"}&panier=${encodeURIComponent(panier)}`;
 
     setRedirectAttempted(true);
 

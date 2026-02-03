@@ -1,12 +1,23 @@
 {
   "applinks": {
-    "apps": [],
     "details": [
       {
-        "appID": "BK3ZRL5966.com.apli.tiaapp",  
-        "paths": ["/payment/redirect*"]
+        "appIDs": ["BK3ZRL5966.com.apli.tiaapp"],
+        "components": [
+          {
+            "/": "/payment/redirect",
+            "comment": "Payment redirect exact"
+          },
+          {
+            "/": "/payment/redirect?*",
+            "comment": "Payment redirect with query params"
+          }
+        ]
       }
     ]
+  },
+  "webcredentials": {
+    "apps": ["BK3ZRL5966.com.apli.tiaapp"]
   }
 }
 
