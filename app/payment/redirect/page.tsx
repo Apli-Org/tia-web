@@ -46,10 +46,10 @@ function PaymentRedirectContent() {
           En cas de problème, contactez le support&nbsp;:
           <br />
           <a
-            href="mailto:ali@tia-meet.com"
+            href="mailto:info@tia-meet.com"
             className="text-primary hover:underline font-medium"
           >
-            ali@tia-meet.com
+            info@tia-meet.com
           </a>
         </p>
 

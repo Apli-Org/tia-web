@@ -17,7 +17,7 @@ const defaultContent = {
     { label: "FAQ", href: "#faq" },
     { label: "Termes et Conditions", href: "/terms" },
   ],
-  contactEmail: "ali@tia-meet.com",
+  contactEmail: "info@tia-meet.com",
   legalLinks: [
     { name: "Politique de confidentialité", href: "/privacy" },
     { name: "Protection des enfants", href: "/child-safety" },

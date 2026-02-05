@@ -265,7 +265,7 @@ function ChildSafetyContent() {
                       href="mailto:child-safety@tia-meet.com"
                       className="text-lg font-semibold text-cyan-600 hover:underline"
                     >
-                      ali@tia-meet.com
+                      info@tia-meet.com
                     </a>
                   </div>
                 </div>

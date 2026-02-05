@@ -402,10 +402,10 @@ function TermsContent() {
                 les Données Personnelles, en adressant un mail avec accusé de
                 réception à{" "}
                 <a
-                  href="mailto:ali@tia-meet.com"
+                  href="mailto:info@tia-meet.com"
                   className="text-primary hover:underline font-medium"
                 >
-                  ali@tia-meet.com
+                  info@tia-meet.com
                 </a>
                 .
               </p>
@@ -451,10 +451,10 @@ function TermsContent() {
                 L&apos;Utilisateur peut mettre fin à tout moment, à son adhésion
                 au Service par mail avec accusé de réception à{" "}
                 <a
-                  href="mailto:ali@tia-meet.com"
+                  href="mailto:info@tia-meet.com"
                   className="text-primary hover:underline font-medium"
                 >
-                  ali@tia-meet.com
+                  info@tia-meet.com
                 </a>
                 . APLI SARLU lui communiquera toutes les informations
                 nécessaires sur les modalités de la résiliation.

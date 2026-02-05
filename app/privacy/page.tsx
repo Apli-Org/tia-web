@@ -91,10 +91,10 @@ function PrivacyContent() {
                 <p className="text-gray-700">
                   <strong>Email de contact :</strong>{" "}
                   <a
-                    href="mailto:ali@tia-meet.com"
+                    href="mailto:info@tia-meet.com"
                     className="text-primary hover:underline"
                   >
-                    ali@tia-meet.com
+                    info@tia-meet.com
                   </a>
                 </p>
               </div>
@@ -430,10 +430,10 @@ function PrivacyContent() {
               <p className="text-gray-600">
                 Les demandes peuvent être adressées à :{" "}
                 <a
-                  href="mailto:ali@tia-meet.com"
+                  href="mailto:info@tia-meet.com"
                   className="text-primary hover:underline font-medium"
                 >
-                  ali@tia-meet.com
+                  info@tia-meet.com
                 </a>
               </p>
             </section>
@@ -489,10 +489,10 @@ function PrivacyContent() {
                 <p className="text-gray-700 flex items-center gap-2">
                   <span>📧</span>
                   <a
-                    href="mailto:ali@tia-meet.com"
+                    href="mailto:info@tia-meet.com"
                     className="text-primary hover:underline font-medium"
                   >
-                    ali@tia-meet.com
+                    info@tia-meet.com
                   </a>
                 </p>
                 <p className="text-gray-600 text-sm mt-2 italic">
@@ -608,10 +608,10 @@ function PrivacyContent() {
                     Email de contact
                   </p>
                   <a
-                    href="mailto:ali@tia-meet.com"
+                    href="mailto:info@tia-meet.com"
                     className="text-lg font-semibold text-primary hover:underline"
                   >
-                    ali@tia-meet.com
+                    info@tia-meet.com
                   </a>
                 </div>
               </div>
