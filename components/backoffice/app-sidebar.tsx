@@ -16,6 +16,7 @@ import {
   Shield,
   Tag,
   Ticket,
+  Timer,
   Users,
   UsersRound,
 } from "lucide-react";
@@ -108,6 +109,13 @@ const navItems: NavItem[] = [
     url: "/moderation",
     icon: Shield,
     action: "view_reports",
+    section: "moderation",
+  },
+  {
+    title: "Gestion dislike",
+    url: "/moderation/passed-profiles",
+    icon: Timer,
+    action: "manage_cron_settings",
     section: "moderation",
   },
   {
