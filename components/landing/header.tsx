@@ -39,6 +39,7 @@ export function Header({ content }: HeaderProps) {
     text: content?.ctaButton?.text || defaultContent.ctaButton.text,
     href: content?.ctaButton?.href || defaultContent.ctaButton.href,
   };
+  const isCtaExternal = ctaButton.href.startsWith("http://") || ctaButton.href.startsWith("https://");
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur-md">
@@ -62,12 +63,14 @@ export function Header({ content }: HeaderProps) {
 
           <nav className="hidden md:flex items-center gap-8">
             {navItems.map((item, index) => {
-              const isExternalLink = item.href.startsWith("/");
-              const href = isExternalLink ? item.href : (isLandingPage ? item.href : `/${item.href}`);
+              const isHttpLink = item.href.startsWith("http://") || item.href.startsWith("https://");
+              const isAbsoluteLink = item.href.startsWith("/");
+              const href = isHttpLink ? item.href : (isAbsoluteLink ? item.href : (isLandingPage ? item.href : `/${item.href}`));
               return (
                 <a
                   key={`nav-${index}`}
                   href={href}
+                  {...(isHttpLink ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                   className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
                 >
                   {item.label}
@@ -78,7 +81,8 @@ export function Header({ content }: HeaderProps) {
 
           <div className="flex items-center gap-4">
             <a
-              href={isLandingPage ? ctaButton.href : `/${ctaButton.href}`}
+              href={isCtaExternal ? ctaButton.href : (isLandingPage ? ctaButton.href : `/${ctaButton.href}`)}
+              {...(isCtaExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
               className="transition-transform hover:scale-105 duration-300"
             >
               <button type="button" className="bg-primary text-white py-2 px-4 rounded-lg flex items-center gap-2 hover:bg-primary-dark transition-all duration-300 cursor-pointer">
@@ -107,12 +111,14 @@ export function Header({ content }: HeaderProps) {
               <SheetContent side="right" className="w-[300px] sm:w-[400px]">
                 <nav className="flex flex-col gap-4 mt-8">
                   {navItems.map((item, index) => {
-                    const isExternalLink = item.href.startsWith("/");
-                    const href = isExternalLink ? item.href : (isLandingPage ? item.href : `/${item.href}`);
+                    const isHttpLink = item.href.startsWith("http://") || item.href.startsWith("https://");
+                    const isAbsoluteLink = item.href.startsWith("/");
+                    const href = isHttpLink ? item.href : (isAbsoluteLink ? item.href : (isLandingPage ? item.href : `/${item.href}`));
                     return (
                       <a
                         key={`mobile-nav-${index}`}
                         href={href}
+                        {...(isHttpLink ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                         onClick={() => setOpen(false)}
                         className="text-lg font-medium hover:text-primary transition-colors"
                       >
@@ -121,7 +127,11 @@ export function Header({ content }: HeaderProps) {
                     );
                   })}
                   <Button asChild className="mt-4">
-                    <a href={isLandingPage ? ctaButton.href : `/${ctaButton.href}`} onClick={() => setOpen(false)}>
+                    <a
+                      href={isCtaExternal ? ctaButton.href : (isLandingPage ? ctaButton.href : `/${ctaButton.href}`)}
+                      {...(isCtaExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                      onClick={() => setOpen(false)}
+                    >
                       {ctaButton.text}
                     </a>
                   </Button>

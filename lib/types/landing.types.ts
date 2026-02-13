@@ -45,6 +45,7 @@ export interface SocialProofItem {
 export interface AppStoreBadge {
   image: string
   tooltip: string
+  href?: string
 }
 
 export interface AppStoreBadges {
@@ -136,6 +137,8 @@ export interface CTAContent {
   appStoreBadge: string
   googlePlayTooltip: string
   appStoreTooltip: string
+  googlePlayHref?: string
+  appStoreHref?: string
   stats: CTAStats
 }
 

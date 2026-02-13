@@ -27,8 +27,8 @@ const defaultHeroContent: HeroContent = {
   floatingBadges: [],
   socialProof: [],
   appStoreBadges: {
-    googlePlay: { image: '', tooltip: '' },
-    appStore: { image: '', tooltip: '' },
+    googlePlay: { image: '', tooltip: '', href: '' },
+    appStore: { image: '', tooltip: '', href: '' },
   },
   scrollIndicatorText: '',
 }
@@ -44,11 +44,13 @@ export function HeroEditor({ section, adminId }: HeroEditorProps) {
     appStoreBadges: {
       googlePlay: {
         image: sectionContent?.appStoreBadges?.googlePlay?.image || '',
-        tooltip: sectionContent?.appStoreBadges?.googlePlay?.tooltip || ''
+        tooltip: sectionContent?.appStoreBadges?.googlePlay?.tooltip || '',
+        href: sectionContent?.appStoreBadges?.googlePlay?.href || '',
       },
       appStore: {
         image: sectionContent?.appStoreBadges?.appStore?.image || '',
-        tooltip: sectionContent?.appStoreBadges?.appStore?.tooltip || ''
+        tooltip: sectionContent?.appStoreBadges?.appStore?.tooltip || '',
+        href: sectionContent?.appStoreBadges?.appStore?.href || '',
       },
     },
   })
@@ -57,7 +59,7 @@ export function HeroEditor({ section, adminId }: HeroEditorProps) {
     setContent(prev => ({ ...prev, ...updates }))
   }
 
-  const updateAppStoreBadge = (store: 'googlePlay' | 'appStore', updates: { image?: string; tooltip?: string }) => {
+  const updateAppStoreBadge = (store: 'googlePlay' | 'appStore', updates: { image?: string; tooltip?: string; href?: string }) => {
     setContent(prev => ({
       ...prev,
       appStoreBadges: {
@@ -236,6 +238,15 @@ export function HeroEditor({ section, adminId }: HeroEditorProps) {
                   placeholder="Application en cours d'approbation..."
                 />
               </div>
+              <div className="space-y-2">
+                <Label>Lien Google Play</Label>
+                <Input
+                  value={content.appStoreBadges?.googlePlay?.href || ''}
+                  onChange={(e) => updateAppStoreBadge('googlePlay', { href: e.target.value })}
+                  placeholder="https://play.google.com/store/apps/details?id=..."
+                />
+                <p className="text-xs text-muted-foreground">Laissez vide pour afficher &quot;Bientôt disponible&quot;</p>
+              </div>
             </div>
             <div className="space-y-4">
               <ImageUpload
@@ -251,6 +262,15 @@ export function HeroEditor({ section, adminId }: HeroEditorProps) {
                   onChange={(e) => updateAppStoreBadge('appStore', { tooltip: e.target.value })}
                   placeholder="Application en cours de développement..."
                 />
+              </div>
+              <div className="space-y-2">
+                <Label>Lien App Store</Label>
+                <Input
+                  value={content.appStoreBadges?.appStore?.href || ''}
+                  onChange={(e) => updateAppStoreBadge('appStore', { href: e.target.value })}
+                  placeholder="https://apps.apple.com/app/..."
+                />
+                <p className="text-xs text-muted-foreground">Laissez vide pour afficher &quot;Bientôt disponible&quot;</p>
               </div>
             </div>
           </div>

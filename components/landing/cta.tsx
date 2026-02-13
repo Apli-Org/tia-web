@@ -37,6 +37,8 @@ export function CTA({ content }: CTAProps) {
   const appStoreBadge = content?.appStoreBadge || defaultContent.appStoreBadge;
   const googlePlayTooltip = content?.googlePlayTooltip || defaultContent.googlePlayTooltip;
   const appStoreTooltip = content?.appStoreTooltip || defaultContent.appStoreTooltip;
+  const googlePlayHref = content?.googlePlayHref || '';
+  const appStoreHref = content?.appStoreHref || '';
   const stats = content?.stats || defaultContent.stats;
 
   return (
@@ -90,42 +92,66 @@ export function CTA({ content }: CTAProps) {
                 : "opacity-0 translate-y-8"
             }`}
           >
-            <div className="relative group cursor-pointer transform hover:scale-105 transition-transform duration-300">
-              <Image
-                src={googlePlayBadge}
-                alt="Bientôt sur Google Play"
-                width={160}
-                height={60}
-                className="h-14 object-contain grayscale opacity-70 transition-all duration-300"
-              />
-              <div className="absolute inset-0 flex items-center justify-center bg-black/40 rounded-lg">
-                <span className="text-white text-sm font-medium">
-                  Bientôt disponible
-                </span>
+            {googlePlayHref ? (
+              <a href={googlePlayHref} target="_blank" rel="noopener noreferrer" className="relative group transform hover:scale-105 transition-transform duration-300">
+                <Image
+                  src={googlePlayBadge}
+                  alt="Télécharger sur Google Play"
+                  width={160}
+                  height={60}
+                  className="h-14 object-contain transition-all duration-300"
+                />
+              </a>
+            ) : (
+              <div className="relative group cursor-pointer transform hover:scale-105 transition-transform duration-300">
+                <Image
+                  src={googlePlayBadge}
+                  alt="Bientôt sur Google Play"
+                  width={160}
+                  height={60}
+                  className="h-14 object-contain grayscale opacity-70 transition-all duration-300"
+                />
+                <div className="absolute inset-0 flex items-center justify-center bg-black/40 rounded-lg">
+                  <span className="text-white text-sm font-medium">
+                    Bientôt disponible
+                  </span>
+                </div>
+                <div className="absolute opacity-0 group-hover:opacity-100 transition-opacity duration-300 -top-12 left-1/2 -translate-x-1/2 w-52 p-2 bg-gray-900 text-white text-xs rounded-lg text-center shadow-lg">
+                  {googlePlayTooltip}
+                  <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-gray-900 rotate-45"></div>
+                </div>
               </div>
-              <div className="absolute opacity-0 group-hover:opacity-100 transition-opacity duration-300 -top-12 left-1/2 -translate-x-1/2 w-52 p-2 bg-gray-900 text-white text-xs rounded-lg text-center shadow-lg">
-                {googlePlayTooltip}
-                <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-gray-900 rotate-45"></div>
+            )}
+            {appStoreHref ? (
+              <a href={appStoreHref} target="_blank" rel="noopener noreferrer" className="relative group transform hover:scale-105 transition-transform duration-300">
+                <Image
+                  src={appStoreBadge}
+                  alt="Télécharger sur App Store"
+                  width={160}
+                  height={60}
+                  className="h-14 object-contain transition-all duration-300"
+                />
+              </a>
+            ) : (
+              <div className="relative group cursor-pointer transform hover:scale-105 transition-transform duration-300">
+                <Image
+                  src={appStoreBadge}
+                  alt="Bientôt sur App Store"
+                  width={160}
+                  height={60}
+                  className="h-14 object-contain grayscale opacity-70 transition-all duration-300"
+                />
+                <div className="absolute inset-0 flex items-center justify-center bg-black/40 rounded-lg">
+                  <span className="text-white text-sm font-medium">
+                    Bientôt disponible
+                  </span>
+                </div>
+                <div className="absolute opacity-0 group-hover:opacity-100 transition-opacity duration-300 -top-12 left-1/2 -translate-x-1/2 w-52 p-2 bg-gray-900 text-white text-xs rounded-lg text-center shadow-lg">
+                  {appStoreTooltip}
+                  <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-gray-900 rotate-45"></div>
+                </div>
               </div>
-            </div>
-            <div className="relative group cursor-pointer transform hover:scale-105 transition-transform duration-300">
-              <Image
-                src={appStoreBadge}
-                alt="Bientôt sur App Store"
-                width={160}
-                height={60}
-                className="h-14 object-contain grayscale opacity-70 transition-all duration-300"
-              />
-              <div className="absolute inset-0 flex items-center justify-center bg-black/40 rounded-lg">
-                <span className="text-white text-sm font-medium">
-                  Bientôt disponible
-                </span>
-              </div>
-              <div className="absolute opacity-0 group-hover:opacity-100 transition-opacity duration-300 -top-12 left-1/2 -translate-x-1/2 w-52 p-2 bg-gray-900 text-white text-xs rounded-lg text-center shadow-lg">
-                {appStoreTooltip}
-                <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-gray-900 rotate-45"></div>
-              </div>
-            </div>
+            )}
           </div>
 
           <div

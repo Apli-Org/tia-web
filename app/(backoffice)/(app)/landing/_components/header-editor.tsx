@@ -96,8 +96,9 @@ export function HeaderEditor({ section, adminId }: HeaderEditorProps) {
                 id="ctaHref"
                 value={content.ctaButton?.href || ''}
                 onChange={(e) => updateCTAButton({ href: e.target.value })}
-                placeholder="#newsletter"
+                placeholder="https://play.google.com/... ou #section"
               />
+              <p className="text-xs text-muted-foreground">Utilisez https://... pour un lien externe (nouvel onglet) ou #section pour un ancre interne</p>
             </div>
           </div>
         </div>

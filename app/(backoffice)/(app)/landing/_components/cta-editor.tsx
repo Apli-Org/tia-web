@@ -23,6 +23,8 @@ const defaultCTAContent: CTAContent = {
   appStoreBadge: '',
   googlePlayTooltip: '',
   appStoreTooltip: '',
+  googlePlayHref: '',
+  appStoreHref: '',
   stats: { users: '', usersLabel: '', status: '' },
 }
 
@@ -133,6 +135,29 @@ export function CTAEditor({ section, adminId }: CTAEditorProps) {
               onChange={(e) => updateContent({ appStoreTooltip: e.target.value })}
               placeholder="Application en cours de développement..."
             />
+          </div>
+        </div>
+
+        <div className="grid gap-4 md:grid-cols-2">
+          <div className="space-y-2">
+            <Label htmlFor="googlePlayHref">Lien Google Play</Label>
+            <Input
+              id="googlePlayHref"
+              value={content.googlePlayHref || ''}
+              onChange={(e) => updateContent({ googlePlayHref: e.target.value })}
+              placeholder="https://play.google.com/store/apps/details?id=..."
+            />
+            <p className="text-xs text-muted-foreground">Laissez vide pour afficher &quot;Bientôt disponible&quot;</p>
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="appStoreHref">Lien App Store</Label>
+            <Input
+              id="appStoreHref"
+              value={content.appStoreHref || ''}
+              onChange={(e) => updateContent({ appStoreHref: e.target.value })}
+              placeholder="https://apps.apple.com/app/..."
+            />
+            <p className="text-xs text-muted-foreground">Laissez vide pour afficher &quot;Bientôt disponible&quot;</p>
           </div>
         </div>
 

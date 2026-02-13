@@ -63,6 +63,8 @@ export function Hero({ content }: HeroProps) {
   const googlePlayTooltip = content?.appStoreBadges?.googlePlay?.tooltip || defaultContent.appStoreBadges.googlePlay.tooltip;
   const appStoreImage = content?.appStoreBadges?.appStore?.image || defaultContent.appStoreBadges.appStore.image;
   const appStoreTooltip = content?.appStoreBadges?.appStore?.tooltip || defaultContent.appStoreBadges.appStore.tooltip;
+  const googlePlayHref = content?.appStoreBadges?.googlePlay?.href || '';
+  const appStoreHref = content?.appStoreBadges?.appStore?.href || '';
 
   return (
     <section
@@ -190,44 +192,68 @@ export function Hero({ content }: HeroProps) {
           >
             <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
               {googlePlayImage && (
-                <div className="relative group cursor-pointer transform hover:scale-105 transition-transform duration-300">
-                  <Image
-                    src={googlePlayImage}
-                    alt="Bientôt sur Google Play"
-                    width={160}
-                    height={60}
-                    className="h-12 sm:h-14 object-contain grayscale opacity-70 transition-all duration-300"
-                  />
-                  <div className="absolute inset-0 flex items-center justify-center bg-black/40 rounded-lg">
-                    <span className="text-white text-xs sm:text-sm font-medium">
-                      Bientôt disponible
-                    </span>
+                googlePlayHref ? (
+                  <a href={googlePlayHref} target="_blank" rel="noopener noreferrer" className="relative group transform hover:scale-105 transition-transform duration-300">
+                    <Image
+                      src={googlePlayImage}
+                      alt="Télécharger sur Google Play"
+                      width={160}
+                      height={60}
+                      className="h-12 sm:h-14 object-contain transition-all duration-300"
+                    />
+                  </a>
+                ) : (
+                  <div className="relative group cursor-pointer transform hover:scale-105 transition-transform duration-300">
+                    <Image
+                      src={googlePlayImage}
+                      alt="Bientôt sur Google Play"
+                      width={160}
+                      height={60}
+                      className="h-12 sm:h-14 object-contain grayscale opacity-70 transition-all duration-300"
+                    />
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/40 rounded-lg">
+                      <span className="text-white text-xs sm:text-sm font-medium">
+                        Bientôt disponible
+                      </span>
+                    </div>
+                    <div className="absolute opacity-0 group-hover:opacity-100 transition-opacity duration-300 -top-12 left-1/2 -translate-x-1/2 w-52 p-2 bg-gray-900 text-white text-xs rounded-lg text-center shadow-lg">
+                      {googlePlayTooltip}
+                      <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-gray-900 rotate-45"></div>
+                    </div>
                   </div>
-                  <div className="absolute opacity-0 group-hover:opacity-100 transition-opacity duration-300 -top-12 left-1/2 -translate-x-1/2 w-52 p-2 bg-gray-900 text-white text-xs rounded-lg text-center shadow-lg">
-                    {googlePlayTooltip}
-                    <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-gray-900 rotate-45"></div>
-                  </div>
-                </div>
+                )
               )}
               {appStoreImage && (
-                <div className="relative group cursor-pointer transform hover:scale-105 transition-transform duration-300">
-                  <Image
-                    src={appStoreImage}
-                    alt="Bientôt sur App Store"
-                    width={160}
-                    height={60}
-                    className="h-12 sm:h-14 object-contain grayscale opacity-70 transition-all duration-300"
-                  />
-                  <div className="absolute inset-0 flex items-center justify-center bg-black/40 rounded-lg">
-                    <span className="text-white text-xs sm:text-sm font-medium">
-                      Bientôt disponible
-                    </span>
+                appStoreHref ? (
+                  <a href={appStoreHref} target="_blank" rel="noopener noreferrer" className="relative group transform hover:scale-105 transition-transform duration-300">
+                    <Image
+                      src={appStoreImage}
+                      alt="Télécharger sur App Store"
+                      width={160}
+                      height={60}
+                      className="h-12 sm:h-14 object-contain transition-all duration-300"
+                    />
+                  </a>
+                ) : (
+                  <div className="relative group cursor-pointer transform hover:scale-105 transition-transform duration-300">
+                    <Image
+                      src={appStoreImage}
+                      alt="Bientôt sur App Store"
+                      width={160}
+                      height={60}
+                      className="h-12 sm:h-14 object-contain grayscale opacity-70 transition-all duration-300"
+                    />
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/40 rounded-lg">
+                      <span className="text-white text-xs sm:text-sm font-medium">
+                        Bientôt disponible
+                      </span>
+                    </div>
+                    <div className="absolute opacity-0 group-hover:opacity-100 transition-opacity duration-300 -top-12 left-1/2 -translate-x-1/2 w-52 p-2 bg-gray-900 text-white text-xs rounded-lg text-center shadow-lg">
+                      {appStoreTooltip}
+                      <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-gray-900 rotate-45"></div>
+                    </div>
                   </div>
-                  <div className="absolute opacity-0 group-hover:opacity-100 transition-opacity duration-300 -top-12 left-1/2 -translate-x-1/2 w-52 p-2 bg-gray-900 text-white text-xs rounded-lg text-center shadow-lg">
-                    {appStoreTooltip}
-                    <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-gray-900 rotate-45"></div>
-                  </div>
-                </div>
+                )
               )}
             </div>
           </div>
