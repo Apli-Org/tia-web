@@ -6,6 +6,7 @@ import { checkAdminAction } from './roles.action'
 import { render } from '@react-email/render'
 import { Resend } from 'resend'
 import NewsletterEmail from '@/emails/newsletter'
+import { processNewsletterBatches } from '@/lib/newsletter/process-batches'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
@@ -152,6 +153,190 @@ export async function sendNewsletter(
       success: false,
       error: error instanceof Error ? error.message : 'Erreur inconnue',
     }
+  }
+}
+
+// --- New types and actions for improved newsletter system ---
+
+export type SubscriberListResult = {
+  success: boolean
+  subscribers?: Array<{
+    id: string
+    email: string
+    prenom: string | null
+    numero: string | null
+    subscribed_at: string
+  }>
+  total?: number
+  totalPages?: number
+  error?: string
+}
+
+export type InitiateSendResult = {
+  success: boolean
+  sendId?: string
+  error?: string
+}
+
+export type SendStatusResult = {
+  success: boolean
+  status?: string
+  total_recipients?: number
+  sent_count?: number
+  failed_count?: number
+  completed_at?: string | null
+  is_simulation?: boolean
+  error?: string
+}
+
+export async function getNewsletterSubscribers(
+  adminId: string,
+  page: number,
+  pageSize: number,
+  search?: string
+): Promise<SubscriberListResult> {
+  const hasPermission = await checkAdminAction(adminId, 'send_newsletter')
+  if (!hasPermission) {
+    return { success: false, error: 'Permission insuffisante' }
+  }
+
+  const supabase = createAdminClient()
+
+  const offset = (page - 1) * pageSize
+
+  let query = supabase
+    .from('newsletter_subscribers')
+    .select('id, email, prenom, numero, subscribed_at', { count: 'exact' })
+
+  if (search) {
+    query = query.or(`email.ilike.%${search}%,prenom.ilike.%${search}%`)
+  }
+
+  query = query.order('subscribed_at', { ascending: false })
+  query = query.range(offset, offset + pageSize - 1)
+
+  const { data, count, error } = await query
+
+  if (error) {
+    console.error('Error fetching newsletter subscribers:', error)
+    return { success: false, error: 'Erreur lors de la récupération des abonnés' }
+  }
+
+  const total = count ?? 0
+
+  return {
+    success: true,
+    subscribers: data ?? [],
+    total,
+    totalPages: Math.ceil(total / pageSize),
+  }
+}
+
+export async function initiateNewsletterSend(
+  adminId: string,
+  subject: string,
+  htmlContent: string,
+  subscriberIds?: string[],
+  simulation?: boolean
+): Promise<InitiateSendResult> {
+  const hasPermission = await checkAdminAction(adminId, 'send_newsletter')
+  if (!hasPermission) {
+    return { success: false, error: 'Permission insuffisante' }
+  }
+
+  if (!subject || !subject.trim()) {
+    return { success: false, error: 'Le sujet est requis' }
+  }
+
+  if (!htmlContent || !htmlContent.trim()) {
+    return { success: false, error: 'Le contenu est requis' }
+  }
+
+  if (!process.env.RESEND_API_KEY) {
+    console.error('RESEND_API_KEY is not configured')
+    return { success: false, error: 'Service email non configuré' }
+  }
+
+  const supabase = createAdminClient()
+
+  let totalCount: number
+
+  if (subscriberIds && subscriberIds.length > 0) {
+    totalCount = subscriberIds.length
+  } else {
+    const { count, error: countError } = await supabase
+      .from('newsletter_subscribers')
+      .select('*', { count: 'exact', head: true })
+
+    if (countError) {
+      console.error('Error counting subscribers:', countError)
+      return { success: false, error: 'Erreur lors du comptage des abonnés' }
+    }
+
+    totalCount = count ?? 0
+  }
+
+  if (totalCount === 0) {
+    return { success: false, error: 'Aucun abonné trouvé' }
+  }
+
+  const { data: insertedRecord, error: insertError } = await supabase
+    .from('newsletter_sends')
+    .insert({
+      admin_id: adminId,
+      subject,
+      html_content: htmlContent,
+      status: 'pending',
+      total_recipients: totalCount,
+      subscriber_ids: subscriberIds && subscriberIds.length > 0 ? subscriberIds : null,
+      is_simulation: simulation ?? false,
+    })
+    .select('id')
+    .single()
+
+  if (insertError || !insertedRecord) {
+    console.error('Error creating newsletter send record:', insertError)
+    return { success: false, error: "Erreur lors de la création de l'envoi" }
+  }
+
+  // Fire and forget - start batch processing in background
+  processNewsletterBatches(insertedRecord.id).catch(err =>
+    console.error('Newsletter batch processing error:', err)
+  )
+
+  return { success: true, sendId: insertedRecord.id }
+}
+
+export async function getNewsletterSendStatus(
+  adminId: string,
+  sendId: string
+): Promise<SendStatusResult> {
+  const hasPermission = await checkAdminAction(adminId, 'send_newsletter')
+  if (!hasPermission) {
+    return { success: false, error: 'Permission insuffisante' }
+  }
+
+  const supabase = createAdminClient()
+
+  const { data, error } = await supabase
+    .from('newsletter_sends')
+    .select('status, total_recipients, sent_count, failed_count, completed_at, is_simulation')
+    .eq('id', sendId)
+    .single()
+
+  if (error || !data) {
+    console.error('Error fetching newsletter send status:', error)
+    return { success: false, error: "Erreur lors de la récupération du statut d'envoi" }
+  }
+
+  return {
+    success: true,
+    status: data.status,
+    total_recipients: data.total_recipients,
+    sent_count: data.sent_count,
+    failed_count: data.failed_count,
+    completed_at: data.completed_at,
+    is_simulation: data.is_simulation,
   }
 }
 

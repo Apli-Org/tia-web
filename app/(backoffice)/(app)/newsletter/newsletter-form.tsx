@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Mail, Loader2, Eye, Send, CheckCircle2 } from 'lucide-react'
+import { Mail, Loader2, Eye, Send, CheckCircle2, FlaskConical } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -25,16 +25,19 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
 import { Alert, AlertDescription } from '@/components/ui/alert'
+import { Checkbox } from '@/components/ui/checkbox'
 import { RichTextEditor } from '@/components/newsletter/rich-text-editor'
 import { NewsletterPreview } from '@/components/newsletter/newsletter-preview'
-import { sendNewsletter } from '@/actions/admin/newsletter.action'
+import { initiateNewsletterSend } from '@/actions/admin/newsletter.action'
+import { SendProgress } from './send-progress'
 
 type NewsletterFormProps = {
   adminId: string
   subscriberCount: number
+  selectedSubscriberIds: string[]
 }
 
-export function NewsletterForm({ adminId, subscriberCount }: NewsletterFormProps) {
+export function NewsletterForm({ adminId, subscriberCount, selectedSubscriberIds }: NewsletterFormProps) {
   const [subject, setSubject] = useState('')
   const [content, setContent] = useState('<p>Écrivez votre newsletter ici...</p>')
   const [isLoading, setIsLoading] = useState(false)
@@ -42,6 +45,8 @@ export function NewsletterForm({ adminId, subscriberCount }: NewsletterFormProps
   const [showConfirmation, setShowConfirmation] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState<{ sent: number; failed?: number } | null>(null)
+  const [activeSendId, setActiveSendId] = useState<string | null>(null)
+  const [isSimulation, setIsSimulation] = useState(false)
 
   const handlePreview = () => {
     if (!subject.trim()) {
@@ -65,7 +70,7 @@ export function NewsletterForm({ adminId, subscriberCount }: NewsletterFormProps
       setError('Le contenu est requis')
       return
     }
-    if (subscriberCount === 0) {
+    if (subscriberCount === 0 && selectedSubscriberIds.length === 0) {
       setError('Aucun abonné à la newsletter')
       return
     }
@@ -78,18 +83,29 @@ export function NewsletterForm({ adminId, subscriberCount }: NewsletterFormProps
     setError(null)
     setSuccess(null)
 
-    const result = await sendNewsletter(adminId, subject, content)
+    const result = await initiateNewsletterSend(
+      adminId,
+      subject,
+      content,
+      selectedSubscriberIds.length > 0 ? selectedSubscriberIds : undefined,
+      isSimulation
+    )
 
-    if (result.success) {
-      setSuccess({ sent: result.sent || 0, failed: result.failed })
-      setSubject('')
-      setContent('<p>Écrivez votre newsletter ici...</p>')
+    if (result.success && result.sendId) {
+      setActiveSendId(result.sendId)
       setShowConfirmation(false)
     } else {
       setError(result.error || 'Une erreur est survenue')
     }
 
     setIsLoading(false)
+  }
+
+  const handleSendComplete = () => {
+    setActiveSendId(null)
+    setSuccess({ sent: 0 })
+    setSubject('')
+    setContent('<p>Écrivez votre newsletter ici...</p>')
   }
 
   return (
@@ -142,6 +158,19 @@ export function NewsletterForm({ adminId, subscriberCount }: NewsletterFormProps
           />
         </div>
 
+        <div className="flex items-center gap-3 p-3 rounded-lg border border-dashed border-orange-300 bg-orange-50">
+          <Checkbox
+            id="simulation"
+            checked={isSimulation}
+            onCheckedChange={(checked) => setIsSimulation(checked === true)}
+          />
+          <label htmlFor="simulation" className="flex items-center gap-2 text-sm cursor-pointer">
+            <FlaskConical className="h-4 w-4 text-orange-600" />
+            <span className="font-medium text-orange-700">Mode test (simulation)</span>
+            <span className="text-muted-foreground">- Aucun email ne sera envoyé, simule le processus de batch</span>
+          </label>
+        </div>
+
         <div className="flex gap-3">
           <Button
             type="button"
@@ -155,13 +184,23 @@ export function NewsletterForm({ adminId, subscriberCount }: NewsletterFormProps
           <Button
             type="button"
             onClick={handleSendClick}
-            disabled={isLoading || subscriberCount === 0}
-            className="flex-1"
+            disabled={isLoading || activeSendId !== null || (subscriberCount === 0 && selectedSubscriberIds.length === 0)}
+            className={`flex-1 ${isSimulation ? 'bg-orange-600 hover:bg-orange-700' : ''}`}
           >
             {isLoading ? (
               <>
                 <Loader2 className="h-4 w-4 mr-2 animate-spin" />
                 Envoi en cours...
+              </>
+            ) : isSimulation ? (
+              <>
+                <FlaskConical className="h-4 w-4 mr-2" />
+                Simuler l&apos;envoi à {selectedSubscriberIds.length > 0 ? `${selectedSubscriberIds.length} sélectionné${selectedSubscriberIds.length > 1 ? 's' : ''}` : `${subscriberCount} abonné${subscriberCount > 1 ? 's' : ''}`}
+              </>
+            ) : selectedSubscriberIds.length > 0 ? (
+              <>
+                <Send className="h-4 w-4 mr-2" />
+                Envoyer à {selectedSubscriberIds.length} sélectionné{selectedSubscriberIds.length > 1 ? 's' : ''}
               </>
             ) : (
               <>
@@ -172,7 +211,15 @@ export function NewsletterForm({ adminId, subscriberCount }: NewsletterFormProps
           </Button>
         </div>
 
-        {subscriberCount === 0 && (
+        {activeSendId && (
+          <SendProgress
+            adminId={adminId}
+            sendId={activeSendId}
+            onComplete={handleSendComplete}
+          />
+        )}
+
+        {subscriberCount === 0 && selectedSubscriberIds.length === 0 && (
           <Alert>
             <AlertDescription>
               Aucun abonné inscrit à la newsletter pour le moment.
@@ -203,12 +250,31 @@ export function NewsletterForm({ adminId, subscriberCount }: NewsletterFormProps
       <AlertDialog open={showConfirmation} onOpenChange={setShowConfirmation}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Confirmer l'envoi</AlertDialogTitle>
+            <AlertDialogTitle>{isSimulation ? 'Confirmer la simulation' : "Confirmer l'envoi"}</AlertDialogTitle>
             <AlertDialogDescription>
-              Êtes-vous sûr de vouloir envoyer cette newsletter à{' '}
-              <strong>{subscriberCount} abonné(s)</strong> ?<br />
-              <br />
-              Cette action ne peut pas être annulée.
+              {isSimulation ? (
+                <>
+                  Lancer une <strong>simulation de test</strong> pour{' '}
+                  <strong>
+                    {selectedSubscriberIds.length > 0
+                      ? `${selectedSubscriberIds.length} abonné(s) sélectionné(s)`
+                      : `${subscriberCount} abonné(s)`}
+                  </strong> ?<br />
+                  <br />
+                  Aucun email ne sera réellement envoyé. Le processus de batch sera simulé pour tester le flux.
+                </>
+              ) : (
+                <>
+                  Êtes-vous sûr de vouloir envoyer cette newsletter à{' '}
+                  <strong>
+                    {selectedSubscriberIds.length > 0
+                      ? `${selectedSubscriberIds.length} abonné(s) sélectionné(s)`
+                      : `${subscriberCount} abonné(s)`}
+                  </strong> ?<br />
+                  <br />
+                  L&apos;envoi sera effectué en arrière-plan par lots de 10 emails.
+                </>
+              )}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

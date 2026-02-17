@@ -15,7 +15,7 @@ import { getCurrentAdmin } from '@/actions/admin/auth.action'
 import { checkAdminAction } from '@/actions/admin/roles.action'
 import { getNewsletterSubscriberCount } from '@/actions/admin/newsletter.action'
 import { NewsletterStats } from './newsletter-stats'
-import { NewsletterForm } from './newsletter-form'
+import { NewsletterContent } from './newsletter-content'
 import { NewsletterExport } from './newsletter-export'
 import { RefreshButton } from '@/components/backoffice/refresh-button'
 
@@ -59,14 +59,14 @@ function FormSkeleton() {
   )
 }
 
-async function NewsletterFormWrapper() {
+async function NewsletterContentWrapper() {
   const admin = await getCurrentAdmin()
   if (!admin) return null
 
   const result = await getNewsletterSubscriberCount(admin.id)
   const count = result.success && result.count !== undefined ? result.count : 0
 
-  return <NewsletterForm adminId={admin.id} subscriberCount={count} />
+  return <NewsletterContent adminId={admin.id} subscriberCount={count} />
 }
 
 export default async function NewsletterPage() {
@@ -101,7 +101,7 @@ export default async function NewsletterPage() {
             <div>
               <h1 className="text-3xl font-bold tracking-tight">Newsletter</h1>
               <p className="text-muted-foreground">
-                Envoyez des emails personnalisés à tous les abonnés
+                Envoyez des emails personnalisés à vos abonnés
               </p>
             </div>
             <NewsletterExport adminId={admin.id} />
@@ -112,7 +112,7 @@ export default async function NewsletterPage() {
           </Suspense>
 
           <Suspense fallback={<FormSkeleton />}>
-            <NewsletterFormWrapper />
+            <NewsletterContentWrapper />
           </Suspense>
         </div>
       </main>
