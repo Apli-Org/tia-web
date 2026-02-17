@@ -28,7 +28,7 @@ export async function sendWelcomeEmail(
       const emailHtml = await render(WelcomeNewsletterEmail({ email }));
 
       const { data, error } = await resend.emails.send({
-        from: process.env.RESEND_FROM_EMAIL || 'TIA <onboarding@resend.dev>',
+        from: process.env.RESEND_FROM_EMAIL || 'TIA <newsletter@send.tia-meet.com>',
         to: [email],
         subject: 'Bienvenue dans la communauté TIA ! 🎉',
         html: emailHtml,

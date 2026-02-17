@@ -129,7 +129,7 @@ export function NewsletterPreview({ subject, content }: NewsletterPreviewProps) 
             </a>
             <span style={{ color: '#666666', margin: '0 8px' }}>•</span>
             <a
-              href="https://www.tia-meet.com/child-safety"
+              href="https://www.tia-meet.com/terms"
               style={{ color: '#FF6B9D', textDecoration: 'none' }}
             >
               CGU

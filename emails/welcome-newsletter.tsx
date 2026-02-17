@@ -98,7 +98,7 @@ export const WelcomeNewsletterEmail = ({
               Confidentialité
             </Link>{' '}
             •{' '}
-            <Link href="https://www.tia-meet.com/child-safety" style={link}>
+            <Link href="https://www.tia-meet.com/terms" style={link}>
               CGU
             </Link>
           </Text>

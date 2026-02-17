@@ -97,7 +97,7 @@ export async function sendNewsletter(
       try {
         const { data, error } = await resend.batch.send(
           chunk.map(email => ({
-            from: process.env.RESEND_FROM_EMAIL || 'TIA <newsletter@tia-meet.com>',
+            from: process.env.RESEND_FROM_EMAIL || 'TIA <newsletter@send.tia-meet.com>',
             to: [email],
             subject: subject,
             html: emailHtml,
