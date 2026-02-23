@@ -68,6 +68,9 @@ export async function getUsers(
     `,
       { count: "exact" }
     )
+    // Only show users who completed registration
+    .not("birthdate", "is", null)
+    .not("gender", "is", null)
 
   // Apply filters
   if (filters.search) {
@@ -263,10 +266,10 @@ export async function getUserStats() {
   const supabase = createAdminClient()
 
   const [totalResult, activeResult, premiumResult, bannedResult] = await Promise.all([
-    supabase.from("users").select("id", { count: "exact", head: true }),
-    supabase.from("users").select("id", { count: "exact", head: true }).eq("is_active", true),
-    supabase.from("users").select("id", { count: "exact", head: true }).eq("isPremium", true),
-    supabase.from("users").select("id", { count: "exact", head: true }).not("banned_until", "is", null),
+    supabase.from("users").select("id", { count: "exact", head: true }).not("birthdate", "is", null).not("gender", "is", null),
+    supabase.from("users").select("id", { count: "exact", head: true }).not("birthdate", "is", null).not("gender", "is", null).eq("is_active", true),
+    supabase.from("users").select("id", { count: "exact", head: true }).not("birthdate", "is", null).not("gender", "is", null).eq("isPremium", true),
+    supabase.from("users").select("id", { count: "exact", head: true }).not("birthdate", "is", null).not("gender", "is", null).not("banned_until", "is", null),
   ])
 
   return {
@@ -298,6 +301,9 @@ export async function exportUsersCSV(filters: UsersFilter = {}) {
       banned_until
     `
     )
+    // Only export users who completed registration
+    .not("birthdate", "is", null)
+    .not("gender", "is", null)
 
   // Apply same filters as getUsers
   if (filters.search) {
