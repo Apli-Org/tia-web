@@ -67,11 +67,13 @@ export async function getDashboardKPIs(): Promise<DashboardKPIs> {
     supabase
       .from("users")
       .select("id", { count: "exact", head: true })
-      .eq("is_active", true),
+      .not("birthdate", "is", null)
+      .not("gender", "is", null),
     supabase
       .from("users")
       .select("id", { count: "exact", head: true })
-      .eq("is_active", true)
+      .not("birthdate", "is", null)
+      .not("gender", "is", null)
       .lt("created_at", startOfMonth.toISOString()),
     supabase
       .from("matches")
@@ -189,10 +191,12 @@ export async function getGrowthData(): Promise<GrowthData[]> {
     const monthName = monthNames[targetMonth]
 
     const [usersResult, matchesResult] = await Promise.all([
-      // Cumulative users up to end of month
+      // Cumulative users up to end of month (only completed registrations)
       supabase
         .from("users")
         .select("id", { count: "exact", head: true })
+        .not("birthdate", "is", null)
+        .not("gender", "is", null)
         .lte("created_at", endOfMonth.toISOString()),
       // Matches created in this month
       supabase
@@ -437,6 +441,8 @@ export async function getTierDistribution() {
     .from("users")
     .select("current_tier")
     .eq("is_active", true)
+    .not("birthdate", "is", null)
+    .not("gender", "is", null)
 
   const distribution = {
     base: 0,

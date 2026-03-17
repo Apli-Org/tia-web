@@ -85,8 +85,8 @@ async function KPICards() {
 
   const kpiData = [
     {
-      title: "Utilisateurs Actifs",
-      value: formatNumber(kpis.activeUsers.total),
+      title: "Total Utilisateurs",
+      value: kpis.activeUsers.total.toLocaleString("fr-FR"),
       change: `${kpis.activeUsers.trend === "up" ? "+" : "-"}${kpis.activeUsers.change}%`,
       trend: kpis.activeUsers.trend,
       description: "vs mois dernier",
