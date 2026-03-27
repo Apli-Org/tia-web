@@ -69,15 +69,20 @@ export function AdActions({ ad, adminId, canManage }: AdActionsProps) {
     })
   }
 
-  const handleDelete = () => {
+  const handleDelete = (e: React.MouseEvent) => {
+    e.preventDefault()
     startTransition(async () => {
-      const result = await deleteAdvertisement(ad.id, adminId)
+      try {
+        const result = await deleteAdvertisement(ad.id, adminId)
 
-      if (result.success) {
-        toast.success("Publicité supprimée")
-        setShowDeleteDialog(false)
-      } else {
-        toast.error(result.error || "Une erreur est survenue")
+        if (result.success) {
+          toast.success("Publicité supprimée")
+          setShowDeleteDialog(false)
+        } else {
+          toast.error(result.error || "Une erreur est survenue")
+        }
+      } catch {
+        toast.error("Une erreur est survenue lors de la suppression")
       }
     })
   }
@@ -154,18 +159,15 @@ export function AdActions({ ad, adminId, canManage }: AdActionsProps) {
             <AlertDialogDescription>
               Êtes-vous sûr de vouloir supprimer la publicité{" "}
               <span className="font-medium">&quot;{ad.title}&quot;</span> ?
-              {(ad.clicks_count > 0 || ad.impressions_count > 0) && (
-                <span className="block mt-2 text-amber-600">
-                  Cette publicité a {ad.impressions_count} impressions et {ad.clicks_count} clics.
-                  Elle sera désactivée au lieu d&apos;être supprimée.
-                </span>
-              )}
+              Cette action est irréversible et supprimera également les
+              statistiques associées.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Annuler</AlertDialogCancel>
+            <AlertDialogCancel disabled={isPending}>Annuler</AlertDialogCancel>
             <AlertDialogAction
               onClick={handleDelete}
+              disabled={isPending}
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
             >
               {isPending ? "Suppression..." : "Supprimer"}

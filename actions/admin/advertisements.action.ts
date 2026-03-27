@@ -350,36 +350,35 @@ export async function deleteAdvertisement(
   id: string,
   adminId: string
 ): Promise<{ success: boolean; error?: string }> {
-  const supabase = createAdminClient()
+  try {
+    const supabase = createAdminClient()
 
-  const { data: currentAd, error: fetchError } = await supabase
-    .from('advertisements')
-    .select('title')
-    .eq('id', id)
-    .single()
-
-  if (fetchError || !currentAd) {
-    return { success: false, error: 'Publicité non trouvée' }
-  }
-
-  // Check if ad has statistics (soft delete) or can be hard deleted
-  const { count: statsCount } = await supabase
-    .from('ad_clicks')
-    .select('id', { count: 'exact', head: true })
-    .eq('ad_id', id)
-
-  if (statsCount && statsCount > 0) {
-    // Soft delete - just deactivate
-    const { error } = await supabase
+    const { data: currentAd, error: fetchError } = await supabase
       .from('advertisements')
-      .update({ is_active: false, updated_at: new Date().toISOString() })
+      .select('title, image_url, video_url')
       .eq('id', id)
+      .single()
 
-    if (error) {
-      return { success: false, error: error.message }
+    if (fetchError || !currentAd) {
+      return { success: false, error: 'Publicité non trouvée' }
     }
-  } else {
-    // Hard delete
+
+    // Clean up storage files before deleting the record
+    const filesToRemove: string[] = []
+    if (currentAd.image_url) {
+      const parts = currentAd.image_url.split('/')
+      filesToRemove.push(parts[parts.length - 1])
+    }
+    if (currentAd.video_url) {
+      const parts = currentAd.video_url.split('/')
+      const filename = parts.slice(-2).join('/')
+      filesToRemove.push(filename)
+    }
+    if (filesToRemove.length > 0) {
+      await supabase.storage.from('advertisements').remove(filesToRemove)
+    }
+
+    // Hard delete — cascades to ad_impressions and ad_clicks
     const { error } = await supabase
       .from('advertisements')
       .delete()
@@ -388,21 +387,23 @@ export async function deleteAdvertisement(
     if (error) {
       return { success: false, error: error.message }
     }
+
+    // Log the action
+    await supabase.from('admin_activity_logs').insert({
+      admin_id: adminId,
+      action: 'advertisement_deleted',
+      details: {
+        advertisement_id: id,
+        title: currentAd.title,
+      },
+    })
+
+    revalidatePath('/advertisements')
+    return { success: true }
+  } catch (err) {
+    console.error('Error deleting advertisement:', err)
+    return { success: false, error: 'Une erreur inattendue est survenue' }
   }
-
-  // Log the action
-  await supabase.from('admin_activity_logs').insert({
-    admin_id: adminId,
-    action: 'advertisement_deleted',
-    details: {
-      advertisement_id: id,
-      title: currentAd.title,
-      soft_deleted: (statsCount ?? 0) > 0,
-    },
-  })
-
-  revalidatePath('/advertisements')
-  return { success: true }
 }
 
 // Get overall statistics for the dashboard
