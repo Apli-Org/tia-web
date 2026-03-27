@@ -50,18 +50,18 @@ export function AdMobilePreview({
       <p className="text-sm font-medium text-muted-foreground">Aperçu mobile</p>
 
       {/* Phone Frame */}
-      <div className="relative mx-auto border-gray-800 bg-gray-800 border-[10px] rounded-[2rem] h-[520px] w-[260px] shadow-xl">
+      <div className="relative mx-auto border-gray-800 bg-gray-800 border-[8px] rounded-[1.8rem] h-[440px] w-[220px] shadow-xl">
         {/* Notch */}
-        <div className="w-[100px] h-[14px] bg-gray-800 top-0 rounded-b-[0.8rem] left-1/2 -translate-x-1/2 absolute z-10 flex items-start justify-center">
-          <div className="w-1.5 h-1.5 bg-gray-600 rounded-full -mt-1.5" />
+        <div className="w-[80px] h-[12px] bg-gray-800 top-0 rounded-b-[0.6rem] left-1/2 -translate-x-1/2 absolute z-10 flex items-start justify-center">
+          <div className="w-1.5 h-1.5 bg-gray-600 rounded-full -mt-1" />
         </div>
         {/* Side buttons */}
-        <div className="h-[32px] w-[2px] bg-gray-800 absolute -start-[12px] top-[90px] rounded-s-lg" />
-        <div className="h-[32px] w-[2px] bg-gray-800 absolute -start-[12px] top-[130px] rounded-s-lg" />
-        <div className="h-[46px] w-[2px] bg-gray-800 absolute -end-[12px] top-[110px] rounded-e-lg" />
+        <div className="h-[28px] w-[2px] bg-gray-800 absolute -start-[10px] top-[75px] rounded-s-lg" />
+        <div className="h-[28px] w-[2px] bg-gray-800 absolute -start-[10px] top-[110px] rounded-s-lg" />
+        <div className="h-[40px] w-[2px] bg-gray-800 absolute -end-[10px] top-[90px] rounded-e-lg" />
 
         {/* Screen */}
-        <div className="rounded-[1.2rem] overflow-hidden w-full h-full bg-gray-50 flex flex-col">
+        <div className="rounded-[1rem] overflow-hidden w-full h-full bg-gray-50 flex flex-col">
           {/* Header Tia */}
           <div className="flex items-center justify-between px-3 py-2 bg-white border-b border-gray-100">
             <span className="text-base font-bold bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">
