@@ -26,6 +26,7 @@ import {
 } from "@/actions/admin/advertisements.action"
 import type { Advertisement, MediaType } from "@/lib/types/advertisements.types"
 import { toast } from "sonner"
+import { AdMobilePreview } from "./ad-mobile-preview"
 
 type AdModalProps = {
   isOpen: boolean
@@ -200,7 +201,7 @@ export function AdModal({ isOpen, onClose, adminId, ad }: AdModalProps) {
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="sm:max-w-lg">
+      <DialogContent className="sm:max-w-4xl">
         <DialogHeader>
           <DialogTitle>
             {isEditing ? "Modifier la publicité" : "Créer une publicité"}
@@ -212,7 +213,8 @@ export function AdModal({ isOpen, onClose, adminId, ad }: AdModalProps) {
           </DialogDescription>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="flex flex-col lg:flex-row gap-6">
+        <form onSubmit={handleSubmit} className="space-y-4 flex-1 min-w-0">
           <div className="space-y-2">
             <Label htmlFor="title">Titre *</Label>
             <Input
@@ -423,6 +425,19 @@ export function AdModal({ isOpen, onClose, adminId, ad }: AdModalProps) {
             </Button>
           </DialogFooter>
         </form>
+
+        {/* Mobile Preview */}
+        <div className="hidden lg:flex items-center justify-center border-l pl-6">
+          <AdMobilePreview
+            title={title}
+            description={description}
+            mediaType={mediaType}
+            imageUrl={imageUrl}
+            videoUrl={videoUrl}
+            targetUrl={targetUrl}
+          />
+        </div>
+        </div>
       </DialogContent>
     </Dialog>
   )
