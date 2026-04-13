@@ -12,7 +12,7 @@ import type { NewsletterContent } from "@/lib/types/landing.types";
 const defaultContent = {
   badgeText: "",
   headline: "Il y a un moment parfait pour commencer. C'est maintenant.",
-  subheadline: "En vous pré-inscrivant dès maintenant, vous rejoignez les tout premiers utilisateurs de Tia. Accès anticipé, informations prioritaires et surprises réservées aux early users le jour J. Le bon moment, c'est maintenant.",
+  subheadline: "En vous inscrivant à notre newsletter dès maintenant, vous rejoignez les tout premiers utilisateurs de Tia. Accès anticipé, informations prioritaires et surprises réservées aux early users le jour J. Le bon moment, c'est maintenant.",
   inputLabel: "Adresse email",
   inputPlaceholder: "votre@email.com",
   submitButtonText: "Je choisis Tia",
@@ -82,7 +82,7 @@ export function Newsletter({ content }: NewsletterProps) {
 
   return (
     <section
-      id="pre-inscription"
+      id="newsletter"
       ref={sectionRef}
       className="py-24 md:py-32 bg-linear-to-br from-primary/5 via-white to-pink-50 relative overflow-hidden"
     >

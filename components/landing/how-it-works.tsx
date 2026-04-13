@@ -66,7 +66,7 @@ export function HowItWorks({ content }: HowItWorksProps) {
           </p>
         </div>
 
-        {/* Steps grid - centered */}
+        {/* Phone screens row */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8 lg:gap-12 max-w-6xl mx-auto">
           {steps.map((step, index) => (
             <div
@@ -81,7 +81,7 @@ export function HowItWorks({ content }: HowItWorksProps) {
               }}
             >
               {/* Mobile frame container - centered */}
-              <div className="relative mb-8 flex justify-center w-full">
+              <div className="relative flex justify-center w-full">
                 {/* Glow effect */}
                 <div className="absolute inset-0 bg-linear-to-br from-primary/20 to-pink-400/20 rounded-[3rem] blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 scale-90"></div>
 
@@ -96,37 +96,52 @@ export function HowItWorks({ content }: HowItWorksProps) {
                       className="w-full h-full object-cover"
                     />
                   </MobileFrame>
-
-                  {/* Step number badge */}
-                  <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 z-20">
-                    <div className="w-14 h-14 rounded-full bg-linear-to-br from-primary to-pink-500 flex items-center justify-center shadow-lg shadow-primary/30 group-hover:scale-110 transition-transform duration-300">
-                      <span className="text-white font-bold text-lg">
-                        {step.number}
-                      </span>
-                    </div>
-                  </div>
                 </div>
-              </div>
-
-              {/* Text content */}
-              <div className="mt-4 space-y-3">
-                <h3 className="text-xl md:text-2xl font-bold text-gray-900">
-                  {step.title}
-                </h3>
-                <p className="text-gray-600 leading-relaxed max-w-xs mx-auto">
-                  {step.description}
-                </p>
               </div>
             </div>
           ))}
         </div>
 
-        {/* Connector line for desktop */}
-        <div
-          className={`hidden md:block absolute top-[52%] left-1/2 -translate-x-1/2 w-1/2 h-0.5 bg-linear-to-r from-transparent via-primary/30 to-transparent transition-all duration-1000 delay-500 ${
-            isVisible ? "opacity-100 scale-x-100" : "opacity-0 scale-x-0"
-          }`}
-        ></div>
+        {/* Badges row with connector line */}
+        <div className="relative max-w-6xl mx-auto my-10">
+          {/* Connector line - behind badges */}
+          <div
+            className={`hidden md:block absolute top-1/2 -translate-y-1/2 left-[16.67%] right-[16.67%] h-[3px] z-10 transition-all duration-1000 delay-500 ${
+              isVisible ? "opacity-100 scale-x-100" : "opacity-0 scale-x-0"
+            }`}
+          >
+            <div className="w-full h-full bg-gradient-to-r from-primary/30 via-pink-400/50 to-primary/30 rounded-full" />
+          </div>
+
+          {/* Badges */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8 lg:gap-12">
+            {steps.map((step, index) => (
+              <div key={`badge-${index}`} className="flex justify-center">
+                <div className="relative z-20">
+                  <div className="w-16 h-16 rounded-full bg-linear-to-br from-primary to-pink-500 flex items-center justify-center shadow-lg shadow-primary/30 hover:scale-110 transition-transform duration-300 ring-4 ring-white">
+                    <span className="text-white font-bold text-xl">
+                      {step.number}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Text content row */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8 lg:gap-12 max-w-6xl mx-auto">
+          {steps.map((step, index) => (
+            <div key={`text-${index}`} className="text-center space-y-3">
+              <h3 className="text-xl md:text-2xl font-bold text-gray-900">
+                {step.title}
+              </h3>
+              <p className="text-gray-600 leading-relaxed max-w-xs mx-auto">
+                {step.description}
+              </p>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );

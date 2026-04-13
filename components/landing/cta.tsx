@@ -1,7 +1,7 @@
 "use client";
 
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
-import { Clock, HeartIcon, Users } from "lucide-react";
+import { HeartIcon, Users } from "lucide-react";
 import Image from "next/image";
 import type { CTAContent } from "@/lib/types/landing.types";
 
@@ -11,14 +11,16 @@ const defaultContent = {
   headline: "Prêt à trouver",
   headlineHighlight: "l'amour ?",
   subheadline: "Téléchargez TIA dès maintenant et commencez votre aventure",
-  googlePlayBadge: "/images/logo/google-play-badge.png",
-  appStoreBadge: "/images/logo/app-store-badge.png",
-  googlePlayTooltip: "Application en cours d'approbation sur le Google Play Store",
-  appStoreTooltip: "Application en cours de développement pour iOS",
+  googlePlayBadge: "/images/logo/google-play-badge.svg",
+  appStoreBadge: "/images/logo/app-store-badge.svg",
+  googlePlayTooltip: "Télécharger sur Google Play",
+  googlePlayHref: "https://play.google.com/store/apps/details?id=com.rdh36.tiaapp",
+  appStoreTooltip: "Télécharger sur l'App Store",
+  appStoreHref: "https://apps.apple.com/mg/app/tia/id6758033706",
   stats: {
-    users: "2k+",
-    usersLabel: "Intéressés",
-    status: "Bientôt",
+    users: "10k+",
+    usersLabel: "Utilisateurs intéressés",
+    status: "Disponible",
   },
 };
 
@@ -37,8 +39,8 @@ export function CTA({ content }: CTAProps) {
   const appStoreBadge = content?.appStoreBadge || defaultContent.appStoreBadge;
   const googlePlayTooltip = content?.googlePlayTooltip || defaultContent.googlePlayTooltip;
   const appStoreTooltip = content?.appStoreTooltip || defaultContent.appStoreTooltip;
-  const googlePlayHref = content?.googlePlayHref || '';
-  const appStoreHref = content?.appStoreHref || '';
+  const googlePlayHref = content?.googlePlayHref || defaultContent.googlePlayHref || '';
+  const appStoreHref = content?.appStoreHref || defaultContent.appStoreHref || '';
   const stats = content?.stats || defaultContent.stats;
 
   return (
@@ -99,7 +101,7 @@ export function CTA({ content }: CTAProps) {
                   alt="Télécharger sur Google Play"
                   width={160}
                   height={60}
-                  className="h-14 object-contain transition-all duration-300"
+                  className="h-[40px] sm:h-[48px] w-auto object-contain transition-all duration-300"
                 />
               </a>
             ) : (
@@ -109,7 +111,7 @@ export function CTA({ content }: CTAProps) {
                   alt="Bientôt sur Google Play"
                   width={160}
                   height={60}
-                  className="h-14 object-contain grayscale opacity-70 transition-all duration-300"
+                  className="h-[40px] sm:h-[48px] w-auto object-contain grayscale opacity-70 transition-all duration-300"
                 />
                 <div className="absolute inset-0 flex items-center justify-center bg-black/40 rounded-lg">
                   <span className="text-white text-sm font-medium">
@@ -129,7 +131,7 @@ export function CTA({ content }: CTAProps) {
                   alt="Télécharger sur App Store"
                   width={160}
                   height={60}
-                  className="h-14 object-contain transition-all duration-300"
+                  className="h-[40px] sm:h-[48px] w-auto object-contain transition-all duration-300"
                 />
               </a>
             ) : (
@@ -139,7 +141,7 @@ export function CTA({ content }: CTAProps) {
                   alt="Bientôt sur App Store"
                   width={160}
                   height={60}
-                  className="h-14 object-contain grayscale opacity-70 transition-all duration-300"
+                  className="h-[40px] sm:h-[48px] w-auto object-contain grayscale opacity-70 transition-all duration-300"
                 />
                 <div className="absolute inset-0 flex items-center justify-center bg-black/40 rounded-lg">
                   <span className="text-white text-sm font-medium">
@@ -171,10 +173,6 @@ export function CTA({ content }: CTAProps) {
                 <span className="text-sm font-medium text-white">
                   {stats.usersLabel}
                 </span>
-              </div>
-              <div className="flex items-center">
-                <Clock className="h-4 w-4 text-amber-500 mr-1" />
-                <span className="text-sm font-medium text-white">{stats.status}</span>
               </div>
             </div>
           </div>

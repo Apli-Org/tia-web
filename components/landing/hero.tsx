@@ -20,21 +20,23 @@ const defaultContent = {
     { text: "Super Like", icon: "emoji", position: "right" },
   ],
   socialProof: [
-    { value: "2k+", label: "Intéressés", icon: "users" },
+    { value: "10k+", label: "Utilisateurs intéressés", icon: "users" },
     { value: "IA", label: "Powered", icon: "heart" },
     { value: "2026", label: "Lancement", icon: "clock" },
   ],
   appStoreBadges: {
     googlePlay: {
-      image: "/images/logo/google-play-badge.png",
-      tooltip: "Application en cours d'approbation sur le Google Play Store",
+      image: "/images/logo/google-play-badge.svg",
+      tooltip: "Télécharger sur Google Play",
+      href: "https://play.google.com/store/apps/details?id=com.rdh36.tiaapp",
     },
     appStore: {
-      image: "/images/logo/app-store-badge.png",
-      tooltip: "Application en cours de développement pour iOS",
+      image: "/images/logo/app-store-badge.svg",
+      tooltip: "Télécharger sur l'App Store",
+      href: "https://apps.apple.com/mg/app/tia/id6758033706",
     },
   },
-  scrollIndicatorText: "Découvrir",
+  scrollIndicatorText: "Découvrir modif",
 };
 
 interface HeroProps {
@@ -63,8 +65,8 @@ export function Hero({ content }: HeroProps) {
   const googlePlayTooltip = content?.appStoreBadges?.googlePlay?.tooltip || defaultContent.appStoreBadges.googlePlay.tooltip;
   const appStoreImage = content?.appStoreBadges?.appStore?.image || defaultContent.appStoreBadges.appStore.image;
   const appStoreTooltip = content?.appStoreBadges?.appStore?.tooltip || defaultContent.appStoreBadges.appStore.tooltip;
-  const googlePlayHref = content?.appStoreBadges?.googlePlay?.href || '';
-  const appStoreHref = content?.appStoreBadges?.appStore?.href || '';
+  const googlePlayHref = content?.appStoreBadges?.googlePlay?.href || defaultContent.appStoreBadges.googlePlay.href || '';
+  const appStoreHref = content?.appStoreBadges?.appStore?.href || defaultContent.appStoreBadges.appStore.href || '';
 
   return (
     <section
@@ -199,7 +201,7 @@ export function Hero({ content }: HeroProps) {
                       alt="Télécharger sur Google Play"
                       width={160}
                       height={60}
-                      className="h-12 sm:h-14 object-contain transition-all duration-300"
+                      className="h-[40px] sm:h-[48px] w-auto object-contain transition-all duration-300"
                     />
                   </a>
                 ) : (
@@ -209,7 +211,7 @@ export function Hero({ content }: HeroProps) {
                       alt="Bientôt sur Google Play"
                       width={160}
                       height={60}
-                      className="h-12 sm:h-14 object-contain grayscale opacity-70 transition-all duration-300"
+                      className="h-[40px] sm:h-[48px] w-auto object-contain grayscale opacity-70 transition-all duration-300"
                     />
                     <div className="absolute inset-0 flex items-center justify-center bg-black/40 rounded-lg">
                       <span className="text-white text-xs sm:text-sm font-medium">
@@ -231,7 +233,7 @@ export function Hero({ content }: HeroProps) {
                       alt="Télécharger sur App Store"
                       width={160}
                       height={60}
-                      className="h-12 sm:h-14 object-contain transition-all duration-300"
+                      className="h-[40px] sm:h-[48px] w-auto object-contain transition-all duration-300"
                     />
                   </a>
                 ) : (
@@ -241,7 +243,7 @@ export function Hero({ content }: HeroProps) {
                       alt="Bientôt sur App Store"
                       width={160}
                       height={60}
-                      className="h-12 sm:h-14 object-contain grayscale opacity-70 transition-all duration-300"
+                      className="h-[40px] sm:h-[48px] w-auto object-contain grayscale opacity-70 transition-all duration-300"
                     />
                     <div className="absolute inset-0 flex items-center justify-center bg-black/40 rounded-lg">
                       <span className="text-white text-xs sm:text-sm font-medium">
@@ -367,11 +369,9 @@ export function Hero({ content }: HeroProps) {
         </div>
       </div>
 
-      {/* Scroll indicator */}
+      {/* Scroll indicator - hidden for now */}
       <div
-        className={`absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 transition-all duration-1000 delay-700 ${
-          isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-        }`}
+        className="hidden"
       >
         <span className="text-sm text-gray-400">{scrollIndicatorText}</span>
         <div className="w-6 h-10 border-2 border-gray-300 rounded-full flex justify-center p-1">

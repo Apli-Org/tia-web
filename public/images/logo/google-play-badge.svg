@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 40" width="120" height="40">
+  <rect width="120" height="40" rx="5" fill="#000"/>
+  <rect x=".5" y=".5" width="119" height="39" rx="4.5" fill="none" stroke="#a6a6a6" stroke-width=".5"/>
+  <g transform="translate(7,5) scale(0.55)">
+    <path fill="#00d9ff" d="M8.286 7.5L0 15.996V38l8.286-8.496L19.07 23z"/>
+    <path fill="#00f076" d="M25.674 19.77L19.07 23 8.286 29.504 23.392 27.5z"/>
+    <path fill="#ff3a44" d="M25.674 19.77L23.392 16.5 8.286 7.5l10.784 15.5z"/>
+    <path fill="#ffba00" d="M8.286 29.504L23.392 27.5l2.282-7.73L19.07 23z"/>
+    <path fill="#00d9ff" d="M25.674 19.77l5.608-3.197a1.89 1.89 0 0 0 0-3.296l-5.608-3.197"/>
+  </g>
+  <g fill="#fff" font-family="'SF Pro Text','Helvetica Neue',Helvetica,Arial,sans-serif">
+    <text x="36" y="13" font-size="5" letter-spacing=".05em">DISPONIBLE SUR</text>
+    <text x="36" y="27" font-size="11" font-weight="600" letter-spacing="-.02em">Google Play</text>
+  </g>
+</svg>
