@@ -11,15 +11,15 @@ const defaultContent = {
   headline: "Prêt à trouver",
   headlineHighlight: "l'amour ?",
   subheadline: "Téléchargez TIA dès maintenant et commencez votre aventure",
-  googlePlayBadge: "/images/logo/google-play-badge.svg",
-  appStoreBadge: "/images/logo/app-store-badge.svg",
+  googlePlayBadge: "/images/logo/google-play-badge.webp",
+  appStoreBadge: "/images/logo/app-store-badge.webp",
   googlePlayTooltip: "Télécharger sur Google Play",
   googlePlayHref: "https://play.google.com/store/apps/details?id=com.rdh36.tiaapp",
   appStoreTooltip: "Télécharger sur l'App Store",
   appStoreHref: "https://apps.apple.com/mg/app/tia/id6758033706",
   stats: {
     users: "10k+",
-    usersLabel: "Utilisateurs intéressés",
+    usersLabel: "Utilisateurs actifs",
     status: "Disponible",
   },
 };
@@ -99,9 +99,9 @@ export function CTA({ content }: CTAProps) {
                 <Image
                   src={googlePlayBadge}
                   alt="Télécharger sur Google Play"
-                  width={160}
-                  height={60}
-                  className="h-[40px] sm:h-[48px] w-auto object-contain transition-all duration-300"
+                  width={836}
+                  height={250}
+                  className="h-[42px] sm:h-[50px] w-auto transition-all duration-300"
                 />
               </a>
             ) : (
@@ -109,9 +109,9 @@ export function CTA({ content }: CTAProps) {
                 <Image
                   src={googlePlayBadge}
                   alt="Bientôt sur Google Play"
-                  width={160}
-                  height={60}
-                  className="h-[40px] sm:h-[48px] w-auto object-contain grayscale opacity-70 transition-all duration-300"
+                  width={836}
+                  height={250}
+                  className="h-[42px] sm:h-[50px] w-auto grayscale opacity-70 transition-all duration-300"
                 />
                 <div className="absolute inset-0 flex items-center justify-center bg-black/40 rounded-lg">
                   <span className="text-white text-sm font-medium">
@@ -129,9 +129,9 @@ export function CTA({ content }: CTAProps) {
                 <Image
                   src={appStoreBadge}
                   alt="Télécharger sur App Store"
-                  width={160}
-                  height={60}
-                  className="h-[40px] sm:h-[48px] w-auto object-contain transition-all duration-300"
+                  width={791}
+                  height={250}
+                  className="h-[42px] sm:h-[50px] w-auto transition-all duration-300"
                 />
               </a>
             ) : (
@@ -139,9 +139,9 @@ export function CTA({ content }: CTAProps) {
                 <Image
                   src={appStoreBadge}
                   alt="Bientôt sur App Store"
-                  width={160}
-                  height={60}
-                  className="h-[40px] sm:h-[48px] w-auto object-contain grayscale opacity-70 transition-all duration-300"
+                  width={791}
+                  height={250}
+                  className="h-[42px] sm:h-[50px] w-auto grayscale opacity-70 transition-all duration-300"
                 />
                 <div className="absolute inset-0 flex items-center justify-center bg-black/40 rounded-lg">
                   <span className="text-white text-sm font-medium">

@@ -20,18 +20,18 @@ const defaultContent = {
     { text: "Super Like", icon: "emoji", position: "right" },
   ],
   socialProof: [
-    { value: "10k+", label: "Utilisateurs intéressés", icon: "users" },
+    { value: "10k+", label: "Utilisateurs actifs", icon: "users" },
     { value: "IA", label: "Powered", icon: "heart" },
     { value: "2026", label: "Lancement", icon: "clock" },
   ],
   appStoreBadges: {
     googlePlay: {
-      image: "/images/logo/google-play-badge.svg",
+      image: "/images/logo/google-play-badge.webp",
       tooltip: "Télécharger sur Google Play",
       href: "https://play.google.com/store/apps/details?id=com.rdh36.tiaapp",
     },
     appStore: {
-      image: "/images/logo/app-store-badge.svg",
+      image: "/images/logo/app-store-badge.webp",
       tooltip: "Télécharger sur l'App Store",
       href: "https://apps.apple.com/mg/app/tia/id6758033706",
     },
@@ -199,9 +199,9 @@ export function Hero({ content }: HeroProps) {
                     <Image
                       src={googlePlayImage}
                       alt="Télécharger sur Google Play"
-                      width={160}
-                      height={60}
-                      className="h-[40px] sm:h-[48px] w-auto object-contain transition-all duration-300"
+                      width={836}
+                      height={250}
+                      className="h-[42px] sm:h-[50px] w-auto transition-all duration-300"
                     />
                   </a>
                 ) : (
@@ -209,9 +209,9 @@ export function Hero({ content }: HeroProps) {
                     <Image
                       src={googlePlayImage}
                       alt="Bientôt sur Google Play"
-                      width={160}
-                      height={60}
-                      className="h-[40px] sm:h-[48px] w-auto object-contain grayscale opacity-70 transition-all duration-300"
+                      width={836}
+                      height={250}
+                      className="h-[42px] sm:h-[50px] w-auto grayscale opacity-70 transition-all duration-300"
                     />
                     <div className="absolute inset-0 flex items-center justify-center bg-black/40 rounded-lg">
                       <span className="text-white text-xs sm:text-sm font-medium">
@@ -231,9 +231,9 @@ export function Hero({ content }: HeroProps) {
                     <Image
                       src={appStoreImage}
                       alt="Télécharger sur App Store"
-                      width={160}
-                      height={60}
-                      className="h-[40px] sm:h-[48px] w-auto object-contain transition-all duration-300"
+                      width={791}
+                      height={250}
+                      className="h-[42px] sm:h-[50px] w-auto transition-all duration-300"
                     />
                   </a>
                 ) : (
@@ -241,9 +241,9 @@ export function Hero({ content }: HeroProps) {
                     <Image
                       src={appStoreImage}
                       alt="Bientôt sur App Store"
-                      width={160}
-                      height={60}
-                      className="h-[40px] sm:h-[48px] w-auto object-contain grayscale opacity-70 transition-all duration-300"
+                      width={791}
+                      height={250}
+                      className="h-[42px] sm:h-[50px] w-auto grayscale opacity-70 transition-all duration-300"
                     />
                     <div className="absolute inset-0 flex items-center justify-center bg-black/40 rounded-lg">
                       <span className="text-white text-xs sm:text-sm font-medium">

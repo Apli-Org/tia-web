@@ -56,7 +56,7 @@ export function Features({ content }: FeaturesProps) {
           <span className="inline-block px-4 py-2 bg-primary/10 text-primary rounded-full mb-4 font-semibold text-sm">
             Fonctionnalités
           </span>
-          <h2 className="text-4xl md:text-6xl font-bold mb-6 bg-linear-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
+          <h2 className="text-4xl md:text-6xl font-bold mb-6 bg-linear-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent pb-1 leading-tight">
             Pourquoi TIA change tout
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
