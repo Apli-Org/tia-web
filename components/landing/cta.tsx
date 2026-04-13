@@ -88,7 +88,7 @@ export function CTA({ content }: CTAProps) {
           </p>
 
           <div
-            className={`flex flex-col sm:flex-row gap-6 justify-center pt-4 transition-all duration-700 delay-300 ${
+            className={`flex flex-row gap-4 sm:gap-6 justify-center pt-4 transition-all duration-700 delay-300 ${
               isVisible
                 ? "opacity-100 translate-y-0"
                 : "opacity-0 translate-y-8"

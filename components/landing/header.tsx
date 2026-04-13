@@ -42,7 +42,9 @@ interface HeaderProps {
 function getStoreLink(): string | null {
   if (typeof navigator === "undefined") return null;
   const ua = navigator.userAgent;
+  // iOS detection: userAgent check + iPad disguised as Mac
   if (/iPhone|iPad|iPod/i.test(ua)) return STORE_LINKS.appStore;
+  if (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1) return STORE_LINKS.appStore;
   if (/Android/i.test(ua)) return STORE_LINKS.googlePlay;
   return null;
 }
@@ -107,7 +109,8 @@ export function Header({ content }: HeaderProps) {
                     const link = getStoreLink();
                     if (link) {
                       e.preventDefault();
-                      window.open(link, "_blank", "noopener,noreferrer");
+                      e.stopPropagation();
+                      window.location.href = link;
                     }
                   }}
                 >
