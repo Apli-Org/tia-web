@@ -1,7 +1,6 @@
 "use client";
 
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
-import { Clock } from "lucide-react";
 import Image from "next/image";
 import type { TestimonialsContent } from "@/lib/types/landing.types";
 
@@ -26,7 +25,7 @@ const defaultTestimonials = [
     age: 25,
     avatar: "/images/avatars/2.jpg",
     quote:
-      "Le concept de swipe façon TikTok + IA pour les matchs ? Je suis inscrite sur la liste d'attente depuis le premier jour !",
+      "Le concept de swipe façon TikTok + IA pour les matchs ? J'adore, je suis fan depuis le premier jour !",
   },
 ];
 
@@ -38,7 +37,6 @@ export function Testimonials({ content }: TestimonialsProps) {
   const { ref: sectionRef, isVisible } = useScrollAnimation({ threshold: 0.2 });
 
   const testimonials = content?.testimonials || defaultTestimonials;
-  const badgeText = content?.badgeText || "Sur liste d'attente";
 
   return (
     <section
@@ -60,10 +58,10 @@ export function Testimonials({ content }: TestimonialsProps) {
             Communauté
           </span>
           <h2 className="text-4xl md:text-6xl font-bold mb-6 bg-linear-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
-            Ils attendent TIA avec impatience
+            TIA, c'est eux qui en parlent le mieux
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
-            Rejoignez les milliers de célibataires qui attendent le lancement
+            Rejoignez la communauté de célibataires qui se rencontrent vraiment
           </p>
         </div>
 
@@ -96,9 +94,8 @@ export function Testimonials({ content }: TestimonialsProps) {
                     {testimonial.name}, {testimonial.age} ans
                   </p>
                   <div className="flex items-center gap-1 text-primary">
-                    <Clock className="w-3 h-3" />
                     <span className="text-xs font-medium">
-                      Sur liste d&apos;attente
+                      Membre TIA
                     </span>
                   </div>
                 </div>
