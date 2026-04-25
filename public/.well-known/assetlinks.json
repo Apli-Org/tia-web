@@ -1,0 +1,15 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls",
+      "delegate_permission/common.get_login_creds"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.rdh36.tiaapp",
+      "sha256_cert_fingerprints": [
+        "BA:8A:19:ED:18:BB:12:A3:E3:A6:7E:02:06:E3:56:62:69:1C:2C:68:6E:36:F5:5A:D6:A4:19:27:DA:79:5B:68"
+      ]
+    }
+  }
+]
