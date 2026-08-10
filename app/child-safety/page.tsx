@@ -51,7 +51,10 @@ function ChildSafetyContent() {
               <p className="text-red-800 leading-relaxed mb-0 font-semibold">
                 TIA applique une politique de tolérance zéro envers toute forme
                 d&apos;exploitation, d&apos;abus ou de mise en danger des
-                enfants.
+                enfants. Cette politique s&apos;applique à l&apos;ensemble des
+                utilisateurs, contenus et fonctionnalités de
+                l&apos;Application, conformément aux standards des magasins
+                d&apos;applications (Apple App Store, Google Play).
               </p>
             </div>
 
@@ -73,19 +76,30 @@ function ChildSafetyContent() {
                 <div className="flex items-start gap-3">
                   <span className="text-red-500 mt-1">●</span>
                   <span className="text-gray-700">
-                    Suppression immédiate du compte
+                    La suspension immédiate et le bannissement définitif du
+                    compte concerné
                   </span>
                 </div>
                 <div className="flex items-start gap-3">
                   <span className="text-red-500 mt-1">●</span>
                   <span className="text-gray-700">
-                    Conservation des preuves
+                    La conservation des preuves nécessaires au traitement du
+                    signalement
                   </span>
                 </div>
                 <div className="flex items-start gap-3">
                   <span className="text-red-500 mt-1">●</span>
                   <span className="text-gray-700">
-                    Signalement aux autorités compétentes
+                    Le signalement systématique aux autorités compétentes
+                    malgaches et, le cas échéant, aux organismes
+                    internationaux compétents
+                  </span>
+                </div>
+                <div className="flex items-start gap-3">
+                  <span className="text-red-500 mt-1">●</span>
+                  <span className="text-gray-700">
+                    La coopération pleine et entière avec toute enquête
+                    judiciaire
                   </span>
                 </div>
               </div>
@@ -109,6 +123,7 @@ function ChildSafetyContent() {
                   <span className="text-red-500 mt-1">✕</span>
                   <span className="text-gray-700">
                     Les tentatives de contact inapproprié avec des mineurs
+                    (« grooming »)
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
@@ -121,7 +136,8 @@ function ChildSafetyContent() {
               <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg">
                 <p className="text-blue-800 mb-0">
                   Nous utilisons des systèmes de modération humains et
-                  automatisés pour détecter et supprimer ces contenus.
+                  automatisés pour détecter et supprimer ces contenus dans les
+                  meilleurs délais.
                 </p>
               </div>
             </section>
@@ -137,28 +153,53 @@ function ChildSafetyContent() {
                 </p>
               </div>
               <p className="text-gray-600 mb-4">Mesures mises en place :</p>
-              <div className="grid md:grid-cols-1 gap-3">
+              <div className="grid md:grid-cols-1 gap-3 mb-6">
                 <div className="flex items-start gap-2 p-3 bg-gray-50 rounded-lg">
                   <span className="text-green-500 mt-1">✓</span>
                   <span className="text-gray-700">
-                    Déclaration obligatoire de l&apos;âge lors de
-                    l&apos;inscription
+                    Déclaration obligatoire de l&apos;âge et de la date de
+                    naissance lors de l&apos;inscription, avec blocage de
+                    l&apos;inscription en deçà de 18 ans
                   </span>
                 </div>
                 <div className="flex items-start gap-2 p-3 bg-gray-50 rounded-lg">
                   <span className="text-green-500 mt-1">✓</span>
                   <span className="text-gray-700">
                     Suspension immédiate des comptes suspectés d&apos;appartenir
-                    à un mineur
+                    à un mineur, dans l&apos;attente de vérification
                   </span>
                 </div>
                 <div className="flex items-start gap-2 p-3 bg-gray-50 rounded-lg">
                   <span className="text-green-500 mt-1">✓</span>
                   <span className="text-gray-700">
-                    Vérification supplémentaire en cas de doute
+                    Vérification complémentaire en cas de doute, à la
+                    discrétion de TIA
                   </span>
                 </div>
               </div>
+              <div className="bg-gray-50 rounded-lg p-6 mb-4">
+                <p className="text-gray-700 mb-0">
+                  Malgré ces mesures, TIA ne peut garantir avec une certitude
+                  absolue l&apos;exactitude de l&apos;âge déclaré par un
+                  Utilisateur, cette déclaration reposant sur les informations
+                  communiquées par l&apos;intéressé. Toute personne fournissant
+                  une fausse déclaration d&apos;âge agit en violation des
+                  Conditions Générales d&apos;Utilisation et engage sa seule et
+                  entière responsabilité, y compris le cas échéant sur le plan
+                  pénal ; la responsabilité de TIA ne saurait être recherchée
+                  à ce titre dès lors qu&apos;elle a mis en œuvre les mesures
+                  de vérification raisonnables décrites dans la présente
+                  politique.
+                </p>
+              </div>
+              <p className="text-gray-600 text-sm italic">
+                Il appartient par ailleurs aux parents et représentants légaux
+                de mineurs de mettre en œuvre les mesures de contrôle
+                parental appropriées (restriction d&apos;accès aux magasins
+                d&apos;applications, contrôle des appareils) afin
+                d&apos;empêcher l&apos;accès de mineurs à une application
+                exclusivement réservée aux adultes.
+              </p>
             </section>
 
             <section className="mb-10">
@@ -235,8 +276,24 @@ function ChildSafetyContent() {
             </section>
 
             <section className="mb-10">
+              <h2 className="text-2xl font-bold text-gray-900 mb-6 pb-3 border-b-2 border-orange-500/20">
+                6. Coopération avec les autorités et conservation des preuves
+              </h2>
+              <p className="text-gray-600">
+                TIA conserve les éléments nécessaires (comptes, contenus
+                signalés, métadonnées techniques) pendant la durée strictement
+                nécessaire au traitement des signalements et à la coopération
+                avec les autorités compétentes, dans le respect de la loi
+                applicable. TIA répond aux réquisitions judiciaires régulières
+                émanant des autorités compétentes et peut, de sa propre
+                initiative, signaler tout contenu ou comportement laissant
+                suspecter une exploitation de mineur.
+              </p>
+            </section>
+
+            <section className="mb-10">
               <h2 className="text-2xl font-bold text-gray-900 mb-6 pb-3 border-b-2 border-cyan-500/20">
-                6. Point de contact dédié à la sécurité des enfants
+                7. Point de contact dédié à la sécurité des enfants
               </h2>
               <p className="text-gray-600 mb-4">
                 Un point de contact spécifique est mis à disposition pour toute
@@ -262,7 +319,7 @@ function ChildSafetyContent() {
                   <div>
                     <p className="text-sm text-gray-500 mb-1">Email</p>
                     <a
-                      href="mailto:child-safety@tia-meet.com"
+                      href="mailto:info@tia-meet.com"
                       className="text-lg font-semibold text-cyan-600 hover:underline"
                     >
                       info@tia-meet.com
@@ -322,7 +379,7 @@ function ChildSafetyContent() {
 
             <section className="mb-8">
               <h2 className="text-2xl font-bold text-gray-900 mb-6 pb-3 border-b-2 border-indigo-500/20">
-                7. Engagement continu
+                8. Engagement continu
               </h2>
               <div className="bg-indigo-50 border-l-4 border-indigo-500 p-6 rounded-r-lg">
                 <p className="text-indigo-800 mb-0">

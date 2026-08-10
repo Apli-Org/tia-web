@@ -55,22 +55,31 @@ function PrivacyContent() {
                   d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
                 />
               </svg>
-              <span>Dernière mise à jour : 23/12/2025</span>
+              <span>Dernière mise à jour : Août 2026</span>
             </div>
           </div>
 
           <article className="px-8 py-10 prose prose-lg max-w-none">
             <div className="bg-blue-50 border-l-4 border-primary p-6 rounded-r-lg mb-8">
               <p className="text-gray-700 leading-relaxed mb-0">
-                La présente Politique de Confidentialité décrit la manière dont
-                TIA collecte, utilise, stocke et protège les données
-                personnelles de ses utilisateurs.
+                La présente Politique de Confidentialité décrit la manière
+                dont TIA (APLI SARLU) collecte, utilise, partage, conserve et
+                protège les données personnelles de ses utilisateurs, ainsi
+                que les droits dont ils disposent à cet égard.
               </p>
             </div>
 
             <p className="text-gray-600 leading-relaxed mb-10">
-              En utilisant l&apos;Application, vous acceptez les pratiques
-              décrites dans cette politique.
+              Elle doit être lue conjointement avec les{" "}
+              <Link href="/terms" className="text-primary hover:underline font-medium">
+                Conditions Générales d&apos;Utilisation
+              </Link>{" "}
+              et la{" "}
+              <Link href="/child-safety" className="text-primary hover:underline font-medium">
+                Politique de Protection des Mineurs
+              </Link>{" "}
+              de TIA. En utilisant l&apos;Application, vous reconnaissez avoir
+              pris connaissance des pratiques décrites dans cette politique.
             </p>
 
             <section className="mb-10">
@@ -82,14 +91,14 @@ function PrivacyContent() {
               </p>
               <div className="bg-gray-50 rounded-lg p-6 space-y-2">
                 <p className="text-gray-700">
-                  <strong>Nom de la société / Éditeur :</strong> APli SALU
+                  <strong>Nom de la société / Éditeur :</strong> APLI SARLU
                 </p>
                 <p className="text-gray-700">
                   <strong>Adresse :</strong> LOGT 51 CITE Ampefiloha
                   Antananarivo Madagascar
                 </p>
                 <p className="text-gray-700">
-                  <strong>Email de contact :</strong>{" "}
+                  <strong>Point de contact vie privée :</strong>{" "}
                   <a
                     href="mailto:info@tia-meet.com"
                     className="text-primary hover:underline"
@@ -200,6 +209,18 @@ function PrivacyContent() {
                   <span className="text-gray-700">Historique de connexion</span>
                 </li>
               </ul>
+
+              <h3 className="text-xl font-semibold text-gray-800 mt-6 mb-4">
+                2.4 Données de paiement
+              </h3>
+              <div className="bg-gray-50 rounded-lg p-6">
+                <p className="text-gray-700 mb-0">
+                  Les paiements sont traités directement par l&apos;App Store
+                  d&apos;Apple, Google Play et notre prestataire de gestion
+                  d&apos;abonnements. TIA n&apos;a accès à aucune donnée de
+                  carte bancaire et ne la stocke pas.
+                </p>
+              </div>
             </section>
 
             <section className="mb-10">
@@ -220,13 +241,15 @@ function PrivacyContent() {
                 <div className="flex items-start gap-2 p-3 bg-gray-50 rounded-lg">
                   <span className="text-primary mt-1">✓</span>
                   <span className="text-gray-700">
-                    Mise en relation entre utilisateurs
+                    Mise en relation, y compris via des fonctionnalités
+                    assistées par intelligence artificielle
                   </span>
                 </div>
                 <div className="flex items-start gap-2 p-3 bg-gray-50 rounded-lg">
                   <span className="text-primary mt-1">✓</span>
                   <span className="text-gray-700">
-                    Amélioration de l&apos;expérience utilisateur
+                    Amélioration de l&apos;expérience utilisateur et
+                    statistiques agrégées
                   </span>
                 </div>
                 <div className="flex items-start gap-2 p-3 bg-gray-50 rounded-lg">
@@ -247,6 +270,13 @@ function PrivacyContent() {
                     Communication avec les utilisateurs
                   </span>
                 </div>
+                <div className="flex items-start gap-2 p-3 bg-gray-50 rounded-lg">
+                  <span className="text-primary mt-1">✓</span>
+                  <span className="text-gray-700">
+                    Respect de nos obligations légales et réponse aux
+                    réquisitions des autorités
+                  </span>
+                </div>
               </div>
             </section>
 
@@ -255,32 +285,39 @@ function PrivacyContent() {
                 4. Base légale du traitement
               </h2>
               <p className="text-gray-600 mb-4">
-                Les traitements de données reposent sur :
+                Chaque traitement repose sur l&apos;une des bases légales
+                suivantes, selon la finalité concernée :
               </p>
               <ul className="space-y-2">
                 <li className="flex items-start gap-2">
                   <span className="text-primary mt-1">•</span>
                   <span className="text-gray-700">
-                    Le consentement de l&apos;utilisateur
+                    <strong>Exécution du contrat</strong> — création de
+                    compte, fonctionnement du Service, mise en relation
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-primary mt-1">•</span>
                   <span className="text-gray-700">
-                    L&apos;exécution du contrat (fourniture du service)
+                    <strong>Consentement de l&apos;utilisateur</strong> —
+                    géolocalisation, notifications, fonctionnalités
+                    optionnelles
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-primary mt-1">•</span>
                   <span className="text-gray-700">
-                    L&apos;intérêt légitime de l&apos;éditeur (sécurité,
-                    amélioration du service)
+                    <strong>Intérêt légitime de l&apos;éditeur</strong> —
+                    sécurité de la plateforme, prévention de la fraude,
+                    amélioration du service, statistiques agrégées
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-primary mt-1">•</span>
                   <span className="text-gray-700">
-                    Les obligations légales applicables à Madagascar
+                    <strong>Obligation légale</strong> — réponse aux
+                    réquisitions des autorités, lutte contre l&apos;exploitation
+                    des mineurs, obligations comptables
                   </span>
                 </li>
               </ul>
@@ -292,43 +329,53 @@ function PrivacyContent() {
               </h2>
               <div className="bg-green-50 border-l-4 border-green-500 p-4 mb-4">
                 <p className="text-green-800 font-semibold">
-                  Les données personnelles ne sont pas vendues.
+                  Les données personnelles ne sont ni vendues, ni louées.
                 </p>
               </div>
               <p className="text-gray-600 mb-4">
-                Elles peuvent être partagées uniquement avec :
+                Elles peuvent être partagées, dans la stricte mesure
+                nécessaire, avec :
               </p>
               <ul className="space-y-2 mb-4">
                 <li className="flex items-start gap-2">
                   <span className="text-primary mt-1">•</span>
                   <span className="text-gray-700">
-                    Des prestataires techniques (hébergement, maintenance,
-                    messagerie)
+                    Nos prestataires techniques (hébergement, infrastructure
+                    cloud, messagerie, notifications push, gestion des
+                    abonnements)
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-primary mt-1">•</span>
                   <span className="text-gray-700">
-                    Des autorités compétentes, si la loi l&apos;exige
+                    Les plateformes de paiement (Apple, Google) pour le
+                    traitement des transactions
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-primary mt-1">•</span>
                   <span className="text-gray-700">
-                    Des partenaires strictement nécessaires au fonctionnement de
-                    l&apos;Application
+                    Les autorités compétentes, sur réquisition légale ou en
+                    cas de signalement lié à la sécurité des mineurs
+                  </span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-primary mt-1">•</span>
+                  <span className="text-gray-700">
+                    Tout partenaire strictement nécessaire au fonctionnement
+                    de l&apos;Application
                   </span>
                 </li>
               </ul>
               <p className="text-gray-600 text-sm italic">
-                Tous les partenaires sont soumis à des obligations de
-                confidentialité.
+                Tous nos prestataires sont liés par des obligations
+                contractuelles de confidentialité et de sécurité.
               </p>
             </section>
 
             <section className="mb-10">
               <h2 className="text-3xl font-bold text-gray-900 mb-6 pb-3 border-b-2 border-primary/20">
-                6. Hébergement et transfert des données
+                6. Transferts internationaux
               </h2>
               <p className="text-gray-600 mb-4">
                 Les données peuvent être hébergées :
@@ -347,8 +394,11 @@ function PrivacyContent() {
                 </li>
               </ul>
               <p className="text-gray-600 text-sm">
-                Dans ce cas, des mesures sont prises pour garantir un niveau de
-                protection adéquat des données.
+                Lorsqu&apos;un transfert intervient vers un pays ne
+                bénéficiant pas d&apos;une reconnaissance d&apos;adéquation,
+                TIA veille à ce que des garanties appropriées soient mises en
+                œuvre par ses prestataires (clauses contractuelles types ou
+                mécanisme équivalent).
               </p>
             </section>
 
@@ -357,31 +407,40 @@ function PrivacyContent() {
                 7. Durée de conservation
               </h2>
               <p className="text-gray-600 mb-4">
-                Les données personnelles sont conservées :
+                Les données personnelles sont conservées tant que le compte
+                utilisateur est actif. En cas de suppression du compte ou de
+                demande de suppression, les données sont supprimées ou
+                anonymisées dans un délai maximum de trente (30) jours, sous
+                réserve des données devant être conservées au-delà pour :
               </p>
               <ul className="space-y-2 mb-4">
                 <li className="flex items-start gap-2">
                   <span className="text-primary mt-1">•</span>
                   <span className="text-gray-700">
-                    Tant que le compte utilisateur est actif
+                    Répondre à une obligation légale ou comptable
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-primary mt-1">•</span>
                   <span className="text-gray-700">
-                    Jusqu&apos;à la suppression du compte par l&apos;utilisateur
+                    Assurer la preuve d&apos;un droit ou d&apos;un contrat,
+                    dans les limites de la prescription applicable
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-primary mt-1">•</span>
                   <span className="text-gray-700">
-                    Ou conformément aux obligations légales en vigueur
+                    Les besoins d&apos;une procédure de modération ou de
+                    coopération avec les autorités, notamment en matière de
+                    protection des mineurs, pendant la durée strictement
+                    nécessaire
                   </span>
                 </li>
               </ul>
               <p className="text-gray-600 text-sm italic">
-                Les comptes inactifs peuvent être supprimés après une période
-                prolongée d&apos;inactivité.
+                Les comptes inactifs depuis plus de trente (30) jours (offre
+                gratuite) peuvent être suspendus ou supprimés conformément aux
+                CGU.
               </p>
             </section>
 
@@ -390,7 +449,7 @@ function PrivacyContent() {
                 8. Droits des utilisateurs
               </h2>
               <p className="text-gray-600 mb-4">
-                Conformément aux principes de protection des données, chaque
+                Conformément à la réglementation applicable, chaque
                 utilisateur dispose des droits suivants :
               </p>
               <div className="bg-purple-50 rounded-lg p-6 mb-4">
@@ -425,16 +484,26 @@ function PrivacyContent() {
                       Droit à la limitation du traitement
                     </span>
                   </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary mt-1">✓</span>
+                    <span className="text-gray-700 font-medium">
+                      Droit à la portabilité des données fournies
+                    </span>
+                  </li>
                 </ul>
               </div>
               <p className="text-gray-600">
-                Les demandes peuvent être adressées à :{" "}
+                Ces droits peuvent être exercés en écrivant à{" "}
                 <a
                   href="mailto:info@tia-meet.com"
                   className="text-primary hover:underline font-medium"
                 >
                   info@tia-meet.com
                 </a>
+                . Les résidents de l&apos;Union Européenne disposent en outre
+                du droit d&apos;introduire une réclamation auprès de
+                l&apos;autorité de contrôle compétente de leur pays de
+                résidence (par exemple la CNIL en France).
               </p>
             </section>
 
@@ -444,8 +513,8 @@ function PrivacyContent() {
               </h2>
               <p className="text-gray-600 mb-4">
                 Nous mettons en œuvre des mesures techniques et
-                organisationnelles pour protéger les données personnelles,
-                notamment :
+                organisationnelles raisonnables pour protéger les données
+                personnelles, notamment :
               </p>
               <ul className="space-y-2 mb-4">
                 <li className="flex items-start gap-2">
@@ -467,9 +536,16 @@ function PrivacyContent() {
                   </span>
                 </li>
               </ul>
-              <p className="text-gray-600 text-sm italic">
+              <p className="text-gray-600 text-sm italic mb-2">
                 Malgré ces mesures, aucun système n&apos;est totalement
-                sécurisé.
+                sécurisé et TIA ne peut garantir une sécurité absolue.
+              </p>
+              <p className="text-gray-600 text-sm italic">
+                En cas de violation de données susceptible d&apos;engendrer un
+                risque pour les droits et libertés des personnes concernées,
+                TIA en informera les personnes concernées et, le cas échéant,
+                les autorités compétentes, dans les meilleurs délais et
+                conformément à la réglementation applicable.
               </p>
             </section>
 
@@ -511,8 +587,8 @@ function PrivacyContent() {
                 <li className="flex items-start gap-2">
                   <span className="text-primary mt-1">•</span>
                   <span className="text-gray-700">
-                    Certaines données peuvent être conservées temporairement si
-                    la loi l&apos;exige.
+                    Certaines données peuvent être conservées au-delà de ce
+                    délai lorsque la loi l&apos;exige (voir article 7).
                   </span>
                 </li>
               </ul>
@@ -530,6 +606,15 @@ function PrivacyContent() {
               </div>
               <p className="text-gray-600">
                 Aucune donnée de mineur n&apos;est collectée intentionnellement.
+                Si TIA découvre qu&apos;un compte a été créé par ou concerne
+                une personne mineure, ce compte est immédiatement suspendu et
+                les données associées supprimées, sous réserve de la
+                conservation des éléments nécessaires à un signalement aux
+                autorités compétentes, conformément à la{" "}
+                <Link href="/child-safety" className="text-primary hover:underline font-medium">
+                  Politique de Protection des Mineurs
+                </Link>{" "}
+                de TIA.
               </p>
             </section>
 
@@ -539,53 +624,82 @@ function PrivacyContent() {
               </h2>
               <p className="text-gray-600 mb-4">
                 L&apos;Application peut utiliser des cookies ou technologies
-                similaires pour :
+                similaires, répartis en trois catégories :
               </p>
               <ul className="space-y-2 mb-4">
                 <li className="flex items-start gap-2">
                   <span className="text-primary mt-1">•</span>
-                  <span className="text-gray-700">Améliorer la navigation</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-primary mt-1">•</span>
                   <span className="text-gray-700">
-                    Analyser l&apos;utilisation de l&apos;Application
+                    Cookies strictement nécessaires au fonctionnement
+                    (authentification, sécurité)
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-primary mt-1">•</span>
                   <span className="text-gray-700">
-                    Personnaliser l&apos;expérience utilisateur
+                    Cookies de mesure d&apos;audience
+                  </span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-primary mt-1">•</span>
+                  <span className="text-gray-700">
+                    Le cas échéant, cookies de personnalisation
                   </span>
                 </li>
               </ul>
               <p className="text-gray-600 text-sm">
-                L&apos;utilisateur peut gérer ses préférences via les paramètres
-                de son appareil.
+                Les cookies non strictement nécessaires ne sont déposés
+                qu&apos;avec le consentement de l&apos;utilisateur, lequel
+                peut être retiré à tout moment via les paramètres de son
+                appareil ou de l&apos;Application.
               </p>
             </section>
 
             <section className="mb-10">
               <h2 className="text-3xl font-bold text-gray-900 mb-6 pb-3 border-b-2 border-primary/20">
-                13. Modification de la politique
+                13. Traitements automatisés et intelligence artificielle
+              </h2>
+              <p className="text-gray-600">
+                TIA utilise des traitements algorithmiques et des
+                fonctionnalités d&apos;intelligence artificielle pour proposer
+                des suggestions de mise en relation et améliorer
+                l&apos;expérience utilisateur. Ces traitements ne produisent
+                pas de décision entièrement automatisée ayant des effets
+                juridiques ou significatifs similaires sur
+                l&apos;Utilisateur, qui peut à tout moment demander des
+                informations sur leur logique en écrivant à{" "}
+                <a
+                  href="mailto:info@tia-meet.com"
+                  className="text-primary hover:underline font-medium"
+                >
+                  info@tia-meet.com
+                </a>
+                .
+              </p>
+            </section>
+
+            <section className="mb-10">
+              <h2 className="text-3xl font-bold text-gray-900 mb-6 pb-3 border-b-2 border-primary/20">
+                14. Modification de la politique
               </h2>
               <p className="text-gray-600 mb-4">
                 Cette Politique de Confidentialité peut être mise à jour à tout
                 moment.
               </p>
               <p className="text-gray-600">
-                Toute modification importante sera notifiée aux utilisateurs via
-                l&apos;Application.
+                Toute modification substantielle sera notifiée aux
+                utilisateurs via l&apos;Application ou par email, avant son
+                entrée en vigueur.
               </p>
             </section>
 
             <section className="mb-8">
               <h2 className="text-3xl font-bold text-gray-900 mb-6 pb-3 border-b-2 border-primary/20">
-                14. Contact
+                15. Contact et réclamations
               </h2>
               <p className="text-gray-600 mb-6">
-                Pour toute question concernant cette Politique de
-                Confidentialité, vous pouvez nous contacter à :
+                Pour toute question ou réclamation relative à cette Politique
+                de Confidentialité, vous pouvez nous contacter à :
               </p>
               <div className="bg-gradient-to-r from-primary/10 to-purple-50 rounded-lg p-6 flex items-center gap-4">
                 <div className="bg-white rounded-full p-3">
@@ -615,6 +729,11 @@ function PrivacyContent() {
                   </a>
                 </div>
               </div>
+              <p className="text-gray-500 text-sm mt-4 italic">
+                Les résidents de l&apos;Union Européenne peuvent également
+                saisir l&apos;autorité de contrôle compétente de leur pays de
+                résidence.
+              </p>
             </section>
           </article>
         </div>
