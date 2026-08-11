@@ -103,7 +103,7 @@ function TermsContent() {
                   <strong>STAT :</strong> 62011 11 2025 0 10781
                 </p>
                 <p className="text-gray-700">
-                  <strong>Représentant légal / Directeur de publication :</strong> à compléter
+                  <strong>Représentant légal / Directeur de publication :</strong> Ali Pirbay
                 </p>
                 <p className="text-gray-700">
                   <strong>Email général :</strong>{" "}
