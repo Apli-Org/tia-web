@@ -94,7 +94,13 @@ function TermsContent() {
                   <strong>Siège social :</strong> LOGT 51, Cité Ampefiloha, Antananarivo, Madagascar
                 </p>
                 <p className="text-gray-700">
-                  <strong>RCS / NIF / STAT :</strong> à compléter
+                  <strong>RCS :</strong> RCS Antananarivo 2025 B 00769
+                </p>
+                <p className="text-gray-700">
+                  <strong>NIF :</strong> 4019287505
+                </p>
+                <p className="text-gray-700">
+                  <strong>STAT :</strong> 62011 11 2025 0 10781
                 </p>
                 <p className="text-gray-700">
                   <strong>Représentant légal / Directeur de publication :</strong> à compléter
