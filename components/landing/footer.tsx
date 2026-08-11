@@ -19,8 +19,12 @@ const defaultContent = {
   ],
   contactEmail: "info@tia-meet.com",
   legalLinks: [
+    { name: "Conditions Générales d'Utilisation", href: "/terms" },
     { name: "Politique de confidentialité", href: "/privacy" },
-    { name: "Protection des enfants", href: "/child-safety" },
+    { name: "Protection des mineurs", href: "/child-safety" },
+    { name: "Charte de sécurité des rencontres", href: "/dating-safety" },
+    { name: "Règles de la communauté", href: "/community-guidelines" },
+    { name: "Suppression du compte", href: "/account-deletion" },
   ],
   copyright: "TIA. Tous droits réservés.",
   madeBy: "Made with ❤️ by APli",
