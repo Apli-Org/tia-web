@@ -39,265 +39,443 @@ function ChildSafetyContent() {
         <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
           <div className="bg-linear-to-r from-blue-500/10 via-indigo-50 to-purple-50 px-8 py-12 border-b border-gray-100">
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              Protection des Enfants
+              Politique de Protection des Mineurs et de Lutte contre l'Exploitation Sexuelle des Enfants
             </h1>
             <p className="text-lg text-gray-600">
-              Notre engagement pour la sécurité des mineurs
+              Version 2.0 — Dernière mise à jour : 11 août 2026
             </p>
           </div>
 
           <article className="px-8 py-10 prose prose-lg max-w-none">
             <div className="bg-red-50 border-l-4 border-red-500 p-6 rounded-r-lg mb-8">
               <p className="text-red-800 leading-relaxed mb-0 font-semibold">
-                TIA applique une politique de tolérance zéro envers toute forme
-                d&apos;exploitation, d&apos;abus ou de mise en danger des
-                enfants. Cette politique s&apos;applique à l&apos;ensemble des
-                utilisateurs, contenus et fonctionnalités de
-                l&apos;Application, conformément aux standards des magasins
-                d&apos;applications (Apple App Store, Google Play).
+                TIA est un service de rencontres strictement réservé aux personnes âgées de 18 ans et plus. APLI
+                SARLU applique une politique de tolérance zéro envers toute forme d'exploitation sexuelle, d'abus,
+                de mise en danger, de sollicitation ou de sexualisation d'une personne mineure. Cette politique
+                s'applique à tous les Comptes, profils, photos, messages, contenus et comportements liés à
+                l'utilisation de TIA, y compris lorsqu'une interaction commencée sur TIA se poursuit hors de
+                l'Application.
               </p>
             </div>
 
             <section className="mb-10">
               <h2 className="text-2xl font-bold text-gray-900 mb-6 pb-3 border-b-2 border-blue-500/20">
-                1. Engagement contre l&apos;exploitation des enfants
+                1. Notre engagement
               </h2>
-              <p className="text-gray-600 mb-4">
-                TIA s&apos;engage fermement à lutter contre toute forme
-                d&apos;exploitation, d&apos;abus et de mise en danger des
-                enfants. Nous interdisons strictement tout contenu, comportement
-                ou interaction impliquant des mineurs à des fins sexuelles,
-                abusives ou inappropriées.
+              <p className="text-gray-600">
+                TIA est un service de rencontres strictement réservé aux personnes âgées de 18 ans et plus. APLI
+                SARLU applique une politique de tolérance zéro envers toute forme d'exploitation sexuelle, d'abus,
+                de mise en danger, de sollicitation ou de sexualisation d'une personne mineure, y compris lorsque
+                l'interaction commencée sur TIA se poursuit hors de l'Application.
               </p>
-              <p className="text-gray-600 mb-4">
-                Toute violation de ces règles entraîne :
-              </p>
-              <div className="bg-gray-50 rounded-lg p-6 space-y-3">
-                <div className="flex items-start gap-3">
-                  <span className="text-red-500 mt-1">●</span>
-                  <span className="text-gray-700">
-                    La suspension immédiate et le bannissement définitif du
-                    compte concerné
-                  </span>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="text-red-500 mt-1">●</span>
-                  <span className="text-gray-700">
-                    La conservation des preuves nécessaires au traitement du
-                    signalement
-                  </span>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="text-red-500 mt-1">●</span>
-                  <span className="text-gray-700">
-                    Le signalement systématique aux autorités compétentes
-                    malgaches et, le cas échéant, aux organismes
-                    internationaux compétents
-                  </span>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="text-red-500 mt-1">●</span>
-                  <span className="text-gray-700">
-                    La coopération pleine et entière avec toute enquête
-                    judiciaire
-                  </span>
-                </div>
-              </div>
             </section>
 
             <section className="mb-10">
               <h2 className="text-2xl font-bold text-gray-900 mb-6 pb-3 border-b-2 border-red-500/20">
-                2. Interdiction du contenu illégal (CSAE & CSAM)
+                2. Définitions et comportements interdits
               </h2>
-              <p className="text-gray-600 mb-4">
-                TIA applique une politique de tolérance zéro concernant :
-              </p>
+              <p className="text-gray-600 mb-4">TIA interdit notamment :</p>
               <ul className="space-y-2 mb-6">
                 <li className="flex items-start gap-2">
                   <span className="text-red-500 mt-1">✕</span>
-                  <span className="text-gray-700">
-                    Le contenu d&apos;abus sexuel d&apos;enfants (CSAM)
-                  </span>
+                  <span className="text-gray-700">tout contenu d'abus sexuel d'enfants (« CSAM ») ;</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-red-500 mt-1">✕</span>
+                  <span className="text-gray-700">toute exploitation ou abus sexuel d'enfant (« CSAE ») ;</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-red-500 mt-1">✕</span>
+                  <span className="text-gray-700">la représentation sexuelle d'une personne mineure ;</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-red-500 mt-1">✕</span>
                   <span className="text-gray-700">
-                    Les tentatives de contact inapproprié avec des mineurs
-                    (« grooming »)
+                    le grooming, c'est-à-dire la création ou l'entretien d'un contact avec un mineur à des fins
+                    sexuelles, abusives ou d'exploitation ;
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-red-500 mt-1">✕</span>
+                  <span className="text-gray-700">la sollicitation d'images intimes d'une personne mineure ;</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-red-500 mt-1">✕</span>
+                  <span className="text-gray-700">le chantage sexuel ou « sextortion » impliquant un mineur ;</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-red-500 mt-1">✕</span>
+                  <span className="text-gray-700">la traite, le trafic ou l'exploitation commerciale d'un mineur ;</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-red-500 mt-1">✕</span>
                   <span className="text-gray-700">
-                    La sollicitation, le chantage ou l&apos;exploitation
+                    toute proposition de rencontre à caractère sexuel impliquant une personne mineure ;
+                  </span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-red-500 mt-1">✕</span>
+                  <span className="text-gray-700">le partage de liens, fichiers ou instructions permettant d'accéder à du CSAM ;</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-red-500 mt-1">✕</span>
+                  <span className="text-gray-700">la glorification ou la banalisation d'un abus sexuel d'enfant ;</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-red-500 mt-1">✕</span>
+                  <span className="text-gray-700">
+                    toute tentative de contourner les mécanismes de détection, signalement ou contrôle liés à la
+                    protection des mineurs.
                   </span>
                 </li>
               </ul>
               <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg">
                 <p className="text-blue-800 mb-0">
-                  Nous utilisons des systèmes de modération humains et
-                  automatisés pour détecter et supprimer ces contenus dans les
-                  meilleurs délais.
+                  Aucune intention humoristique, artistique ou provocatrice ne justifie un contenu illégal ou un
+                  comportement mettant un mineur en danger.
                 </p>
               </div>
             </section>
 
             <section className="mb-10">
               <h2 className="text-2xl font-bold text-gray-900 mb-6 pb-3 border-b-2 border-amber-500/20">
-                3. Accès réservé aux utilisateurs majeurs
+                3. Accès strictement réservé aux adultes
               </h2>
-              <div className="bg-yellow-50 border-l-4 border-yellow-500 p-4 mb-6 rounded-r-lg">
-                <p className="text-yellow-800 font-semibold mb-0">
-                  L&apos;utilisation de TIA est strictement réservée aux
-                  personnes âgées de 18 ans et plus.
-                </p>
-              </div>
-              <p className="text-gray-600 mb-4">Mesures mises en place :</p>
+              <p className="text-gray-600 mb-4">
+                Pour créer un Compte, l'Utilisateur doit déclarer être âgé d'au moins 18 ans et fournir sa date de
+                naissance. TIA peut mettre en œuvre, selon les fonctionnalités disponibles :
+              </p>
               <div className="grid md:grid-cols-1 gap-3 mb-6">
                 <div className="flex items-start gap-2 p-3 bg-gray-50 rounded-lg">
                   <span className="text-green-500 mt-1">✓</span>
-                  <span className="text-gray-700">
-                    Déclaration obligatoire de l&apos;âge et de la date de
-                    naissance lors de l&apos;inscription, avec blocage de
-                    l&apos;inscription en deçà de 18 ans
-                  </span>
+                  <span className="text-gray-700">blocage de l'inscription des dates de naissance indiquant un âge inférieur à 18 ans ;</span>
                 </div>
                 <div className="flex items-start gap-2 p-3 bg-gray-50 rounded-lg">
                   <span className="text-green-500 mt-1">✓</span>
-                  <span className="text-gray-700">
-                    Suspension immédiate des comptes suspectés d&apos;appartenir
-                    à un mineur, dans l&apos;attente de vérification
-                  </span>
+                  <span className="text-gray-700">contrôles de cohérence ;</span>
                 </div>
                 <div className="flex items-start gap-2 p-3 bg-gray-50 rounded-lg">
                   <span className="text-green-500 mt-1">✓</span>
-                  <span className="text-gray-700">
-                    Vérification complémentaire en cas de doute, à la
-                    discrétion de TIA
-                  </span>
+                  <span className="text-gray-700">vérification de téléphone ou email ;</span>
+                </div>
+                <div className="flex items-start gap-2 p-3 bg-gray-50 rounded-lg">
+                  <span className="text-green-500 mt-1">✓</span>
+                  <span className="text-gray-700">vérification de photo ou selfie ;</span>
+                </div>
+                <div className="flex items-start gap-2 p-3 bg-gray-50 rounded-lg">
+                  <span className="text-green-500 mt-1">✓</span>
+                  <span className="text-gray-700">vérification documentaire ;</span>
+                </div>
+                <div className="flex items-start gap-2 p-3 bg-gray-50 rounded-lg">
+                  <span className="text-green-500 mt-1">✓</span>
+                  <span className="text-gray-700">demande de justificatif en cas de doute ;</span>
+                </div>
+                <div className="flex items-start gap-2 p-3 bg-gray-50 rounded-lg">
+                  <span className="text-green-500 mt-1">✓</span>
+                  <span className="text-gray-700">suspension conservatoire d'un Compte suspecté d'appartenir à un mineur.</span>
                 </div>
               </div>
-              <div className="bg-gray-50 rounded-lg p-6 mb-4">
-                <p className="text-gray-700 mb-0">
-                  Malgré ces mesures, TIA ne peut garantir avec une certitude
-                  absolue l&apos;exactitude de l&apos;âge déclaré par un
-                  Utilisateur, cette déclaration reposant sur les informations
-                  communiquées par l&apos;intéressé. Toute personne fournissant
-                  une fausse déclaration d&apos;âge agit en violation des
-                  Conditions Générales d&apos;Utilisation et engage sa seule et
-                  entière responsabilité, y compris le cas échéant sur le plan
-                  pénal ; la responsabilité de TIA ne saurait être recherchée
-                  à ce titre dès lors qu&apos;elle a mis en œuvre les mesures
-                  de vérification raisonnables décrites dans la présente
-                  politique.
+              <div className="bg-yellow-50 border-l-4 border-yellow-500 p-4 rounded-r-lg">
+                <p className="text-yellow-800 font-semibold mb-0">
+                  La fourniture d'une fausse date de naissance, l'utilisation du document d'un tiers, la
+                  falsification d'une pièce ou le contournement volontaire d'une vérification constitue une violation
+                  grave des CGU.
                 </p>
               </div>
-              <p className="text-gray-600 text-sm italic">
-                Il appartient par ailleurs aux parents et représentants légaux
-                de mineurs de mettre en œuvre les mesures de contrôle
-                parental appropriées (restriction d&apos;accès aux magasins
-                d&apos;applications, contrôle des appareils) afin
-                d&apos;empêcher l&apos;accès de mineurs à une application
-                exclusivement réservée aux adultes.
+            </section>
+
+            <section className="mb-10">
+              <h2 className="text-2xl font-bold text-gray-900 mb-6 pb-3 border-b-2 border-orange-500/20">
+                4. Limites des mécanismes de vérification
+              </h2>
+              <p className="text-gray-600 mb-4">
+                Aucun mécanisme technique, déclaratif ou documentaire ne peut garantir avec une certitude absolue
+                qu'une personne malintentionnée ne parviendra jamais à fournir de fausses informations ou à
+                contourner un contrôle. Une vérification réussie ou un badge n'est donc pas une garantie absolue de
+                l'âge réel, de l'identité, des intentions, des antécédents ou de la sécurité d'un Utilisateur.
               </p>
+              <div className="bg-gray-50 rounded-lg p-6 mb-4">
+                <p className="text-gray-700 mb-0">
+                  <strong>
+                    Dans toute la mesure permise par la loi, TIA ne saurait être tenue responsable du seul fait
+                    qu'une personne ait frauduleusement contourné les mesures raisonnables mises en place pour
+                    empêcher l'accès des mineurs.
+                  </strong>{" "}
+                  Cette limitation ne réduit pas les obligations légales de TIA lorsqu'elle acquiert connaissance
+                  d'un risque crédible ou d'un contenu impliquant potentiellement un mineur.
+                </p>
+              </div>
             </section>
 
             <section className="mb-10">
               <h2 className="text-2xl font-bold text-gray-900 mb-6 pb-3 border-b-2 border-green-500/20">
-                4. Système de signalement dans l&apos;application
+                5. Signalement dans l'Application
               </h2>
-              <p className="text-gray-600 mb-4">
-                Les utilisateurs peuvent signaler :
-              </p>
+              <p className="text-gray-600 mb-4">Les Utilisateurs sont invités à signaler immédiatement :</p>
               <ul className="space-y-2 mb-6">
                 <li className="flex items-start gap-2">
                   <span className="text-primary mt-1">•</span>
-                  <span className="text-gray-700">Un comportement suspect</span>
+                  <span className="text-gray-700">un profil paraissant appartenir à une personne mineure ;</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-primary mt-1">•</span>
-                  <span className="text-gray-700">Un contenu inapproprié</span>
+                  <span className="text-gray-700">une personne affirmant être mineure ;</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-primary mt-1">•</span>
-                  <span className="text-gray-700">
-                    Toute situation mettant un enfant en danger
-                  </span>
+                  <span className="text-gray-700">un comportement de grooming ;</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-primary mt-1">•</span>
+                  <span className="text-gray-700">une sollicitation sexuelle impliquant un mineur ;</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-primary mt-1">•</span>
+                  <span className="text-gray-700">un contenu pouvant constituer du CSAM ;</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-primary mt-1">•</span>
+                  <span className="text-gray-700">toute menace, extorsion ou exploitation concernant un enfant.</span>
                 </li>
               </ul>
-              <p className="text-gray-600 mb-4">Fonctionnalités :</p>
               <div className="bg-green-50 rounded-lg p-6 space-y-3">
                 <div className="flex items-start gap-3">
                   <span className="text-green-600 mt-1">✓</span>
                   <span className="text-gray-700">
-                    Bouton &quot;Signaler&quot; sur chaque profil et
-                    conversation
+                    Bouton « Signaler » disponible sur les profils et/ou conversations lorsque cette fonctionnalité
+                    est prévue
                   </span>
                 </div>
                 <div className="flex items-start gap-3">
                   <span className="text-green-600 mt-1">✓</span>
                   <span className="text-gray-700">
-                    Formulaire de plainte accessible dans l&apos;application
+                    Signalement également possible à{" "}
+                    <a href="mailto:info@tia-meet.com" className="text-primary hover:underline font-medium">
+                      info@tia-meet.com
+                    </a>
                   </span>
                 </div>
                 <div className="flex items-start gap-3">
                   <span className="text-green-600 mt-1">✓</span>
-                  <span className="text-gray-700">
-                    Traitement prioritaire par notre équipe de sécurité
-                  </span>
+                  <span className="text-gray-700">Les signalements concernant la sécurité d'un enfant sont traités en priorité</span>
                 </div>
               </div>
             </section>
 
             <section className="mb-10">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6 pb-3 border-b-2 border-purple-500/20">
-                5. Conformité aux lois sur la protection de l&apos;enfance
+              <h2 className="text-2xl font-bold text-gray-900 mb-6 pb-3 border-b-2 border-blue-500/20">
+                6. Mesures de TIA en cas de suspicion
               </h2>
               <p className="text-gray-600 mb-4">
-                TIA respecte toutes les lois applicables relatives à la
-                protection des enfants, y compris :
+                Lorsqu'un signalement ou un élément objectif laisse raisonnablement suspecter qu'un Compte appartient
+                à une personne mineure ou qu'un contenu implique l'exploitation d'un enfant, TIA peut immédiatement :
               </p>
-              <ul className="space-y-2">
+              <ul className="space-y-2 mb-4">
+                <li className="flex items-start gap-2">
+                  <span className="text-primary mt-1">•</span>
+                  <span className="text-gray-700">suspendre le Compte ;</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-primary mt-1">•</span>
+                  <span className="text-gray-700">empêcher l'envoi ou la réception de messages ;</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-primary mt-1">•</span>
+                  <span className="text-gray-700">masquer ou retirer le contenu ;</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-primary mt-1">•</span>
+                  <span className="text-gray-700">demander une vérification d'âge ou d'identité ;</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-primary mt-1">•</span>
+                  <span className="text-gray-700">préserver les éléments techniques et contenus nécessaires à l'analyse ;</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-primary mt-1">•</span>
+                  <span className="text-gray-700">empêcher une réinscription ;</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-primary mt-1">•</span>
+                  <span className="text-gray-700">transmettre ou conserver des informations lorsque la loi l'exige ou l'autorise ;</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-primary mt-1">•</span>
+                  <span className="text-gray-700">coopérer avec les autorités compétentes.</span>
+                </li>
+              </ul>
+              <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg">
+                <p className="text-blue-800 mb-0">
+                  TIA peut agir avant d'avoir terminé une enquête interne lorsqu'une mesure conservatoire est
+                  raisonnablement nécessaire pour protéger une personne.
+                </p>
+              </div>
+            </section>
+
+            <section className="mb-10">
+              <h2 className="text-2xl font-bold text-gray-900 mb-6 pb-3 border-b-2 border-red-500/20">
+                7. CSAM : retrait, préservation et coopération
+              </h2>
+              <p className="text-gray-600 mb-4">
+                TIA applique une politique de tolérance zéro au CSAM. Lorsqu'un contenu est raisonnablement identifié
+                comme pouvant constituer du CSAM, TIA prend les mesures adaptées à la réglementation applicable,
+                pouvant inclure :
+              </p>
+              <ul className="space-y-2 mb-4">
+                <li className="flex items-start gap-2">
+                  <span className="text-primary mt-1">•</span>
+                  <span className="text-gray-700">restriction immédiate de l'accès au contenu ;</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-primary mt-1">•</span>
+                  <span className="text-gray-700">suspension du Compte ;</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-primary mt-1">•</span>
+                  <span className="text-gray-700">préservation sécurisée des éléments nécessaires à une enquête, sans diffusion inutile ;</span>
+                </li>
                 <li className="flex items-start gap-2">
                   <span className="text-primary mt-1">•</span>
                   <span className="text-gray-700">
-                    Les législations nationales et internationales sur la
-                    protection des mineurs
+                    signalement ou transmission aux autorités ou organismes compétents lorsque la loi l'exige ou
+                    l'autorise ;
+                  </span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-primary mt-1">•</span>
+                  <span className="text-gray-700">coopération avec une enquête judiciaire régulière.</span>
+                </li>
+              </ul>
+              <p className="text-gray-600 text-sm italic">
+                Le personnel et les prestataires ne doivent pas télécharger, dupliquer ou transmettre inutilement un
+                contenu potentiellement illégal en dehors des procédures autorisées.
+              </p>
+            </section>
+
+            <section className="mb-10">
+              <h2 className="text-2xl font-bold text-gray-900 mb-6 pb-3 border-b-2 border-gray-400/40">
+                8. Preuves et conservation
+              </h2>
+              <p className="text-gray-600 mb-4">
+                TIA peut conserver les données nécessaires à un signalement de sécurité enfant, notamment :
+                identifiants de Compte, contenu signalé, historique de signalement, métadonnées techniques
+                pertinentes, décisions de modération et éléments transmis aux autorités.
+              </p>
+              <p className="text-gray-600">
+                Cette conservation est limitée à ce qui est nécessaire pour la sécurité, la prévention de récidive,
+                une procédure, la défense d'un droit ou une obligation légale. La suppression volontaire d'un Compte
+                ne peut pas obliger TIA à détruire des éléments qu'elle est légalement tenue ou autorisée à
+                conserver pour une enquête ou la protection d'un enfant.
+              </p>
+            </section>
+
+            <section className="mb-10">
+              <h2 className="text-2xl font-bold text-gray-900 mb-6 pb-3 border-b-2 border-purple-500/20">
+                9. Interdiction de contacter ou d'exploiter un mineur hors plateforme
+              </h2>
+              <p className="text-gray-600">
+                Un Utilisateur ne peut pas échapper à cette politique en transférant une conversation vers WhatsApp,
+                téléphone, email, réseau social ou tout autre service. Lorsqu'un comportement hors plateforme est
+                signalé à TIA et qu'il est suffisamment lié à un Compte TIA pour révéler un risque de sécurité, TIA
+                peut prendre des mesures sur le Compte concerné, dans la mesure permise par la loi et les CGU.
+              </p>
+            </section>
+
+            <section className="mb-10">
+              <h2 className="text-2xl font-bold text-gray-900 mb-6 pb-3 border-b-2 border-gray-400/40">
+                10. Responsabilité de l'auteur d'un acte illicite
+              </h2>
+              <p className="text-gray-600 mb-4">
+                Toute personne qui exploite, sollicite, menace, harcèle ou agresse un mineur demeure personnellement
+                responsable de ses actes et peut faire l'objet des sanctions civiles ou pénales prévues par la loi.
+                Le fait qu'une personne ait créé un Compte ou utilisé TIA ne transfère pas à TIA la responsabilité de
+                l'acte illicite commis par cette personne.
+              </p>
+              <div className="bg-gray-50 rounded-lg p-6">
+                <p className="text-gray-700 mb-0">
+                  Dans toute la mesure permise par la loi applicable, TIA n'est pas responsable d'un acte criminel
+                  commis par un Utilisateur qui a trompé ou contourné les mesures raisonnables de la plateforme, sauf
+                  faute propre de TIA engageant légalement sa responsabilité.
+                </p>
+              </div>
+            </section>
+
+            <section className="mb-10">
+              <h2 className="text-2xl font-bold text-gray-900 mb-6 pb-3 border-b-2 border-indigo-500/20">
+                11. Parents et représentants légaux
+              </h2>
+              <p className="text-gray-600 mb-4">
+                TIA n'est pas destiné aux mineurs et ne doit pas être installé ou utilisé par eux. Les parents et
+                représentants légaux sont encouragés à utiliser les mécanismes de contrôle parental, restrictions de
+                téléchargement et paramètres d'âge mis à disposition par les systèmes d'exploitation et magasins
+                d'applications.
+              </p>
+              <p className="text-gray-600">
+                Toute personne pensant qu'un mineur utilise TIA peut le signaler immédiatement à{" "}
+                <a href="mailto:info@tia-meet.com" className="text-primary hover:underline font-medium">
+                  info@tia-meet.com
+                </a>
+                .
+              </p>
+            </section>
+
+            <section className="mb-10">
+              <h2 className="text-2xl font-bold text-gray-900 mb-6 pb-3 border-b-2 border-teal-500/20">
+                12. Obligations des Utilisateurs
+              </h2>
+              <p className="text-gray-600 mb-4">Chaque Utilisateur doit :</p>
+              <ul className="space-y-2">
+                <li className="flex items-start gap-2">
+                  <span className="text-primary mt-1">•</span>
+                  <span className="text-gray-700">déclarer son âge de manière exacte ;</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-primary mt-1">•</span>
+                  <span className="text-gray-700">ne jamais prêter son Compte à une personne mineure ;</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-primary mt-1">•</span>
+                  <span className="text-gray-700">ne jamais utiliser la photo, le document ou l'identité d'un mineur pour créer un profil ;</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-primary mt-1">•</span>
+                  <span className="text-gray-700">
+                    signaler immédiatement tout Compte ou comportement laissant suspecter la présence d'un mineur ;
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-primary mt-1">•</span>
                   <span className="text-gray-700">
-                    Les obligations de signalement aux autorités en cas de
-                    découverte de contenu illicite
+                    ne pas tenter d'enquêter lui-même en demandant ou partageant du contenu sexuel ;
                   </span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-primary mt-1">•</span>
+                  <span className="text-gray-700">coopérer raisonnablement avec TIA lorsqu'une vérification de sécurité est nécessaire.</span>
                 </li>
               </ul>
             </section>
 
             <section className="mb-10">
               <h2 className="text-2xl font-bold text-gray-900 mb-6 pb-3 border-b-2 border-orange-500/20">
-                6. Coopération avec les autorités et conservation des preuves
+                13. Modération humaine et automatisée
               </h2>
               <p className="text-gray-600">
-                TIA conserve les éléments nécessaires (comptes, contenus
-                signalés, métadonnées techniques) pendant la durée strictement
-                nécessaire au traitement des signalements et à la coopération
-                avec les autorités compétentes, dans le respect de la loi
-                applicable. TIA répond aux réquisitions judiciaires régulières
-                émanant des autorités compétentes et peut, de sa propre
-                initiative, signaler tout contenu ou comportement laissant
-                suspecter une exploitation de mineur.
+                TIA peut utiliser des outils automatisés et des contrôles humains pour identifier des signaux
+                associés aux faux profils, à la fraude, aux contenus interdits ou aux risques pour les mineurs. Ces
+                outils réduisent les risques mais ne peuvent garantir la détection de chaque violation avant
+                exposition. L'absence de détection immédiate ne signifie pas qu'un contenu ou comportement est
+                autorisé.
               </p>
             </section>
 
             <section className="mb-10">
               <h2 className="text-2xl font-bold text-gray-900 mb-6 pb-3 border-b-2 border-cyan-500/20">
-                7. Point de contact dédié à la sécurité des enfants
+                14. Contact dédié à la sécurité des enfants
               </h2>
               <p className="text-gray-600 mb-4">
-                Un point de contact spécifique est mis à disposition pour toute
-                question ou alerte liée à la sécurité des mineurs :
+                Un point de contact spécifique est mis à disposition pour toute question ou alerte liée à la sécurité
+                des mineurs :
               </p>
               <div className="bg-linear-to-r from-cyan-50 to-blue-50 rounded-lg p-6 space-y-4">
                 <div className="flex items-center gap-4">
@@ -344,49 +522,90 @@ function ChildSafetyContent() {
                   </div>
                   <div>
                     <p className="text-sm text-gray-500 mb-1">Responsable</p>
-                    <p className="text-lg font-semibold text-gray-800">
-                      Équipe Sécurité TIA
-                    </p>
+                    <p className="text-lg font-semibold text-gray-800">Équipe Sécurité TIA</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-4">
-                  <div className="bg-white rounded-full p-3 shadow-sm">
-                    <svg
-                      className="w-6 h-6 text-cyan-600"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                      />
-                    </svg>
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-500 mb-1">
-                      Temps de réponse moyen
-                    </p>
-                    <p className="text-lg font-semibold text-gray-800">
-                      24 heures
-                    </p>
-                  </div>
-                </div>
+              </div>
+              <p className="text-gray-600 text-sm italic mt-4">
+                TIA désigne également dans les interfaces développeur pertinentes, notamment lorsque requis par
+                Google Play, un point de contact interne habilité à répondre aux questions concernant les pratiques
+                de lutte contre le CSAE/CSAM.
+              </p>
+            </section>
+
+            <section className="mb-10">
+              <h2 className="text-2xl font-bold text-gray-900 mb-6 pb-3 border-b-2 border-blue-500/20">
+                15. Conformité aux magasins d'applications
+              </h2>
+              <p className="text-gray-600">
+                TIA maintient des standards publics interdisant explicitement le CSAE/CSAM, un mécanisme de
+                signalement utilisateur et un point de contact relatif à la sécurité des enfants conformément aux
+                politiques applicables aux applications sociales et de rencontres. TIA peut adapter cette Politique
+                pour tenir compte d'une évolution des exigences Apple App Store, Google Play ou de la réglementation.
+              </p>
+            </section>
+
+            <section className="mb-10">
+              <h2 className="text-2xl font-bold text-gray-900 mb-6 pb-3 border-b-2 border-orange-500/20">
+                16. Coopération avec les autorités
+              </h2>
+              <p className="text-gray-600">
+                TIA répond aux demandes légalement valables des autorités compétentes et peut prendre toute mesure
+                autorisée par la loi afin de préserver la sécurité d'une personne, de prévenir une infraction grave
+                ou de protéger un enfant. TIA peut refuser une demande informelle, excessivement large ou
+                juridiquement insuffisante lorsqu'aucune urgence ou obligation légale ne justifie la communication.
+              </p>
+            </section>
+
+            <section className="mb-10">
+              <h2 className="text-2xl font-bold text-gray-900 mb-6 pb-3 border-b-2 border-indigo-500/20">
+                17. Modifications et révision continue
+              </h2>
+              <div className="bg-indigo-50 border-l-4 border-indigo-500 p-6 rounded-r-lg">
+                <p className="text-indigo-800 mb-0">
+                  TIA réévalue régulièrement ses procédures de modération, de contrôle d'âge, de signalement et de
+                  conservation afin d'améliorer la protection des mineurs. Toute modification substantielle de cette
+                  Politique est publiée dans l'Application ou sur le site de TIA.
+                </p>
               </div>
             </section>
 
             <section className="mb-8">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6 pb-3 border-b-2 border-indigo-500/20">
-                8. Engagement continu
+              <h2 className="text-2xl font-bold text-gray-900 mb-6 pb-3 border-b-2 border-red-500/20">
+                18. Contact
               </h2>
-              <div className="bg-indigo-50 border-l-4 border-indigo-500 p-6 rounded-r-lg">
-                <p className="text-indigo-800 mb-0">
-                  Nous révisons régulièrement nos systèmes, nos politiques et
-                  nos outils de modération afin d&apos;améliorer la protection
-                  des utilisateurs et prévenir toute exploitation des enfants
-                  sur notre plateforme.
+              <p className="text-gray-600 mb-4">Pour toute alerte liée à la sécurité d'un enfant :</p>
+              <div className="bg-gradient-to-r from-primary/10 to-purple-50 rounded-lg p-6 flex items-center gap-4 mb-4">
+                <div className="bg-white rounded-full p-3">
+                  <svg
+                    className="w-6 h-6 text-primary"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                    />
+                  </svg>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-600 mb-1">Contact sécurité enfant</p>
+                  <a
+                    href="mailto:info@tia-meet.com"
+                    className="text-lg font-semibold text-primary hover:underline"
+                  >
+                    info@tia-meet.com
+                  </a>
+                </div>
+              </div>
+              <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-r-lg">
+                <p className="text-red-800 mb-0 font-semibold">
+                  Pour une situation urgente mettant immédiatement une personne en danger, il convient de contacter
+                  directement les services d'urgence ou les autorités locales compétentes ; TIA n'est pas un service
+                  d'urgence.
                 </p>
               </div>
             </section>
