@@ -308,7 +308,7 @@ export default async function DashboardPage() {
           <div>
             <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
             <p className="text-muted-foreground">
-              Vue d&apos;ensemble de la plateforme TIA
+              Vue d&apos;ensemble de la plateforme Tia
             </p>
           </div>
           <Button asChild>

@@ -72,11 +72,11 @@ function TermsContent() {
             <div className="bg-blue-50 border-l-4 border-primary p-6 rounded-r-lg mb-8">
               <p className="text-gray-700 leading-relaxed mb-0">
                 Les présentes Conditions Générales d'Utilisation (« CGU ») régissent l'accès et l'utilisation de
-                l'application mobile TIA, de ses sites, interfaces, fonctionnalités, contenus et services associés
+                l'application mobile Tia, de ses sites, interfaces, fonctionnalités, contenus et services associés
                 (ensemble, le « Service »), édités par APLI SARLU. En créant un Compte, en cochant la case
                 d'acceptation ou en utilisant le Service, l'Utilisateur reconnaît avoir lu, compris et accepté sans
                 réserve les présentes CGU, la Politique de Confidentialité, la Politique de Protection des Mineurs
-                et les Règles de la Communauté TIA. Si l'Utilisateur n'accepte pas ces documents, il ne doit pas
+                et les Règles de la Communauté Tia. Si l'Utilisateur n'accepte pas ces documents, il ne doit pas
                 créer de Compte ni utiliser le Service.
               </p>
             </div>
@@ -125,7 +125,7 @@ function TermsContent() {
                 </p>
               </div>
               <p className="text-gray-600 text-sm italic mt-4">
-                Dans les présentes CGU, « TIA », « APLI », « la Société », « nous », « notre » ou « nos » désignent
+                Dans les présentes CGU, « Tia », « APLI », « la Société », « nous », « notre » ou « nos » désignent
                 APLI SARLU selon le contexte.
               </p>
             </section>
@@ -136,7 +136,7 @@ function TermsContent() {
               </h2>
               <ul className="space-y-4">
                 <Bullet>
-                  <strong>Application :</strong> l'application mobile TIA et, le cas échéant, toute interface web
+                  <strong>Application :</strong> l'application mobile Tia et, le cas échéant, toute interface web
                   associée.
                 </Bullet>
                 <Bullet>
@@ -154,7 +154,7 @@ function TermsContent() {
                   d'entrer en contact, selon les règles du Service.
                 </Bullet>
                 <Bullet>
-                  <strong>Service :</strong> l'ensemble des fonctionnalités fournies par TIA, gratuites ou payantes,
+                  <strong>Service :</strong> l'ensemble des fonctionnalités fournies par Tia, gratuites ou payantes,
                   y compris les outils de découverte, de suggestion, de communication, de modération, de
                   vérification et les fonctionnalités assistées par algorithme ou intelligence artificielle.
                 </Bullet>
@@ -166,7 +166,7 @@ function TermsContent() {
                   dans l'Application.
                 </Bullet>
                 <Bullet>
-                  <strong>Partenaire technique :</strong> tout prestataire intervenant pour le compte de TIA,
+                  <strong>Partenaire technique :</strong> tout prestataire intervenant pour le compte de Tia,
                   notamment en matière d'hébergement, authentification, paiement, messagerie, notifications,
                   analyse, sécurité, modération ou support.
                 </Bullet>
@@ -178,24 +178,24 @@ function TermsContent() {
                 3. Objet et nature du Service
               </h2>
               <p className="text-gray-600 mb-4">
-                TIA fournit une plateforme technologique permettant à des personnes majeures de découvrir d'autres
+                Tia fournit une plateforme technologique permettant à des personnes majeures de découvrir d'autres
                 Utilisateurs, d'exprimer un intérêt réciproque et, lorsque les fonctionnalités le permettent, de
                 communiquer.
               </p>
               <p className="text-gray-600 mb-4">
-                TIA n'est pas une agence matrimoniale, un service de conseil sentimental, un service de vérification
+                Tia n'est pas une agence matrimoniale, un service de conseil sentimental, un service de vérification
                 d'antécédents, un service de sécurité privée, un assureur, un garant de moralité, un mandataire d'un
                 Utilisateur, ni une partie à une relation, une rencontre ou une transaction pouvant intervenir entre
                 Utilisateurs.
               </p>
               <p className="text-gray-600 mb-4">
-                TIA n'organise pas, ne supervise pas et ne contrôle pas les rencontres physiques entre Utilisateurs.
+                Tia n'organise pas, ne supervise pas et ne contrôle pas les rencontres physiques entre Utilisateurs.
                 Toute décision de poursuivre une conversation, de communiquer hors de l'Application ou de rencontrer
                 une personne dans le monde réel est prise indépendamment par les personnes concernées.
               </p>
               <div className="bg-gray-50 rounded-lg p-6">
                 <p className="text-gray-700 mb-0">
-                  L'obligation de TIA est une obligation de moyens consistant notamment à mettre à disposition le
+                  L'obligation de Tia est une obligation de moyens consistant notamment à mettre à disposition le
                   Service conformément aux fonctionnalités proposées, sous réserve de la disponibilité technique, de
                   la maintenance, des règles de modération et des limites prévues par les présentes CGU.
                 </p>
@@ -220,7 +220,7 @@ function TermsContent() {
                   utiliser son propre numéro, email, identité, photos et moyens d'authentification, sauf
                   fonctionnalité expressément prévue autrement ;
                 </Bullet>
-                <Bullet>ne pas avoir été définitivement banni de TIA, sauf autorisation écrite préalable de TIA ;</Bullet>
+                <Bullet>ne pas avoir été définitivement banni de Tia, sauf autorisation écrite préalable de Tia ;</Bullet>
                 <Bullet>
                   ne pas être légalement empêché d'utiliser un service de rencontres ou de communiquer avec d'autres
                   personnes ;
@@ -238,7 +238,7 @@ function TermsContent() {
                 </p>
               </div>
               <p className="text-gray-600">
-                TIA peut demander des éléments complémentaires afin de vérifier l'âge, l'identité ou la conformité
+                Tia peut demander des éléments complémentaires afin de vérifier l'âge, l'identité ou la conformité
                 d'un Compte lorsque cela paraît raisonnablement nécessaire.
               </p>
             </section>
@@ -249,20 +249,20 @@ function TermsContent() {
               </h2>
               <p className="text-gray-600 mb-4">
                 Le Compte est personnel, individuel, non cessible et non transférable. Sauf fonctionnalité contraire
-                expressément autorisée par TIA, chaque Utilisateur ne peut détenir qu'un seul Compte actif.
+                expressément autorisée par Tia, chaque Utilisateur ne peut détenir qu'un seul Compte actif.
               </p>
               <p className="text-gray-600 mb-4">
                 L'Utilisateur est responsable de la confidentialité de ses identifiants, codes et appareils. Il doit
-                informer TIA sans délai de tout accès non autorisé, perte d'un appareil, compromission
+                informer Tia sans délai de tout accès non autorisé, perte d'un appareil, compromission
                 d'identifiants ou utilisation suspecte du Compte.
               </p>
               <p className="text-gray-600 mb-4">
-                TIA peut bloquer temporairement un Compte lorsqu'une compromission, une fraude, une usurpation ou un
+                Tia peut bloquer temporairement un Compte lorsqu'une compromission, une fraude, une usurpation ou un
                 risque de sécurité est suspecté.
               </p>
               <p className="text-gray-600">
                 Le fait qu'une action soit effectuée depuis un Compte ne prive pas l'Utilisateur de la possibilité de
-                démontrer une compromission, mais TIA pourra raisonnablement considérer les activités réalisées avec
+                démontrer une compromission, mais Tia pourra raisonnablement considérer les activités réalisées avec
                 des identifiants valides comme provenant du titulaire tant qu'aucune anomalie n'a été signalée.
               </p>
             </section>
@@ -272,7 +272,7 @@ function TermsContent() {
                 6. Vérifications, badges et absence de garantie d'identité ou d'antécédents
               </h2>
               <p className="text-gray-600 mb-4">
-                TIA peut proposer ou imposer certaines vérifications, notamment par téléphone, email, selfie, photo,
+                Tia peut proposer ou imposer certaines vérifications, notamment par téléphone, email, selfie, photo,
                 document d'identité ou mécanisme automatisé, selon les fonctionnalités disponibles et la
                 réglementation applicable.
               </p>
@@ -297,7 +297,7 @@ function TermsContent() {
                 </ul>
               </div>
               <p className="text-gray-600 mb-4">
-                TIA ne réalise pas de contrôle systématique des casiers judiciaires, registres de délinquants sexuels
+                Tia ne réalise pas de contrôle systématique des casiers judiciaires, registres de délinquants sexuels
                 ou antécédents de chaque Utilisateur, sauf si une fonctionnalité ou une obligation légale
                 particulière est expressément mise en place et annoncée.
               </p>
@@ -322,7 +322,7 @@ function TermsContent() {
               </p>
               <p className="text-gray-600 mb-4">
                 Une suggestion de profil, un score, un ordre d'affichage ou un contenu généré par une fonctionnalité
-                d'IA ne constitue ni une approbation, ni une recommandation personnelle, ni une garantie de TIA
+                d'IA ne constitue ni une approbation, ni une recommandation personnelle, ni une garantie de Tia
                 concernant l'Utilisateur concerné.
               </p>
               <p className="text-gray-600">
@@ -364,7 +364,7 @@ function TermsContent() {
                 </Bullet>
                 <Bullet>
                   promouvoir un produit, service, recrutement, activité commerciale, vente pyramidale ou sollicitation
-                  sans autorisation écrite de TIA ;
+                  sans autorisation écrite de Tia ;
                 </Bullet>
                 <Bullet>
                   collecter, copier, aspirer ou réutiliser les données d'autres Utilisateurs par scraping, robot,
@@ -373,7 +373,7 @@ function TermsContent() {
                 <Bullet>contourner les mesures de sécurité, les limitations du Service ou une sanction de Compte ;</Bullet>
                 <Bullet>
                   introduire un virus, code malveillant, charge nuisible ou tenter d'accéder sans autorisation aux
-                  systèmes de TIA ;
+                  systèmes de Tia ;
                 </Bullet>
                 <Bullet>
                   publier les coordonnées privées, documents d'identité ou informations confidentielles d'autrui sans
@@ -383,7 +383,7 @@ function TermsContent() {
                 <Bullet>enfreindre les droits de propriété intellectuelle, la vie privée ou les droits d'un tiers.</Bullet>
               </ul>
               <p className="text-gray-600 text-sm italic mt-4">
-                Les Règles de la Communauté TIA font partie intégrante des présentes CGU et peuvent détailler ces
+                Les Règles de la Communauté Tia font partie intégrante des présentes CGU et peuvent détailler ces
                 interdictions.
               </p>
             </section>
@@ -396,7 +396,7 @@ function TermsContent() {
                 L'Utilisateur demeure propriétaire des droits qu'il détient sur son Contenu Utilisateur.
               </p>
               <p className="text-gray-600 mb-4">
-                En transmettant du Contenu à TIA, il accorde à TIA, pour la durée nécessaire au fonctionnement du
+                En transmettant du Contenu à Tia, il accorde à Tia, pour la durée nécessaire au fonctionnement du
                 Service et sous réserve de la réglementation applicable, une licence non exclusive, mondiale,
                 gratuite et techniquement sous-licenciable à ses prestataires, permettant d'héberger, stocker,
                 reproduire, adapter au format, afficher, transmettre, modérer, analyser et traiter ce Contenu
@@ -425,7 +425,7 @@ function TermsContent() {
                 10. Modération, signalement et blocage
               </h2>
               <p className="text-gray-600 mb-4">
-                TIA peut utiliser une combinaison de signalements, contrôles humains, règles automatisées et outils
+                Tia peut utiliser une combinaison de signalements, contrôles humains, règles automatisées et outils
                 algorithmiques afin de détecter des violations des CGU ou des risques de sécurité.
               </p>
               <p className="text-gray-600 mb-4">
@@ -433,7 +433,7 @@ function TermsContent() {
                 dans l'Application et peut bloquer un autre Utilisateur lorsque la fonctionnalité est disponible.
               </p>
               <p className="text-gray-600 mb-4">
-                TIA peut, sans que cela constitue une obligation générale de surveillance préalable de chaque
+                Tia peut, sans que cela constitue une obligation générale de surveillance préalable de chaque
                 communication :
               </p>
               <ul className="space-y-2 mb-4">
@@ -456,7 +456,7 @@ function TermsContent() {
                 </p>
                 <p className="text-yellow-800 mb-0">
                   <strong>
-                    Le fait pour TIA de mettre en place volontairement des outils de sécurité ou de modération ne
+                    Le fait pour Tia de mettre en place volontairement des outils de sécurité ou de modération ne
                     crée pas une garantie générale de sécurité ni une obligation de contrôler en temps réel
                     l'ensemble des interactions.
                   </strong>
@@ -470,7 +470,7 @@ function TermsContent() {
               </h2>
               <p className="text-gray-600 mb-4">
                 Les rencontres physiques sont décidées et organisées{" "}
-                <strong>indépendamment de TIA, sous la responsabilité des Utilisateurs concernés</strong>. TIA n'est
+                <strong>indépendamment de Tia, sous la responsabilité des Utilisateurs concernés</strong>. Tia n'est
                 pas présent lors des rencontres et ne contrôle ni le lieu, ni l'identité réelle, ni les intentions,
                 ni le comportement des personnes rencontrées.
               </p>
@@ -493,7 +493,7 @@ function TermsContent() {
               </ul>
               <p className="text-gray-600">
                 Toute communication poursuivie par téléphone, WhatsApp, email, réseau social ou autre service tiers
-                se déroule hors du contrôle de TIA.
+                se déroule hors du contrôle de Tia.
               </p>
             </section>
 
@@ -502,18 +502,18 @@ function TermsContent() {
                 12. Transactions, argent, cadeaux et arnaques
               </h2>
               <p className="text-gray-600 mb-4">
-                TIA n'est partie à aucune transaction financière entre Utilisateurs et ne garantit aucun paiement,
+                Tia n'est partie à aucune transaction financière entre Utilisateurs et ne garantit aucun paiement,
                 prêt, investissement, vente, cadeau ou transfert de fonds entre eux.
               </p>
               <div className="bg-red-50 border-l-4 border-red-500 p-4 mb-4">
                 <p className="text-red-800 font-semibold mb-0">
-                  TIA recommande de ne jamais envoyer d'argent ou de données bancaires à une personne rencontrée via
+                  Tia recommande de ne jamais envoyer d'argent ou de données bancaires à une personne rencontrée via
                   le Service.
                 </p>
               </div>
               <p className="text-gray-600">
                 L'Utilisateur qui décide néanmoins d'effectuer une transaction avec un autre Utilisateur le fait à
-                ses propres risques et sous sa seule responsabilité, sans recours contre TIA fondé uniquement sur le
+                ses propres risques et sous sa seule responsabilité, sans recours contre Tia fondé uniquement sur le
                 fait que les personnes se sont connues via le Service.
               </p>
             </section>
@@ -523,7 +523,7 @@ function TermsContent() {
                 13. Services Premium, abonnements et paiements
               </h2>
               <p className="text-gray-600 mb-4">
-                TIA peut proposer des abonnements et achats intégrés donnant accès à des fonctionnalités
+                Tia peut proposer des abonnements et achats intégrés donnant accès à des fonctionnalités
                 supplémentaires. Les prix, durées, avantages, modalités de renouvellement et éventuelles périodes
                 promotionnelles sont ceux affichés au moment de l'achat.
               </p>
@@ -541,7 +541,7 @@ function TermsContent() {
                 effectués pour une période déjà commencée ne sont pas remboursables.
               </p>
               <p className="text-gray-600">
-                TIA peut modifier les tarifs pour les périodes futures. Lorsqu'une réglementation ou une plateforme
+                Tia peut modifier les tarifs pour les périodes futures. Lorsqu'une réglementation ou une plateforme
                 l'exige, l'Utilisateur sera informé avant l'entrée en vigueur du nouveau tarif.
               </p>
             </section>
@@ -555,7 +555,7 @@ function TermsContent() {
                 moment selon les modalités disponibles dans l'Application ou indiquées dans la Politique de
                 Confidentialité.
               </p>
-              <p className="text-gray-600 mb-4">TIA peut suspendre, limiter ou supprimer un Compte notamment en cas de :</p>
+              <p className="text-gray-600 mb-4">Tia peut suspendre, limiter ou supprimer un Compte notamment en cas de :</p>
               <ul className="space-y-2 mb-4">
                 <Bullet>violation des présentes CGU ;</Bullet>
                 <Bullet>suspicion raisonnable de fraude, usurpation ou activité dangereuse ;</Bullet>
@@ -567,11 +567,11 @@ function TermsContent() {
                 <Bullet>défaut de paiement d'un Service Premium.</Bullet>
               </ul>
               <p className="text-gray-600 mb-4">
-                TIA peut prendre une mesure conservatoire avant d'avoir terminé son analyse lorsqu'un risque de
+                Tia peut prendre une mesure conservatoire avant d'avoir terminé son analyse lorsqu'un risque de
                 sécurité le justifie raisonnablement.
               </p>
               <p className="text-gray-600">
-                Lorsqu'une notification ou une procédure de contestation est imposée par une loi applicable, TIA la
+                Lorsqu'une notification ou une procédure de contestation est imposée par une loi applicable, Tia la
                 met en œuvre dans les conditions requises.
               </p>
             </section>
@@ -581,7 +581,7 @@ function TermsContent() {
                 15. Inactivité
               </h2>
               <p className="text-gray-600 mb-4">
-                TIA peut désactiver ou supprimer des Comptes durablement inactifs, sous réserve des durées de
+                Tia peut désactiver ou supprimer des Comptes durablement inactifs, sous réserve des durées de
                 conservation nécessaires à la sécurité, à la prévention des abus, aux obligations légales ou à
                 l'exercice de droits.
               </p>
@@ -601,13 +601,13 @@ function TermsContent() {
                 plateformes de paiement, outils de communication ou contenus fournis par des tiers.
               </p>
               <p className="text-gray-600 mb-4">
-                TIA ne contrôle pas les services tiers et ne garantit ni leur disponibilité, ni leur contenu, ni
+                Tia ne contrôle pas les services tiers et ne garantit ni leur disponibilité, ni leur contenu, ni
                 leurs pratiques. Leur utilisation peut être soumise à leurs propres conditions et politiques de
                 confidentialité.
               </p>
               <p className="text-gray-600">
-                Dans toute la mesure permise par la loi, TIA n'est pas responsable d'un dommage résultant
-                exclusivement d'un service tiers indépendant de TIA.
+                Dans toute la mesure permise par la loi, Tia n'est pas responsable d'un dommage résultant
+                exclusivement d'un service tiers indépendant de Tia.
               </p>
             </section>
 
@@ -617,7 +617,7 @@ function TermsContent() {
               </h2>
               <p className="text-gray-600 mb-4">
                 Le Service est fourni « <strong>en l'état</strong> » et « <strong>selon disponibilité</strong> »,
-                dans toute la mesure permise par la loi. TIA ne garantit notamment pas :
+                dans toute la mesure permise par la loi. Tia ne garantit notamment pas :
               </p>
               <ul className="space-y-2 mb-4">
                 <Bullet>une disponibilité permanente ou sans interruption ;</Bullet>
@@ -629,7 +629,7 @@ function TermsContent() {
                 <Bullet>l'absence de faux profil ou de comportement malveillant malgré les mesures de sécurité mises en place.</Bullet>
               </ul>
               <p className="text-gray-600">
-                TIA peut modifier, suspendre ou faire évoluer certaines fonctionnalités pour des raisons techniques,
+                Tia peut modifier, suspendre ou faire évoluer certaines fonctionnalités pour des raisons techniques,
                 de sécurité, juridiques ou commerciales.
               </p>
             </section>
@@ -647,7 +647,7 @@ function TermsContent() {
                 </p>
               </div>
               <p className="text-gray-600 mb-4">
-                Dans toute la mesure permise par la loi applicable, TIA ne répond pas des actes, omissions ou
+                Dans toute la mesure permise par la loi applicable, Tia ne répond pas des actes, omissions ou
                 comportements d'un Utilisateur ou d'un tiers, sur ou hors du Service, notamment :
               </p>
               <ul className="space-y-2 mb-4">
@@ -664,7 +664,7 @@ function TermsContent() {
               </ul>
               <p className="text-gray-600 text-sm italic">
                 Le simple fait que deux personnes aient été mises en relation, aient communiqué ou se soient
-                découvertes au moyen de TIA ne transfère pas à TIA la responsabilité des actes ultérieurs de l'une de
+                découvertes au moyen de Tia ne transfère pas à Tia la responsabilité des actes ultérieurs de l'une de
                 ces personnes.
               </p>
             </section>
@@ -680,8 +680,8 @@ function TermsContent() {
               </p>
               <p className="text-gray-600 mb-4">
                 Sous réserve des responsabilités légalement non excluables, l'Utilisateur renonce à diriger contre
-                TIA une réclamation fondée exclusivement sur le comportement d'un autre Utilisateur ou d'un tiers
-                lorsque TIA n'a pas elle-même commis de faute susceptible d'engager sa responsabilité en vertu de la
+                Tia une réclamation fondée exclusivement sur le comportement d'un autre Utilisateur ou d'un tiers
+                lorsque Tia n'a pas elle-même commis de faute susceptible d'engager sa responsabilité en vertu de la
                 loi applicable.
               </p>
               <p className="text-gray-600">
@@ -692,10 +692,10 @@ function TermsContent() {
 
             <section className="mb-10">
               <h2 className="text-3xl font-bold text-gray-900 mb-6 pb-3 border-b-2 border-primary/20">
-                20. Limitation de responsabilité de TIA
+                20. Limitation de responsabilité de Tia
               </h2>
               <p className="text-gray-600 mb-4">
-                <strong>Dans toute la mesure maximale autorisée par la loi applicable</strong>, TIA, APLI SARLU, ses
+                <strong>Dans toute la mesure maximale autorisée par la loi applicable</strong>, Tia, APLI SARLU, ses
                 dirigeants, salariés, représentants, prestataires et partenaires ne pourront être tenus responsables
                 des dommages indirects, consécutifs, accessoires, spéciaux ou immatériels résultant de l'accès au
                 Service ou de son utilisation, notamment perte de profit, perte d'opportunité, perte de données,
@@ -704,10 +704,10 @@ function TermsContent() {
               <div className="bg-purple-50 rounded-lg p-6 mb-4">
                 <p className="text-gray-700 mb-0">
                   Sous réserve des cas dans lesquels un plafond de responsabilité est interdit par une règle
-                  impérative, la responsabilité cumulée de TIA, tous faits générateurs et fondements confondus, au
+                  impérative, la responsabilité cumulée de Tia, tous faits générateurs et fondements confondus, au
                   titre d'un événement lié au Service, est limitée au montant effectivement payé par l'Utilisateur à
-                  TIA au cours des douze (12) mois précédant directement le fait générateur. Pour un Utilisateur
-                  n'ayant versé aucun montant à TIA au cours de cette période, cette clause ne crée aucune garantie
+                  Tia au cours des douze (12) mois précédant directement le fait générateur. Pour un Utilisateur
+                  n'ayant versé aucun montant à Tia au cours de cette période, cette clause ne crée aucune garantie
                   financière et s'applique dans toute la mesure autorisée par la loi.
                 </p>
               </div>
@@ -728,8 +728,8 @@ function TermsContent() {
               </p>
               <p className="text-gray-600 mb-4">
                 En particulier, les présentes CGU ne peuvent priver une personne d'un droit impératif résultant,
-                lorsqu'il est applicable, d'une fraude ou d'un dol de TIA, d'une faute lourde lorsque la loi interdit
-                son exclusion, d'une atteinte imputable à TIA que la loi impose d'indemniser, ni des droits
+                lorsqu'il est applicable, d'une fraude ou d'un dol de Tia, d'une faute lourde lorsque la loi interdit
+                son exclusion, d'une atteinte imputable à Tia que la loi impose d'indemniser, ni des droits
                 impératifs attachés à la protection des données personnelles ou à la protection du consommateur.
               </p>
               <p className="text-gray-600">
@@ -740,12 +740,12 @@ function TermsContent() {
 
             <section className="mb-10">
               <h2 className="text-3xl font-bold text-gray-900 mb-6 pb-3 border-b-2 border-primary/20">
-                22. Indemnisation de TIA par l'Utilisateur
+                22. Indemnisation de Tia par l'Utilisateur
               </h2>
               <div className="bg-gray-50 rounded-lg p-6 mb-4">
                 <p className="text-gray-700 mb-3">
                   Dans toute la mesure permise par la loi, l'Utilisateur s'engage à indemniser, défendre et tenir
-                  indemnes TIA, APLI SARLU, leurs dirigeants, salariés, représentants, prestataires et partenaires
+                  indemnes Tia, APLI SARLU, leurs dirigeants, salariés, représentants, prestataires et partenaires
                   contre toute réclamation, procédure, condamnation, perte, dommage, coût ou frais raisonnable de
                   défense résultant directement :
                 </p>
@@ -758,7 +758,7 @@ function TermsContent() {
                 </ul>
               </div>
               <p className="text-gray-600 text-sm italic">
-                Cette obligation ne couvre pas la part d'un dommage directement causée par une faute propre de TIA
+                Cette obligation ne couvre pas la part d'un dommage directement causée par une faute propre de Tia
                 dont la responsabilité ne peut être exclue par la loi.
               </p>
             </section>
@@ -768,7 +768,7 @@ function TermsContent() {
                 23. Coopération avec les autorités et conservation des preuves
               </h2>
               <p className="text-gray-600 mb-4">
-                TIA peut préserver et communiquer des informations lorsqu'elle estime de bonne foi que cela est
+                Tia peut préserver et communiquer des informations lorsqu'elle estime de bonne foi que cela est
                 nécessaire pour :
               </p>
               <ul className="space-y-2 mb-4">
@@ -778,7 +778,7 @@ function TermsContent() {
                   prévenir ou enquêter sur une fraude, une exploitation sexuelle, un risque impliquant un mineur ou
                   une infraction grave ;
                 </Bullet>
-                <Bullet>exercer ou défendre les droits de TIA.</Bullet>
+                <Bullet>exercer ou défendre les droits de Tia.</Bullet>
               </ul>
               <p className="text-gray-600">
                 Toute communication de données personnelles est effectuée conformément à la réglementation
@@ -788,20 +788,20 @@ function TermsContent() {
 
             <section className="mb-10">
               <h2 className="text-3xl font-bold text-gray-900 mb-6 pb-3 border-b-2 border-primary/20">
-                24. Propriété intellectuelle de TIA
+                24. Propriété intellectuelle de Tia
               </h2>
               <p className="text-gray-600 mb-4">
-                L'Application, la marque TIA, les logiciels, bases de données, interfaces, éléments graphiques,
-                textes, logos, fonctionnalités, modèles, systèmes et contenus appartenant à TIA ou à ses concédants
+                L'Application, la marque Tia, les logiciels, bases de données, interfaces, éléments graphiques,
+                textes, logos, fonctionnalités, modèles, systèmes et contenus appartenant à Tia ou à ses concédants
                 sont protégés par les droits de propriété intellectuelle applicables.
               </p>
               <p className="text-gray-600 mb-4">
-                TIA accorde à l'Utilisateur un droit personnel, limité, révocable, non exclusif et non transférable
+                Tia accorde à l'Utilisateur un droit personnel, limité, révocable, non exclusif et non transférable
                 d'utiliser le Service pour un usage privé conformément aux présentes CGU.
               </p>
               <p className="text-gray-600">
                 Sauf autorisation écrite, il est interdit de copier, modifier, distribuer, désassembler,
-                rétroconcevoir, revendre, exploiter commercialement ou créer un service dérivé à partir de TIA, dans
+                rétroconcevoir, revendre, exploiter commercialement ou créer un service dérivé à partir de Tia, dans
                 la mesure où une telle interdiction est légalement permise.
               </p>
             </section>
@@ -813,7 +813,7 @@ function TermsContent() {
               <p className="text-gray-600">
                 Le traitement des données personnelles est régi par la{" "}
                 <Link href="/privacy" className="text-primary hover:underline font-medium">
-                  Politique de Confidentialité TIA
+                  Politique de Confidentialité Tia
                 </Link>
                 , qui fait partie intégrante du cadre contractuel applicable au Service. L'Utilisateur doit également
                 consulter les informations et consentements présentés au moment où certaines données sensibles,
@@ -826,7 +826,7 @@ function TermsContent() {
                 26. Force majeure et événements hors contrôle raisonnable
               </h2>
               <p className="text-gray-600">
-                TIA ne pourra être tenue responsable d'un retard, d'une interruption ou d'une inexécution résultant
+                Tia ne pourra être tenue responsable d'un retard, d'une interruption ou d'une inexécution résultant
                 d'un événement hors de son contrôle raisonnable, notamment catastrophe naturelle, panne majeure
                 d'infrastructure, coupure d'électricité ou de télécommunication, cyberattaque externe malgré des
                 mesures raisonnables, conflit, acte d'autorité, grève externe, défaillance généralisée d'un
@@ -839,7 +839,7 @@ function TermsContent() {
                 27. Modification du Service et des CGU
               </h2>
               <p className="text-gray-600 mb-4">
-                TIA peut modifier les présentes CGU afin notamment de tenir compte d'une évolution du Service, de la
+                Tia peut modifier les présentes CGU afin notamment de tenir compte d'une évolution du Service, de la
                 sécurité, de la réglementation ou des pratiques techniques.
               </p>
               <p className="text-gray-600 mb-4">
@@ -847,7 +847,7 @@ function TermsContent() {
                 avant son entrée en vigueur lorsque la loi l'exige.
               </p>
               <p className="text-gray-600">
-                Lorsque l'acceptation expresse d'une nouvelle version est légalement nécessaire, TIA pourra demander
+                Lorsque l'acceptation expresse d'une nouvelle version est légalement nécessaire, Tia pourra demander
                 une nouvelle validation avant de permettre la poursuite de l'utilisation du Service.
               </p>
             </section>
@@ -857,12 +857,12 @@ function TermsContent() {
                 28. Cession
               </h2>
               <p className="text-gray-600 mb-4">
-                TIA peut transférer tout ou partie de ses droits et obligations dans le cadre d'une restructuration,
+                Tia peut transférer tout ou partie de ses droits et obligations dans le cadre d'une restructuration,
                 fusion, acquisition, cession d'activité ou opération comparable, sous réserve des droits impératifs
                 des Utilisateurs et des règles applicables à la protection des données.
               </p>
               <p className="text-gray-600">
-                L'Utilisateur ne peut céder son Compte ou ses droits d'accès au Service sans l'accord écrit de TIA.
+                L'Utilisateur ne peut céder son Compte ou ses droits d'accès au Service sans l'accord écrit de Tia.
               </p>
             </section>
 
@@ -882,7 +882,7 @@ function TermsContent() {
                 30. Non-renonciation
               </h2>
               <p className="text-gray-600">
-                Le fait pour TIA de ne pas exercer immédiatement un droit ne constitue pas une renonciation à ce
+                Le fait pour Tia de ne pas exercer immédiatement un droit ne constitue pas une renonciation à ce
                 droit.
               </p>
             </section>
@@ -895,7 +895,7 @@ function TermsContent() {
                 Les présentes CGU, la Politique de Confidentialité, la Politique de Protection des Mineurs, la Charte
                 de Sécurité et les Règles de la Communauté constituent, avec les informations spécifiques affichées
                 lors d'un achat ou d'une fonctionnalité, l'ensemble des règles contractuelles applicables à
-                l'utilisation de TIA.
+                l'utilisation de Tia.
               </p>
             </section>
 

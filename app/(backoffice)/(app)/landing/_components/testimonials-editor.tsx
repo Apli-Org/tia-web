@@ -79,7 +79,7 @@ export function TestimonialsEditor({ section, adminId }: TestimonialsEditorProps
               id="sectionDescription"
               value={content.sectionDescription}
               onChange={(e) => updateContent({ sectionDescription: e.target.value })}
-              placeholder="Ils ont testé TIA en avant-première"
+              placeholder="Ils ont testé Tia en avant-première"
             />
           </div>
           <div className="space-y-2">
@@ -141,7 +141,7 @@ export function TestimonialsEditor({ section, adminId }: TestimonialsEditorProps
                       <Textarea
                         value={testimonial.quote}
                         onChange={(e) => updateTestimonial(index, { quote: e.target.value })}
-                        placeholder="J'ai hâte de découvrir TIA..."
+                        placeholder="J'ai hâte de découvrir Tia..."
                         rows={3}
                       />
                     </div>

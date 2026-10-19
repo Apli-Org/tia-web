@@ -89,7 +89,7 @@ export function FeaturesEditor({ section, adminId }: FeaturesEditorProps) {
               id="sectionDescription"
               value={content.sectionDescription}
               onChange={(e) => updateContent({ sectionDescription: e.target.value })}
-              placeholder="Découvrez ce qui rend TIA unique"
+              placeholder="Découvrez ce qui rend Tia unique"
             />
           </div>
         </div>

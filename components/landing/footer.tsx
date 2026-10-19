@@ -6,7 +6,7 @@ import Link from "next/link";
 const defaultContent = {
   logo: "/images/TiaLogo.png",
   description:
-    "TIA révolutionne les rencontres avec une expérience immersive, sécurisée et intelligente. Trouvez l'âme sœur grâce à l'IA.",
+    "Tia révolutionne les rencontres avec une expérience immersive, sécurisée et intelligente. Trouvez l'âme sœur grâce à l'IA.",
   socialLinks: [
     { name: "Instagram", href: "https://instagram.com/tia.app" },
     { name: "TikTok", href: "https://tiktok.com/@tia.app" },
@@ -26,7 +26,7 @@ const defaultContent = {
     { name: "Règles de la communauté", href: "/community-guidelines" },
     { name: "Suppression du compte", href: "/account-deletion" },
   ],
-  copyright: "TIA. Tous droits réservés.",
+  copyright: "Tia. Tous droits réservés.",
   madeBy: "Made with ❤️ by APli",
 };
 
@@ -123,7 +123,7 @@ export function Footer({ content }: FooterProps) {
             {logo && (
               <Image
                 src={logo}
-                alt="TIA Logo"
+                alt="Tia Logo"
                 width={120}
                 height={40}
                 className="h-8 w-auto brightness-0 invert"

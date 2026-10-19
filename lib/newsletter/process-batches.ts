@@ -83,7 +83,7 @@ export async function processNewsletterBatches(sendId: string) {
   const BATCH_SIZE = 10
   let totalSent = 0
   let totalFailed = 0
-  const fromEmail = process.env.RESEND_FROM_EMAIL || 'TIA <newsletter@send.tia-meet.com>'
+  const fromEmail = process.env.RESEND_FROM_EMAIL || 'Tia <newsletter@send.tia-meet.com>'
   const isSimulation = sendRecord.is_simulation === true
 
   for (let i = 0; i < subscribers.length; i += BATCH_SIZE) {

@@ -11,14 +11,14 @@ const defaultTestimonials = [
     age: 28,
     avatar: "/images/avatars/1.jpg",
     quote:
-      "J'attends TIA avec impatience ! L'idée d'avoir une IA qui m'aide à briser la glace, c'est exactement ce qu'il me fallait.",
+      "J'attends Tia avec impatience ! L'idée d'avoir une IA qui m'aide à briser la glace, c'est exactement ce qu'il me fallait.",
   },
   {
     name: "Judi",
     age: 32,
     avatar: "/images/avatars/3.jpg",
     quote:
-      "Les apps de rencontres actuelles me lassent. TIA a l'air vraiment différent avec son approche IA. Vivement le lancement !",
+      "Les apps de rencontres actuelles me lassent. Tia a l'air vraiment différent avec son approche IA. Vivement le lancement !",
   },
   {
     name: "Hanta",
@@ -58,7 +58,7 @@ export function Testimonials({ content }: TestimonialsProps) {
             Communauté
           </span>
           <h2 className="text-4xl md:text-6xl font-bold mb-6 bg-linear-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
-            TIA, c'est eux qui en parlent le mieux
+            Tia, c'est eux qui en parlent le mieux
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
             Rejoignez la communauté de célibataires qui se rencontrent vraiment
@@ -95,7 +95,7 @@ export function Testimonials({ content }: TestimonialsProps) {
                   </p>
                   <div className="flex items-center gap-1 text-primary">
                     <span className="text-xs font-medium">
-                      Membre TIA
+                      Membre Tia
                     </span>
                   </div>
                 </div>

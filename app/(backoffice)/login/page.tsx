@@ -8,12 +8,12 @@ export default function LoginPage() {
         <a href="#" className="flex items-center gap-2 self-center font-medium">
           <Image
             src="/images/TiaApp.png"
-            alt="TIA Logo"
+            alt="Tia Logo"
             width={32}
             height={32}
             className="size-8 rounded-lg"
           />
-          <span className="text-xl font-semibold">TIA</span>
+          <span className="text-xl font-semibold">Tia</span>
         </a>
         <LoginForm />
       </div>

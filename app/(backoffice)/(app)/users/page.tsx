@@ -170,7 +170,7 @@ export default async function UsersPage({
           <div>
             <h1 className="text-3xl font-bold tracking-tight">Gestion des Utilisateurs</h1>
             <p className="text-muted-foreground">
-              Gérez les utilisateurs de la plateforme TIA
+              Gérez les utilisateurs de la plateforme Tia
             </p>
           </div>
 

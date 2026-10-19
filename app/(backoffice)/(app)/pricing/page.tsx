@@ -177,7 +177,7 @@ export default async function PricingPage() {
                   <CardTitle>Microtransactions</CardTitle>
                 </div>
                 <CardDescription>
-                  Gérez les prix des TIA Hearts, Boosts et Révélations
+                  Gérez les prix des Tia Hearts, Boosts et Révélations
                 </CardDescription>
               </CardHeader>
               <CardContent>

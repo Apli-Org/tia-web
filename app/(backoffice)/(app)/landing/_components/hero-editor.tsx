@@ -169,7 +169,7 @@ export function HeroEditor({ section, adminId }: HeroEditorProps) {
             id="subheadline"
             value={content.subheadline}
             onChange={(e) => updateContent({ subheadline: e.target.value })}
-            placeholder="TIA révolutionne les rencontres avec une expérience"
+            placeholder="Tia révolutionne les rencontres avec une expérience"
             rows={2}
           />
         </div>

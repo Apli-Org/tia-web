@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "TIA - Rencontres Intelligentes avec l'IA | App de Dating",
-  description: "TIA révolutionne les rencontres avec l'IA. Swipes immersifs, matchs intelligents, messages suggérés. Téléchargez gratuitement sur iOS et Android.",
+  title: "Tia - Rencontres Intelligentes avec l'IA | App de Dating",
+  description: "Tia révolutionne les rencontres avec l'IA. Swipes immersifs, matchs intelligents, messages suggérés. Téléchargez gratuitement sur iOS et Android.",
 };
 
 export default function RootLayout({

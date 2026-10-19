@@ -48,7 +48,7 @@ function CommunityGuidelinesContent() {
         <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
           <div className="bg-gradient-to-r from-primary/10 via-purple-50 to-pink-50 px-8 py-12 border-b border-gray-100">
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              Règles de la Communauté TIA
+              Règles de la Communauté Tia
             </h1>
             <div className="flex items-center gap-2 text-gray-600">
               <svg
@@ -71,7 +71,7 @@ function CommunityGuidelinesContent() {
           <article className="px-8 py-10 prose prose-lg max-w-none">
             <div className="bg-blue-50 border-l-4 border-primary p-6 rounded-r-lg mb-8">
               <p className="text-gray-700 leading-relaxed mb-0">
-                TIA veut offrir un environnement de rencontre respectueux entre adultes. L'accès au Service implique
+                Tia veut offrir un environnement de rencontre respectueux entre adultes. L'accès au Service implique
                 le respect des présentes règles. Une violation peut entraîner avertissement, restriction, suspension
                 ou bannissement définitif, selon la gravité et le risque.
               </p>
@@ -131,7 +131,7 @@ function CommunityGuidelinesContent() {
               </h2>
               <div className="bg-red-50 border-l-4 border-red-500 p-4">
                 <p className="text-red-800 mb-0">
-                  TIA applique une tolérance zéro au CSAM, au grooming et à toute exploitation sexuelle d'enfant.
+                  Tia applique une tolérance zéro au CSAM, au grooming et à toute exploitation sexuelle d'enfant.
                   Tout comportement de ce type peut entraîner un bannissement immédiat, la préservation des preuves
                   et une coopération avec les autorités selon la loi.
                 </p>
@@ -163,10 +163,10 @@ function CommunityGuidelinesContent() {
                 <Bullet>de menacer de blesser ou tuer une personne ;</Bullet>
                 <Bullet>de glorifier une agression réelle contre un Utilisateur ;</Bullet>
                 <Bullet>de publier une menace crédible ;</Bullet>
-                <Bullet>d'utiliser TIA pour planifier une agression, un enlèvement, une extorsion ou un crime.</Bullet>
+                <Bullet>d'utiliser Tia pour planifier une agression, un enlèvement, une extorsion ou un crime.</Bullet>
               </ul>
               <p className="text-gray-600 text-sm italic">
-                TIA peut suspendre immédiatement un Compte lorsqu'un risque grave est suspecté.
+                Tia peut suspendre immédiatement un Compte lorsqu'un risque grave est suspecté.
               </p>
             </section>
 
@@ -192,7 +192,7 @@ function CommunityGuidelinesContent() {
                 8. Pas de prostitution, exploitation ou traite
               </h2>
               <p className="text-gray-600 mb-4">
-                TIA ne peut pas être utilisé pour organiser, promouvoir ou faciliter :
+                Tia ne peut pas être utilisé pour organiser, promouvoir ou faciliter :
               </p>
               <ul className="space-y-2">
                 <Bullet>prostitution ou escorting ;</Bullet>
@@ -222,7 +222,7 @@ function CommunityGuidelinesContent() {
                 10. Contenus intimes et pornographiques
               </h2>
               <p className="text-gray-600">
-                TIA peut limiter ou interdire les contenus explicitement pornographiques selon les fonctionnalités
+                Tia peut limiter ou interdire les contenus explicitement pornographiques selon les fonctionnalités
                 et politiques applicables. Les images intimes non consenties, les menaces de diffusion et tout
                 contenu impliquant une personne mineure sont strictement interdits.
               </p>
@@ -232,7 +232,7 @@ function CommunityGuidelinesContent() {
               <h2 className="text-3xl font-bold text-gray-900 mb-6 pb-3 border-b-2 border-primary/20">
                 11. Pas de spam ou d'usage commercial non autorisé
               </h2>
-              <p className="text-gray-600 mb-4">Sont interdits sans autorisation de TIA :</p>
+              <p className="text-gray-600 mb-4">Sont interdits sans autorisation de Tia :</p>
               <ul className="space-y-2">
                 <Bullet>publicité répétitive ;</Bullet>
                 <Bullet>recrutement commercial ;</Bullet>
@@ -288,7 +288,7 @@ function CommunityGuidelinesContent() {
               <h2 className="text-3xl font-bold text-gray-900 mb-6 pb-3 border-b-2 border-primary/20">
                 14. Modération et sanctions
               </h2>
-              <p className="text-gray-600 mb-4">TIA peut prendre notamment les mesures suivantes :</p>
+              <p className="text-gray-600 mb-4">Tia peut prendre notamment les mesures suivantes :</p>
               <ul className="space-y-2 mb-4">
                 <Bullet>avertissement ;</Bullet>
                 <Bullet>suppression de contenu ;</Bullet>
@@ -301,7 +301,7 @@ function CommunityGuidelinesContent() {
               </ul>
               <p className="text-gray-600 text-sm italic">
                 La sanction dépend notamment de la gravité, de la répétition, du contexte, de la crédibilité du
-                signalement et du risque pour autrui. TIA n'est pas tenue de révéler l'intégralité de ses méthodes
+                signalement et du risque pour autrui. Tia n'est pas tenue de révéler l'intégralité de ses méthodes
                 de détection ou de sécurité lorsqu'une telle divulgation pourrait faciliter leur contournement.
               </p>
             </section>
@@ -311,7 +311,7 @@ function CommunityGuidelinesContent() {
                 15. Sécurité hors plateforme
               </h2>
               <p className="text-gray-600">
-                Un comportement dangereux commis après qu'une conversation a quitté TIA peut conduire à une sanction
+                Un comportement dangereux commis après qu'une conversation a quitté Tia peut conduire à une sanction
                 du Compte lorsqu'il est suffisamment lié à l'utilisation du Service et qu'il démontre un risque pour
                 la communauté. Le fait de déplacer une conversation vers un autre service n'autorise pas un
                 comportement interdit par les présentes règles.
@@ -323,7 +323,7 @@ function CommunityGuidelinesContent() {
                 16. Contestation d'une mesure
               </h2>
               <p className="text-gray-600">
-                Lorsque TIA met à disposition une procédure d'appel ou lorsque la loi l'exige, l'Utilisateur peut
+                Lorsque Tia met à disposition une procédure d'appel ou lorsque la loi l'exige, l'Utilisateur peut
                 demander le réexamen d'une décision de modération. La demande doit être faite de bonne foi et ne
                 suspend pas automatiquement une mesure prise pour protéger la sécurité d'autrui.
               </p>
@@ -335,7 +335,7 @@ function CommunityGuidelinesContent() {
               </h2>
               <p className="text-gray-600">
                 Si un comportement n'est pas expressément cité mais qu'il est manifestement frauduleux, dangereux,
-                abusif, illégal ou contraire à l'objectif d'un service de rencontres entre adultes, TIA peut prendre
+                abusif, illégal ou contraire à l'objectif d'un service de rencontres entre adultes, Tia peut prendre
                 les mesures raisonnablement nécessaires pour protéger le Service et ses Utilisateurs.
               </p>
             </section>

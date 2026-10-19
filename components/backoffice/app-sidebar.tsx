@@ -223,13 +223,13 @@ export function AppSidebar({ admin }: AppSidebarProps) {
               <Link href="/dashboard">
                 <Image
                   src="/images/TiaApp.png"
-                  alt="TIA Logo"
+                  alt="Tia Logo"
                   width={32}
                   height={32}
                   className="size-8 rounded-lg"
                 />
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold">TIA</span>
+                  <span className="truncate font-semibold">Tia</span>
                   <span className="truncate text-xs text-muted-foreground">
                     Back Office
                   </span>

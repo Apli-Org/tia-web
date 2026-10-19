@@ -45,7 +45,7 @@ export function NewsletterPreview({ subject, content }: NewsletterPreviewProps) 
               letterSpacing: '2px',
             }}
           >
-            TIA
+            Tia
           </div>
         </div>
 
@@ -111,7 +111,7 @@ export function NewsletterPreview({ subject, content }: NewsletterPreviewProps) 
               marginBottom: '5px',
             }}
           >
-            © 2025 TIA - L'application de rencontre nouvelle génération
+            © 2025 Tia - L'application de rencontre nouvelle génération
           </div>
           <div style={{ margin: '15px 0 5px 0' }}>
             <a

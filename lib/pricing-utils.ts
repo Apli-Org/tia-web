@@ -28,7 +28,7 @@ export function getTierInfo(tier: string): { label: string; color: string } {
 // Get consumable type display info
 export function getConsumableInfo(type: string): { label: string; icon: string; color: string } {
   const types: Record<string, { label: string; icon: string; color: string }> = {
-    tia_heart: { label: 'TIA Heart', icon: '💜', color: 'bg-pink-100 text-pink-700' },
+    tia_heart: { label: 'Tia Heart', icon: '💜', color: 'bg-pink-100 text-pink-700' },
     boost: { label: 'Boost', icon: '⚡', color: 'bg-yellow-100 text-yellow-700' },
     reveal_like: { label: 'Révélation', icon: '👁️', color: 'bg-blue-100 text-blue-700' },
   }

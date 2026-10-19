@@ -1,4 +1,4 @@
-export const APP_NAME = 'TIA'
+export const APP_NAME = 'Tia'
 export const APP_DESCRIPTION = 'Rencontrez l\'âme sœur grâce à l\'IA'
 
 export const SUBSCRIPTION_TIERS = {

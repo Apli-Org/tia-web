@@ -71,7 +71,7 @@ function DatingSafetyContent() {
           <article className="px-8 py-10 prose prose-lg max-w-none">
             <div className="bg-blue-50 border-l-4 border-primary p-6 rounded-r-lg mb-8">
               <p className="text-gray-700 leading-relaxed mb-0">
-                TIA est conçu pour faciliter des mises en relation entre personnes majeures. Aucun service de
+                Tia est conçu pour faciliter des mises en relation entre personnes majeures. Aucun service de
                 rencontres ne peut cependant garantir la sincérité, l'identité, les intentions ou le comportement
                 futur de chaque personne. Cette Charte explique les précautions recommandées avant, pendant et après
                 une interaction.
@@ -84,7 +84,7 @@ function DatingSafetyContent() {
               </h2>
               <p className="text-gray-600 mb-4">
                 Un badge, un selfie vérifié, une validation de téléphone ou un contrôle d'identité signifie
-                uniquement qu'un processus technique a été satisfait. Cela ne signifie pas que TIA garantit :
+                uniquement qu'un processus technique a été satisfait. Cela ne signifie pas que Tia garantit :
               </p>
               <ul className="space-y-2 mb-4">
                 <Bullet>la moralité de la personne ;</Bullet>
@@ -112,7 +112,7 @@ function DatingSafetyContent() {
 
             <section className="mb-10">
               <h2 className="text-3xl font-bold text-gray-900 mb-6 pb-3 border-b-2 border-primary/20">
-                3. N'envoyez jamais d'argent à une personne rencontrée sur TIA
+                3. N'envoyez jamais d'argent à une personne rencontrée sur Tia
               </h2>
               <div className="bg-red-50 border-l-4 border-red-500 p-4 mb-4">
                 <p className="text-red-800 font-semibold mb-0">
@@ -121,7 +121,7 @@ function DatingSafetyContent() {
                 </p>
               </div>
               <p className="text-gray-600">
-                TIA ne garantit aucune transaction entre Utilisateurs et ne vous demandera pas de payer un autre
+                Tia ne garantit aucune transaction entre Utilisateurs et ne vous demandera pas de payer un autre
                 Utilisateur pour débloquer un Match ou conserver un Compte. Signalez toute sollicitation suspecte.
               </p>
             </section>
@@ -214,7 +214,7 @@ function DatingSafetyContent() {
               </h2>
               <div className="bg-yellow-50 border-l-4 border-yellow-500 p-4 mb-4">
                 <p className="text-yellow-800 mb-0">
-                  TIA est strictement réservé aux personnes âgées de 18 ans et plus. Si une personne indique ou
+                  Tia est strictement réservé aux personnes âgées de 18 ans et plus. Si une personne indique ou
                   laisse raisonnablement penser qu'elle est mineure, interrompez immédiatement toute interaction
                   romantique ou sexuelle et signalez le Compte.
                 </p>
@@ -227,12 +227,12 @@ function DatingSafetyContent() {
 
             <section className="mb-10">
               <h2 className="text-3xl font-bold text-gray-900 mb-6 pb-3 border-b-2 border-primary/20">
-                10. Communications hors TIA
+                10. Communications hors Tia
               </h2>
               <p className="text-gray-600">
-                Lorsque vous quittez TIA pour WhatsApp, téléphone, email ou un réseau social, TIA ne contrôle plus
-                l'environnement technique de la conversation. Le fait qu'un Match ait commencé sur TIA ne signifie
-                pas que TIA approuve ou supervise les échanges effectués ailleurs.
+                Lorsque vous quittez Tia pour WhatsApp, téléphone, email ou un réseau social, Tia ne contrôle plus
+                l'environnement technique de la conversation. Le fait qu'un Match ait commencé sur Tia ne signifie
+                pas que Tia approuve ou supervise les échanges effectués ailleurs.
               </p>
             </section>
 
@@ -246,13 +246,13 @@ function DatingSafetyContent() {
                 <a href="mailto:info@tia-meet.com" className="text-primary hover:underline font-medium">
                   info@tia-meet.com
                 </a>
-                . TIA peut suspendre un Compte, préserver des éléments et coopérer avec les autorités lorsque la
+                . Tia peut suspendre un Compte, préserver des éléments et coopérer avec les autorités lorsque la
                 situation le justifie.
               </p>
               <div className="bg-red-50 border-l-4 border-red-500 p-4">
                 <p className="text-red-800 mb-0">
                   Pour une urgence immédiate, contactez directement les services d'urgence ou les autorités locales.
-                  TIA n'est pas un service d'urgence et ne peut intervenir physiquement sur le lieu d'un incident.
+                  Tia n'est pas un service d'urgence et ne peut intervenir physiquement sur le lieu d'un incident.
                 </p>
               </div>
             </section>
@@ -263,7 +263,7 @@ function DatingSafetyContent() {
               </h2>
               <p className="text-gray-600">
                 Chaque Utilisateur reste responsable de ses décisions, déplacements et interactions. Les outils de
-                sécurité de TIA sont destinés à réduire certains risques ; ils ne peuvent éliminer tous les risques
+                sécurité de Tia sont destinés à réduire certains risques ; ils ne peuvent éliminer tous les risques
                 liés à des personnes malintentionnées.
               </p>
             </section>

@@ -33,7 +33,7 @@ async function ConsumablesContent() {
     <div className="space-y-8">
       <ConsumableGrid
         type="tia_heart"
-        label="TIA Hearts"
+        label="Tia Hearts"
         description="Super Likes pour se démarquer"
         icon="💜"
         pricing={tiaHearts}
@@ -128,7 +128,7 @@ export default async function ConsumablesPage() {
                 Microtransactions
               </h1>
               <p className="text-muted-foreground">
-                Configurez les prix des TIA Hearts, Boosts et Révélations
+                Configurez les prix des Tia Hearts, Boosts et Révélations
               </p>
             </div>
           </div>

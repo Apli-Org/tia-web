@@ -71,7 +71,7 @@ function AccountDeletionContent() {
           <article className="px-8 py-10 prose prose-lg max-w-none">
             <div className="bg-blue-50 border-l-4 border-primary p-6 rounded-r-lg mb-8">
               <p className="text-gray-700 leading-relaxed mb-0">
-                Cette page explique comment demander la suppression d'un Compte TIA et des données personnelles
+                Cette page explique comment demander la suppression d'un Compte Tia et des données personnelles
                 associées.
               </p>
             </div>
@@ -81,11 +81,11 @@ function AccountDeletionContent() {
                 1. Supprimer son Compte depuis l'Application
               </h2>
               <p className="text-gray-600 mb-4">
-                Lorsque cette fonctionnalité est disponible dans votre version de TIA :
+                Lorsque cette fonctionnalité est disponible dans votre version de Tia :
               </p>
               <div className="bg-gray-50 rounded-lg p-6">
                 <ol className="space-y-2 list-decimal list-inside text-gray-700">
-                  <li>ouvrez <strong>TIA</strong> ;</li>
+                  <li>ouvrez <strong>Tia</strong> ;</li>
                   <li>accédez à <strong>Paramètres</strong> ;</li>
                   <li>ouvrez <strong>Compte</strong> ;</li>
                   <li>choisissez <strong>Supprimer mon compte</strong> ;</li>
@@ -131,7 +131,7 @@ function AccountDeletionContent() {
               </div>
               <p className="text-gray-600">
                 Indiquez l'adresse email ou le numéro de téléphone utilisé pour votre Compte afin que nous puissions
-                identifier votre demande. TIA peut demander une vérification raisonnable afin d'éviter qu'un tiers
+                identifier votre demande. Tia peut demander une vérification raisonnable afin d'éviter qu'un tiers
                 tente de supprimer frauduleusement votre Compte.
               </p>
             </section>
@@ -190,7 +190,7 @@ function AccountDeletionContent() {
               </h2>
               <div className="bg-red-50 border-l-4 border-red-500 p-4 mb-4">
                 <p className="text-red-800 font-semibold mb-0">
-                  La suppression du Compte TIA ne résilie pas automatiquement un abonnement géré par l'App Store ou
+                  La suppression du Compte Tia ne résilie pas automatiquement un abonnement géré par l'App Store ou
                   Google Play.
                 </p>
               </div>
@@ -205,9 +205,9 @@ function AccountDeletionContent() {
                 6. Données déjà partagées avec d'autres personnes
               </h2>
               <p className="text-gray-600">
-                La suppression de votre Compte retire votre profil du Service, mais TIA ne peut pas garantir la
+                La suppression de votre Compte retire votre profil du Service, mais Tia ne peut pas garantir la
                 suppression d'une copie qu'un autre Utilisateur aurait déjà enregistrée, copiée ou reçue, par
-                exemple une capture d'écran ou un message sauvegardé hors de TIA. Une utilisation illicite de telles
+                exemple une capture d'écran ou un message sauvegardé hors de Tia. Une utilisation illicite de telles
                 informations peut toutefois être signalée et peut engager la responsabilité de son auteur.
               </p>
             </section>
@@ -236,7 +236,7 @@ function AccountDeletionContent() {
                   </svg>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-600 mb-1">APLI SARLU — TIA · LOGT 51, Cité Ampefiloha, Antananarivo, Madagascar</p>
+                  <p className="text-sm text-gray-600 mb-1">APLI SARLU — Tia · LOGT 51, Cité Ampefiloha, Antananarivo, Madagascar</p>
                   <a
                     href="mailto:info@tia-meet.com"
                     className="text-lg font-semibold text-primary hover:underline"

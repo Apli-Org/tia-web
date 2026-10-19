@@ -77,7 +77,7 @@ export function FAQEditor({ section, adminId }: FAQEditorProps) {
               id="sectionDescription"
               value={content.sectionDescription}
               onChange={(e) => updateContent({ sectionDescription: e.target.value })}
-              placeholder="Tout ce que vous devez savoir sur TIA"
+              placeholder="Tout ce que vous devez savoir sur Tia"
             />
           </div>
         </div>
@@ -103,7 +103,7 @@ export function FAQEditor({ section, adminId }: FAQEditorProps) {
                       <Input
                         value={faq.question}
                         onChange={(e) => updateFAQ(index, { question: e.target.value })}
-                        placeholder="TIA est-elle gratuite ?"
+                        placeholder="Tia est-elle gratuite ?"
                       />
                     </div>
                     <div className="space-y-2">
@@ -111,7 +111,7 @@ export function FAQEditor({ section, adminId }: FAQEditorProps) {
                       <Textarea
                         value={faq.answer}
                         onChange={(e) => updateFAQ(index, { answer: e.target.value })}
-                        placeholder="Oui, TIA propose une version gratuite..."
+                        placeholder="Oui, Tia propose une version gratuite..."
                         rows={4}
                       />
                     </div>

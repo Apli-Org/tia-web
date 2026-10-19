@@ -71,9 +71,9 @@ function PrivacyContent() {
           <article className="px-8 py-10 prose prose-lg max-w-none">
             <div className="bg-blue-50 border-l-4 border-primary p-6 rounded-r-lg mb-8">
               <p className="text-gray-700 leading-relaxed mb-0">
-                La présente Politique de Confidentialité explique comment APLI SARLU, exploitant de TIA, collecte,
+                La présente Politique de Confidentialité explique comment APLI SARLU, exploitant de Tia, collecte,
                 utilise, partage, conserve et protège les données personnelles liées à l'utilisation de
-                l'application TIA et de ses services associés.
+                l'application Tia et de ses services associés.
               </p>
             </div>
 
@@ -96,7 +96,7 @@ function PrivacyContent() {
               </h2>
               <div className="bg-gray-50 rounded-lg p-6 space-y-2">
                 <p className="text-gray-700">
-                  <strong>Responsable du traitement :</strong> APLI SARLU — TIA
+                  <strong>Responsable du traitement :</strong> APLI SARLU — Tia
                 </p>
                 <p className="text-gray-700">
                   <strong>Adresse :</strong> LOGT 51, Cité Ampefiloha, Antananarivo, Madagascar
@@ -133,7 +133,7 @@ function PrivacyContent() {
                 2. Champ d'application
               </h2>
               <p className="text-gray-600 mb-4">
-                Cette Politique s'applique aux traitements de données personnelles réalisés par TIA dans le cadre :
+                Cette Politique s'applique aux traitements de données personnelles réalisés par Tia dans le cadre :
               </p>
               <ul className="space-y-2 mb-4">
                 <Bullet>de la création et gestion d'un Compte ;</Bullet>
@@ -142,7 +142,7 @@ function PrivacyContent() {
                 <Bullet>des outils de modération, signalement, sécurité et prévention de la fraude ;</Bullet>
                 <Bullet>des Services Premium ;</Bullet>
                 <Bullet>du support utilisateur ;</Bullet>
-                <Bullet>des sites ou pages web de TIA auxquels la présente Politique renvoie.</Bullet>
+                <Bullet>des sites ou pages web de Tia auxquels la présente Politique renvoie.</Bullet>
               </ul>
               <p className="text-gray-600 text-sm italic">
                 Les services tiers indépendants restent soumis à leurs propres politiques de confidentialité.
@@ -154,7 +154,7 @@ function PrivacyContent() {
                 3. Principes généraux
               </h2>
               <p className="text-gray-600">
-                TIA traite les données selon les principes de licéité, loyauté, transparence, finalité déterminée,
+                Tia traite les données selon les principes de licéité, loyauté, transparence, finalité déterminée,
                 proportionnalité, exactitude, limitation de conservation et sécurité prévus par la réglementation
                 applicable. Nous cherchons à ne collecter que les données nécessaires aux finalités décrites
                 ci-dessous.
@@ -169,7 +169,7 @@ function PrivacyContent() {
               <h3 className="text-xl font-semibold text-gray-800 mt-6 mb-4">
                 4.1 Données de Compte obligatoires ou nécessaires
               </h3>
-              <p className="text-gray-600 mb-3">Selon le mode d'inscription utilisé, TIA peut collecter :</p>
+              <p className="text-gray-600 mb-3">Selon le mode d'inscription utilisé, Tia peut collecter :</p>
               <ul className="space-y-2 mb-3">
                 <Bullet>prénom, nom ou pseudonyme affiché ;</Bullet>
                 <Bullet>adresse email ;</Bullet>
@@ -186,7 +186,7 @@ function PrivacyContent() {
 
               <h3 className="text-xl font-semibold text-gray-800 mt-6 mb-4">4.2 Données de profil</h3>
               <p className="text-gray-600 mb-3">
-                TIA peut collecter les données que l'Utilisateur choisit d'ajouter à son profil, notamment :
+                Tia peut collecter les données que l'Utilisateur choisit d'ajouter à son profil, notamment :
               </p>
               <ul className="space-y-2 mb-6">
                 <Bullet>genre ;</Bullet>
@@ -209,7 +209,7 @@ function PrivacyContent() {
                   raisonnablement d'inférer des informations relatives à la vie sexuelle, aux préférences de
                   rencontre, à l'orientation sexuelle, à la santé, aux convictions religieuses ou à d'autres
                   catégories protégées par la loi. Lorsque le traitement d'une donnée sensible repose sur le
-                  consentement exprès, TIA recueille un consentement spécifique, libre et informé conformément à la
+                  consentement exprès, Tia recueille un consentement spécifique, libre et informé conformément à la
                   réglementation applicable. L'Utilisateur peut retirer ce consentement lorsqu'il constitue la base
                   du traitement ; le retrait n'affecte pas la licéité du traitement effectué avant le retrait, mais
                   peut rendre certaines fonctionnalités indisponibles.
@@ -218,7 +218,7 @@ function PrivacyContent() {
 
               <h3 className="text-xl font-semibold text-gray-800 mt-6 mb-4">4.4 Localisation</h3>
               <p className="text-gray-600 mb-3">
-                Si l'Utilisateur autorise la permission correspondante, TIA peut collecter une localisation précise
+                Si l'Utilisateur autorise la permission correspondante, Tia peut collecter une localisation précise
                 ou approximative fournie par l'appareil afin notamment :
               </p>
               <ul className="space-y-2 mb-3">
@@ -228,7 +228,7 @@ function PrivacyContent() {
                 <Bullet>d'assurer la sécurité du Compte.</Bullet>
               </ul>
               <p className="text-gray-600 text-sm italic mb-6">
-                La localisation exacte n'a pas vocation à être affichée publiquement. TIA peut afficher une distance
+                La localisation exacte n'a pas vocation à être affichée publiquement. Tia peut afficher une distance
                 approximative ou une zone selon les paramètres du Service. L'Utilisateur peut modifier les
                 autorisations de localisation dans les réglages de son appareil, sous réserve de l'impact sur
                 certaines fonctionnalités.
@@ -236,7 +236,7 @@ function PrivacyContent() {
 
               <h3 className="text-xl font-semibold text-gray-800 mt-6 mb-4">4.5 Messages et interactions</h3>
               <p className="text-gray-600 mb-3">
-                TIA traite les informations nécessaires au fonctionnement des interactions, notamment :
+                Tia traite les informations nécessaires au fonctionnement des interactions, notamment :
               </p>
               <ul className="space-y-2 mb-3">
                 <Bullet>likes, matchs, refus ou autres signaux d'intérêt ;</Bullet>
@@ -255,7 +255,7 @@ function PrivacyContent() {
                 4.6 Données de vérification d'identité ou de photo
               </h3>
               <p className="text-gray-600 mb-3">
-                TIA peut proposer ou demander une vérification de photo, de selfie, d'âge ou d'identité. Selon le
+                Tia peut proposer ou demander une vérification de photo, de selfie, d'âge ou d'identité. Selon le
                 mécanisme utilisé, les données peuvent inclure :
               </p>
               <ul className="space-y-2 mb-3">
@@ -271,14 +271,14 @@ function PrivacyContent() {
               <div className="bg-gray-50 rounded-lg p-6 mb-6">
                 <p className="text-gray-700 mb-0">
                   Les données biométriques sont considérées comme sensibles par la loi malgache. Lorsqu'un tel
-                  traitement est mis en œuvre, TIA applique les formalités, garanties et bases légales requises et
-                  recueille un consentement exprès lorsqu'il constitue le fondement légal applicable. TIA n'utilise
+                  traitement est mis en œuvre, Tia applique les formalités, garanties et bases légales requises et
+                  recueille un consentement exprès lorsqu'il constitue le fondement légal applicable. Tia n'utilise
                   pas une vérification comme une certification de moralité ou d'absence d'antécédents.
                 </p>
               </div>
 
               <h3 className="text-xl font-semibold text-gray-800 mt-6 mb-4">4.7 Données techniques et d'utilisation</h3>
-              <p className="text-gray-600 mb-3">TIA peut collecter automatiquement :</p>
+              <p className="text-gray-600 mb-3">Tia peut collecter automatiquement :</p>
               <ul className="space-y-2 mb-6">
                 <Bullet>adresse IP ;</Bullet>
                 <Bullet>modèle d'appareil ;</Bullet>
@@ -296,11 +296,11 @@ function PrivacyContent() {
               <div className="bg-gray-50 rounded-lg p-6 mb-3">
                 <p className="text-gray-700 mb-0">
                   Lorsque l'achat est traité par Apple, Google ou un autre prestataire de paiement, ce prestataire
-                  collecte les données de paiement conformément à sa propre politique. TIA ne conserve pas le numéro
+                  collecte les données de paiement conformément à sa propre politique. Tia ne conserve pas le numéro
                   complet de carte bancaire lorsque celui-ci est traité exclusivement par un prestataire tiers.
                 </p>
               </div>
-              <p className="text-gray-600 mb-3">TIA peut toutefois recevoir et conserver :</p>
+              <p className="text-gray-600 mb-3">Tia peut toutefois recevoir et conserver :</p>
               <ul className="space-y-2 mb-6">
                 <Bullet>identifiant de transaction ;</Bullet>
                 <Bullet>produit acheté ;</Bullet>
@@ -312,7 +312,7 @@ function PrivacyContent() {
 
               <h3 className="text-xl font-semibold text-gray-800 mt-6 mb-4">4.9 Support, réclamations et signalements</h3>
               <p className="text-gray-600 mb-3">
-                Lorsque l'Utilisateur contacte TIA ou signale un autre Compte, nous pouvons collecter :
+                Lorsque l'Utilisateur contacte Tia ou signale un autre Compte, nous pouvons collecter :
               </p>
               <ul className="space-y-2 mb-6">
                 <Bullet>coordonnées ;</Bullet>
@@ -327,8 +327,8 @@ function PrivacyContent() {
               <h3 className="text-xl font-semibold text-gray-800 mt-6 mb-4">4.10 Données provenant de tiers</h3>
               <p className="text-gray-600">
                 Lorsque l'Utilisateur choisit une connexion via Apple, Google ou un autre fournisseur d'identité,
-                TIA peut recevoir les données que ce fournisseur autorise à transmettre, par exemple nom, adresse
-                email, identifiant ou jeton d'authentification. TIA peut également recevoir des informations de
+                Tia peut recevoir les données que ce fournisseur autorise à transmettre, par exemple nom, adresse
+                email, identifiant ou jeton d'authentification. Tia peut également recevoir des informations de
                 prestataires de sécurité, d'anti-fraude, de paiement ou de support nécessaires à la fourniture du
                 Service.
               </p>
@@ -339,7 +339,7 @@ function PrivacyContent() {
                 5. Finalités et bases légales
               </h2>
               <p className="text-gray-600 mb-6">
-                TIA traite les données pour les finalités suivantes, selon la base légale applicable au traitement
+                Tia traite les données pour les finalités suivantes, selon la base légale applicable au traitement
                 concerné :
               </p>
 
@@ -367,7 +367,7 @@ function PrivacyContent() {
 
               <h3 className="text-xl font-semibold text-gray-800 mt-6 mb-4">5.3 Intérêt légitime</h3>
               <p className="text-gray-600 mb-3">
-                Sous réserve des droits et libertés des Utilisateurs, TIA peut traiter certaines données pour :
+                Sous réserve des droits et libertés des Utilisateurs, Tia peut traiter certaines données pour :
               </p>
               <ul className="space-y-2 mb-6">
                 <Bullet>prévenir fraude, usurpation, spam et abus ;</Bullet>
@@ -376,13 +376,13 @@ function PrivacyContent() {
                 <Bullet>modérer le Service et enquêter sur un signalement ;</Bullet>
                 <Bullet>assurer la sécurité informatique ;</Bullet>
                 <Bullet>établir des statistiques agrégées et améliorer les performances ;</Bullet>
-                <Bullet>défendre les droits de TIA ou répondre à un litige.</Bullet>
+                <Bullet>défendre les droits de Tia ou répondre à un litige.</Bullet>
               </ul>
 
               <h3 className="text-xl font-semibold text-gray-800 mt-6 mb-4">
                 5.4 Obligation légale ou sauvegarde de la vie / sécurité
               </h3>
-              <p className="text-gray-600 mb-3">TIA peut traiter ou communiquer des données lorsque cela est nécessaire pour :</p>
+              <p className="text-gray-600 mb-3">Tia peut traiter ou communiquer des données lorsque cela est nécessaire pour :</p>
               <ul className="space-y-2">
                 <Bullet>respecter une réquisition ou obligation légale ;</Bullet>
                 <Bullet>répondre à une autorité compétente ;</Bullet>
@@ -400,7 +400,7 @@ function PrivacyContent() {
                 6. Recommandations, algorithmes et traitements automatisés
               </h2>
               <p className="text-gray-600 mb-4">
-                TIA peut utiliser des systèmes algorithmiques afin de classer les profils, personnaliser les
+                Tia peut utiliser des systèmes algorithmiques afin de classer les profils, personnaliser les
                 suggestions, limiter le spam et identifier des comportements anormaux. Ces traitements peuvent
                 utiliser notamment l'âge et les préférences, la distance, l'activité récente, l'historique
                 d'interactions, des signaux de sécurité ou de fraude et les paramètres du profil.
@@ -410,7 +410,7 @@ function PrivacyContent() {
                 une garantie concernant un autre Utilisateur.
               </p>
               <p className="text-gray-600">
-                Sauf disposition contraire expressément annoncée, TIA n'utilise pas un traitement entièrement
+                Sauf disposition contraire expressément annoncée, Tia n'utilise pas un traitement entièrement
                 automatisé produisant à lui seul des effets juridiques ou des effets significatifs comparables sur
                 l'Utilisateur sans mettre en place les garanties requises par la loi applicable.
               </p>
@@ -438,7 +438,7 @@ function PrivacyContent() {
               </ul>
               <div className="bg-yellow-50 border-l-4 border-yellow-500 p-4">
                 <p className="text-yellow-800 mb-0">
-                  Les messages sont visibles par leurs destinataires. TIA ne peut empêcher un destinataire de
+                  Les messages sont visibles par leurs destinataires. Tia ne peut empêcher un destinataire de
                   copier, enregistrer, photographier ou retransmettre illicitement une information qu'il a reçue,
                   bien qu'un tel comportement puisse violer les CGU ou la loi. L'Utilisateur doit donc éviter de
                   transmettre des informations particulièrement sensibles avant d'avoir évalué la personne avec
@@ -452,7 +452,7 @@ function PrivacyContent() {
                 8. Destinataires et partage des données
               </h2>
               <div className="bg-green-50 border-l-4 border-green-500 p-4 mb-4">
-                <p className="text-green-800 font-semibold mb-0">TIA ne vend pas les données personnelles des Utilisateurs.</p>
+                <p className="text-green-800 font-semibold mb-0">Tia ne vend pas les données personnelles des Utilisateurs.</p>
               </div>
               <p className="text-gray-600 mb-4">
                 Les données peuvent être communiquées, dans la mesure nécessaire, aux catégories suivantes :
@@ -465,7 +465,7 @@ function PrivacyContent() {
               </p>
 
               <h3 className="text-xl font-semibold text-gray-800 mt-6 mb-3">8.2 Prestataires techniques</h3>
-              <p className="text-gray-600 mb-3">TIA peut faire appel à des prestataires pour :</p>
+              <p className="text-gray-600 mb-3">Tia peut faire appel à des prestataires pour :</p>
               <ul className="space-y-2 mb-6">
                 <Bullet>hébergement et infrastructure cloud ;</Bullet>
                 <Bullet>base de données et stockage ;</Bullet>
@@ -493,7 +493,7 @@ function PrivacyContent() {
 
               <h3 className="text-xl font-semibold text-gray-800 mt-6 mb-3">8.4 Autorités et procédures légales</h3>
               <p className="text-gray-600 mb-6">
-                TIA peut transmettre des données à une autorité, un tribunal ou un organisme compétent lorsqu'une
+                Tia peut transmettre des données à une autorité, un tribunal ou un organisme compétent lorsqu'une
                 telle communication est légalement requise ou autorisée, notamment dans le cadre d'une enquête, d'un
                 risque grave pour la sécurité d'une personne ou de la protection des mineurs.
               </p>
@@ -511,16 +511,16 @@ function PrivacyContent() {
                 9. Transferts internationaux
               </h2>
               <p className="text-gray-600 mb-4">
-                Les prestataires de TIA peuvent être établis à Madagascar ou dans d'autres pays.
+                Les prestataires de Tia peuvent être établis à Madagascar ou dans d'autres pays.
               </p>
               <p className="text-gray-600 mb-4">
-                Conformément à la loi malgache, TIA veille à ce qu'un transfert vers l'étranger repose sur un niveau
+                Conformément à la loi malgache, Tia veille à ce qu'un transfert vers l'étranger repose sur un niveau
                 de protection similaire ou, lorsque ce niveau n'est pas établi, sur les garanties et autorisations
                 requises, notamment les mécanismes contractuels appropriés et, lorsque nécessaire, l'autorisation de
                 la Commission Malagasy de l'Informatique et des Libertés (« CMIL »).
               </p>
               <p className="text-gray-600">
-                Lorsque le RGPD ou une autre réglementation internationale est applicable, TIA met en place les
+                Lorsque le RGPD ou une autre réglementation internationale est applicable, Tia met en place les
                 mécanismes de transfert requis par cette réglementation en complément des obligations malgaches.
               </p>
             </section>
@@ -530,7 +530,7 @@ function PrivacyContent() {
                 10. Durées de conservation
               </h2>
               <p className="text-gray-600 mb-6">
-                TIA conserve les données uniquement pendant la durée nécessaire à la finalité concernée, puis les
+                Tia conserve les données uniquement pendant la durée nécessaire à la finalité concernée, puis les
                 supprime, anonymise ou archive lorsqu'une obligation légale, une nécessité de sécurité ou la défense
                 d'un droit impose une conservation supplémentaire. Les principes suivants s'appliquent :
               </p>
@@ -563,7 +563,7 @@ function PrivacyContent() {
 
               <h3 className="text-xl font-semibold text-gray-800 mt-6 mb-3">10.3 Comptes bannis ou comportements dangereux</h3>
               <p className="text-gray-600 mb-6">
-                TIA peut conserver pendant une durée proportionnée les informations strictement nécessaires
+                Tia peut conserver pendant une durée proportionnée les informations strictement nécessaires
                 permettant d'identifier un Compte banni, prévenir une réinscription frauduleuse, conserver la preuve
                 d'un incident ou défendre ses droits. La durée est déterminée selon la gravité du comportement, les
                 risques de récidive, les délais de prescription et les obligations légales applicables.
@@ -573,7 +573,7 @@ function PrivacyContent() {
               <p className="text-gray-600 mb-6">
                 Les dossiers de signalement, preuves, décisions de modération et informations associées peuvent être
                 conservés au-delà de la fermeture d'un Compte lorsqu'ils sont nécessaires à la protection des
-                Utilisateurs, à une procédure, à une enquête, à une obligation légale ou à la défense de TIA.
+                Utilisateurs, à une procédure, à une enquête, à une obligation légale ou à la défense de Tia.
               </p>
 
               <h3 className="text-xl font-semibold text-gray-800 mt-6 mb-3">10.5 Données de paiement</h3>
@@ -608,12 +608,12 @@ function PrivacyContent() {
                 </Bullet>
               </ul>
               <p className="text-gray-600 mb-4">
-                TIA peut demander une vérification raisonnable de l'identité du demandeur afin d'éviter la
+                Tia peut demander une vérification raisonnable de l'identité du demandeur afin d'éviter la
                 suppression frauduleuse du Compte d'un tiers. La suppression du Compte n'annule pas automatiquement
                 un abonnement géré par Apple ou Google.
               </p>
               <p className="text-gray-600 mb-4">
-                La suppression ne peut pas être utilisée pour exiger la destruction immédiate d'informations que TIA
+                La suppression ne peut pas être utilisée pour exiger la destruction immédiate d'informations que Tia
                 est légalement tenue ou légitimement autorisée à conserver, par exemple pour une enquête, un litige,
                 une obligation comptable ou un dossier de sécurité.
               </p>
@@ -638,7 +638,7 @@ function PrivacyContent() {
                 <ul className="space-y-3 mb-0">
                   <li className="flex items-start gap-2">
                     <span className="text-primary mt-1">✓</span>
-                    <span className="text-gray-700 font-medium">demander si TIA traite des données le concernant ;</span>
+                    <span className="text-gray-700 font-medium">demander si Tia traite des données le concernant ;</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-primary mt-1">✓</span>
@@ -672,7 +672,7 @@ function PrivacyContent() {
                 <a href="mailto:info@tia-meet.com" className="text-primary hover:underline font-medium">
                   info@tia-meet.com
                 </a>
-                . TIA peut demander une preuve raisonnable d'identité et peut refuser ou limiter une demande
+                . Tia peut demander une preuve raisonnable d'identité et peut refuser ou limiter une demande
                 manifestement abusive ou lorsque la loi prévoit une exception.
               </p>
             </section>
@@ -702,7 +702,7 @@ function PrivacyContent() {
               </p>
               <p className="text-gray-600">
                 Lorsque le RGPD impose la désignation d'un représentant dans l'Union européenne ou d'un délégué à la
-                protection des données, TIA met en place cette désignation avant de réaliser les traitements qui
+                protection des données, Tia met en place cette désignation avant de réaliser les traitements qui
                 l'exigent et publie les coordonnées correspondantes.
               </p>
             </section>
@@ -711,7 +711,7 @@ function PrivacyContent() {
               <h2 className="text-3xl font-bold text-gray-900 mb-6 pb-3 border-b-2 border-primary/20">
                 14. Cookies, SDKs et technologies similaires
               </h2>
-              <p className="text-gray-600 mb-4">TIA peut utiliser des cookies, SDKs, identifiants ou technologies similaires. Ils peuvent être classés notamment comme :</p>
+              <p className="text-gray-600 mb-4">Tia peut utiliser des cookies, SDKs, identifiants ou technologies similaires. Ils peuvent être classés notamment comme :</p>
               <ul className="space-y-2 mb-4">
                 <Bullet>strictement nécessaires au fonctionnement ou à la sécurité ;</Bullet>
                 <Bullet>mesure d'audience et diagnostic ;</Bullet>
@@ -719,7 +719,7 @@ function PrivacyContent() {
                 <Bullet>marketing ou publicité, si ces fonctions sont utilisées.</Bullet>
               </ul>
               <p className="text-gray-600 text-sm">
-                Lorsqu'un consentement est requis pour une technologie non essentielle, TIA le recueille avant son
+                Lorsqu'un consentement est requis pour une technologie non essentielle, Tia le recueille avant son
                 activation et permet son retrait selon les mécanismes disponibles. Les préférences peuvent également
                 être gérées via les paramètres de l'appareil ou du système d'exploitation lorsque pertinent.
               </p>
@@ -737,7 +737,7 @@ function PrivacyContent() {
                 15. Sécurité
               </h2>
               <p className="text-gray-600 mb-4">
-                TIA met en œuvre des mesures techniques et organisationnelles proportionnées à la nature des données
+                Tia met en œuvre des mesures techniques et organisationnelles proportionnées à la nature des données
                 et aux risques, notamment selon les systèmes utilisés :
               </p>
               <ul className="space-y-2 mb-4">
@@ -751,7 +751,7 @@ function PrivacyContent() {
                 <Bullet>obligations contractuelles de sécurité imposées aux sous-traitants.</Bullet>
               </ul>
               <p className="text-gray-600 text-sm italic">
-                Aucun système informatique n'offre une sécurité absolue. TIA ne peut donc garantir qu'un incident ne
+                Aucun système informatique n'offre une sécurité absolue. Tia ne peut donc garantir qu'un incident ne
                 surviendra jamais malgré des mesures raisonnables. L'Utilisateur contribue à la sécurité en
                 protégeant ses identifiants, son appareil et les informations qu'il choisit de partager.
               </p>
@@ -762,8 +762,8 @@ function PrivacyContent() {
                 16. Violations de données
               </h2>
               <p className="text-gray-600">
-                En cas de violation de données personnelles, TIA évalue la nature de l'incident, les données
-                concernées et le risque pour les personnes. TIA prend les mesures de confinement et de remédiation
+                En cas de violation de données personnelles, Tia évalue la nature de l'incident, les données
+                concernées et le risque pour les personnes. Tia prend les mesures de confinement et de remédiation
                 appropriées et effectue les notifications aux personnes et/ou autorités compétentes lorsque la
                 réglementation applicable l'exige.
               </p>
@@ -775,17 +775,17 @@ function PrivacyContent() {
               </h2>
               <div className="bg-yellow-50 border-l-4 border-yellow-500 p-4 mb-4">
                 <p className="text-yellow-800 font-semibold mb-0">
-                  TIA est strictement réservé aux personnes âgées de 18 ans et plus.
+                  Tia est strictement réservé aux personnes âgées de 18 ans et plus.
                 </p>
               </div>
               <p className="text-gray-600">
-                TIA ne cherche pas à collecter intentionnellement les données d'une personne mineure. Lorsqu'un
-                Compte est raisonnablement suspecté d'appartenir à une personne mineure, TIA peut le suspendre
+                Tia ne cherche pas à collecter intentionnellement les données d'une personne mineure. Lorsqu'un
+                Compte est raisonnablement suspecté d'appartenir à une personne mineure, Tia peut le suspendre
                 immédiatement, demander une vérification d'âge et supprimer les données lorsque la situation est
                 confirmée, sous réserve de la conservation strictement nécessaire à la sécurité, à une preuve ou à
                 un signalement légal. Pour plus de détails, consulter la{" "}
                 <Link href="/child-safety" className="text-primary hover:underline font-medium">
-                  Politique de Protection des Mineurs TIA
+                  Politique de Protection des Mineurs Tia
                 </Link>
                 .
               </p>
@@ -796,7 +796,7 @@ function PrivacyContent() {
                 18. Confidentialité des signalements
               </h2>
               <p className="text-gray-600">
-                TIA traite les signalements avec un niveau de confidentialité approprié. La personne signalée n'est
+                Tia traite les signalements avec un niveau de confidentialité approprié. La personne signalée n'est
                 pas automatiquement informée de l'identité du signalant. Toutefois, des informations peuvent être
                 communiquées lorsqu'une procédure contradictoire, une obligation légale ou l'exercice de droits
                 l'exige.
@@ -808,7 +808,7 @@ function PrivacyContent() {
                 19. Traitements automatisés et intelligence artificielle
               </h2>
               <p className="text-gray-600">
-                TIA utilise des traitements algorithmiques et des fonctionnalités d'intelligence artificielle pour
+                Tia utilise des traitements algorithmiques et des fonctionnalités d'intelligence artificielle pour
                 proposer des suggestions de mise en relation et améliorer l'expérience utilisateur. Ces traitements
                 ne produisent pas de décision entièrement automatisée ayant des effets juridiques ou des effets
                 significatifs similaires sur l'Utilisateur sans les garanties requises par la loi applicable.
@@ -825,11 +825,11 @@ function PrivacyContent() {
                 20. Modifications de la Politique
               </h2>
               <p className="text-gray-600 mb-4">
-                TIA peut modifier cette Politique afin de refléter une évolution du Service, de la réglementation ou
+                Tia peut modifier cette Politique afin de refléter une évolution du Service, de la réglementation ou
                 de ses pratiques.
               </p>
               <p className="text-gray-600">
-                En cas de modification substantielle, TIA en informe les Utilisateurs par un moyen approprié avant
+                En cas de modification substantielle, Tia en informe les Utilisateurs par un moyen approprié avant
                 l'entrée en vigueur lorsque la loi l'exige. La date de dernière mise à jour figure en tête du
                 document.
               </p>

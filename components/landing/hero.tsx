@@ -11,7 +11,7 @@ const defaultContent = {
   badge: "La révolution des rencontres",
   headline: "Swipez vers",
   headlineHighlight: "votre avenir à deux",
-  subheadline: "TIA révolutionne les rencontres avec une expérience",
+  subheadline: "Tia révolutionne les rencontres avec une expérience",
   subheadlineKeywords: ["immersive", "sécurisée", "intelligente"],
   phoneImage: "/images/screen/8.jpg",
   floatingBadges: [
@@ -315,7 +315,7 @@ export function Hero({ content }: HeroProps) {
               <MobileFrame>
                 <Image
                   src={phoneImage}
-                  alt="TIA App - Interface de découverte"
+                  alt="Tia App - Interface de découverte"
                   width={300}
                   height={600}
                   className="w-full h-full object-cover"

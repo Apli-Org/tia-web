@@ -97,7 +97,7 @@ export function CTAEditor({ section, adminId }: CTAEditorProps) {
             id="subheadline"
             value={content.subheadline}
             onChange={(e) => updateContent({ subheadline: e.target.value })}
-            placeholder="Téléchargez TIA dès maintenant..."
+            placeholder="Téléchargez Tia dès maintenant..."
             rows={2}
           />
         </div>

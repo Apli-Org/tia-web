@@ -10,7 +10,7 @@ const defaultContent = {
   badgeText: "Rejoignez-nous",
   headline: "Prêt à trouver",
   headlineHighlight: "l'amour ?",
-  subheadline: "Téléchargez TIA dès maintenant et commencez votre aventure",
+  subheadline: "Téléchargez Tia dès maintenant et commencez votre aventure",
   googlePlayBadge: "/images/logo/google-play-badge.webp",
   appStoreBadge: "/images/logo/app-store-badge.webp",
   googlePlayTooltip: "Télécharger sur Google Play",

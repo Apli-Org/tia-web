@@ -229,7 +229,7 @@ export function FooterEditor({ section, adminId }: FooterEditorProps) {
             id="description"
             value={content.description}
             onChange={(e) => updateContent({ description: e.target.value })}
-            placeholder="TIA - L'application de rencontres nouvelle génération..."
+            placeholder="Tia - L'application de rencontres nouvelle génération..."
             rows={2}
           />
         </div>
@@ -251,7 +251,7 @@ export function FooterEditor({ section, adminId }: FooterEditorProps) {
               id="copyright"
               value={content.copyright}
               onChange={(e) => updateContent({ copyright: e.target.value })}
-              placeholder="TIA. Tous droits réservés."
+              placeholder="Tia. Tous droits réservés."
             />
           </div>
         </div>

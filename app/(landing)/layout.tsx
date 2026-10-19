@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://tia.app"),
-  title: "TIA - Rencontres Intelligentes avec l'IA | App de Dating",
+  title: "Tia - Rencontres Intelligentes avec l'IA | App de Dating",
   description:
-    "TIA révolutionne les rencontres avec l'IA. Swipes immersifs, matchs intelligents, messages suggérés. Téléchargez gratuitement sur iOS et Android.",
+    "Tia révolutionne les rencontres avec l'IA. Swipes immersifs, matchs intelligents, messages suggérés. Téléchargez gratuitement sur iOS et Android.",
   keywords: [
     "rencontre",
     "dating",
@@ -13,33 +13,33 @@ export const metadata: Metadata = {
     "match",
     "amour",
     "application rencontre",
-    "TIA",
+    "Tia",
   ],
-  authors: [{ name: "TIA" }],
-  creator: "TIA",
-  publisher: "TIA",
+  authors: [{ name: "Tia" }],
+  creator: "Tia",
+  publisher: "Tia",
   openGraph: {
     type: "website",
     locale: "fr_FR",
     url: "https://tia.app",
-    siteName: "TIA",
-    title: "TIA - Rencontres Intelligentes",
+    siteName: "Tia",
+    title: "Tia - Rencontres Intelligentes",
     description:
-      "Trouvez l'amour avec TIA, l'app de rencontre nouvelle génération",
+      "Trouvez l'amour avec Tia, l'app de rencontre nouvelle génération",
     images: [
       {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "TIA - Rencontres Intelligentes",
+        alt: "Tia - Rencontres Intelligentes",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "TIA - Rencontres Intelligentes avec l'IA",
+    title: "Tia - Rencontres Intelligentes avec l'IA",
     description:
-      "TIA révolutionne les rencontres avec l'IA. Swipes immersifs, matchs intelligents, messages suggérés.",
+      "Tia révolutionne les rencontres avec l'IA. Swipes immersifs, matchs intelligents, messages suggérés.",
     images: ["/og-image.png"],
     creator: "@tia_app",
   },

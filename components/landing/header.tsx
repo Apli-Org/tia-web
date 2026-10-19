@@ -77,7 +77,7 @@ export function Header({ content }: HeaderProps) {
             {logo && (
               <Image
                 src={logo}
-                alt="TIA Logo"
+                alt="Tia Logo"
                 width={120}
                 height={40}
                 className="h-8 w-auto"

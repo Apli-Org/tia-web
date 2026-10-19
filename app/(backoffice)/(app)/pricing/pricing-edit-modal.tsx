@@ -171,7 +171,7 @@ export function PricingEditModal({
                 id="features"
                 value={features}
                 onChange={(e) => setFeatures(e.target.value)}
-                placeholder="Likes illimités&#10;5 TIA Hearts/mois&#10;..."
+                placeholder="Likes illimités&#10;5 Tia Hearts/mois&#10;..."
                 rows={5}
               />
             </div>

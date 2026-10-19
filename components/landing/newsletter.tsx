@@ -18,7 +18,7 @@ const defaultContent = {
   submitButtonText: "Je choisis Tia",
   submittingText: "Inscription en cours...",
   successTitle: "Merci de votre inscription !",
-  successMessage: "Vous recevrez bientôt des nouvelles exclusives sur TIA",
+  successMessage: "Vous recevrez bientôt des nouvelles exclusives sur Tia",
   disclaimer: "En vous inscrivant, vous acceptez de recevoir nos actualités. Vous pourrez vous désinscrire à tout moment.",
 };
 

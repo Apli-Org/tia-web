@@ -12,7 +12,7 @@ import type { FAQContent } from "@/lib/types/landing.types";
 // Default content
 const defaultFaqs = [
   {
-    question: "TIA est-elle vraiment gratuite ?",
+    question: "Tia est-elle vraiment gratuite ?",
     answer: "Oui, la version Base est 100% gratuite. Vous pouvez upgrader pour débloquer des fonctionnalités premium comme les swipes illimités, les filtres avancés et le mode incognito.",
   },
   {
@@ -28,11 +28,11 @@ const defaultFaqs = [
     answer: "Oui, sans frais ni pénalités. Vous pouvez annuler votre abonnement premium à tout moment depuis les paramètres de l'application.",
   },
   {
-    question: "Sur quels appareils TIA est-elle disponible ?",
-    answer: "TIA sera disponible sur iOS (iPhone), Android, et bientôt le Web.",
+    question: "Sur quels appareils Tia est-elle disponible ?",
+    answer: "Tia sera disponible sur iOS (iPhone), Android, et bientôt le Web.",
   },
   {
-    question: "Comment fonctionne l'IA de TIA ?",
+    question: "Comment fonctionne l'IA de Tia ?",
     answer: "Notre IA analyse vos préférences, comportements et profils likés pour suggérer des matchs pertinents et générer des messages d'ouverture uniques.",
   },
 ];
@@ -71,7 +71,7 @@ export function FAQ({ content }: FAQProps) {
             Questions fréquentes
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
-            Tout ce que vous devez savoir sur TIA
+            Tout ce que vous devez savoir sur Tia
           </p>
         </div>
 

@@ -52,7 +52,7 @@ async function SubscriptionsContent() {
       <SubscriptionGrid
         tier="elite"
         label="Elite"
-        description="Le meilleur de TIA, sans compromis"
+        description="Le meilleur de Tia, sans compromis"
         pricing={elitePricing}
         color="purple"
       />

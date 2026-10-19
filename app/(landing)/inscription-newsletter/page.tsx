@@ -5,9 +5,9 @@ import { Newsletter } from "@/components/landing/newsletter";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Newsletter - TIA | Rejoignez la communauté",
+  title: "Newsletter - Tia | Rejoignez la communauté",
   description:
-    "Inscrivez-vous à la newsletter TIA pour recevoir les dernières actualités et offres exclusives.",
+    "Inscrivez-vous à la newsletter Tia pour recevoir les dernières actualités et offres exclusives.",
 };
 
 export default async function InscriptionPage() {

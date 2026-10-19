@@ -55,7 +55,7 @@ function PaymentRedirectContent() {
 
 
         <div className="mt-8 pt-6 border-t border-gray-100">
-          <p className="text-xs text-gray-400">TIA Dating</p>
+          <p className="text-xs text-gray-400">Tia Dating</p>
         </div>
       </div>
     </div>

@@ -49,11 +49,11 @@ function ChildSafetyContent() {
           <article className="px-8 py-10 prose prose-lg max-w-none">
             <div className="bg-red-50 border-l-4 border-red-500 p-6 rounded-r-lg mb-8">
               <p className="text-red-800 leading-relaxed mb-0 font-semibold">
-                TIA est un service de rencontres strictement réservé aux personnes âgées de 18 ans et plus. APLI
+                Tia est un service de rencontres strictement réservé aux personnes âgées de 18 ans et plus. APLI
                 SARLU applique une politique de tolérance zéro envers toute forme d'exploitation sexuelle, d'abus,
                 de mise en danger, de sollicitation ou de sexualisation d'une personne mineure. Cette politique
                 s'applique à tous les Comptes, profils, photos, messages, contenus et comportements liés à
-                l'utilisation de TIA, y compris lorsqu'une interaction commencée sur TIA se poursuit hors de
+                l'utilisation de Tia, y compris lorsqu'une interaction commencée sur Tia se poursuit hors de
                 l'Application.
               </p>
             </div>
@@ -63,10 +63,10 @@ function ChildSafetyContent() {
                 1. Notre engagement
               </h2>
               <p className="text-gray-600">
-                TIA est un service de rencontres strictement réservé aux personnes âgées de 18 ans et plus. APLI
+                Tia est un service de rencontres strictement réservé aux personnes âgées de 18 ans et plus. APLI
                 SARLU applique une politique de tolérance zéro envers toute forme d'exploitation sexuelle, d'abus,
                 de mise en danger, de sollicitation ou de sexualisation d'une personne mineure, y compris lorsque
-                l'interaction commencée sur TIA se poursuit hors de l'Application.
+                l'interaction commencée sur Tia se poursuit hors de l'Application.
               </p>
             </section>
 
@@ -74,7 +74,7 @@ function ChildSafetyContent() {
               <h2 className="text-2xl font-bold text-gray-900 mb-6 pb-3 border-b-2 border-red-500/20">
                 2. Définitions et comportements interdits
               </h2>
-              <p className="text-gray-600 mb-4">TIA interdit notamment :</p>
+              <p className="text-gray-600 mb-4">Tia interdit notamment :</p>
               <ul className="space-y-2 mb-6">
                 <li className="flex items-start gap-2">
                   <span className="text-red-500 mt-1">✕</span>
@@ -143,7 +143,7 @@ function ChildSafetyContent() {
               </h2>
               <p className="text-gray-600 mb-4">
                 Pour créer un Compte, l'Utilisateur doit déclarer être âgé d'au moins 18 ans et fournir sa date de
-                naissance. TIA peut mettre en œuvre, selon les fonctionnalités disponibles :
+                naissance. Tia peut mettre en œuvre, selon les fonctionnalités disponibles :
               </p>
               <div className="grid md:grid-cols-1 gap-3 mb-6">
                 <div className="flex items-start gap-2 p-3 bg-gray-50 rounded-lg">
@@ -197,11 +197,11 @@ function ChildSafetyContent() {
               <div className="bg-gray-50 rounded-lg p-6 mb-4">
                 <p className="text-gray-700 mb-0">
                   <strong>
-                    Dans toute la mesure permise par la loi, TIA ne saurait être tenue responsable du seul fait
+                    Dans toute la mesure permise par la loi, Tia ne saurait être tenue responsable du seul fait
                     qu'une personne ait frauduleusement contourné les mesures raisonnables mises en place pour
                     empêcher l'accès des mineurs.
                   </strong>{" "}
-                  Cette limitation ne réduit pas les obligations légales de TIA lorsqu'elle acquiert connaissance
+                  Cette limitation ne réduit pas les obligations légales de Tia lorsqu'elle acquiert connaissance
                   d'un risque crédible ou d'un contenu impliquant potentiellement un mineur.
                 </p>
               </div>
@@ -264,11 +264,11 @@ function ChildSafetyContent() {
 
             <section className="mb-10">
               <h2 className="text-2xl font-bold text-gray-900 mb-6 pb-3 border-b-2 border-blue-500/20">
-                6. Mesures de TIA en cas de suspicion
+                6. Mesures de Tia en cas de suspicion
               </h2>
               <p className="text-gray-600 mb-4">
                 Lorsqu'un signalement ou un élément objectif laisse raisonnablement suspecter qu'un Compte appartient
-                à une personne mineure ou qu'un contenu implique l'exploitation d'un enfant, TIA peut immédiatement :
+                à une personne mineure ou qu'un contenu implique l'exploitation d'un enfant, Tia peut immédiatement :
               </p>
               <ul className="space-y-2 mb-4">
                 <li className="flex items-start gap-2">
@@ -306,7 +306,7 @@ function ChildSafetyContent() {
               </ul>
               <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg">
                 <p className="text-blue-800 mb-0">
-                  TIA peut agir avant d'avoir terminé une enquête interne lorsqu'une mesure conservatoire est
+                  Tia peut agir avant d'avoir terminé une enquête interne lorsqu'une mesure conservatoire est
                   raisonnablement nécessaire pour protéger une personne.
                 </p>
               </div>
@@ -317,8 +317,8 @@ function ChildSafetyContent() {
                 7. CSAM : retrait, préservation et coopération
               </h2>
               <p className="text-gray-600 mb-4">
-                TIA applique une politique de tolérance zéro au CSAM. Lorsqu'un contenu est raisonnablement identifié
-                comme pouvant constituer du CSAM, TIA prend les mesures adaptées à la réglementation applicable,
+                Tia applique une politique de tolérance zéro au CSAM. Lorsqu'un contenu est raisonnablement identifié
+                comme pouvant constituer du CSAM, Tia prend les mesures adaptées à la réglementation applicable,
                 pouvant inclure :
               </p>
               <ul className="space-y-2 mb-4">
@@ -357,14 +357,14 @@ function ChildSafetyContent() {
                 8. Preuves et conservation
               </h2>
               <p className="text-gray-600 mb-4">
-                TIA peut conserver les données nécessaires à un signalement de sécurité enfant, notamment :
+                Tia peut conserver les données nécessaires à un signalement de sécurité enfant, notamment :
                 identifiants de Compte, contenu signalé, historique de signalement, métadonnées techniques
                 pertinentes, décisions de modération et éléments transmis aux autorités.
               </p>
               <p className="text-gray-600">
                 Cette conservation est limitée à ce qui est nécessaire pour la sécurité, la prévention de récidive,
                 une procédure, la défense d'un droit ou une obligation légale. La suppression volontaire d'un Compte
-                ne peut pas obliger TIA à détruire des éléments qu'elle est légalement tenue ou autorisée à
+                ne peut pas obliger Tia à détruire des éléments qu'elle est légalement tenue ou autorisée à
                 conserver pour une enquête ou la protection d'un enfant.
               </p>
             </section>
@@ -376,7 +376,7 @@ function ChildSafetyContent() {
               <p className="text-gray-600">
                 Un Utilisateur ne peut pas échapper à cette politique en transférant une conversation vers WhatsApp,
                 téléphone, email, réseau social ou tout autre service. Lorsqu'un comportement hors plateforme est
-                signalé à TIA et qu'il est suffisamment lié à un Compte TIA pour révéler un risque de sécurité, TIA
+                signalé à Tia et qu'il est suffisamment lié à un Compte Tia pour révéler un risque de sécurité, Tia
                 peut prendre des mesures sur le Compte concerné, dans la mesure permise par la loi et les CGU.
               </p>
             </section>
@@ -388,14 +388,14 @@ function ChildSafetyContent() {
               <p className="text-gray-600 mb-4">
                 Toute personne qui exploite, sollicite, menace, harcèle ou agresse un mineur demeure personnellement
                 responsable de ses actes et peut faire l'objet des sanctions civiles ou pénales prévues par la loi.
-                Le fait qu'une personne ait créé un Compte ou utilisé TIA ne transfère pas à TIA la responsabilité de
+                Le fait qu'une personne ait créé un Compte ou utilisé Tia ne transfère pas à Tia la responsabilité de
                 l'acte illicite commis par cette personne.
               </p>
               <div className="bg-gray-50 rounded-lg p-6">
                 <p className="text-gray-700 mb-0">
-                  Dans toute la mesure permise par la loi applicable, TIA n'est pas responsable d'un acte criminel
+                  Dans toute la mesure permise par la loi applicable, Tia n'est pas responsable d'un acte criminel
                   commis par un Utilisateur qui a trompé ou contourné les mesures raisonnables de la plateforme, sauf
-                  faute propre de TIA engageant légalement sa responsabilité.
+                  faute propre de Tia engageant légalement sa responsabilité.
                 </p>
               </div>
             </section>
@@ -405,13 +405,13 @@ function ChildSafetyContent() {
                 11. Parents et représentants légaux
               </h2>
               <p className="text-gray-600 mb-4">
-                TIA n'est pas destiné aux mineurs et ne doit pas être installé ou utilisé par eux. Les parents et
+                Tia n'est pas destiné aux mineurs et ne doit pas être installé ou utilisé par eux. Les parents et
                 représentants légaux sont encouragés à utiliser les mécanismes de contrôle parental, restrictions de
                 téléchargement et paramètres d'âge mis à disposition par les systèmes d'exploitation et magasins
                 d'applications.
               </p>
               <p className="text-gray-600">
-                Toute personne pensant qu'un mineur utilise TIA peut le signaler immédiatement à{" "}
+                Toute personne pensant qu'un mineur utilise Tia peut le signaler immédiatement à{" "}
                 <a href="mailto:info@tia-meet.com" className="text-primary hover:underline font-medium">
                   info@tia-meet.com
                 </a>
@@ -451,7 +451,7 @@ function ChildSafetyContent() {
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-primary mt-1">•</span>
-                  <span className="text-gray-700">coopérer raisonnablement avec TIA lorsqu'une vérification de sécurité est nécessaire.</span>
+                  <span className="text-gray-700">coopérer raisonnablement avec Tia lorsqu'une vérification de sécurité est nécessaire.</span>
                 </li>
               </ul>
             </section>
@@ -461,7 +461,7 @@ function ChildSafetyContent() {
                 13. Modération humaine et automatisée
               </h2>
               <p className="text-gray-600">
-                TIA peut utiliser des outils automatisés et des contrôles humains pour identifier des signaux
+                Tia peut utiliser des outils automatisés et des contrôles humains pour identifier des signaux
                 associés aux faux profils, à la fraude, aux contenus interdits ou aux risques pour les mineurs. Ces
                 outils réduisent les risques mais ne peuvent garantir la détection de chaque violation avant
                 exposition. L'absence de détection immédiate ne signifie pas qu'un contenu ou comportement est
@@ -522,12 +522,12 @@ function ChildSafetyContent() {
                   </div>
                   <div>
                     <p className="text-sm text-gray-500 mb-1">Responsable</p>
-                    <p className="text-lg font-semibold text-gray-800">Équipe Sécurité TIA</p>
+                    <p className="text-lg font-semibold text-gray-800">Équipe Sécurité Tia</p>
                   </div>
                 </div>
               </div>
               <p className="text-gray-600 text-sm italic mt-4">
-                TIA désigne également dans les interfaces développeur pertinentes, notamment lorsque requis par
+                Tia désigne également dans les interfaces développeur pertinentes, notamment lorsque requis par
                 Google Play, un point de contact interne habilité à répondre aux questions concernant les pratiques
                 de lutte contre le CSAE/CSAM.
               </p>
@@ -538,9 +538,9 @@ function ChildSafetyContent() {
                 15. Conformité aux magasins d'applications
               </h2>
               <p className="text-gray-600">
-                TIA maintient des standards publics interdisant explicitement le CSAE/CSAM, un mécanisme de
+                Tia maintient des standards publics interdisant explicitement le CSAE/CSAM, un mécanisme de
                 signalement utilisateur et un point de contact relatif à la sécurité des enfants conformément aux
-                politiques applicables aux applications sociales et de rencontres. TIA peut adapter cette Politique
+                politiques applicables aux applications sociales et de rencontres. Tia peut adapter cette Politique
                 pour tenir compte d'une évolution des exigences Apple App Store, Google Play ou de la réglementation.
               </p>
             </section>
@@ -550,9 +550,9 @@ function ChildSafetyContent() {
                 16. Coopération avec les autorités
               </h2>
               <p className="text-gray-600">
-                TIA répond aux demandes légalement valables des autorités compétentes et peut prendre toute mesure
+                Tia répond aux demandes légalement valables des autorités compétentes et peut prendre toute mesure
                 autorisée par la loi afin de préserver la sécurité d'une personne, de prévenir une infraction grave
-                ou de protéger un enfant. TIA peut refuser une demande informelle, excessivement large ou
+                ou de protéger un enfant. Tia peut refuser une demande informelle, excessivement large ou
                 juridiquement insuffisante lorsqu'aucune urgence ou obligation légale ne justifie la communication.
               </p>
             </section>
@@ -563,9 +563,9 @@ function ChildSafetyContent() {
               </h2>
               <div className="bg-indigo-50 border-l-4 border-indigo-500 p-6 rounded-r-lg">
                 <p className="text-indigo-800 mb-0">
-                  TIA réévalue régulièrement ses procédures de modération, de contrôle d'âge, de signalement et de
+                  Tia réévalue régulièrement ses procédures de modération, de contrôle d'âge, de signalement et de
                   conservation afin d'améliorer la protection des mineurs. Toute modification substantielle de cette
-                  Politique est publiée dans l'Application ou sur le site de TIA.
+                  Politique est publiée dans l'Application ou sur le site de Tia.
                 </p>
               </div>
             </section>
@@ -604,7 +604,7 @@ function ChildSafetyContent() {
               <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-r-lg">
                 <p className="text-red-800 mb-0 font-semibold">
                   Pour une situation urgente mettant immédiatement une personne en danger, il convient de contacter
-                  directement les services d'urgence ou les autorités locales compétentes ; TIA n'est pas un service
+                  directement les services d'urgence ou les autorités locales compétentes ; Tia n'est pas un service
                   d'urgence.
                 </p>
               </div>
