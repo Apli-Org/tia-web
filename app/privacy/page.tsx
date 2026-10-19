@@ -64,7 +64,7 @@ function PrivacyContent() {
                   d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
                 />
               </svg>
-              <span>Version 2.0 — Dernière mise à jour : 11 août 2026</span>
+              <span>Version 2.1 — Dernière mise à jour : 19 octobre 2026</span>
             </div>
           </div>
 
@@ -722,6 +722,13 @@ function PrivacyContent() {
                 Lorsqu'un consentement est requis pour une technologie non essentielle, TIA le recueille avant son
                 activation et permet son retrait selon les mécanismes disponibles. Les préférences peuvent également
                 être gérées via les paramètres de l'appareil ou du système d'exploitation lorsque pertinent.
+              </p>
+              <h3 className="text-xl font-semibold text-gray-800 mt-6 mb-3">14.1 Mesure publicitaire (Meta)</h3>
+              <p className="text-gray-600 mb-0">
+                L'Application utilise le SDK de Meta Platforms pour savoir quelles publicités amènent de nouveaux
+                membres (installation et ouverture de l'Application). Sur iOS, l'identifiant publicitaire n'est
+                partagé qu'avec l'accord de l'Utilisateur, donné via la demande de suivi d'Apple. Le profil, les
+                photos et les messages ne sont jamais transmis à Meta.
               </p>
             </section>
 
