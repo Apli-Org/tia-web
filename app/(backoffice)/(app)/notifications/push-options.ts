@@ -2,10 +2,9 @@ export type Option = { value: string; label: string }
 
 export const TERRITORIES: Option[] = [
   { value: 'MG', label: 'Madagascar' },
-  { value: 'RE', label: 'La Réunion' },
   { value: 'MU', label: 'Maurice' },
-  { value: 'YT', label: 'Mayotte' },
-  { value: 'KM', label: 'Comores' },
+  { value: 'RE', label: 'La Réunion' },
+  { value: 'ZA', label: 'Afrique du Sud' },
 ]
 
 export const TIERS: Option[] = [
