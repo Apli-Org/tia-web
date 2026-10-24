@@ -2,6 +2,7 @@
 
 import {
   Activity,
+  BellRing,
   ChevronDown,
   ChevronUp,
   CreditCard,
@@ -144,6 +145,13 @@ const navItems: NavItem[] = [
     url: "/newsletter",
     icon: Mail,
     action: "send_newsletter",
+    section: "communication",
+  },
+  {
+    title: "Notifications push",
+    url: "/notifications",
+    icon: BellRing,
+    action: "send_push",
     section: "communication",
   },
   {
