@@ -23,8 +23,8 @@ export default function TermsPage({ searchParams }: TermsPageProps) {
   return (
     <LegalPage
       title="Conditions Générales d'Utilisation et de Vente des services de APLI SARLU"
-      version="2.0"
-      updatedAt="11 août 2026"
+      version="2.1"
+      updatedAt="25 octobre 2026"
       searchParams={searchParams}
     >
       <LegalCallout>
@@ -212,9 +212,10 @@ export default function TermsPage({ searchParams }: TermsPageProps) {
 
       <LegalSection title="6. Vérifications, badges et absence de garantie d'identité ou d'antécédents">
         <p>
-          Tia peut proposer ou imposer certaines vérifications, notamment par téléphone, email, selfie, photo,
-          document d'identité ou mécanisme automatisé, selon les fonctionnalités disponibles et la
-          réglementation applicable.
+          Tia peut proposer ou imposer certaines vérifications, notamment par selfie vidéo, comparaison avec
+          la photo de profil, contrôle d'un document d'identité ou mécanisme automatisé, réalisées le cas
+          échéant par un prestataire spécialisé, selon les fonctionnalités disponibles et la réglementation
+          applicable.
         </p>
         <LegalCard>
           <p>
@@ -265,6 +266,12 @@ export default function TermsPage({ searchParams }: TermsPageProps) {
         <p>
           Sauf obligation légale contraire, l'Utilisateur demeure seul responsable de toute décision prise à
           partir d'une suggestion ou d'un contenu généré par le Service.
+        </p>
+        <p>
+          Le coach T.IA est un assistant conversationnel reposant sur un modèle d'intelligence artificielle
+          fourni par un prestataire tiers. Ses réponses sont générées automatiquement, peuvent être inexactes
+          et ne constituent pas un conseil professionnel. Les données qu'il utilise sont décrites dans la{" "}
+          <LegalLink href="/privacy">Politique de Confidentialité</LegalLink>.
         </p>
       </LegalSection>
 
@@ -357,8 +364,15 @@ export default function TermsPage({ searchParams }: TermsPageProps) {
           algorithmiques afin de détecter des violations des CGU ou des risques de sécurité.
         </p>
         <p>
-          L'Utilisateur peut signaler un profil, un message ou un comportement via les mécanismes disponibles
-          dans l'Application et peut bloquer un autre Utilisateur lorsque la fonctionnalité est disponible.
+          L'Utilisateur peut signaler ou bloquer un autre Utilisateur depuis leur conversation, via
+          le menu en haut à droite de la conversation, et retrouver les Utilisateurs bloqués dans Paramètres, Utilisateurs bloqués. Tout
+          profil, message ou comportement peut également être signalé en écrivant à{" "}
+          <LegalLink href="mailto:info@tia-meet.com">info@tia-meet.com</LegalLink>.
+        </p>
+        <p>
+          Chaque photo de profil est analysée automatiquement. Une photo non conforme peut être retirée et
+          compter comme un avertissement ; au troisième avertissement, le profil est masqué jusqu'à l'ajout
+          d'une nouvelle photo conforme.
         </p>
         <p>
           Tia peut, sans que cela constitue une obligation générale de surveillance préalable de chaque
@@ -455,6 +469,13 @@ export default function TermsPage({ searchParams }: TermsPageProps) {
             d'abonnement de la plateforme concernée.
           </p>
         </LegalCard>
+        <LegalCard>
+          <p>
+            Lorsque le paiement est effectué par mobile money (Orange Money, MVola ou Airtel Money) via Vanilla
+            Pay, il s'agit d'un paiement unique pour la durée choisie, sans renouvellement automatique :
+            l'accès aux fonctionnalités payantes prend fin à l'échéance, sauf nouveau paiement.
+          </p>
+        </LegalCard>
         <p>
           Sauf règle impérative contraire ou politique obligatoire de la plateforme de paiement, les paiements
           effectués pour une période déjà commencée ne sont pas remboursables.
@@ -468,8 +489,9 @@ export default function TermsPage({ searchParams }: TermsPageProps) {
       <LegalSection title="14. Suspension et résiliation">
         <p>
           L'Utilisateur peut cesser d'utiliser le Service et demander la suppression de son Compte à tout
-          moment selon les modalités disponibles dans l'Application ou indiquées dans la Politique de
-          Confidentialité.
+          moment, depuis Paramètres, section Zone de danger, Supprimer mon compte, ou selon les modalités
+          indiquées sur la page{" "}
+          <LegalLink href="/account-deletion">Suppression du Compte et des Données</LegalLink>.
         </p>
         <p>Tia peut suspendre, limiter ou supprimer un Compte notamment en cas de :</p>
         <LegalList>
