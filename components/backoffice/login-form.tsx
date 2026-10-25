@@ -2,25 +2,24 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { AlertCircle, Loader2, Check } from "lucide-react"
+import { AlertCircle, ArrowRight, Check, Loader2 } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { loginAdmin } from "@/actions/admin/auth.action"
 
-export function LoginForm({
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
+const INPUT_CLASS_NAME =
+  "h-12 rounded-2xl border-tia-plum-200 bg-tia-plum-100/60 px-4 text-[15px] shadow-none transition-[background-color,border-color,box-shadow] placeholder:text-tia-plum-300 focus-visible:border-tia-violet-500 focus-visible:bg-tia-plum-50 focus-visible:ring-4 focus-visible:ring-tia-violet-500/15 md:text-[15px]"
+
+const LABEL_CLASS_NAME = "text-[13px] font-semibold text-tia-plum-700"
+
+type LoginFormProps = {
+  className?: string
+}
+
+export function LoginForm({ className }: LoginFormProps) {
   const router = useRouter()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -54,74 +53,74 @@ export function LoginForm({
   }
 
   return (
-    <div className={cn("flex flex-col gap-6", className)} {...props}>
-      <Card>
-        <CardHeader className="text-center">
-          <CardTitle className="text-xl">Back Office</CardTitle>
-          <CardDescription>
-            Connectez-vous pour accéder au panneau d&apos;administration
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit}>
-            <FieldGroup>
-              {error && (
-                <div className="flex items-center gap-2 rounded-md bg-destructive/10 p-3 text-sm text-destructive">
-                  <AlertCircle className="h-4 w-4 shrink-0" />
-                  <span>{error}</span>
-                </div>
-              )}
-              <Field>
-                <FieldLabel htmlFor="email">Email</FieldLabel>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="admin@tia.app"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  disabled={isLoading}
-                />
-              </Field>
-              <Field>
-                <FieldLabel htmlFor="password">Mot de passe</FieldLabel>
-                <Input
-                  id="password"
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                  disabled={isLoading}
-                />
-              </Field>
-              <Field>
-                <Button
-                  type="submit"
-                  className={cn(
-                    "w-full",
-                    isSuccess && "bg-green-600 hover:bg-green-600"
-                  )}
-                  disabled={isLoading || isSuccess}
-                >
-                  {isSuccess ? (
-                    <>
-                      <Check className="mr-2 h-4 w-4" />
-                      Connexion réussie
-                    </>
-                  ) : isLoading ? (
-                    <>
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      Connexion en cours...
-                    </>
-                  ) : (
-                    'Se connecter'
-                  )}
-                </Button>
-              </Field>
-            </FieldGroup>
-          </form>
-        </CardContent>
-      </Card>
-    </div>
+    <form onSubmit={handleSubmit} className={className}>
+      <FieldGroup className="gap-5">
+        {error && (
+          <div
+            role="alert"
+            className="flex items-start gap-2.5 rounded-2xl bg-tia-coral-50 px-4 py-3 text-[14px]/[20px] font-medium text-tia-coral-700"
+          >
+            <AlertCircle className="mt-0.5 size-4 shrink-0" />
+            <span>{error}</span>
+          </div>
+        )}
+        <Field className="gap-2">
+          <FieldLabel htmlFor="email" className={LABEL_CLASS_NAME}>
+            Adresse e-mail
+          </FieldLabel>
+          <Input
+            id="email"
+            type="email"
+            autoComplete="email"
+            placeholder="nom@exemple.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            disabled={isLoading}
+            className={INPUT_CLASS_NAME}
+          />
+        </Field>
+        <Field className="gap-2">
+          <FieldLabel htmlFor="password" className={LABEL_CLASS_NAME}>
+            Mot de passe
+          </FieldLabel>
+          <Input
+            id="password"
+            type="password"
+            autoComplete="current-password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            disabled={isLoading}
+            className={INPUT_CLASS_NAME}
+          />
+        </Field>
+        <Button
+          type="submit"
+          className={cn(
+            "group mt-2 h-12 w-full rounded-full bg-tia-plum-800 text-[15px] font-semibold text-tia-plum-50 transition-[background-color,scale] hover:bg-tia-violet-700 active:scale-[.98] disabled:opacity-100",
+            isSuccess && "bg-tia-violet-500 hover:bg-tia-violet-500"
+          )}
+          disabled={isLoading || isSuccess}
+        >
+          {isSuccess ? (
+            <>
+              <Check className="size-4" />
+              Connexion réussie
+            </>
+          ) : isLoading ? (
+            <>
+              <Loader2 className="size-4 animate-spin" />
+              Connexion en cours…
+            </>
+          ) : (
+            <>
+              Se connecter
+              <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-0.5" />
+            </>
+          )}
+        </Button>
+      </FieldGroup>
+    </form>
   )
 }
