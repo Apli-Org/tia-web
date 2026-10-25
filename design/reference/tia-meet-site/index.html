@@ -1,0 +1,585 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tia · L’appli de rencontre à Madagascar et à La Réunion</title>
+<meta name="description" content="Des profils vérifiés, des vrais gens près de chez toi. Télécharge Tia gratuitement sur iPhone et Android.">
+<meta name="theme-color" content="#1A0A28">
+<meta property="og:title" content="Tia · Trouve ta moitié">
+<meta property="og:description" content="Des profils vérifiés, des vrais gens près de chez toi. Télécharge Tia gratuitement.">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://tia-meet.com/">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Borel&family=Raleway:wght@400;500;600;700&display=swap">
+<style>
+html{scroll-behavior:smooth}
+
+body{margin:0}
+.t-light{--canvas:#FBF8FE;--surface:#FBF8FE;--surface-sunken:#F2EBF9;--surface-raised:#FBF8FE;--line:#DDD5E7;--line-strong:#7E738D;--fg:#251337;--fg-muted:#6F6280;--fg-disabled:#B6A8C9;--fg-inverse:#FBF8FE;--primary:#7C4DDB;--primary-pressed:#6538B8;--primary-soft:#F0EAFB;--on-primary:#FBF8FE;--on-primary-soft:#502898;--accent:#BA344F;--accent-soft:#FCEAED;--on-accent:#FBF8FE;--on-accent-soft:#99273E;--heart:#E4536B;--success:#077649;--success-soft:#D8F6E3;--on-success-soft:#01603A;--warning:#A0640A;--warning-soft:#FFEDDA;--on-warning-soft:#804E00;--danger:#B3260E;--danger-soft:#FFE7E2;--on-danger:#FBF8FE;--on-danger-soft:#941903;--info:#6538B8;--info-soft:#F0EAFB;--focus:#7C4DDB;--on-media:#FBF8FE;--glass:rgba(251,248,254,.72);--glass-photo:rgba(26,10,40,.32);--scrim:rgba(26, 10, 40, 0.48);--e1:0 4px 16px rgba(37,19,55,.06);--e2:0 12px 32px rgba(37,19,55,.12)}
+.t-dark{--canvas:#1A0A28;--surface:#251337;--surface-sunken:#251337;--surface-raised:#3C2D4E;--line:#3C2D4E;--line-strong:#7E738D;--fg:#FBF8FE;--fg-muted:#B6A8C9;--fg-disabled:#6F6280;--fg-inverse:#1A0A28;--primary:#A88BFB;--primary-pressed:#BEACFE;--primary-soft:#291351;--on-primary:#1A0A28;--on-primary-soft:#DAD2FF;--accent:#F98A93;--accent-soft:#561521;--on-accent:#1A0A28;--on-accent-soft:#FFCCCF;--heart:#E4536B;--success:#7DD3A3;--success-soft:#03351E;--on-success-soft:#B4E9C9;--warning:#FEBC72;--warning-soft:#462900;--on-warning-soft:#FFD6AB;--danger:#FEA290;--danger-soft:#520F05;--on-danger:#1A0A28;--on-danger-soft:#FFCDC3;--info:#BEACFE;--info-soft:#291351;--focus:#BEACFE;--on-media:#FBF8FE;--glass:rgba(37,19,55,.72);--glass-photo:rgba(26,10,40,.40);--scrim:rgba(10, 4, 16, 0.64);--e1:none;--e2:none}
+.tia{font-family:'Raleway',system-ui,-apple-system,'Segoe UI',sans-serif;font-variant-numeric:lining-nums;color:var(--fg);-webkit-font-smoothing:antialiased;box-sizing:border-box;line-height:1.5}
+.tia *{box-sizing:border-box}
+.tia h1,.tia h2,.tia h3,.tia h4,.tia p,.tia ul,.tia ol,.tia figure{margin:0;padding:0}
+.tia button{font:inherit;color:inherit;border:0;background:none;padding:0;margin:0;cursor:pointer;text-align:inherit}
+.tia input,.tia textarea{font:inherit;color:inherit;margin:0}
+.borel{font-family:'Borel','Raleway',cursive;font-weight:400;font-style:normal}
+.num{font-variant-numeric:lining-nums tabular-nums}
+.g-brand,.tia .g-brand{background-image:linear-gradient(135deg,#7C4DDB 0%,#B4479E 52%,#F4696B 100%)}
+.g-action,.tia .g-action{background-image:linear-gradient(90deg,#6538B8 0%,#A63A8F 50%,#BA344F 100%)}
+.g-text{background-image:linear-gradient(120deg,#7C4DDB 0%,#B4479E 55%,#F4696B 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.g-border,.tia .g-border{border:2px solid transparent;background:linear-gradient(var(--surface),var(--surface)) padding-box,linear-gradient(135deg,#7C4DDB,#B4479E,#F4696B) border-box}
+.scrim{background-image:linear-gradient(180deg,rgba(26,10,40,0) 45%,rgba(26,10,40,.72) 100%)}
+.ph-1{background-image:linear-gradient(165deg,#D3C2EA 0%,#8C76B4 58%,#5E4A86 100%)}
+.ph-2{background-image:linear-gradient(165deg,#EBC9BC 0%,#C18A7E 58%,#8E5A55 100%)}
+.ph-3{background-image:linear-gradient(165deg,#C3CDE0 0%,#8695B3 58%,#56617F 100%)}
+.ph-4{background-image:linear-gradient(165deg,#E6D6BA 0%,#B59C74 58%,#7C6747 100%)}
+.ph-5{background-image:linear-gradient(165deg,#CCDCC9 0%,#8FA98C 58%,#5D7660 100%)}
+.ph-6{background-image:linear-gradient(165deg,#EAC3D3 0%,#B98199 58%,#86536B 100%)}
+a{color:#7C4DDB}a:hover{color:#6538B8}
+
+
+.w-site{container-type:inline-size;-webkit-font-smoothing:antialiased;line-height:1.5;font-variant-numeric:lining-nums;background:var(--canvas);color:var(--fg);font-family:'Raleway',system-ui,sans-serif;overflow:hidden;position:relative}
+.w-site *{box-sizing:border-box}
+:where(.w-site) :where(h1,h2,h3,h4,p,ul,ol,li,figure){margin:0;padding:0}
+:where(.w-site) :where(ul,ol){list-style:none}
+:where(.w-site) a{text-decoration:none;color:inherit}
+.w-ph{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 28%;display:block}
+.borel{font-family:'Borel','Raleway',cursive;font-weight:400}
+.w-grad{color:#F98A93;padding:0 .08em}
+@keyframes w-shine{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.w-eyebrow{font-size:14px;line-height:20px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--primary)}
+.w-eyebrow--light{color:#C9B6FF}
+/* nav */
+.w-nav{position:absolute;top:18px;left:0;right:0;z-index:30;display:flex;justify-content:center;padding:0 24px;pointer-events:none}
+.w-nav-in{pointer-events:auto;width:100%;max-width:1180px;height:68px;padding:0 10px 0 24px;display:flex;align-items:center;gap:16px;border-radius:999px;color:#FBF8FE;background:#1A0A28;border:1px solid #3C2D4E;animation:w-navin 1.1s cubic-bezier(.34,1.56,.64,1) both}
+@keyframes w-navin{from{opacity:0;translate:0 -28px;scale:.94}to{opacity:1;translate:0 0;scale:1}}
+.w-nav-logo{display:flex;align-items:center;transition:transform .5s cubic-bezier(.34,1.56,.64,1)}
+.w-nav-logo:hover{transform:rotate(-6deg) scale(1.06)}
+.w-nav-links{position:relative;display:flex;margin:0 auto;padding:4px;border-radius:999px;background:#251337}
+.w-nav-links a{position:relative;z-index:1;width:124px;height:42px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;color:rgba(251,248,254,.78);transition:color .35s}
+.w-nav-links a:hover{color:#FBF8FE}
+.w-ind{position:absolute;left:4px;top:4px;width:124px;height:42px;border-radius:999px;background:#7C4DDB;opacity:0;scale:.86;transition:translate .6s cubic-bezier(.34,1.56,.64,1),opacity .3s,scale .45s cubic-bezier(.34,1.56,.64,1)}
+.w-nav-links:hover .w-ind{opacity:1;scale:1}
+.w-nav-links:has(a:nth-of-type(2):hover) .w-ind{translate:124px 0}
+.w-nav-links:has(a:nth-of-type(3):hover) .w-ind{translate:248px 0}
+.w-nav-links:has(a:nth-of-type(4):hover) .w-ind{translate:372px 0}
+.w-nav-right{display:flex;align-items:center;gap:10px}
+.w-lang{display:inline-flex;align-items:center;gap:8px;height:42px;padding:0 14px;border-radius:999px;font-size:14px;font-weight:700;background:#251337;cursor:pointer;transition:background .3s}
+.w-lang:hover{background:#3C2D4E}
+.w-lang svg:first-child{border-radius:3px}
+.w-btn--nav{height:48px;padding:0 22px;gap:8px;font-size:15px}
+.w-btn--nav:hover{transform:scale(1.04)}
+.w-btn--nav svg{transition:transform .5s cubic-bezier(.34,1.56,.64,1)}
+.w-btn--nav:hover svg{transform:scale(1.25) rotate(-10deg)}
+.w-btn{display:inline-flex;align-items:center;justify-content:center;height:52px;padding:0 26px;border-radius:999px;font-weight:700;font-size:16px;color:#FBF8FE;background:#7C4DDB;transition:background-color .3s,transform .5s cubic-bezier(.34,1.56,.64,1)}
+.w-btn:hover{background:#6538B8}
+/* stores */
+.w-stores{display:flex;gap:12px;flex-wrap:wrap}
+.w-store{display:inline-flex;align-items:center;gap:10px;height:56px;padding:0 20px 0 16px;border-radius:16px;transition:transform .2s,box-shadow .2s}
+.w-store span{display:flex;flex-direction:column;font-size:17px;line-height:20px;font-weight:700}
+.w-store small{font-size:11px;line-height:13px;font-weight:500;opacity:.8}
+.w-store--light{background:#FBF8FE;color:#1A0A28}
+.w-store--dark{background:#1A0A28;color:#FBF8FE}
+.w-store:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(26,10,40,.35)}
+/* hero */
+.w-hero{position:relative;min-height:860px;height:100vh;max-height:1080px;background:#1A0A28;color:#FBF8FE;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.w-hero-bg{position:absolute;inset:-40px -20px;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px;transform:rotate(-6deg) scale(1.12);opacity:.95}
+.w-hcol{overflow:hidden}
+.w-hcol-track{display:flex;flex-direction:column;gap:16px;animation:w-up var(--d) linear infinite}
+.w-hcol--1 .w-hcol-track{animation-name:w-down}
+.w-hcard{position:relative;aspect-ratio:4/5;border-radius:24px;overflow:hidden;flex:none;background:#3C2D4E}
+@keyframes w-up{from{transform:translateY(0)}to{transform:translateY(-50%)}}
+@keyframes w-down{from{transform:translateY(-50%)}to{transform:translateY(0)}}
+.w-hero-veil{position:absolute;inset:0;background:rgba(26,10,40,.72)}
+.w-hero-in{position:relative;z-index:2;text-align:center;display:flex;flex-direction:column;align-items:center;gap:24px;padding:0 24px;max-width:980px}
+.w-hero h1{font-size:clamp(56px,9cqi,132px);line-height:1;font-weight:700;letter-spacing:-.03em}
+.w-hero h1 .borel{letter-spacing:0;font-size:.92em}
+.w-ccs{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+.w-cc{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 14px 0 10px;border-radius:999px;background:#251337;border:1px solid #3C2D4E;font-size:14px;font-weight:600;color:#FBF8FE;transition:transform .5s cubic-bezier(.34,1.56,.64,1),background-color .3s}
+.w-cc:hover{transform:translateY(-3px);background:#3C2D4E}
+.w-cc svg{border-radius:3px;flex:none}
+.w-cc em{font-style:normal;font-size:11px;font-weight:700;color:#BEACFE;margin-left:2px}
+.w-hero-sub{font-size:clamp(18px,1.6cqi,22px);line-height:1.5;max-width:620px;color:rgba(251,248,254,.86)}
+.w-hero-note{font-size:14px;font-weight:600;color:rgba(251,248,254,.7)}
+.w-hero .w-stores{justify-content:center}
+.w-in{animation:w-rise .9s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i) * .12s + .1s)}
+@keyframes w-rise{from{opacity:0;translate:0 28px}to{opacity:1;translate:0 0}}
+.w-scroll{position:absolute;bottom:40px;left:50%;width:48px;height:48px;margin-left:-24px;border-radius:999px;border:1px solid rgba(251,248,254,.35);display:flex;align-items:center;justify-content:center;font-size:20px;color:#FBF8FE;animation:w-bob 2.4s ease-in-out infinite;z-index:2}
+@keyframes w-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
+.w-disclaimer{position:absolute;right:24px;bottom:16px;font-size:12px;color:rgba(251,248,254,.55);z-index:2}
+/* sections */
+.w-sec{padding:120px 48px;position:relative}
+.w-sec--tint{background:var(--surface-sunken)}
+.w-sec--ink{background:#1A0A28;color:#FBF8FE}
+.w-head{max-width:1200px;margin:0 auto 56px;display:flex;flex-direction:column;gap:14px;text-align:center;align-items:center}
+.w-head--left{text-align:left;align-items:flex-start;margin:0}
+.w-head h2{font-size:clamp(36px,4.4cqi,60px);line-height:1.08;font-weight:700;letter-spacing:-.02em;max-width:900px}
+.w-lead{font-size:18px;line-height:28px;color:var(--fg-muted)}
+.w-lead a{color:var(--primary);font-weight:700}
+.w-note{text-align:center;margin-top:28px;font-size:15px;color:var(--fg-muted)}
+/* bento */
+@property --a{syntax:'<angle>';inherits:false;initial-value:0deg}
+.w-bento{max-width:1240px;margin:0 auto;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:340px;gap:20px;perspective:1400px}
+.w-tile{--spot:rgba(251,248,254,.35);--kbg:rgba(124,77,219,.12);--kfg:#502898;position:relative;isolation:isolate;border-radius:32px;overflow:hidden;padding:28px;display:flex;flex-direction:column;justify-content:flex-end;background:var(--surface);box-shadow:0 0 0 1px rgba(37,19,55,.06);transform-style:preserve-3d;transition:transform .7s cubic-bezier(.34,1.56,.64,1),box-shadow .5s cubic-bezier(.22,1,.36,1);animation:w-pop 1s cubic-bezier(.34,1.56,.64,1) both;animation-delay:calc(var(--r) * .09s)}
+@keyframes w-pop{from{opacity:0;translate:0 48px;scale:.92}to{opacity:1;translate:0 0;scale:1}}
+.w-tile:hover{transform:translateY(-8px);box-shadow:0 0 0 2px var(--ring,#7C4DDB),0 20px 40px -16px rgba(37,19,55,.25)}
+.w-tile-txt{position:relative;z-index:3;display:flex;flex-direction:column;gap:6px;align-items:flex-start;transition:transform .6s cubic-bezier(.34,1.56,.64,1)}
+.w-tile:hover .w-tile-txt{transform:translateY(-4px)}
+.w-kick{display:inline-flex;align-items:center;height:26px;padding:0 12px;border-radius:999px;font-size:12px;font-weight:700;letter-spacing:.04em;background:var(--kbg);color:var(--kfg);margin-bottom:6px}
+.w-tile h3{font-size:24px;line-height:30px;font-weight:700;letter-spacing:-.01em}
+.w-tile p{font-size:15px;line-height:22px;color:var(--fg-muted);max-width:340px}
+/* tile palettes (une couleur par case) */
+.w-t-swipe{grid-column:span 2;grid-row:span 2;background:#291351;--ring:#A88BFB;color:#FBF8FE;justify-content:flex-start;padding-top:36px;--kbg:rgba(251,248,254,.12);--kfg:#DAD2FF;--spot:rgba(168,139,251,.28)}
+.w-t-swipe p{color:rgba(251,248,254,.78)}
+.w-t-swipe .w-tile-txt{max-width:236px}
+.w-t-verif{background:#F0EAFB;--kbg:#DAD2FF;--kfg:#3C1D74;--spot:rgba(124,77,219,.18)}
+.w-t-verif p{color:#502898}
+.w-t-heart{color:#FBF8FE;background:#BA344F;--ring:#E4536B;--kbg:rgba(251,248,254,.2);--kfg:#FBF8FE;--spot:rgba(251,248,254,.3)}
+.w-t-heart p{color:rgba(251,248,254,.9)}
+.w-t-map{grid-column:span 2;background:#3C1D74;--ring:#A88BFB;color:#FBF8FE;--kbg:rgba(251,248,254,.12);--kfg:#FFCCCF;--spot:rgba(249,138,147,.22)}
+.w-t-map p{color:rgba(251,248,254,.78)}
+.w-t-coach{background:#FCEAED;--ring:#E4536B;--kbg:#FFCCCF;--kfg:#791E30;--spot:rgba(228,83,107,.16)}
+.w-t-coach p{color:#99273E}
+.w-t-int{background:#DAD2FF;color:#3C1D74;--kbg:#FBF8FE;--kfg:#502898;--spot:rgba(124,77,219,.18)}
+.w-t-int p{color:#502898}
+.w-t-pay{grid-column:span 2;background:#F2EBF9;--ring:#B4479E;--kbg:#FBF8FE;--kfg:#502898;--spot:rgba(180,71,158,.14)}
+.w-t-pay p{color:#534663}
+/* swipe phone */
+.w-phone{position:absolute;z-index:3;right:40px;top:36px;bottom:36px;aspect-ratio:9/18.5;border-radius:40px;background:#000;padding:8px;box-shadow:0 30px 60px rgba(0,0,0,.45),0 0 0 1px rgba(251,248,254,.12);rotate:4deg;animation:w-float 6s cubic-bezier(.45,0,.55,1) infinite;transition:rotate .8s cubic-bezier(.34,1.56,.64,1),scale .8s cubic-bezier(.34,1.56,.64,1)}
+.w-t-swipe:hover .w-phone{rotate:-2deg;scale:1.04}
+@keyframes w-float{0%,100%{translate:0 0}50%{translate:0 -12px}}
+.w-stack{position:absolute;inset:8px;border-radius:32px;overflow:hidden;background:#251337}
+.w-sc{position:absolute;inset:0;border-radius:32px;overflow:hidden;animation:w-swipe 9s cubic-bezier(.65,0,.35,1) infinite;transform-origin:50% 100%}
+@keyframes w-swipe{
+ 0%{transform:none;opacity:1;z-index:3}
+ 26%{transform:none;opacity:1;z-index:3}
+ 33%{transform:translateX(120%) rotate(18deg);opacity:0;z-index:3}
+ 34%{transform:scale(.9) translateY(30px);opacity:0;z-index:1}
+ 40%{transform:scale(.9) translateY(30px);opacity:1;z-index:1}
+ 60%{transform:scale(.9) translateY(30px);opacity:1;z-index:1}
+ 66%{transform:scale(.95) translateY(14px);opacity:1;z-index:2}
+ 93%{transform:scale(.95) translateY(14px);opacity:1;z-index:2}
+ 100%{transform:none;opacity:1;z-index:3}}
+.w-sc-scrim{position:absolute;inset:0;background:linear-gradient(180deg,rgba(26,10,40,0) 50%,rgba(26,10,40,.85) 100%)}
+.w-sc-info{position:absolute;left:16px;bottom:22px;display:flex;flex-direction:column;color:#FBF8FE}
+.w-sc-info b{font-size:22px;font-weight:700}
+.w-sc-info i{font-style:normal;font-weight:400}
+.w-sc-info small{font-size:13px;opacity:.85}
+.w-stamp{position:absolute;top:44px;left:18px;padding:6px 14px;border:3px solid #E4536B;color:#FBF8FE;background:rgba(228,83,107,.85);border-radius:12px;font-weight:800;font-size:20px;letter-spacing:.04em;transform:rotate(-14deg);opacity:0;animation:w-stamp 9s infinite}
+@keyframes w-stamp{0%,18%{opacity:0;transform:rotate(-14deg) scale(1.4)}23%,31%{opacity:1;transform:rotate(-14deg) scale(1)}34%,100%{opacity:0}}
+.w-rail{position:absolute;right:14px;bottom:70px;display:flex;flex-direction:column;gap:10px;z-index:4}
+.w-rb{width:40px;height:40px;border-radius:999px;display:flex;align-items:center;justify-content:center;color:#FBF8FE}
+.w-rb--like{background:#E4536B;width:46px;height:46px;animation:w-tap 3s infinite}
+.w-rb--tia{background:#7C4DDB}
+.w-rb--x{background:rgba(26,10,40,.45);border:1px solid rgba(251,248,254,.3)}
+@keyframes w-tap{0%,60%,100%{transform:scale(1)}70%{transform:scale(.86)}80%{transform:scale(1.08)}}
+/* verif */
+.w-verif{position:absolute;z-index:3;left:50%;top:30px;translate:-50% 0;transition:scale .7s cubic-bezier(.34,1.56,.64,1)}
+.w-t-verif:hover .w-verif{scale:1.08}
+.w-verif-ph{position:relative;width:128px;height:128px;border-radius:999px;overflow:hidden;box-shadow:0 0 0 4px #F0EAFB,0 0 0 7px #7C4DDB}
+.w-scan{position:absolute;left:0;right:0;height:3px;background:#A88BFB;animation:w-scan 3.2s cubic-bezier(.65,0,.35,1) infinite}
+@keyframes w-scan{0%{top:0}55%{top:125px}100%{top:125px}}
+.w-verif-badge{position:absolute;right:-2px;bottom:4px;width:36px;height:36px;border-radius:999px;background:var(--primary);color:#FBF8FE;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 4px #F0EAFB;animation:w-badge 3.2s cubic-bezier(.34,1.56,.64,1) infinite}
+@keyframes w-badge{0%,55%{transform:scale(0) rotate(-90deg)}70%,92%{transform:scale(1) rotate(0)}100%{transform:scale(0) rotate(0)}}
+/* heart */
+.w-heart{position:absolute;z-index:3;left:50%;top:34%;width:120px;height:120px;translate:-50% -50%;transition:scale .7s cubic-bezier(.34,1.56,.64,1)}
+.w-t-heart:hover .w-heart{scale:1.12}
+.w-fh{position:absolute;bottom:10px;width:18px;height:17px;opacity:0;animation:w-fly 4.2s cubic-bezier(.22,1,.36,1) infinite;animation-delay:var(--d)}
+@keyframes w-fly{0%{opacity:0;transform:translate(0,30px) scale(.4) rotate(0)}15%{opacity:1}100%{opacity:0;transform:translate(var(--x),-150px) scale(1.1) rotate(var(--rot))}}
+.w-heart-svg{position:absolute;inset:14px;width:92px;height:84px;margin-top:4px;animation:w-beat 1.6s cubic-bezier(.34,1.56,.64,1) infinite}
+@keyframes w-beat{0%,100%{transform:scale(1)}15%{transform:scale(1.14)}30%{transform:scale(.96)}45%{transform:scale(1.06)}}
+.w-ring{position:absolute;inset:0;border-radius:999px;border:2px solid rgba(251,248,254,.6);animation:w-ring 2.4s ease-out infinite;opacity:0}
+@keyframes w-ring{0%{transform:scale(.5);opacity:.9}100%{transform:scale(1.8);opacity:0}}
+/* map */
+.w-map{position:absolute;inset:0 0 96px 0}
+.w-map-grid{position:absolute;inset:0 0 -96px 0;background-image:linear-gradient(rgba(251,248,254,.08) 2px,transparent 2px),linear-gradient(90deg,rgba(251,248,254,.08) 2px,transparent 2px);background-size:48px 48px,48px 48px;transform:rotate(-8deg) scale(1.3)}
+.w-me{position:absolute;z-index:3;left:48%;top:42%;width:16px;height:16px;border-radius:999px;background:#A88BFB;box-shadow:0 0 0 6px rgba(168,139,251,.3)}
+.w-pin{position:absolute;z-index:3;width:52px;height:52px;margin:-26px 0 0 -26px;animation:w-drop .9s cubic-bezier(.34,1.56,.64,1) both;transition:scale .6s cubic-bezier(.34,1.56,.64,1)}
+.w-t-map:hover .w-pin{scale:1.12}
+.w-pin .w-ph{border-radius:999px;border:3px solid var(--pc,#FBF8FE);position:absolute}
+.w-pin em{position:absolute;left:58px;top:12px;white-space:nowrap;font-style:normal;font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;background:rgba(251,248,254,.92);color:#251337}
+.w-pin-pulse{position:absolute;inset:-10px;border-radius:999px;background:var(--pc,#A88BFB);opacity:.5;animation:w-ring 2.6s cubic-bezier(.22,1,.36,1) infinite}
+@keyframes w-drop{from{opacity:0;transform:translateY(-20px) scale(.6)}to{opacity:1;transform:none}}
+.w-t-map .w-tile-txt{max-width:300px}
+/* coach */
+.w-chat{position:absolute;z-index:3;left:24px;right:24px;top:24px;display:flex;flex-direction:column;gap:8px}
+.w-b{max-width:88%;padding:10px 14px;border-radius:18px;font-size:13px;line-height:18px;opacity:0;transform-origin:0 100%;animation:w-msg 9s cubic-bezier(.34,1.56,.64,1) infinite;animation-delay:calc(var(--i) * 1.2s)}
+.w-b b{display:block;font-size:11px;color:#BA344F;margin-bottom:2px}
+.w-tile .w-b--me{align-self:flex-end;background:#BA344F;color:#FBF8FE;border-bottom-right-radius:6px}
+.w-tile .w-b--coach{background:#FBF8FE;color:#251337;border-bottom-left-radius:6px}
+.w-b--typing{display:flex;gap:4px;background:var(--surface-sunken);width:58px}
+.w-b--typing span{width:7px;height:7px;border-radius:999px;background:var(--fg-muted);animation:w-dot 1s infinite}
+.w-b--typing span:nth-child(2){animation-delay:.15s}.w-b--typing span:nth-child(3){animation-delay:.3s}
+@keyframes w-msg{0%{opacity:0;transform:translateY(14px) scale(.9)}8%,80%{opacity:1;transform:none}90%,100%{opacity:0;transform:translateY(-6px)}}
+@keyframes w-dot{0%,100%{opacity:.3;transform:translateY(0)}50%{opacity:1;transform:translateY(-3px)}}
+/* pay */
+.w-pay{position:absolute;z-index:3;left:28px;right:28px;top:28px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.w-pay div{display:flex;flex-wrap:wrap;gap:8px;align-items:center;align-content:flex-start}
+.w-pay small{width:100%;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#502898}
+.w-pchip{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:600;padding:8px 14px;border-radius:999px;background:#FBF8FE;color:#251337;transition:transform .6s cubic-bezier(.34,1.56,.64,1)}
+.w-pchip i{width:8px;height:8px;border-radius:999px;background:#7C4DDB}
+.w-pchip--re i{background:#E4536B}
+.w-t-pay:hover .w-pchip{transform:translateY(-4px)}
+.w-t-pay .w-pchip:nth-child(3){transition-delay:.04s}.w-t-pay .w-pchip:nth-child(4){transition-delay:.08s}
+/* interests marquee */
+.w-marq{position:absolute;z-index:3;left:0;right:0;top:32px;display:flex;flex-direction:column;gap:12px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent)}
+.w-marq-row{display:flex;gap:10px;width:max-content;animation:w-left 26s linear infinite}
+.w-marq-row--rev{animation-direction:reverse;animation-duration:30s}
+@keyframes w-left{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.w-chip{font-size:15px;font-weight:700;padding:10px 18px;border-radius:999px;white-space:nowrap;transition:transform .5s cubic-bezier(.34,1.56,.64,1)}
+.w-chip--0{background:#FBF8FE;color:#502898}.w-chip--1{background:#FFCCCF;color:#791E30}.w-chip--2{background:#BEACFE;color:#291351}.w-chip--3{background:#DAD2FF;color:#3C1D74}
+.w-chip:hover{transform:scale(1.08) rotate(-2deg)}
+/* steps */
+.w-steps{max-width:1240px;margin:0 auto;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;counter-reset:s}
+.w-step{background:var(--canvas);border-radius:32px;padding:36px;display:flex;flex-direction:column;gap:12px;animation:w-rise .8s both;animation-delay:calc(var(--r) * .12s)}
+.w-step-n{font-size:64px;line-height:1;font-weight:700;color:#7C4DDB}
+.w-step h3{font-size:24px;line-height:30px;font-weight:700}
+.w-step p{font-size:16px;line-height:24px;color:var(--fg-muted)}
+/* safety */
+.w-safety{max-width:1240px;margin:0 auto;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
+.w-safe{border-radius:28px;padding:32px;background:#251337;display:flex;flex-direction:column;gap:12px;transition:background .3s,transform .3s;animation:w-rise .8s both;animation-delay:calc(var(--r) * .1s)}
+.w-safe:hover{background:#3C2D4E;transform:translateY(-4px)}
+.w-safe-ic{width:52px;height:52px;border-radius:16px;background:#291351;color:#C9B6FF;display:flex;align-items:center;justify-content:center;margin-bottom:8px}
+.w-safe h3{font-size:20px;line-height:26px;font-weight:700}
+.w-safe p{font-size:15px;line-height:22px;color:#B6A8C9}
+/* offers */
+.w-offers{max-width:1240px;margin:0 auto;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px;align-items:stretch}
+.w-offer{border-radius:28px;padding:32px;background:var(--surface);box-shadow:0 0 0 1px var(--line);display:flex;flex-direction:column;gap:20px;transition:transform .3s;animation:w-rise .8s both;animation-delay:calc(var(--r) * .1s)}
+.w-offer:hover{transform:translateY(-4px)}
+.w-offer h3{font-size:26px;font-weight:700}
+.w-offer ul{display:flex;flex-direction:column;gap:12px}
+.w-offer li li,.w-offer ul li{display:flex;gap:10px;align-items:flex-start;font-size:15px;line-height:22px}
+.w-offer ul li svg{color:var(--primary);flex:none;margin-top:3px}
+.w-offer--gold{box-shadow:0 0 0 2px #7C4DDB}
+/* countries */
+.w-countries{max-width:1240px;margin:0 auto;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
+.w-country{border-radius:28px;padding:32px;min-height:220px;background:var(--canvas);display:flex;flex-direction:column;justify-content:flex-end;gap:6px;position:relative;overflow:hidden;animation:w-rise .8s both;animation-delay:calc(var(--r) * .1s)}
+.w-country h3{font-size:28px;font-weight:700}
+.w-country p{font-size:15px;color:var(--fg-muted)}
+.w-country-st{position:absolute;top:24px;left:24px;font-size:13px;font-weight:700;padding:6px 12px;border-radius:999px;background:var(--surface-sunken);color:var(--fg-muted)}
+.w-country.is-on{background:#1A0A28;color:#FBF8FE}
+.w-country.is-on p{color:#B6A8C9}
+.w-country.is-on .w-country-st{background:rgba(168,139,251,.18);color:#DAD2FF}
+/* testimonials (inspiré d'Aceternity « Infinite Moving Cards ») */
+.w-sec--testi{padding-left:0;padding-right:0}
+.w-testi{overflow:hidden;padding:12px 0 24px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
+.w-testi-track{display:flex;gap:20px;width:max-content;animation:w-left 48s linear infinite}
+.w-testi:hover .w-testi-track{animation-play-state:paused}
+.w-quote{width:400px;flex:none;margin:0;background:var(--surface);border:1px solid var(--line);border-radius:28px;padding:32px;display:flex;flex-direction:column;gap:20px;transition:transform .6s cubic-bezier(.34,1.56,.64,1),border-color .3s}
+.w-quote:hover{transform:translateY(-6px);border-color:#7C4DDB}
+.w-quote-ic{color:#7C4DDB}
+.w-quote blockquote{margin:0;font-size:18px;line-height:28px;font-weight:500;color:var(--fg)}
+.w-quote figcaption{display:flex;align-items:center;gap:12px;margin-top:auto}
+.w-quote-av{width:44px;height:44px;border-radius:999px;background:#F0EAFB;color:#502898;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700}
+.w-quote figcaption span:last-child{display:flex;flex-direction:column;line-height:20px}
+.w-quote b{font-size:16px}
+.w-quote small{font-size:14px;color:var(--fg-muted)}
+/* faq */
+.w-faq{max-width:1240px;margin:0 auto;display:grid;grid-template-columns:minmax(0,4fr) minmax(0,7fr);gap:64px}
+.w-faq-list{display:flex;flex-direction:column}
+.w-faq-item{border-bottom:1px solid var(--line)}
+.w-faq-item summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:24px;padding:24px 0;font-size:20px;line-height:28px;font-weight:700}
+.w-faq-item summary::-webkit-details-marker{display:none}
+.w-faq-item summary span{font-size:28px;font-weight:400;color:var(--primary);transition:transform .3s}
+.w-faq-item[open] summary span{transform:rotate(45deg)}
+.w-faq-item p{padding:0 0 24px;font-size:17px;line-height:27px;color:var(--fg-muted);max-width:640px}
+/* final */
+.w-final{position:relative;background:#1A0A28;color:#FBF8FE;padding:140px 48px;text-align:center;overflow:hidden}
+.w-final-in{position:relative;display:flex;flex-direction:column;align-items:center;gap:24px}
+.w-final h2{font-size:clamp(40px,5.6cqi,80px);line-height:1.05;font-weight:700;letter-spacing:-.02em;max-width:960px}
+.w-final p{font-size:20px;color:rgba(251,248,254,.8)}
+.w-final .w-stores{justify-content:center}
+/* ticker */
+.w-ticker{background:#7C4DDB;color:#FBF8FE;overflow:hidden;padding:18px 0}
+.w-ticker-track{display:flex;gap:28px;width:max-content;animation:w-left 40s linear infinite;font-size:22px;font-weight:700;align-items:center}
+.w-ticker i{font-style:normal;opacity:.7}
+/* footer (inspiré de tinder.com : fond clair, colonnes, texte de présentation, ligne de liens) */
+.w-foot{background:var(--canvas);color:var(--fg);padding:72px 48px 40px}
+.w-foot-in{max-width:1240px;margin:0 auto}
+.w-foot-cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) minmax(0,1.6fr);gap:40px}
+.w-foot-col{display:flex;flex-direction:column;gap:12px;font-size:15px;line-height:22px}
+.w-foot-col h4{font-size:16px;line-height:24px;font-weight:700;color:var(--fg);margin-bottom:4px}
+.w-foot-col a{color:var(--fg-muted);transition:color .2s}
+.w-foot-col a:hover{color:var(--primary)}
+.w-foot-social{display:flex;gap:10px}
+.w-foot-social a{width:40px;height:40px;border-radius:999px;display:flex;align-items:center;justify-content:center;background:var(--surface-sunken);color:var(--fg);transition:background .2s,color .2s}
+.w-foot-social a:hover{background:#7C4DDB;color:#FBF8FE}
+.w-foot-app .w-stores{flex-direction:column;align-items:flex-start;gap:10px}
+.w-foot-app .w-store{height:52px}
+.w-foot-col .w-store--dark,.w-foot-col .w-store--dark:hover{color:#FBF8FE}
+.w-foot hr{border:0;border-top:1px solid var(--line);margin:40px 0}
+.w-foot-seo{font-size:15px;line-height:24px;color:var(--fg-muted);max-width:1100px}
+.w-foot-bot{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;font-size:14px}
+.w-foot-links{display:flex;gap:24px;flex-wrap:wrap;font-weight:600}
+.w-foot-links a{color:var(--fg)}
+.w-foot-links a:hover{color:var(--primary)}
+.w-foot-legal{display:flex;gap:20px;flex-wrap:wrap;color:var(--fg-muted)}
+.w-foot-legal a{color:var(--fg-muted)}
+.w-foot-legal a:hover{color:var(--primary)}
+.w-foot-brand{margin-top:32px;display:flex;align-items:center;justify-content:space-between;gap:16px;font-size:13px;color:var(--fg-muted)}
+/* responsive (container queries, works in the canvas and in the real site) */
+@container (max-width: 1080px){
+ .w-nav-links{display:none}
+ .w-nav-right{margin-left:auto}
+ .w-bento{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .w-safety,.w-offers,.w-countries{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .w-faq{grid-template-columns:1fr;gap:24px}
+ .w-foot-cols{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .w-hero-bg{grid-template-columns:repeat(4,minmax(0,1fr))}
+}
+@container (max-width: 640px){
+ .w-nav{padding:0 12px;top:12px}
+ .w-nav-in{height:60px;padding:0 6px 0 18px}
+ .w-btn--nav{height:44px;padding:0 16px}
+ .w-lang{display:none}
+ .w-tile:hover{transform:none}
+ .w-sec{padding:80px 20px}
+ .w-head{margin-bottom:36px}
+ .w-hero{min-height:760px;height:auto;padding:120px 0 120px}
+ .w-hero-bg{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+ .w-hcol:nth-child(n+4){display:none}
+ .w-hero .w-stores{flex-direction:column;align-items:center}
+ .w-ccs{gap:6px}
+ .w-cc{height:32px;padding:0 10px 0 8px;font-size:13px;gap:6px}
+ .w-cc em{display:none}
+ .w-disclaimer{right:auto;left:0;width:100%;text-align:center}
+ .w-bento{grid-template-columns:1fr;grid-auto-rows:280px}
+ .w-t-swipe{grid-column:auto;grid-row:span 2}
+ .w-bento{grid-auto-rows:minmax(340px,auto)}
+ .w-t-pay{grid-row:auto}
+ .w-pay{position:static;margin-bottom:24px}
+ .w-heart{top:38%}
+ .w-t-map,.w-t-int,.w-t-pay{grid-column:auto}
+ .w-pay{grid-template-columns:1fr;gap:12px}
+ .w-phone{right:50%;translate:50% 0;top:auto;bottom:24px;height:300px;animation:none}
+ .w-t-swipe .w-tile-txt{max-width:none}
+ .w-steps,.w-safety,.w-offers,.w-countries{grid-template-columns:1fr}
+ .w-final{padding:100px 20px}
+ .w-quote{width:300px;padding:24px}
+ .w-quote blockquote{font-size:16px;line-height:25px}
+ .w-foot{padding:56px 20px 28px}
+ .w-foot-cols{grid-template-columns:repeat(2,minmax(0,1fr));gap:32px 20px}
+ .w-foot-app{grid-column:1 / -1}
+ .w-foot-app .w-stores{flex-direction:row;flex-wrap:wrap}
+ .w-foot-bot{flex-direction:column;align-items:flex-start}
+ .w-foot-brand{flex-direction:column;align-items:flex-start}
+ .w-ticker-track{font-size:18px}
+}
+@media (prefers-reduced-motion: reduce){
+ .w-site *,.w-site *::before,.w-site *::after{animation-duration:.01ms !important;animation-iteration-count:1 !important}
+ .w-b{opacity:1 !important;animation:none !important}
+ .w-sc:not(:first-child){display:none}
+}
+
+
+.w-nav{position:fixed}
+@supports (animation-timeline: scroll()){
+ .w-nav-in{animation:w-navin 1.1s cubic-bezier(.34,1.56,.64,1) both,w-navshrink linear both;animation-timeline:auto,scroll(root);animation-range:normal,0 260px}
+ @keyframes w-navshrink{to{max-width:1040px;height:60px}}
+}
+.js .w-tile,.js .w-step,.js .w-safe,.js .w-offer,.js .w-country{animation-play-state:paused}
+.js .is-in{animation-play-state:running}
+@media (prefers-reduced-motion: reduce){.js .w-tile,.js .w-step,.js .w-safe,.js .w-offer,.js .w-country{animation-play-state:running}}
+
+</style>
+</head>
+<body>
+
+<div class="w-site t-light" id="top">
+  <nav class="w-nav" aria-label="Navigation">
+    <div class="w-nav-in">
+      <a href="#top" class="w-nav-logo" aria-label="Tia, accueil"><svg viewBox="0 0 850 506" style="height: 34px; width: auto; display: block; flex: none" role="img" aria-label="Tia"><defs><linearGradient id="tia-w" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="850" y2="0"><stop offset="0" stop-color="#7C4DDB"></stop><stop offset="0.5" stop-color="#B4479E"></stop><stop offset="1" stop-color="#F4696B"></stop></linearGradient><linearGradient id="tia-h" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="126" y2="126"><stop offset="0" stop-color="#7C4DDB"></stop><stop offset="0.5" stop-color="#B4479E"></stop><stop offset="1" stop-color="#F4696B"></stop></linearGradient></defs><path d="M181.5 504.0C171.5 502.4 158.0 498.2 148.4 493.5C117.1 478.4 83.6 439.1 76.0 408.6C71.3 390.0 67.1 322.2 66.3 254.2L65.7 207.0L49.5 207.0C36.0 207.0 32.4 206.7 27.6 205.0C0.3 195.6 -7.9 160.7 12.4 140.5C22.7 130.2 29.4 128.1 51.2 128.0L66.0 128.0L66.0 81.2C66.0 34.6 66.1 34.5 68.4 28.8C83.2 -7.1 132.3 -8.4 148.8 26.7C151.5 32.5 151.5 32.5 151.8 80.2L152.1 128.0L189.4 128.0C231.9 128.0 234.6 128.4 245.1 135.9C269.8 153.5 266.0 190.0 238.2 203.7C232.5 206.5 232.5 206.5 192.2 206.8L152.0 207.1L152.0 268.3C152.0 355.6 154.6 375.9 168.9 399.9C195.9 445.5 250.4 419.8 267.0 353.5C274.1 325.3 275.0 314.1 275.0 249.2C275.0 196.0 275.1 193.7 277.1 187.8C289.9 149.8 342.0 148.9 357.4 186.4C359.5 191.4 359.5 192.9 360.0 291.0C360.5 383.9 360.6 391.0 362.4 398.0C366.3 413.5 370.2 419.1 378.8 421.6C398.4 427.3 420.2 410.2 437.7 375.2C443.9 362.8 443.9 362.8 443.3 354.6C438.7 288.0 475.9 218.3 530.4 191.1C592.9 160.0 673.9 180.6 711.3 237.2C731.5 267.8 736.4 287.8 739.5 353.0C741.4 391.4 742.8 402.0 747.3 410.9C754.3 425.2 768.4 426.7 786.8 415.3C819.0 395.3 857.7 421.6 847.5 456.6C842.6 473.7 827.3 487.6 803.5 497.0C758.7 514.5 711.2 503.3 684.8 469.1C682.2 465.7 682.2 465.7 674.9 471.9C647.4 495.2 621.3 504.5 584.0 504.5C544.6 504.5 516.5 493.7 490.0 468.3L480.4 459.1L471.4 468.1C446.5 493.1 418.0 505.0 382.9 505.0C349.1 505.0 322.6 493.1 305.3 470.3L299.4 462.4L292.5 468.7C274.3 485.4 255.8 495.5 232.0 501.7C221.4 504.5 193.3 505.8 181.5 504.0ZM305.2 113.0C263.2 102.0 248.4 49.4 278.9 19.1C314.6 -16.4 374.5 8.3 374.5 58.5C374.5 95.8 340.7 122.3 305.2 113.0Z" fill="url(#tia-w)" fill-rule="evenodd"></path><path d="M188.5 489.3C162.4 486.0 144.6 476.7 123.5 455.6C106.1 438.1 95.2 421.1 91.0 404.4C86.4 386.7 82.9 324.0 82.3 250.8L81.8 192.0L59.6 192.0C35.4 192.0 32.1 191.5 25.8 186.7C14.7 178.2 13.5 161.3 23.3 151.2C29.5 144.7 30.1 144.5 57.0 144.0L81.5 143.5L82.0 88.5C82.5 33.5 82.5 33.5 85.2 29.3C97.2 10.9 123.6 12.3 133.7 31.9C137.0 38.2 137.0 38.2 137.0 91.1L137.0 144.0L182.5 144.0C228.1 144.0 228.1 144.0 232.9 146.5C251.3 155.8 250.5 180.6 231.5 189.6C226.5 192.0 226.5 192.0 181.7 192.0L136.9 192.0L137.3 270.2C137.6 345.1 137.7 349.0 139.8 360.5C148.9 411.4 171.3 438.0 205.2 438.0C239.4 438.0 270.4 404.6 282.4 354.9C289.2 326.9 289.3 325.9 289.9 256.5C290.5 194.4 290.5 193.4 292.7 189.5C303.9 168.5 332.4 169.1 342.2 190.5C344.5 195.5 344.5 195.5 345.1 295.0C345.5 366.2 346.0 395.9 346.8 399.5C353.1 426.0 363.3 436.6 383.9 437.8C409.7 439.2 433.3 419.4 452.5 379.8C459.0 366.5 459.0 366.5 459.0 350.7C459.0 292.0 479.5 246.0 518.9 216.4C581.0 169.8 673.0 191.9 707.4 261.7C718.7 284.6 721.9 302.2 724.0 353.7C725.6 393.2 727.4 405.8 733.0 417.5C743.6 439.7 769.1 444.6 794.0 429.2C822.9 411.2 848.2 443.8 823.3 467.1C807.0 482.4 777.2 491.6 752.6 489.1C722.4 485.9 702.2 472.2 689.4 446.3L685.3 438.0L678.6 446.0C627.9 506.6 532.9 504.1 486.1 441.1L480.3 433.2L474.4 441.3C448.3 477.1 409.4 494.6 368.3 488.9C338.2 484.8 316.5 467.7 305.5 439.3L302.7 432.1L297.8 439.1C273.0 474.4 229.1 494.5 188.5 489.3ZM607.0 419.7C612.6 416.9 614.5 415.2 621.3 406.5C646.0 374.8 677.3 322.4 680.0 307.9C682.6 294.2 675.5 280.3 662.7 274.1C650.2 268.1 650.4 268.0 621.9 282.4L596.9 295.1L586.5 289.6C580.8 286.5 571.9 281.5 566.8 278.4C552.0 269.3 550.2 268.6 542.5 268.2C520.8 267.1 505.8 285.4 510.4 307.3C514.1 325.3 555.3 398.7 570.3 414.0C580.2 424.1 593.7 426.2 607.0 419.7ZM305.3 97.2C281.4 88.7 270.8 59.3 283.6 37.5C296.6 15.3 329.9 11.4 347.9 29.9C367.2 49.7 361.3 83.4 336.5 95.5C328.7 99.4 313.6 100.2 305.3 97.2Z" fill="#FBF8FE" fill-rule="evenodd"></path><g transform="translate(509 268)"><path d="M78.4 155.9C67.2 153.8 62.1 149.4 50.2 131.6C13.0 76.4 -2.8 42.1 1.3 25.5C7.3 1.4 30.6 -6.0 53.9 8.9C65.1 16.0 85.3 27.0 87.3 27.0C88.2 27.0 99.9 21.6 113.2 14.9C137.2 2.9 137.4 2.8 142.7 3.5C160.9 5.8 174.2 23.0 171.0 40.3C167.8 57.3 123.9 129.1 105.2 147.7C98.7 154.2 87.5 157.7 78.4 155.9Z" fill="url(#tia-h)"></path><path d="M117.0 41.9C114.0 40.8 105.9 37.3 99.2 34.0L86.8 28.0L111.0 16.0C124.3 9.4 135.6 4.2 136.1 4.5C138.4 6.0 141.2 13.7 141.7 19.8C143.1 37.1 131.8 47.3 117.0 41.9Z" fill="#251337" fill-opacity="0.3"></path></g></svg></a>
+      <div class="w-nav-links"><span class="w-ind" aria-hidden="true"></span><a href="#pourquoi">Pourquoi Tia</a><a href="#securite">Sécurité</a><a href="#offres">Offres</a><a href="#faq">FAQ</a></div>
+      <div class="w-nav-right">
+        <span class="w-lang"><svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><rect width="6" height="12" fill="#FBF8FE"></rect><rect x="6" width="12" height="6" fill="#DA452C"></rect><rect x="6" y="6" width="12" height="6" fill="#219761"></rect></svg>FR<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></span>
+        <a class="w-btn w-btn--nav" href="#telecharger"><svg width="16" height="16" viewBox="-17 -24.5 206 206" fill="currentColor" aria-hidden="true"><path d="M78.4 155.9C67.2 153.8 62.1 149.4 50.2 131.6C13.0 76.4 -2.8 42.1 1.3 25.5C7.3 1.4 30.6 -6.0 53.9 8.9C65.1 16.0 85.3 27.0 87.3 27.0C88.2 27.0 99.9 21.6 113.2 14.9C137.2 2.9 137.4 2.8 142.7 3.5C160.9 5.8 174.2 23.0 171.0 40.3C167.8 57.3 123.9 129.1 105.2 147.7C98.7 154.2 87.5 157.7 78.4 155.9Z"></path></svg>Télécharger</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="w-hero">
+    <div class="w-hero-bg" aria-hidden="true"><div class="w-hcol w-hcol--0" style="--d:38s"><div class="w-hcol-track"><div class="w-hcard"><img class="w-ph " src="images/fanja.jpg" alt="" loading="lazy"/></div><div class="w-hcard"><img class="w-ph " src="images/hery.jpg" alt="" loading="lazy"/></div><div class="w-hcard"><img class="w-ph " src="images/lova.jpg" alt="" loading="lazy"/></div><div class="w-hcard"><img class="w-ph " src="images/tojo.jpg" alt="" loading="lazy"/></div><div class="w-hcard"><img class="w-ph " src="images/mialy.jpg" alt="" loading="lazy"/></div><div class="w-hcard"><img class="w-ph " src="images/mamy.jpg" alt="" loading="lazy"/></div><div class="w-hcard"><img class="w-ph " src="images/fanja.jpg" alt="" loading="lazy"/></div><div class="w-hcard"><img class="w-ph " src="images/hery.jpg" alt="" loading="lazy"/></div><div class="w-hcard"><img class="w-ph " src="images/lova.jpg" alt="" loading="lazy"/></div><div class="w-hcard"><img class="w-ph " src="images/tojo.jpg" alt="" loading="lazy"/></div><div class="w-hcard"><img class="w-ph " src="images/mialy.jpg" alt="" loading="lazy"/></div><div class="w-hcard"><img class="w-ph " src="images/mamy.jpg" alt="" loading="lazy"/></div></div></div><div class="w-hcol w-hcol--1" style="--d:42s"><div class="w-hcol-track"><div class="w-hcard"><img class="w-ph " src="images/mamy.jpg" alt="" loading="lazy"/></div><div class="w-hcard"><img class="w-ph " src="images/mialy.jpg" alt="" loading="lazy"/></div><div class="w-hcard"><img class="w-ph " src="images/tojo.jpg" alt="" loading="lazy"/></div><div class="w-hcard"><img class="w-ph " src="images/fanja.jpg" alt="" loading="lazy"/></div><div class="w-hcard"><img class="w-ph " src="images/hery.jpg" alt="" loading="lazy"/></div><div class="w-hcard"><img class="w-ph " src="images/lova.jpg" alt="" loading="lazy"/></div><div class="w-hcard"><img class="w-ph " src="images/mamy.jpg" alt="" loading="lazy"/></div><div class="w-hcard"><img class="w-ph " src="images/mialy.jpg" alt="" loading="lazy"/></div><div class="w-hcard"><img class="w-ph " src="images/tojo.jpg" alt="" loading="lazy"/></div><div class="w-hcard"><img class="w-ph " src="images/fanja.jpg" alt="" loading="lazy"/></div><div class="w-hcard"><img class="w-ph " src="images/hery.jpg" alt="" loading="lazy"/></div><div class="w-hcard"><img class="w-ph " src="images/lova.jpg" alt="" loading="lazy"/></div></div></div><div class="w-hcol w-hcol--0" style="--d:46s"><div class="w-hcol-track"><div class="w-hcard"><img class="w-ph " src="images/lova.jpg" alt="" loading="lazy"/></div><div class="w-hcard"><img class="w-ph " src="images/tojo.jpg" alt="" loading="lazy"/></div><div class="w-hcard"><img class="w-ph " src="images/fanja.jpg" alt="" loading="lazy"/></div><div class="w-hcard"><img class="w-ph " src="images/mamy.jpg" alt="" loading="lazy"/></div><div class="w-hcard"><img class="w-ph " src="images/hery.jpg" alt="" loading="lazy"/></div><div class="w-hcard"><img class="w-ph " src="images/mialy.jpg" alt="" loading="lazy"/></div><div class="w-hcard"><img class="w-ph " src="images/lova.jpg" alt="" loading="lazy"/></div><div class="w-hcard"><img class="w-ph " src="images/tojo.jpg" alt="" loading="lazy"/></div><div class="w-hcard"><img class="w-ph " src="images/fanja.jpg" alt="" loading="lazy"/></div><div class="w-hcard"><img class="w-ph " src="images/mamy.jpg" alt="" loading="lazy"/></div><div class="w-hcard"><img class="w-ph " src="images/hery.jpg" alt="" loading="lazy"/></div><div class="w-hcard"><img class="w-ph " src="images/mialy.jpg" alt="" loading="lazy"/></div></div></div><div class="w-hcol w-hcol--1" style="--d:50s"><div class="w-hcol-track"><div class="w-hcard"><img class="w-ph " src="images/hery.jpg" alt="" loading="lazy"/></div><div class="w-hcard"><img class="w-ph " src="images/fanja.jpg" alt="" loading="lazy"/></div><div class="w-hcard"><img class="w-ph " src="images/mamy.jpg" alt="" loading="lazy"/></div><div class="w-hcard"><img class="w-ph " src="images/lova.jpg" alt="" loading="lazy"/></div><div class="w-hcard"><img class="w-ph " src="images/tojo.jpg" alt="" loading="lazy"/></div><div class="w-hcard"><img class="w-ph " src="images/mialy.jpg" alt="" loading="lazy"/></div><div class="w-hcard"><img class="w-ph " src="images/hery.jpg" alt="" loading="lazy"/></div><div class="w-hcard"><img class="w-ph " src="images/fanja.jpg" alt="" loading="lazy"/></div><div class="w-hcard"><img class="w-ph " src="images/mamy.jpg" alt="" loading="lazy"/></div><div class="w-hcard"><img class="w-ph " src="images/lova.jpg" alt="" loading="lazy"/></div><div class="w-hcard"><img class="w-ph " src="images/tojo.jpg" alt="" loading="lazy"/></div><div class="w-hcard"><img class="w-ph " src="images/mialy.jpg" alt="" loading="lazy"/></div></div></div><div class="w-hcol w-hcol--0" style="--d:54s"><div class="w-hcol-track"><div class="w-hcard"><img class="w-ph " src="images/mialy.jpg" alt="" loading="lazy"/></div><div class="w-hcard"><img class="w-ph " src="images/lova.jpg" alt="" loading="lazy"/></div><div class="w-hcard"><img class="w-ph " src="images/hery.jpg" alt="" loading="lazy"/></div><div class="w-hcard"><img class="w-ph " src="images/tojo.jpg" alt="" loading="lazy"/></div><div class="w-hcard"><img class="w-ph " src="images/mamy.jpg" alt="" loading="lazy"/></div><div class="w-hcard"><img class="w-ph " src="images/fanja.jpg" alt="" loading="lazy"/></div><div class="w-hcard"><img class="w-ph " src="images/mialy.jpg" alt="" loading="lazy"/></div><div class="w-hcard"><img class="w-ph " src="images/lova.jpg" alt="" loading="lazy"/></div><div class="w-hcard"><img class="w-ph " src="images/hery.jpg" alt="" loading="lazy"/></div><div class="w-hcard"><img class="w-ph " src="images/tojo.jpg" alt="" loading="lazy"/></div><div class="w-hcard"><img class="w-ph " src="images/mamy.jpg" alt="" loading="lazy"/></div><div class="w-hcard"><img class="w-ph " src="images/fanja.jpg" alt="" loading="lazy"/></div></div></div></div>
+    <div class="w-hero-veil" aria-hidden="true"></div>
+    <div class="w-hero-in">
+      <div class="w-ccs w-in" style="--i:0" aria-label="Pays"><span class="w-cc"><svg width="20" height="14" viewBox="0 0 18 12" aria-hidden="true"><rect width="6" height="12" fill="#FBF8FE"></rect><rect x="6" width="12" height="6" fill="#DA452C"></rect><rect x="6" y="6" width="12" height="6" fill="#219761"></rect></svg>Madagascar</span><span class="w-cc"><svg width="20" height="14" viewBox="0 0 18 12" aria-hidden="true"><rect width="6" height="12" fill="#002395"></rect><rect x="6" width="6" height="12" fill="#FBF8FE"></rect><rect x="12" width="6" height="12" fill="#ED2939"></rect></svg>La Réunion</span><span class="w-cc"><svg width="20" height="14" viewBox="0 0 18 12" aria-hidden="true"><rect width="18" height="3" fill="#EA2839"></rect><rect y="3" width="18" height="3" fill="#1A206D"></rect><rect y="6" width="18" height="3" fill="#FFD500"></rect><rect y="9" width="18" height="3" fill="#00A551"></rect></svg>Maurice<em>Bientôt</em></span><span class="w-cc"><svg width="20" height="14" viewBox="0 0 18 12" aria-hidden="true"><rect width="18" height="12" fill="#FBF8FE"></rect><path d="M3 0H18V4H8.5Z" fill="#E03C31"></path><path d="M3 12H18V8H8.5Z" fill="#001489"></path><path d="M0 0H2L8 4.8H18V7.2H8L2 12H0Z" fill="#007749"></path><path d="M0 1.5L5.6 6L0 10.5Z" fill="#FFB81C"></path><path d="M0 2.6L4.2 6L0 9.4Z" fill="#1A0A28"></path></svg>South Africa<em>Bientôt</em></span></div>
+      <h1 class="w-in" style="--i:1">Trouve ta <span class="borel w-grad">moitié.</span></h1>
+      <p class="w-hero-sub w-in" style="--i:2">Des profils vérifiés, des vrais gens près de chez toi. Il suffit d’un swipe pour commencer.</p>
+      <div class="w-in" style="--i:3"><div class="w-stores">
+          <a class="w-store w-store--light" href="https://apps.apple.com/app/id6758033706" aria-label="Télécharger Tia sur l’App Store">
+            <svg width="22" height="22" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M168.6 510.5C132.1 500.4 82.2 432.2 61.1 363.3C29.3 259.4 53.9 171.4 124.5 136.9C159.9 119.6 184.0 120.7 238.5 142.1C256.1 149.0 261.5 148.6 287.8 138.6C332.7 121.6 358.3 119.6 391.6 130.5C415.2 138.3 440.4 156.2 449.3 171.8L451.0 174.8L443.1 180.4C410.6 203.1 394.0 237.3 396.4 276.4C399.2 320.5 418.3 350.2 458.2 372.4L464.9 376.1L461.9 384.8C451.9 413.1 431.3 448.5 407.4 478.4C380.1 512.4 355.3 518.7 312.0 502.5C273.0 487.9 258.5 487.7 221.3 501.4C191.7 512.2 181.4 514.0 168.6 510.5ZM255.0 111.4C255.0 59.2 293.8 12.8 347.0 1.4C358.8 -1.1 358.0 -1.8 358.0 11.8C357.9 41.9 345.4 68.8 320.3 93.1C303.2 109.7 288.1 116.5 266.2 117.7L255.0 118.3L255.0 111.4Z"></path></svg>
+            <span><small>Télécharger dans</small>l’App Store</span>
+          </a>
+          <a class="w-store w-store--light" href="https://play.google.com/store/apps/details?id=com.rdh36.tiaapp" aria-label="Télécharger Tia sur Google Play">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.2 2.6c-.3.3-.4.7-.4 1.2v16.4c0 .5.1.9.4 1.2l9.3-9.4z"></path><path d="M16.6 15.1L13.5 12l3.1-3.1 3.7 2.1c1 .6 1 1.5 0 2.1z" opacity=".75"></path><path d="M4.9 21.6c.4.3 1 .3 1.6-.1l10.1-6.4-3.1-3.1z" opacity=".55"></path><path d="M4.9 2.4l8.6 9.6 3.1-3.1L6.5 2.5c-.6-.4-1.2-.4-1.6-.1z" opacity=".9"></path></svg>
+            <span><small>Disponible sur</small>Google Play</span>
+          </a>
+        </div></div>
+      <p class="w-hero-note w-in" style="--i:4">Gratuit · iPhone et Android</p>
+    </div>
+    <a class="w-scroll" href="#pourquoi" aria-label="Découvrir">↓</a>
+    <p class="w-disclaimer">Photos de modèles, à titre d’illustration.</p>
+  </header>
+
+  <section class="w-sec" id="pourquoi">
+    <div class="w-head"><p class="w-eyebrow">Pourquoi Tia</p><h2>Tout ce qu’il faut pour un premier rendez-vous.</h2></div>
+    <div class="w-bento">
+        <article class="w-tile w-t-swipe" style="--r:0">
+          <div class="w-phone">
+            <div class="w-stack"><div class="w-sc" style="animation-delay:0s">
+              <img class="w-ph " src="images/fanja.jpg" alt="" loading="lazy"/>
+              <span class="w-sc-scrim"></span>
+              <span class="w-stamp" style="animation-delay:0s">J’aime</span>
+              <span class="w-sc-info"><b>Fanja <i>26</i></b><small>Ivandry · 3 km</small></span>
+            </div><div class="w-sc" style="animation-delay:-3s">
+              <img class="w-ph " src="images/hery.jpg" alt="" loading="lazy"/>
+              <span class="w-sc-scrim"></span>
+              <span class="w-stamp" style="animation-delay:-3s">J’aime</span>
+              <span class="w-sc-info"><b>Hery <i>29</i></b><small>Saint-Denis · 4 km</small></span>
+            </div><div class="w-sc" style="animation-delay:-6s">
+              <img class="w-ph " src="images/mialy.jpg" alt="" loading="lazy"/>
+              <span class="w-sc-scrim"></span>
+              <span class="w-stamp" style="animation-delay:-6s">J’aime</span>
+              <span class="w-sc-info"><b>Miora <i>24</i></b><small>Analakely · 2 km</small></span>
+            </div></div>
+            <div class="w-rail"><span class="w-rb w-rb--like"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 20.5s-8-4.6-8-10.4A4.6 4.6 0 0 1 12 7.2a4.6 4.6 0 0 1 8 2.9c0 5.8-8 10.4-8 10.4z"></path></svg></span><span class="w-rb w-rb--tia"><svg width="20" height="20" viewBox="-17 -24.5 206 206" fill="currentColor" aria-hidden="true"><path d="M78.4 155.9C67.2 153.8 62.1 149.4 50.2 131.6C13.0 76.4 -2.8 42.1 1.3 25.5C7.3 1.4 30.6 -6.0 53.9 8.9C65.1 16.0 85.3 27.0 87.3 27.0C88.2 27.0 99.9 21.6 113.2 14.9C137.2 2.9 137.4 2.8 142.7 3.5C160.9 5.8 174.2 23.0 171.0 40.3C167.8 57.3 123.9 129.1 105.2 147.7C98.7 154.2 87.5 157.7 78.4 155.9Z"></path></svg></span><span class="w-rb w-rb--x"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></span></div>
+          </div>
+          <div class="w-tile-txt"><span class="w-kick">Swipe</span><h3>Un swipe, un vrai visage.</h3><p>Photos plein écran, profils complets. Tu sais à qui tu dis oui.</p></div>
+        </article>
+        <article class="w-tile w-t-verif" style="--r:1">
+          <div class="w-verif">
+            <div class="w-verif-ph"><img class="w-ph " src="images/mialy.jpg" alt="" loading="lazy"/><span class="w-scan"></span></div>
+            <span class="w-verif-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></span>
+          </div>
+          <div class="w-tile-txt"><span class="w-kick">Vérifié</span><h3>Profils vérifiés</h3><p>Un selfie, une minute, et le badge apparaît.</p></div>
+        </article>
+        <article class="w-tile w-t-heart" style="--r:2">
+          <div class="w-heart">
+            <span class="w-ring"></span><span class="w-ring" style="animation-delay:.8s"></span><span class="w-ring" style="animation-delay:1.6s"></span>
+            <svg class="w-fh" style="--x:-30px;--rot:-20deg;--d:0s;left:22%;color:#FFCCCF" viewBox="0 0 172 157" aria-hidden="true"><path d="M78.4 155.9C67.2 153.8 62.1 149.4 50.2 131.6C13.0 76.4 -2.8 42.1 1.3 25.5C7.3 1.4 30.6 -6.0 53.9 8.9C65.1 16.0 85.3 27.0 87.3 27.0C88.2 27.0 99.9 21.6 113.2 14.9C137.2 2.9 137.4 2.8 142.7 3.5C160.9 5.8 174.2 23.0 171.0 40.3C167.8 57.3 123.9 129.1 105.2 147.7C98.7 154.2 87.5 157.7 78.4 155.9Z" fill="currentColor"></path></svg><svg class="w-fh" style="--x:24px;--rot:18deg;--d:0.7s;left:70%;color:#DAD2FF" viewBox="0 0 172 157" aria-hidden="true"><path d="M78.4 155.9C67.2 153.8 62.1 149.4 50.2 131.6C13.0 76.4 -2.8 42.1 1.3 25.5C7.3 1.4 30.6 -6.0 53.9 8.9C65.1 16.0 85.3 27.0 87.3 27.0C88.2 27.0 99.9 21.6 113.2 14.9C137.2 2.9 137.4 2.8 142.7 3.5C160.9 5.8 174.2 23.0 171.0 40.3C167.8 57.3 123.9 129.1 105.2 147.7C98.7 154.2 87.5 157.7 78.4 155.9Z" fill="currentColor"></path></svg><svg class="w-fh" style="--x:-12px;--rot:-8deg;--d:1.4s;left:40%;color:#EF7685" viewBox="0 0 172 157" aria-hidden="true"><path d="M78.4 155.9C67.2 153.8 62.1 149.4 50.2 131.6C13.0 76.4 -2.8 42.1 1.3 25.5C7.3 1.4 30.6 -6.0 53.9 8.9C65.1 16.0 85.3 27.0 87.3 27.0C88.2 27.0 99.9 21.6 113.2 14.9C137.2 2.9 137.4 2.8 142.7 3.5C160.9 5.8 174.2 23.0 171.0 40.3C167.8 57.3 123.9 129.1 105.2 147.7C98.7 154.2 87.5 157.7 78.4 155.9Z" fill="currentColor"></path></svg><svg class="w-fh" style="--x:30px;--rot:24deg;--d:2.1s;left:58%;color:#FBF8FE" viewBox="0 0 172 157" aria-hidden="true"><path d="M78.4 155.9C67.2 153.8 62.1 149.4 50.2 131.6C13.0 76.4 -2.8 42.1 1.3 25.5C7.3 1.4 30.6 -6.0 53.9 8.9C65.1 16.0 85.3 27.0 87.3 27.0C88.2 27.0 99.9 21.6 113.2 14.9C137.2 2.9 137.4 2.8 142.7 3.5C160.9 5.8 174.2 23.0 171.0 40.3C167.8 57.3 123.9 129.1 105.2 147.7C98.7 154.2 87.5 157.7 78.4 155.9Z" fill="currentColor"></path></svg><svg class="w-fh" style="--x:-26px;--rot:-14deg;--d:2.8s;left:30%;color:#F98A93" viewBox="0 0 172 157" aria-hidden="true"><path d="M78.4 155.9C67.2 153.8 62.1 149.4 50.2 131.6C13.0 76.4 -2.8 42.1 1.3 25.5C7.3 1.4 30.6 -6.0 53.9 8.9C65.1 16.0 85.3 27.0 87.3 27.0C88.2 27.0 99.9 21.6 113.2 14.9C137.2 2.9 137.4 2.8 142.7 3.5C160.9 5.8 174.2 23.0 171.0 40.3C167.8 57.3 123.9 129.1 105.2 147.7C98.7 154.2 87.5 157.7 78.4 155.9Z" fill="currentColor"></path></svg><svg class="w-fh" style="--x:14px;--rot:10deg;--d:3.5s;left:78%;color:#BEACFE" viewBox="0 0 172 157" aria-hidden="true"><path d="M78.4 155.9C67.2 153.8 62.1 149.4 50.2 131.6C13.0 76.4 -2.8 42.1 1.3 25.5C7.3 1.4 30.6 -6.0 53.9 8.9C65.1 16.0 85.3 27.0 87.3 27.0C88.2 27.0 99.9 21.6 113.2 14.9C137.2 2.9 137.4 2.8 142.7 3.5C160.9 5.8 174.2 23.0 171.0 40.3C167.8 57.3 123.9 129.1 105.2 147.7C98.7 154.2 87.5 157.7 78.4 155.9Z" fill="currentColor"></path></svg>
+            <svg class="w-heart-svg" viewBox="0 0 172 157" aria-hidden="true"><path d="M78.4 155.9C67.2 153.8 62.1 149.4 50.2 131.6C13.0 76.4 -2.8 42.1 1.3 25.5C7.3 1.4 30.6 -6.0 53.9 8.9C65.1 16.0 85.3 27.0 87.3 27.0C88.2 27.0 99.9 21.6 113.2 14.9C137.2 2.9 137.4 2.8 142.7 3.5C160.9 5.8 174.2 23.0 171.0 40.3C167.8 57.3 123.9 129.1 105.2 147.7C98.7 154.2 87.5 157.7 78.4 155.9Z" fill="#FBF8FE"></path><path d="M117.0 41.9C114.0 40.8 105.9 37.3 99.2 34.0L86.8 28.0L111.0 16.0C124.3 9.4 135.6 4.2 136.1 4.5C138.4 6.0 141.2 13.7 141.7 19.8C143.1 37.1 131.8 47.3 117.0 41.9Z" fill="#251337" fill-opacity=".18"></path></svg>
+          </div>
+          <div class="w-tile-txt"><span class="w-kick">Cœur Tia</span><h3>Un Cœur, pas un like</h3><p>Pour dire «&nbsp;tu m’as vraiment plu&nbsp;» avant tout le monde.</p></div>
+        </article>
+        <article class="w-tile w-t-map" style="--r:1">
+          <div class="w-map"><span class="w-map-grid"></span><span class="w-me"></span><span class="w-pin" style="left:22%;top:30%;animation-delay:0.0s"><span class="w-pin-pulse" style="animation-delay:0.0s;--pc:#A88BFB"></span><img class="w-ph " src="images/fanja.jpg" alt="" loading="lazy"/><em>Fanja · 3 km</em></span><span class="w-pin" style="left:64%;top:22%;animation-delay:0.6s"><span class="w-pin-pulse" style="animation-delay:0.6s;--pc:#F98A93"></span><img class="w-ph " src="images/hery.jpg" alt="" loading="lazy"/><em>Hery · 5 km</em></span><span class="w-pin" style="left:42%;top:62%;animation-delay:1.2s"><span class="w-pin-pulse" style="animation-delay:1.2s;--pc:#BEACFE"></span><img class="w-ph " src="images/lova.jpg" alt="" loading="lazy"/><em>Lova · 2 km</em></span><span class="w-pin" style="left:80%;top:64%;animation-delay:1.7999999999999998s"><span class="w-pin-pulse" style="animation-delay:1.7999999999999998s;--pc:#FFCCCF"></span><img class="w-ph " src="images/tojo.jpg" alt="" loading="lazy"/></span></div>
+          <div class="w-tile-txt"><span class="w-kick">Autour de toi</span><h3>Près de chez toi</h3><p>Des gens de ton quartier, pas à l’autre bout du pays.</p></div>
+        </article>
+        <article class="w-tile w-t-coach" style="--r:2">
+          <div class="w-chat">
+            <p class="w-b w-b--me" style="--i:0">Je sais pas quoi lui écrire…</p>
+            <p class="w-b w-b--coach" style="--i:1"><b>Coach Tia</b>Elle adore la rando. Demande-lui son plus beau sommet.</p>
+          </div>
+          <div class="w-tile-txt"><span class="w-kick">Coach</span><h3>Coach Tia</h3><p>Une idée de premier message quand tu bloques.</p></div>
+        </article>
+        <article class="w-tile w-t-int" style="--r:3">
+          <div class="w-marq"><div class="w-marq-row"><span class="w-chip w-chip--0">Randonnée</span><span class="w-chip w-chip--1">Cuisine</span><span class="w-chip w-chip--2">Musique live</span><span class="w-chip w-chip--3">Photo</span><span class="w-chip w-chip--0">Cinéma</span><span class="w-chip w-chip--1">Voyage</span><span class="w-chip w-chip--2">Football</span><span class="w-chip w-chip--3">Lecture</span><span class="w-chip w-chip--0">Randonnée</span><span class="w-chip w-chip--1">Cuisine</span><span class="w-chip w-chip--2">Musique live</span><span class="w-chip w-chip--3">Photo</span><span class="w-chip w-chip--0">Cinéma</span><span class="w-chip w-chip--1">Voyage</span><span class="w-chip w-chip--2">Football</span><span class="w-chip w-chip--3">Lecture</span></div><div class="w-marq-row w-marq-row--rev"><span class="w-chip w-chip--0">Danse</span><span class="w-chip w-chip--1">Café</span><span class="w-chip w-chip--2">Mode</span><span class="w-chip w-chip--3">Jeux vidéo</span><span class="w-chip w-chip--0">Plage</span><span class="w-chip w-chip--1">Kabary</span><span class="w-chip w-chip--2">Basket</span><span class="w-chip w-chip--3">Séries</span><span class="w-chip w-chip--0">Danse</span><span class="w-chip w-chip--1">Café</span><span class="w-chip w-chip--2">Mode</span><span class="w-chip w-chip--3">Jeux vidéo</span><span class="w-chip w-chip--0">Plage</span><span class="w-chip w-chip--1">Kabary</span><span class="w-chip w-chip--2">Basket</span><span class="w-chip w-chip--3">Séries</span></div></div>
+          <div class="w-tile-txt"><span class="w-kick">Affinités</span><h3>Des points communs</h3><p>Tes centres d’intérêt font les présentations.</p></div>
+        </article>
+        <article class="w-tile w-t-pay" style="--r:3">
+          <div class="w-pay">
+            <div><small>Madagascar</small><span class="w-pchip"><i></i>MVola</span><span class="w-pchip"><i></i>Orange Money</span><span class="w-pchip"><i></i>Airtel Money</span></div>
+            <div><small>La Réunion</small><span class="w-pchip w-pchip--re"><i></i>Carte bancaire</span><span class="w-pchip w-pchip--re"><i></i>App Store</span><span class="w-pchip w-pchip--re"><i></i>Google Play</span></div>
+          </div>
+          <div class="w-tile-txt"><span class="w-kick">Paiement</span><h3>Paie comme tu veux</h3><p>Mobile money à Madagascar, carte et stores à La Réunion.</p></div>
+        </article>
+    </div>
+  </section>
+
+  <section class="w-sec w-sec--tint">
+    <div class="w-head"><p class="w-eyebrow">Comment ça marche</p><h2>Trois étapes, et c’est parti.</h2></div>
+    <ol class="w-steps"><li class="w-step" style="--r:0"><span class="w-step-n">01</span><h3>Crée ton profil</h3><p>Quelques photos, deux lignes sur toi, ce que tu cherches.</p></li><li class="w-step" style="--r:1"><span class="w-step-n">02</span><h3>Swipe</h3><p>À droite si ça te plaît, à gauche sinon. Personne ne le sait.</p></li><li class="w-step" style="--r:2"><span class="w-step-n">03</span><h3>Matche et écris</h3><p>Quand c’est réciproque, la conversation s’ouvre.</p></li></ol>
+  </section>
+
+  <section class="w-sec w-sec--ink t-dark" id="securite">
+    <div class="w-head"><p class="w-eyebrow w-eyebrow--light">Sécurité</p><h2>Ta sécurité passe avant le match.</h2></div>
+    <ul class="w-safety"><li class="w-safe" style="--r:0"><span class="w-safe-ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v6c0 4.5-3 7.8-7 9-4-1.2-7-4.5-7-9V6l7-3z"></path><path d="M9 12l2 2 4-4"></path></svg></span><h3>Vérification</h3><p>Le badge vérifié confirme que la personne est bien celle des photos.</p></li><li class="w-safe" style="--r:1"><span class="w-safe-ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20.5s-8-4.6-8-10.4A4.6 4.6 0 0 1 12 7.2a4.6 4.6 0 0 1 8 2.9c0 5.8-8 10.4-8 10.4z"></path></svg></span><h3>Respect</h3><p>Profils et photos modérés. Zéro tolérance pour le harcèlement.</p></li><li class="w-safe" style="--r:2"><span class="w-safe-ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"></circle><path d="M6 6l12 12"></path></svg></span><h3>Contrôle</h3><p>Bloque, signale ou masque ton profil en deux touches.</p></li><li class="w-safe" style="--r:3"><span class="w-safe-ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10" rx="2.5"></rect><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"></path></svg></span><h3>Données</h3><p>Ton e-mail et ton numéro restent privés. Tu supprimes tout quand tu veux.</p></li></ul>
+  </section>
+
+  <section class="w-sec" id="offres">
+    <div class="w-head"><p class="w-eyebrow">Offres</p><h2>Gratuit pour commencer. Plus loin si tu veux.</h2></div>
+    <ul class="w-offers"><li class="w-offer " style="--r:0"><h3>Gratuit</h3><ul><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg><span>Swipes chaque jour</span></li><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg><span>Matchs et messages</span></li><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg><span>Profil vérifié</span></li></ul></li><li class="w-offer " style="--r:1"><h3>Silver</h3><ul><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg><span>Likes illimités</span></li><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg><span>Retour en arrière</span></li></ul></li><li class="w-offer w-offer--gold" style="--r:2"><h3>Gold</h3><ul><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg><span>Vois qui t’a liké</span></li><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg><span>Likes illimités</span></li><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg><span>5 Cœurs Tia par semaine</span></li></ul></li><li class="w-offer " style="--r:3"><h3>Elite</h3><ul><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg><span>Tout Gold</span></li><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg><span>Profil mis en avant</span></li><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg><span>Révélations illimitées</span></li></ul></li></ul>
+    <p class="w-note">Prix affichés dans l’appli, en monnaie locale&nbsp;: ariary à Madagascar, euro à La Réunion.</p>
+  </section>
+
+  <section class="w-sec w-sec--tint">
+    <div class="w-head"><p class="w-eyebrow">Où trouver Tia</p><h2>Déjà là. Et bientôt chez toi.</h2></div>
+    <ul class="w-countries"><li class="w-country is-on" style="--r:0"><span class="w-country-st">Disponible</span><h3>Madagascar</h3><p>Antananarivo et toute l’île</p></li><li class="w-country is-on" style="--r:1"><span class="w-country-st">Disponible</span><h3>La Réunion</h3><p>Depuis octobre 2026</p></li><li class="w-country " style="--r:2"><span class="w-country-st">Bientôt</span><h3>Maurice</h3><p>On arrive</p></li><li class="w-country " style="--r:3"><span class="w-country-st">Bientôt</span><h3>Afrique du Sud</h3><p>On arrive</p></li></ul>
+  </section>
+
+  <section class="w-sec w-sec--testi" id="temoignages">
+    <div class="w-head"><p class="w-eyebrow">Témoignages</p><h2>Ils en parlent mieux que nous.</h2></div>
+    <div class="w-testi"><div class="w-testi-track"><figure class="w-quote"><span class="w-quote-ic"><svg width="28" height="22" viewBox="0 0 28 22" fill="currentColor" aria-hidden="true"><path d="M0 22V13.2C0 5.9 3.7 1.5 11 0l1.3 3.3C8.2 4.6 6.3 7 6.1 10.5H11V22zm16 0V13.2C16 5.9 19.7 1.5 27 0l1.3 3.3c-4.1 1.3-6 3.7-6.2 7.2H27V22z"></path></svg></span><blockquote>TIA c’est top&nbsp;! Explorer les profils en un coup d’œil, c’est bien plus malin que d’explorer à l’aveugle.</blockquote><figcaption><span class="w-quote-av" aria-hidden="true">N</span><span><b>Nirina</b><small>45 ans</small></span></figcaption></figure><figure class="w-quote"><span class="w-quote-ic"><svg width="28" height="22" viewBox="0 0 28 22" fill="currentColor" aria-hidden="true"><path d="M0 22V13.2C0 5.9 3.7 1.5 11 0l1.3 3.3C8.2 4.6 6.3 7 6.1 10.5H11V22zm16 0V13.2C16 5.9 19.7 1.5 27 0l1.3 3.3c-4.1 1.3-6 3.7-6.2 7.2H27V22z"></path></svg></span><blockquote>Depuis que j’utilise TIA, l’IA me propose des profils vraiment pertinents. Ça change des matchs au hasard.</blockquote><figcaption><span class="w-quote-av" aria-hidden="true">A</span><span><b>Andry</b><small>32 ans</small></span></figcaption></figure><figure class="w-quote"><span class="w-quote-ic"><svg width="28" height="22" viewBox="0 0 28 22" fill="currentColor" aria-hidden="true"><path d="M0 22V13.2C0 5.9 3.7 1.5 11 0l1.3 3.3C8.2 4.6 6.3 7 6.1 10.5H11V22zm16 0V13.2C16 5.9 19.7 1.5 27 0l1.3 3.3c-4.1 1.3-6 3.7-6.2 7.2H27V22z"></path></svg></span><blockquote>La vérification d’identité, c’est exactement ce qu’il manquait aux apps de rencontre à Madagascar.</blockquote><figcaption><span class="w-quote-av" aria-hidden="true">H</span><span><b>Hanta</b><small>25 ans</small></span></figcaption></figure><figure class="w-quote"><span class="w-quote-ic"><svg width="28" height="22" viewBox="0 0 28 22" fill="currentColor" aria-hidden="true"><path d="M0 22V13.2C0 5.9 3.7 1.5 11 0l1.3 3.3C8.2 4.6 6.3 7 6.1 10.5H11V22zm16 0V13.2C16 5.9 19.7 1.5 27 0l1.3 3.3c-4.1 1.3-6 3.7-6.2 7.2H27V22z"></path></svg></span><blockquote>TIA c’est top&nbsp;! Explorer les profils en un coup d’œil, c’est bien plus malin que d’explorer à l’aveugle.</blockquote><figcaption><span class="w-quote-av" aria-hidden="true">N</span><span><b>Nirina</b><small>45 ans</small></span></figcaption></figure><figure class="w-quote"><span class="w-quote-ic"><svg width="28" height="22" viewBox="0 0 28 22" fill="currentColor" aria-hidden="true"><path d="M0 22V13.2C0 5.9 3.7 1.5 11 0l1.3 3.3C8.2 4.6 6.3 7 6.1 10.5H11V22zm16 0V13.2C16 5.9 19.7 1.5 27 0l1.3 3.3c-4.1 1.3-6 3.7-6.2 7.2H27V22z"></path></svg></span><blockquote>Depuis que j’utilise TIA, l’IA me propose des profils vraiment pertinents. Ça change des matchs au hasard.</blockquote><figcaption><span class="w-quote-av" aria-hidden="true">A</span><span><b>Andry</b><small>32 ans</small></span></figcaption></figure><figure class="w-quote"><span class="w-quote-ic"><svg width="28" height="22" viewBox="0 0 28 22" fill="currentColor" aria-hidden="true"><path d="M0 22V13.2C0 5.9 3.7 1.5 11 0l1.3 3.3C8.2 4.6 6.3 7 6.1 10.5H11V22zm16 0V13.2C16 5.9 19.7 1.5 27 0l1.3 3.3c-4.1 1.3-6 3.7-6.2 7.2H27V22z"></path></svg></span><blockquote>La vérification d’identité, c’est exactement ce qu’il manquait aux apps de rencontre à Madagascar.</blockquote><figcaption><span class="w-quote-av" aria-hidden="true">H</span><span><b>Hanta</b><small>25 ans</small></span></figcaption></figure><figure class="w-quote"><span class="w-quote-ic"><svg width="28" height="22" viewBox="0 0 28 22" fill="currentColor" aria-hidden="true"><path d="M0 22V13.2C0 5.9 3.7 1.5 11 0l1.3 3.3C8.2 4.6 6.3 7 6.1 10.5H11V22zm16 0V13.2C16 5.9 19.7 1.5 27 0l1.3 3.3c-4.1 1.3-6 3.7-6.2 7.2H27V22z"></path></svg></span><blockquote>TIA c’est top&nbsp;! Explorer les profils en un coup d’œil, c’est bien plus malin que d’explorer à l’aveugle.</blockquote><figcaption><span class="w-quote-av" aria-hidden="true">N</span><span><b>Nirina</b><small>45 ans</small></span></figcaption></figure><figure class="w-quote"><span class="w-quote-ic"><svg width="28" height="22" viewBox="0 0 28 22" fill="currentColor" aria-hidden="true"><path d="M0 22V13.2C0 5.9 3.7 1.5 11 0l1.3 3.3C8.2 4.6 6.3 7 6.1 10.5H11V22zm16 0V13.2C16 5.9 19.7 1.5 27 0l1.3 3.3c-4.1 1.3-6 3.7-6.2 7.2H27V22z"></path></svg></span><blockquote>Depuis que j’utilise TIA, l’IA me propose des profils vraiment pertinents. Ça change des matchs au hasard.</blockquote><figcaption><span class="w-quote-av" aria-hidden="true">A</span><span><b>Andry</b><small>32 ans</small></span></figcaption></figure><figure class="w-quote"><span class="w-quote-ic"><svg width="28" height="22" viewBox="0 0 28 22" fill="currentColor" aria-hidden="true"><path d="M0 22V13.2C0 5.9 3.7 1.5 11 0l1.3 3.3C8.2 4.6 6.3 7 6.1 10.5H11V22zm16 0V13.2C16 5.9 19.7 1.5 27 0l1.3 3.3c-4.1 1.3-6 3.7-6.2 7.2H27V22z"></path></svg></span><blockquote>La vérification d’identité, c’est exactement ce qu’il manquait aux apps de rencontre à Madagascar.</blockquote><figcaption><span class="w-quote-av" aria-hidden="true">H</span><span><b>Hanta</b><small>25 ans</small></span></figcaption></figure><figure class="w-quote"><span class="w-quote-ic"><svg width="28" height="22" viewBox="0 0 28 22" fill="currentColor" aria-hidden="true"><path d="M0 22V13.2C0 5.9 3.7 1.5 11 0l1.3 3.3C8.2 4.6 6.3 7 6.1 10.5H11V22zm16 0V13.2C16 5.9 19.7 1.5 27 0l1.3 3.3c-4.1 1.3-6 3.7-6.2 7.2H27V22z"></path></svg></span><blockquote>TIA c’est top&nbsp;! Explorer les profils en un coup d’œil, c’est bien plus malin que d’explorer à l’aveugle.</blockquote><figcaption><span class="w-quote-av" aria-hidden="true">N</span><span><b>Nirina</b><small>45 ans</small></span></figcaption></figure><figure class="w-quote"><span class="w-quote-ic"><svg width="28" height="22" viewBox="0 0 28 22" fill="currentColor" aria-hidden="true"><path d="M0 22V13.2C0 5.9 3.7 1.5 11 0l1.3 3.3C8.2 4.6 6.3 7 6.1 10.5H11V22zm16 0V13.2C16 5.9 19.7 1.5 27 0l1.3 3.3c-4.1 1.3-6 3.7-6.2 7.2H27V22z"></path></svg></span><blockquote>Depuis que j’utilise TIA, l’IA me propose des profils vraiment pertinents. Ça change des matchs au hasard.</blockquote><figcaption><span class="w-quote-av" aria-hidden="true">A</span><span><b>Andry</b><small>32 ans</small></span></figcaption></figure><figure class="w-quote"><span class="w-quote-ic"><svg width="28" height="22" viewBox="0 0 28 22" fill="currentColor" aria-hidden="true"><path d="M0 22V13.2C0 5.9 3.7 1.5 11 0l1.3 3.3C8.2 4.6 6.3 7 6.1 10.5H11V22zm16 0V13.2C16 5.9 19.7 1.5 27 0l1.3 3.3c-4.1 1.3-6 3.7-6.2 7.2H27V22z"></path></svg></span><blockquote>La vérification d’identité, c’est exactement ce qu’il manquait aux apps de rencontre à Madagascar.</blockquote><figcaption><span class="w-quote-av" aria-hidden="true">H</span><span><b>Hanta</b><small>25 ans</small></span></figcaption></figure></div></div>
+  </section>
+
+  <section class="w-sec" id="faq">
+    <div class="w-faq">
+      <div class="w-head w-head--left"><p class="w-eyebrow">FAQ</p><h2>Des questions&nbsp;?</h2><p class="w-lead">Écris-nous à <a href="mailto:contact@apli.mg">contact@apli.mg</a> si la réponse n’est pas ici.</p></div>
+      <div class="w-faq-list"><details class="w-faq-item" open><summary>Tia est-elle gratuite&nbsp;?<span aria-hidden="true">+</span></summary><p>Oui. Tu crées ton profil, tu swipes et tu discutes gratuitement. Silver, Gold et Elite ajoutent des options.</p></details><details class="w-faq-item"><summary>Comment marche la vérification&nbsp;?<span aria-hidden="true">+</span></summary><p>Tu prends un selfie dans l’appli. On le compare à tes photos, puis le badge vérifié apparaît sur ton profil. Le selfie n’est jamais affiché.</p></details><details class="w-faq-item"><summary>Mes données sont-elles protégées&nbsp;?<span aria-hidden="true">+</span></summary><p>Ton e-mail et ton numéro ne s’affichent jamais. Tu peux supprimer ton compte et tes données depuis les réglages.</p></details><details class="w-faq-item"><summary>Je peux arrêter mon abonnement&nbsp;?<span aria-hidden="true">+</span></summary><p>Oui, à tout moment, depuis l’App Store, Google Play ou les réglages de Tia selon ton moyen de paiement.</p></details><details class="w-faq-item"><summary>Sur quels téléphones&nbsp;?<span aria-hidden="true">+</span></summary><p>iPhone et Android, y compris les modèles d’entrée de gamme.</p></details><details class="w-faq-item"><summary>Dans quels pays&nbsp;?<span aria-hidden="true">+</span></summary><p>Madagascar et La Réunion. Maurice et l’Afrique du Sud arrivent bientôt.</p></details></div>
+    </div>
+  </section>
+
+  <section class="w-final t-dark" id="telecharger">
+    <div class="w-final-in">
+      <h2>Ta moitié est peut-être <span class="borel w-grad">à&nbsp;3&nbsp;km.</span></h2>
+      <p>Télécharge Tia, c’est gratuit.</p>
+      <div class="w-stores">
+          <a class="w-store w-store--light" href="https://apps.apple.com/app/id6758033706" aria-label="Télécharger Tia sur l’App Store">
+            <svg width="22" height="22" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M168.6 510.5C132.1 500.4 82.2 432.2 61.1 363.3C29.3 259.4 53.9 171.4 124.5 136.9C159.9 119.6 184.0 120.7 238.5 142.1C256.1 149.0 261.5 148.6 287.8 138.6C332.7 121.6 358.3 119.6 391.6 130.5C415.2 138.3 440.4 156.2 449.3 171.8L451.0 174.8L443.1 180.4C410.6 203.1 394.0 237.3 396.4 276.4C399.2 320.5 418.3 350.2 458.2 372.4L464.9 376.1L461.9 384.8C451.9 413.1 431.3 448.5 407.4 478.4C380.1 512.4 355.3 518.7 312.0 502.5C273.0 487.9 258.5 487.7 221.3 501.4C191.7 512.2 181.4 514.0 168.6 510.5ZM255.0 111.4C255.0 59.2 293.8 12.8 347.0 1.4C358.8 -1.1 358.0 -1.8 358.0 11.8C357.9 41.9 345.4 68.8 320.3 93.1C303.2 109.7 288.1 116.5 266.2 117.7L255.0 118.3L255.0 111.4Z"></path></svg>
+            <span><small>Télécharger dans</small>l’App Store</span>
+          </a>
+          <a class="w-store w-store--light" href="https://play.google.com/store/apps/details?id=com.rdh36.tiaapp" aria-label="Télécharger Tia sur Google Play">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.2 2.6c-.3.3-.4.7-.4 1.2v16.4c0 .5.1.9.4 1.2l9.3-9.4z"></path><path d="M16.6 15.1L13.5 12l3.1-3.1 3.7 2.1c1 .6 1 1.5 0 2.1z" opacity=".75"></path><path d="M4.9 21.6c.4.3 1 .3 1.6-.1l10.1-6.4-3.1-3.1z" opacity=".55"></path><path d="M4.9 2.4l8.6 9.6 3.1-3.1L6.5 2.5c-.6-.4-1.2-.4-1.6-.1z" opacity=".9"></path></svg>
+            <span><small>Disponible sur</small>Google Play</span>
+          </a>
+        </div>
+    </div>
+  </section>
+
+  <div class="w-ticker" aria-hidden="true"><div class="w-ticker-track"><span>Télécharge Tia</span><i>✦</i><span>C’est gratuit</span><i>✦</i><span>Madagascar</span><i>✦</i><span>La Réunion</span><i>✦</i><span>Maurice</span><i>✦</i><span>South Africa</span><i>✦</i><span>Find your better half</span><i>✦</i><span>Télécharge Tia</span><i>✦</i><span>C’est gratuit</span><i>✦</i><span>Madagascar</span><i>✦</i><span>La Réunion</span><i>✦</i><span>Maurice</span><i>✦</i><span>South Africa</span><i>✦</i><span>Find your better half</span><i>✦</i><span>Télécharge Tia</span><i>✦</i><span>C’est gratuit</span><i>✦</i><span>Madagascar</span><i>✦</i><span>La Réunion</span><i>✦</i><span>Maurice</span><i>✦</i><span>South Africa</span><i>✦</i><span>Find your better half</span><i>✦</i><span>Télécharge Tia</span><i>✦</i><span>C’est gratuit</span><i>✦</i><span>Madagascar</span><i>✦</i><span>La Réunion</span><i>✦</i><span>Maurice</span><i>✦</i><span>South Africa</span><i>✦</i><span>Find your better half</span><i>✦</i></div></div>
+
+  <footer class="w-foot">
+    <div class="w-foot-in">
+      <div class="w-foot-cols">
+        <div class="w-foot-col"><h4>Légal</h4><a href="/privacy">Confidentialité</a><a href="/terms">Conditions d’utilisation</a><a href="/child-safety">Protection des enfants</a><a href="#securite">Sécurité</a></div>
+        <div class="w-foot-col"><h4>Tia</h4><a href="#pourquoi">Pourquoi Tia</a><a href="#offres">Offres</a><a href="#temoignages">Témoignages</a><a href="#faq">FAQ</a><a href="mailto:contact@apli.mg">Contact</a></div>
+        <div class="w-foot-col"><h4>Réseaux</h4>
+          <div class="w-foot-social">
+            <a href="https://www.instagram.com/tia.meet/" aria-label="Instagram de Tia"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.2" cy="6.8" r=".9" fill="currentColor"></circle></svg></a>
+          </div>
+        </div>
+        <div class="w-foot-col w-foot-app"><h4>Télécharge l’appli</h4><div class="w-stores">
+          <a class="w-store w-store--dark" href="https://apps.apple.com/app/id6758033706" aria-label="Télécharger Tia sur l’App Store">
+            <svg width="22" height="22" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M168.6 510.5C132.1 500.4 82.2 432.2 61.1 363.3C29.3 259.4 53.9 171.4 124.5 136.9C159.9 119.6 184.0 120.7 238.5 142.1C256.1 149.0 261.5 148.6 287.8 138.6C332.7 121.6 358.3 119.6 391.6 130.5C415.2 138.3 440.4 156.2 449.3 171.8L451.0 174.8L443.1 180.4C410.6 203.1 394.0 237.3 396.4 276.4C399.2 320.5 418.3 350.2 458.2 372.4L464.9 376.1L461.9 384.8C451.9 413.1 431.3 448.5 407.4 478.4C380.1 512.4 355.3 518.7 312.0 502.5C273.0 487.9 258.5 487.7 221.3 501.4C191.7 512.2 181.4 514.0 168.6 510.5ZM255.0 111.4C255.0 59.2 293.8 12.8 347.0 1.4C358.8 -1.1 358.0 -1.8 358.0 11.8C357.9 41.9 345.4 68.8 320.3 93.1C303.2 109.7 288.1 116.5 266.2 117.7L255.0 118.3L255.0 111.4Z"></path></svg>
+            <span><small>Télécharger dans</small>l’App Store</span>
+          </a>
+          <a class="w-store w-store--dark" href="https://play.google.com/store/apps/details?id=com.rdh36.tiaapp" aria-label="Télécharger Tia sur Google Play">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.2 2.6c-.3.3-.4.7-.4 1.2v16.4c0 .5.1.9.4 1.2l9.3-9.4z"></path><path d="M16.6 15.1L13.5 12l3.1-3.1 3.7 2.1c1 .6 1 1.5 0 2.1z" opacity=".75"></path><path d="M4.9 21.6c.4.3 1 .3 1.6-.1l10.1-6.4-3.1-3.1z" opacity=".55"></path><path d="M4.9 2.4l8.6 9.6 3.1-3.1L6.5 2.5c-.6-.4-1.2-.4-1.6-.1z" opacity=".9"></path></svg>
+            <span><small>Disponible sur</small>Google Play</span>
+          </a>
+        </div></div>
+      </div>
+      <hr>
+      <p class="w-foot-seo">Célibataire à Antananarivo, à Saint-Denis ou ailleurs sur l’île&nbsp;? Tia est l’appli de rencontre pensée pour Madagascar et La Réunion. Crée ton profil, vérifie-le en une minute et découvre des gens près de chez toi, avec de vraies photos et des centres d’intérêt en commun. Que tu cherches une histoire sérieuse, de nouvelles rencontres ou simplement quelqu’un avec qui partager un café, tout commence par un swipe. Tia est gratuite sur iPhone et Android.</p>
+      <hr>
+      <div class="w-foot-bot">
+        <div class="w-foot-links"><a href="#faq">FAQ</a><a href="#securite">Sécurité</a><a href="#offres">Offres</a><a href="mailto:contact@apli.mg">Contact</a></div>
+        <div class="w-foot-legal"><span>© 2026 Tia, édité par APli SARLU</span><a href="/privacy">Confidentialité</a><a href="/terms">Conditions</a></div>
+      </div>
+      <div class="w-foot-brand"><svg viewBox="0 0 850 506" style="height: 34px; width: auto; display: block; flex: none" role="img" aria-label="Tia"><defs><linearGradient id="tia-w" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="850" y2="0"><stop offset="0" stop-color="#7C4DDB"></stop><stop offset="0.5" stop-color="#B4479E"></stop><stop offset="1" stop-color="#F4696B"></stop></linearGradient><linearGradient id="tia-h" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="126" y2="126"><stop offset="0" stop-color="#7C4DDB"></stop><stop offset="0.5" stop-color="#B4479E"></stop><stop offset="1" stop-color="#F4696B"></stop></linearGradient></defs><path d="M181.5 504.0C171.5 502.4 158.0 498.2 148.4 493.5C117.1 478.4 83.6 439.1 76.0 408.6C71.3 390.0 67.1 322.2 66.3 254.2L65.7 207.0L49.5 207.0C36.0 207.0 32.4 206.7 27.6 205.0C0.3 195.6 -7.9 160.7 12.4 140.5C22.7 130.2 29.4 128.1 51.2 128.0L66.0 128.0L66.0 81.2C66.0 34.6 66.1 34.5 68.4 28.8C83.2 -7.1 132.3 -8.4 148.8 26.7C151.5 32.5 151.5 32.5 151.8 80.2L152.1 128.0L189.4 128.0C231.9 128.0 234.6 128.4 245.1 135.9C269.8 153.5 266.0 190.0 238.2 203.7C232.5 206.5 232.5 206.5 192.2 206.8L152.0 207.1L152.0 268.3C152.0 355.6 154.6 375.9 168.9 399.9C195.9 445.5 250.4 419.8 267.0 353.5C274.1 325.3 275.0 314.1 275.0 249.2C275.0 196.0 275.1 193.7 277.1 187.8C289.9 149.8 342.0 148.9 357.4 186.4C359.5 191.4 359.5 192.9 360.0 291.0C360.5 383.9 360.6 391.0 362.4 398.0C366.3 413.5 370.2 419.1 378.8 421.6C398.4 427.3 420.2 410.2 437.7 375.2C443.9 362.8 443.9 362.8 443.3 354.6C438.7 288.0 475.9 218.3 530.4 191.1C592.9 160.0 673.9 180.6 711.3 237.2C731.5 267.8 736.4 287.8 739.5 353.0C741.4 391.4 742.8 402.0 747.3 410.9C754.3 425.2 768.4 426.7 786.8 415.3C819.0 395.3 857.7 421.6 847.5 456.6C842.6 473.7 827.3 487.6 803.5 497.0C758.7 514.5 711.2 503.3 684.8 469.1C682.2 465.7 682.2 465.7 674.9 471.9C647.4 495.2 621.3 504.5 584.0 504.5C544.6 504.5 516.5 493.7 490.0 468.3L480.4 459.1L471.4 468.1C446.5 493.1 418.0 505.0 382.9 505.0C349.1 505.0 322.6 493.1 305.3 470.3L299.4 462.4L292.5 468.7C274.3 485.4 255.8 495.5 232.0 501.7C221.4 504.5 193.3 505.8 181.5 504.0ZM305.2 113.0C263.2 102.0 248.4 49.4 278.9 19.1C314.6 -16.4 374.5 8.3 374.5 58.5C374.5 95.8 340.7 122.3 305.2 113.0Z" fill="url(#tia-w)" fill-rule="evenodd"></path><path d="M188.5 489.3C162.4 486.0 144.6 476.7 123.5 455.6C106.1 438.1 95.2 421.1 91.0 404.4C86.4 386.7 82.9 324.0 82.3 250.8L81.8 192.0L59.6 192.0C35.4 192.0 32.1 191.5 25.8 186.7C14.7 178.2 13.5 161.3 23.3 151.2C29.5 144.7 30.1 144.5 57.0 144.0L81.5 143.5L82.0 88.5C82.5 33.5 82.5 33.5 85.2 29.3C97.2 10.9 123.6 12.3 133.7 31.9C137.0 38.2 137.0 38.2 137.0 91.1L137.0 144.0L182.5 144.0C228.1 144.0 228.1 144.0 232.9 146.5C251.3 155.8 250.5 180.6 231.5 189.6C226.5 192.0 226.5 192.0 181.7 192.0L136.9 192.0L137.3 270.2C137.6 345.1 137.7 349.0 139.8 360.5C148.9 411.4 171.3 438.0 205.2 438.0C239.4 438.0 270.4 404.6 282.4 354.9C289.2 326.9 289.3 325.9 289.9 256.5C290.5 194.4 290.5 193.4 292.7 189.5C303.9 168.5 332.4 169.1 342.2 190.5C344.5 195.5 344.5 195.5 345.1 295.0C345.5 366.2 346.0 395.9 346.8 399.5C353.1 426.0 363.3 436.6 383.9 437.8C409.7 439.2 433.3 419.4 452.5 379.8C459.0 366.5 459.0 366.5 459.0 350.7C459.0 292.0 479.5 246.0 518.9 216.4C581.0 169.8 673.0 191.9 707.4 261.7C718.7 284.6 721.9 302.2 724.0 353.7C725.6 393.2 727.4 405.8 733.0 417.5C743.6 439.7 769.1 444.6 794.0 429.2C822.9 411.2 848.2 443.8 823.3 467.1C807.0 482.4 777.2 491.6 752.6 489.1C722.4 485.9 702.2 472.2 689.4 446.3L685.3 438.0L678.6 446.0C627.9 506.6 532.9 504.1 486.1 441.1L480.3 433.2L474.4 441.3C448.3 477.1 409.4 494.6 368.3 488.9C338.2 484.8 316.5 467.7 305.5 439.3L302.7 432.1L297.8 439.1C273.0 474.4 229.1 494.5 188.5 489.3ZM607.0 419.7C612.6 416.9 614.5 415.2 621.3 406.5C646.0 374.8 677.3 322.4 680.0 307.9C682.6 294.2 675.5 280.3 662.7 274.1C650.2 268.1 650.4 268.0 621.9 282.4L596.9 295.1L586.5 289.6C580.8 286.5 571.9 281.5 566.8 278.4C552.0 269.3 550.2 268.6 542.5 268.2C520.8 267.1 505.8 285.4 510.4 307.3C514.1 325.3 555.3 398.7 570.3 414.0C580.2 424.1 593.7 426.2 607.0 419.7ZM305.3 97.2C281.4 88.7 270.8 59.3 283.6 37.5C296.6 15.3 329.9 11.4 347.9 29.9C367.2 49.7 361.3 83.4 336.5 95.5C328.7 99.4 313.6 100.2 305.3 97.2Z" fill="var(--fg)" fill-rule="evenodd"></path><g transform="translate(509 268)"><path d="M78.4 155.9C67.2 153.8 62.1 149.4 50.2 131.6C13.0 76.4 -2.8 42.1 1.3 25.5C7.3 1.4 30.6 -6.0 53.9 8.9C65.1 16.0 85.3 27.0 87.3 27.0C88.2 27.0 99.9 21.6 113.2 14.9C137.2 2.9 137.4 2.8 142.7 3.5C160.9 5.8 174.2 23.0 171.0 40.3C167.8 57.3 123.9 129.1 105.2 147.7C98.7 154.2 87.5 157.7 78.4 155.9Z" fill="url(#tia-h)"></path><path d="M117.0 41.9C114.0 40.8 105.9 37.3 99.2 34.0L86.8 28.0L111.0 16.0C124.3 9.4 135.6 4.2 136.1 4.5C138.4 6.0 141.2 13.7 141.7 19.8C143.1 37.1 131.8 47.3 117.0 41.9Z" fill="#251337" fill-opacity="0.3"></path></g></svg><span>FR · Madagascar · La Réunion</span></div>
+    </div>
+  </footer>
+</div>
+<script>
+(function(){
+  var d=document.documentElement; d.classList.add('js');
+  var els=document.querySelectorAll('.w-tile,.w-step,.w-safe,.w-offer,.w-country');
+  if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('is-in')});}
+  else{var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('is-in');io.unobserve(e.target);}})},{threshold:.12});els.forEach(function(e){io.observe(e)});}
+  document.querySelectorAll('.w-tile').forEach(function(t){t.addEventListener('pointermove',function(ev){var r=t.getBoundingClientRect();t.style.setProperty('--mx',(ev.clientX-r.left)+'px');t.style.setProperty('--my',(ev.clientY-r.top)+'px');});});
+})();
+</script>
+</body>
+</html>

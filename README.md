@@ -41,7 +41,9 @@ app/
   api/            Route handlers
   payment/        Vanilla Pay return page
   terms/ …        Legal pages
-components/       UI primitives, landing sections, back office shell
+components/       UI primitives, home and landing sections, back office shell
+content/          Home page copy and data (site, countries, testimonials)
+design/reference/ Validated home page mockup (static HTML)
 emails/           React Email templates
 hooks/            Client hooks
 lib/              Supabase clients, auth helpers, types, utilities
@@ -81,7 +83,9 @@ pnpm lint         # ESLint
 
 ## Landing Page
 
-The landing page (`/`) is built from sections in `components/landing/`: header, hero, features, how it works, testimonials, newsletter, CTA, FAQ and footer. Each section reads its published content from the `landing_sections` table and falls back on its built-in defaults, so the team edits the copy, images and store links from the back office without a deploy.
+The home page (`/`) reproduces the validated mockup in `design/reference/tia-meet-site/`. Its sections live in `components/home/` and read their copy from `content/`: `site.ts` (links, sections, FAQ, offers), `countries.ts` (hero chips and the countries section) and `testimonials.ts`. Changing the copy means editing these files and deploying.
+
+The older sections in `components/landing/` still provide the header and footer of the legal pages and `/inscription-newsletter`, and the previews of the back office `/landing` editor, which writes the `landing_sections` table.
 
 ## Public Pages
 

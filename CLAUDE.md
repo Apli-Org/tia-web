@@ -44,8 +44,11 @@ app/
 components/
   ui/               shadcn/ui primitives
   backoffice/       Back office shell (sidebar, login form, navigation progress)
-  landing/          Landing sections
+  home/             Home page sections (navbar, hero, bento, marquees, footer)
+  landing/          Previous landing sections: legal page header/footer, /landing editor previews
   newsletter/       Newsletter editor and preview
+content/            Home page copy and data (site.ts, countries.ts, testimonials.ts)
+design/reference/   Validated home page mockup, the visual source of truth
 emails/             React Email templates
 hooks/              Client hooks
 lib/
@@ -157,7 +160,8 @@ The schema is **owned by the mobile repo**. Migrations live in `tia/supabase/mig
 - Colors come from the theme tokens in `app/globals.css` (`primary`, `muted`, `destructive` …). Never hardcode hex values in components.
 - Tailwind 4 syntax: `bg-linear-to-r`, not `bg-gradient-to-r`.
 - No emojis in new UI.
-- Landing sections read their published content from `landing_sections` and fall back on the `defaultContent` declared in the component. A new field means updating `lib/types/landing.types.ts`, the section editor in `app/(backoffice)/(app)/landing/_components/` and the default content together.
+- The home page matches `design/reference/tia-meet-site/index.html` at 1440 and 390 px. Its components hold no copy: text, links and data come from `content/`. Colors are the `tia-*` tokens in `app/globals.css` (flag colors excepted), gradients are limited to the phone photo scrim and the marquee edge masks, and Borel is only used for the two highlighted words.
+- The `components/landing/` sections read their published content from `landing_sections` and fall back on the `defaultContent` declared in the component. A new field means updating `lib/types/landing.types.ts`, the section editor in `app/(backoffice)/(app)/landing/_components/` and the default content together.
 - Legal pages must keep working with `?embed=true` (no header, no back link): the app opens them in a web view. Wrap `useSearchParams` in `Suspense`.
 
 ## Contracts with the mobile app (do not break)
@@ -184,6 +188,8 @@ The schema is **owned by the mobile repo**. Migrations live in `tia/supabase/mig
 3. **Stale database types** — `lib/database.types.ts` predates most back office tables (no `push_campaigns`, for instance), so many actions type their rows by hand. Regenerate it before relying on it.
 4. **Newsletter without Resend** — `actions/admin/newsletter.action.ts` builds the Resend client when the module loads, so `/newsletter` crashes when `RESEND_API_KEY` is missing, as it is in a fresh `.env.local`.
 5. **Images on preprod** — `next.config.ts` only allows the prod Supabase host for `next/image`, so preprod storage images do not render through it locally.
+6. **Landing editor detached from the home page** — since the home redesign, `/` reads `content/` and no longer `landing_sections`. The `/landing` editor still publishes, but only `/inscription-newsletter` uses its content.
+7. **Root layout fonts** — `app/layout.tsx` preloads Inter and Geist Mono on every page, the home page included, which does not use them (about 72 KB on the critical path).
 
 ## Running the project
 
