@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
-import { WHY_TIA, type TileId } from '@/content/site'
+import type { HomeCopy } from '@/content/home-copy'
+import { SECTION_IDS, TILE_IDS, type TileId } from '@/content/site'
 import { BentoGrid } from './bento-grid'
 import { BentoTile, type BentoTileStyle } from './bento-tile'
 import { CoachChat } from './coach-chat'
@@ -11,16 +12,6 @@ import { Section } from './section'
 import { SectionHeading } from './section-heading'
 import { SwipePhone } from './swipe-phone'
 import { VerifiedSelfie } from './verified-selfie'
-
-const TILE_VISUALS: Record<TileId, ReactNode> = {
-  swipe: <SwipePhone />,
-  verified: <VerifiedSelfie />,
-  heart: <HeartBurst />,
-  nearby: <NearbyMap />,
-  coach: <CoachChat />,
-  interests: <InterestsMarquee />,
-  payment: <PaymentChips />,
-}
 
 const TILE_STYLES: Record<TileId, BentoTileStyle> = {
   swipe: {
@@ -69,20 +60,38 @@ const TILE_STYLES: Record<TileId, BentoTileStyle> = {
   },
 }
 
-export function WhyTia() {
+function getTileVisuals(copy: HomeCopy['whyTia']): Record<TileId, ReactNode> {
+  return {
+    swipe: <SwipePhone likeStamp={copy.likeStamp} />,
+    verified: <VerifiedSelfie />,
+    heart: <HeartBurst />,
+    nearby: <NearbyMap />,
+    coach: <CoachChat chat={copy.coachChat} />,
+    interests: <InterestsMarquee rows={copy.interests} />,
+    payment: <PaymentChips payments={copy.payments} />,
+  }
+}
+
+type WhyTiaProps = {
+  copy: HomeCopy['whyTia']
+}
+
+export function WhyTia({ copy }: WhyTiaProps) {
+  const visuals = getTileVisuals(copy)
+
   return (
-    <Section id={WHY_TIA.id}>
-      <SectionHeading eyebrow={WHY_TIA.eyebrow} title={WHY_TIA.title} />
+    <Section id={SECTION_IDS.whyTia}>
+      <SectionHeading eyebrow={copy.eyebrow} title={copy.title} />
       <BentoGrid>
-        {WHY_TIA.tiles.map((tile) => (
+        {TILE_IDS.map((tileId) => (
           <BentoTile
-            key={tile.id}
-            kicker={tile.kicker}
-            title={tile.title}
-            description={tile.description}
-            tileStyle={TILE_STYLES[tile.id]}
+            key={tileId}
+            kicker={copy.tiles[tileId].kicker}
+            title={copy.tiles[tileId].title}
+            description={copy.tiles[tileId].description}
+            tileStyle={TILE_STYLES[tileId]}
           >
-            {TILE_VISUALS[tile.id]}
+            {visuals[tileId]}
           </BentoTile>
         ))}
       </BentoGrid>

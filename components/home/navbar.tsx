@@ -2,9 +2,10 @@
 
 import { domAnimation, LazyMotion, m, useMotionValueEvent, useScroll } from 'framer-motion'
 import { useRef, useState } from 'react'
-import { NAV } from '@/content/site'
-import { Flag } from './flag'
+import type { HomeCopy } from '@/content/home-copy'
+import type { Locale } from '@/content/i18n'
 import { Icon } from './icon'
+import { LanguageSwitcher } from './language-switcher'
 import { Logo } from './logo'
 import { SPRING_TRANSITION } from './motion'
 
@@ -12,7 +13,13 @@ const SHRINK_DISTANCE = 260
 const LINK_WIDTH = 124
 const INDICATOR_FADE = { duration: 0.3 }
 
-export function Navbar() {
+type NavbarProps = {
+  locale: Locale
+  copy: HomeCopy['nav']
+  languageCopy: HomeCopy['language']
+}
+
+export function Navbar({ locale, copy, languageCopy }: NavbarProps) {
   const capsuleRef = useRef<HTMLDivElement>(null)
   const [indicatorIndex, setIndicatorIndex] = useState(0)
   const [isIndicatorVisible, setIsIndicatorVisible] = useState(false)
@@ -32,7 +39,7 @@ export function Navbar() {
 
   return (
     <nav
-      aria-label={NAV.label}
+      aria-label={copy.label}
       className="pointer-events-none fixed inset-x-0 top-4.5 z-30 flex justify-center px-6 max-[640px]:top-3 max-[640px]:px-3"
     >
       <div
@@ -41,7 +48,7 @@ export function Navbar() {
       >
         <a
           href="#top"
-          aria-label={NAV.homeLabel}
+          aria-label={copy.homeLabel}
           className="flex items-center transition-[rotate,scale] duration-500 ease-tia-spring hover:scale-[1.06] hover:-rotate-6"
         >
           <Logo ink />
@@ -63,7 +70,7 @@ export function Navbar() {
               transition={{ ...SPRING_TRANSITION, opacity: INDICATOR_FADE }}
             />
           </LazyMotion>
-          {NAV.links.map((link, index) => (
+          {copy.links.map((link, index) => (
             <a
               key={link.href}
               href={link.href}
@@ -77,13 +84,9 @@ export function Navbar() {
           ))}
         </div>
         <div className="flex items-center gap-2.5 max-[1080px]:ml-auto">
-          <span className="inline-flex h-10.5 cursor-pointer items-center gap-2 rounded-full bg-tia-plum-800 px-3.5 text-[14px] font-bold transition-colors duration-300 hover:bg-tia-plum-700 max-[640px]:hidden">
-            <Flag code="mg" width={18} height={12} />
-            {NAV.language}
-            <Icon name="chevron-down" size={10} strokeWidth={2.5} />
-          </span>
+          <LanguageSwitcher locale={locale} copy={languageCopy} />
           <a
-            href={NAV.download.href}
+            href={copy.download.href}
             className="group inline-flex h-13 items-center justify-center gap-2 rounded-full bg-tia-violet-500 px-6.5 text-[16px] font-bold text-tia-plum-50 [transition:background-color_.3s,scale_.5s_var(--ease-tia-spring)] hover:scale-[1.04] hover:bg-tia-violet-600 max-[640px]:h-11 max-[640px]:px-4"
           >
             <Icon
@@ -91,7 +94,7 @@ export function Navbar() {
               size={16}
               className="transition-[rotate,scale] duration-500 ease-tia-spring group-hover:scale-125 group-hover:-rotate-10"
             />
-            {NAV.download.label}
+            {copy.download.label}
           </a>
         </div>
       </div>

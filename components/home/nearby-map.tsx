@@ -1,5 +1,5 @@
 import { useId } from 'react'
-import { WHY_TIA } from '@/content/site'
+import { NEARBY_PINS } from '@/content/site'
 import { cn } from '@/lib/utils'
 import { Photo } from './photo'
 
@@ -26,7 +26,7 @@ export function NearbyMap() {
         <rect width="100%" height="100%" fill={`url(#${patternId})`} />
       </svg>
       <span className="absolute top-[42%] left-[48%] z-3 size-4 rounded-full bg-tia-violet-400 ring-6 ring-tia-violet-400/30" />
-      {WHY_TIA.nearbyPins.map((pin, index) => {
+      {NEARBY_PINS.map((pin, index) => {
         const layout = PIN_LAYOUT[index]
         const delay = { animationDelay: `${layout.delay}s` }
 

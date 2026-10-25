@@ -1,11 +1,15 @@
 import { Fragment } from 'react'
-import { TICKER } from '@/content/site'
+import { TICKER_SEPARATOR } from '@/content/site'
 import { Marquee } from './marquee'
 
 const SCROLL_DURATION = 40
 const COPIES = 4
 
-export function Ticker() {
+type TickerProps = {
+  items: string[]
+}
+
+export function Ticker({ items }: TickerProps) {
   return (
     <div aria-hidden="true" className="overflow-hidden bg-tia-violet-500 py-4.5 text-tia-plum-50">
       <Marquee
@@ -13,10 +17,10 @@ export function Ticker() {
         copies={COPIES}
         groupClassName="gap-7 pr-7 text-[22px] font-bold @max-[640px]:text-[18px]"
       >
-        {TICKER.items.map((item) => (
+        {items.map((item) => (
           <Fragment key={item}>
             <span>{item}</span>
-            <i className="opacity-70 not-italic">{TICKER.separator}</i>
+            <i className="opacity-70 not-italic">{TICKER_SEPARATOR}</i>
           </Fragment>
         ))}
       </Marquee>

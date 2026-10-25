@@ -1,4 +1,4 @@
-import { WHY_TIA } from '@/content/site'
+import { SWIPE_PROFILES } from '@/content/site'
 import { cn } from '@/lib/utils'
 import { Icon } from './icon'
 import { Photo } from './photo'
@@ -6,14 +6,18 @@ import { Photo } from './photo'
 const CARD_OFFSET = 3
 const PHOTO_SIZES = '(max-width: 640px) 140px, 290px'
 
-export function SwipePhone() {
+type SwipePhoneProps = {
+  likeStamp: string
+}
+
+export function SwipePhone({ likeStamp }: SwipePhoneProps) {
   return (
     <div
       aria-hidden="true"
       className="absolute top-9 right-10 bottom-9 z-3 aspect-[9/18.5] rotate-4 animate-tia-float rounded-[40px] bg-tia-plum-900 p-2 shadow-[0_30px_60px_black] ring-1 shadow-tia-plum-900/45 ring-tia-plum-50/12 transition-[rotate,scale] duration-800 ease-tia-spring group-hover:-rotate-2 group-hover:scale-[1.04] @max-[640px]:top-auto @max-[640px]:right-1/2 @max-[640px]:bottom-6 @max-[640px]:h-[300px] @max-[640px]:translate-x-1/2 @max-[640px]:animate-none"
     >
       <div className="absolute inset-2 overflow-hidden rounded-[32px] bg-tia-plum-800">
-        {WHY_TIA.swipeProfiles.map((profile, index) => {
+        {SWIPE_PROFILES.map((profile, index) => {
           const delay = { animationDelay: `${-index * CARD_OFFSET}s` }
 
           return (
@@ -31,7 +35,7 @@ export function SwipePhone() {
                 className="absolute top-11 left-4.5 animate-tia-stamp rounded-[12px] border-3 border-tia-coral-500 bg-tia-coral-500/85 px-3.5 py-1.5 text-[20px] font-bold tracking-[.04em] text-tia-plum-50 opacity-0"
                 style={delay}
               >
-                {WHY_TIA.likeStamp}
+                {likeStamp}
               </span>
               <span className="absolute bottom-5.5 left-4 flex flex-col text-tia-plum-50">
                 <b className="text-[22px] font-bold">
