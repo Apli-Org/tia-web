@@ -9,12 +9,17 @@ export const SITE_ASSETS = {
 export const BRAND_NAME = 'Tia'
 
 export const PHOTOS = {
-  ali: '/images/ali.jpg',
-  harena: '/images/harena.jpg',
-  loic: '/images/loic.jpg',
-  tiavina: '/images/tiavina.jpg',
-  'factuel-1': '/images/factuel-1.jpg',
-  'factuel-2': '/images/factuel-2.jpg',
+  ali: '/images/people/ali.jpg',
+  bella: '/images/people/bella.jpg',
+  harena: '/images/people/harena.jpg',
+  jenny: '/images/people/jenny.jpg',
+  karen: '/images/people/karen.jpg',
+  lily: '/images/people/lily.jpg',
+  loic: '/images/people/loic.jpg',
+  max: '/images/people/max.jpg',
+  olivia: '/images/people/olivia.jpg',
+  sophie: '/images/people/sophie.jpg',
+  tiavina: '/images/people/tiavina.jpg',
 } as const
 
 export type PhotoId = keyof typeof PHOTOS
@@ -61,11 +66,11 @@ type MosaicColumn = {
 }
 
 export const HERO_MOSAIC: MosaicColumn[] = [
-  { duration: 38, photos: ['factuel-2', 'ali', 'tiavina', 'factuel-1', 'harena', 'loic'] },
-  { duration: 42, photos: ['loic', 'harena', 'factuel-1', 'factuel-2', 'ali', 'tiavina'] },
-  { duration: 46, photos: ['tiavina', 'factuel-1', 'factuel-2', 'loic', 'ali', 'harena'] },
-  { duration: 50, photos: ['ali', 'factuel-2', 'loic', 'tiavina', 'factuel-1', 'harena'] },
-  { duration: 54, photos: ['harena', 'tiavina', 'ali', 'factuel-1', 'loic', 'factuel-2'] },
+  { duration: 38, photos: ['sophie', 'ali', 'bella', 'jenny', 'loic', 'olivia'] },
+  { duration: 42, photos: ['tiavina', 'max', 'karen', 'harena', 'lily', 'ali'] },
+  { duration: 46, photos: ['jenny', 'olivia', 'loic', 'bella', 'sophie', 'max'] },
+  { duration: 50, photos: ['lily', 'harena', 'ali', 'olivia', 'tiavina', 'jenny'] },
+  { duration: 54, photos: ['max', 'bella', 'harena', 'karen', 'sophie', 'loic'] },
 ]
 
 type SwipeProfile = {
@@ -76,9 +81,9 @@ type SwipeProfile = {
 }
 
 export const SWIPE_PROFILES: SwipeProfile[] = [
-  { photo: 'factuel-2', name: 'Fanja', age: 26, place: 'Ivandry · 3 km' },
-  { photo: 'ali', name: 'Hery', age: 29, place: 'Saint-Denis · 4 km' },
-  { photo: 'tiavina', name: 'Miora', age: 24, place: 'Analakely · 2 km' },
+  { photo: 'sophie', name: 'Sophie', age: 26, place: 'Ivandry · 3 km' },
+  { photo: 'ali', name: 'Ali', age: 29, place: 'Saint-Denis · 4 km' },
+  { photo: 'tiavina', name: 'Tiavina', age: 24, place: 'Analakely · 2 km' },
 ]
 
 export const SELFIE_PHOTO: PhotoId = 'loic'
@@ -89,8 +94,8 @@ type NearbyPin = {
 }
 
 export const NEARBY_PINS: NearbyPin[] = [
-  { photo: 'factuel-2', label: 'Fanja · 3 km' },
-  { photo: 'loic', label: 'Hery · 5 km' },
-  { photo: 'tiavina', label: 'Lova · 2 km' },
-  { photo: 'factuel-1', label: null },
+  { photo: 'sophie', label: 'Sophie · 3 km' },
+  { photo: 'loic', label: 'Loic · 5 km' },
+  { photo: 'tiavina', label: 'Tiavina · 2 km' },
+  { photo: 'lily', label: null },
 ]
