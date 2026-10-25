@@ -3,9 +3,8 @@
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import type { HomeCopy } from '@/content/home-copy'
-import { LANGUAGE_FLAGS, LOCALE_PATHS, LOCALES, type Locale } from '@/content/i18n'
+import { LOCALE_PATHS, LOCALES, type Locale } from '@/content/i18n'
 import { cn } from '@/lib/utils'
-import { Flag } from './flag'
 import { Icon } from './icon'
 
 type LanguageSwitcherProps = {
@@ -45,7 +44,6 @@ export function LanguageSwitcher({ locale, copy }: LanguageSwitcherProps) {
         className="relative inline-flex h-10.5 items-center gap-2 rounded-full bg-tia-plum-800 px-3.5 text-[14px] font-bold uppercase transition-colors duration-300 after:absolute after:inset-x-0 after:-inset-y-px after:content-[''] hover:bg-tia-plum-700"
       >
         <span className="sr-only">{copy.label}</span>
-        <Flag code={LANGUAGE_FLAGS[locale]} width={18} height={12} />
         {locale}
         <Icon
           name="chevron-down"
@@ -69,7 +67,6 @@ export function LanguageSwitcher({ locale, copy }: LanguageSwitcherProps) {
                   option === locale ? 'text-tia-plum-50' : 'text-tia-plum-50/78',
                 )}
               >
-                <Flag code={LANGUAGE_FLAGS[option]} width={18} height={12} />
                 {copy.names[option]}
               </Link>
             </li>
