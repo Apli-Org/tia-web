@@ -126,7 +126,6 @@ const SOCIAL_NETWORKS = [
 
 interface FooterEditorProps {
   section: LandingSection
-  adminId: string
 }
 
 const defaultFooterContent: FooterContent = {
@@ -140,7 +139,7 @@ const defaultFooterContent: FooterContent = {
   legalLinks: [],
 }
 
-export function FooterEditor({ section, adminId }: FooterEditorProps) {
+export function FooterEditor({ section }: FooterEditorProps) {
   const [content, setContent] = useState<FooterContent>({
     ...defaultFooterContent,
     ...(section.content as FooterContent),
@@ -210,7 +209,6 @@ export function FooterEditor({ section, adminId }: FooterEditorProps) {
   return (
     <EditorWrapper
       section={section}
-      adminId={adminId}
       content={content}
       onContentChange={(c) => setContent(c as FooterContent)}
       previewComponent={<Footer content={content} />}
@@ -220,7 +218,6 @@ export function FooterEditor({ section, adminId }: FooterEditorProps) {
           label="Logo"
           value={content.logo}
           onChange={(url) => updateContent({ logo: url })}
-          adminId={adminId}
         />
 
         <div className="space-y-2">

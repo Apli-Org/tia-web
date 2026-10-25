@@ -17,7 +17,7 @@ import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
 import { getSubscriptionPricing, getTestMode } from "@/actions/admin/pricing.action"
 import { getCurrentAdmin } from "@/actions/admin/auth.action"
-import { checkAdminAction } from "@/actions/admin/roles.action"
+import { checkAdminAction } from "@/lib/auth/admin-guard"
 import { SubscriptionGrid } from "./subscription-grid"
 import { TestModeToggle } from "./test-mode-toggle"
 import { TestModeBanner } from "./test-mode-banner"
@@ -132,7 +132,7 @@ export default async function SubscriptionsPage() {
                 Configurez les prix des abonnements Silver, Gold et Elite
               </p>
             </div>
-            <TestModeToggle initialEnabled={testModeEnabled} adminId={admin.id} />
+            <TestModeToggle initialEnabled={testModeEnabled} />
           </div>
 
           <TestModeBanner enabled={testModeEnabled} />

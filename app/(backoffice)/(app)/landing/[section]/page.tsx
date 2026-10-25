@@ -18,7 +18,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { Card, CardContent } from "@/components/ui/card"
 import { getLandingSection } from "@/actions/admin/landing.action"
 import { getCurrentAdmin } from "@/actions/admin/auth.action"
-import { checkAdminAction } from "@/actions/admin/roles.action"
+import { checkAdminAction } from "@/lib/auth/admin-guard"
 import { SECTION_METADATA, type SectionKey } from "@/lib/types/landing.types"
 import { RefreshButton } from "@/components/backoffice/refresh-button"
 
@@ -41,7 +41,7 @@ interface PageProps {
   params: Promise<{ section: string }>
 }
 
-async function SectionEditor({ sectionKey, adminId }: { sectionKey: SectionKey; adminId: string }) {
+async function SectionEditor({ sectionKey }: { sectionKey: SectionKey }) {
   const section = await getLandingSection(sectionKey)
 
   if (!section) {
@@ -56,7 +56,6 @@ async function SectionEditor({ sectionKey, adminId }: { sectionKey: SectionKey; 
 
   const editorProps = {
     section,
-    adminId,
   }
 
   switch (sectionKey) {
@@ -163,7 +162,7 @@ export default async function SectionPage({ params }: PageProps) {
           </div>
 
           <Suspense fallback={<EditorSkeleton />}>
-            <SectionEditor sectionKey={sectionKey} adminId={admin.id} />
+            <SectionEditor sectionKey={sectionKey} />
           </Suspense>
         </div>
       </main>

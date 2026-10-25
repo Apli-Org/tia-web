@@ -16,7 +16,7 @@ import {
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
 import { getCurrentAdmin } from "@/actions/admin/auth.action"
-import { checkAdminAction } from "@/actions/admin/roles.action"
+import { checkAdminAction } from "@/lib/auth/admin-guard"
 import {
   getTicketById,
   getTicketMessages,
@@ -122,7 +122,6 @@ export default async function TicketDetailPage({
                   ticket={ticket}
                   messages={messages}
                   canManage={canManageTickets}
-                  currentAdminId={admin.id}
                 />
               </div>
               <div>
@@ -130,7 +129,6 @@ export default async function TicketDetailPage({
                   ticket={ticket}
                   admins={admins}
                   canManage={canManageTickets}
-                  currentAdminId={admin.id}
                 />
               </div>
             </div>

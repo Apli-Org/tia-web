@@ -1,5 +1,6 @@
 "use server"
 
+import { requireAdminAction } from "@/lib/auth/admin-guard"
 import { createAdminClient } from "@/lib/supabase/admin"
 
 export type ActivityType =
@@ -101,6 +102,8 @@ function translateReportStatus(status: string): string {
 }
 
 export async function getUserActivityStats(): Promise<UserActivityStats> {
+  await requireAdminAction("view_dashboard")
+
   const supabase = createAdminClient()
 
   const now = new Date()
@@ -168,6 +171,8 @@ export async function getAllUserActivities(
   pageSize: number = 20,
   filters: UserActivityFilters = {}
 ): Promise<PaginatedActivities> {
+  await requireAdminAction("view_dashboard")
+
   const supabase = createAdminClient()
   const activities: UserActivity[] = []
 

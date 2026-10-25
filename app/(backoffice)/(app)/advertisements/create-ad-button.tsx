@@ -7,10 +7,9 @@ import { Button } from "@/components/ui/button"
 import { AdModal } from "./ad-modal"
 
 type CreateAdButtonProps = {
-  adminId: string
 }
 
-export function CreateAdButton({ adminId }: CreateAdButtonProps) {
+export function CreateAdButton() {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
@@ -23,7 +22,6 @@ export function CreateAdButton({ adminId }: CreateAdButtonProps) {
       <AdModal
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
-        adminId={adminId}
       />
     </>
   )

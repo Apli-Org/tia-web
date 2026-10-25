@@ -48,10 +48,9 @@ import { toast } from "sonner"
 
 type PromoCodeActionsProps = {
   promoCode: PromoCode
-  adminId: string
 }
 
-export function PromoCodeActions({ promoCode, adminId }: PromoCodeActionsProps) {
+export function PromoCodeActions({ promoCode }: PromoCodeActionsProps) {
   const [isPending, startTransition] = useTransition()
   const [showEditModal, setShowEditModal] = useState(false)
   const [showDeleteDialog, setShowDeleteDialog] = useState(false)
@@ -63,8 +62,7 @@ export function PromoCodeActions({ promoCode, adminId }: PromoCodeActionsProps) 
     startTransition(async () => {
       const result = await togglePromoCodeStatus(
         promoCode.id,
-        !promoCode.is_active,
-        adminId
+        !promoCode.is_active
       )
 
       if (result.success) {
@@ -81,7 +79,7 @@ export function PromoCodeActions({ promoCode, adminId }: PromoCodeActionsProps) 
 
   const handleDelete = () => {
     startTransition(async () => {
-      const result = await deletePromoCode(promoCode.id, adminId)
+      const result = await deletePromoCode(promoCode.id)
 
       if (result.success) {
         toast.success("Code promo supprimé")
@@ -152,7 +150,6 @@ export function PromoCodeActions({ promoCode, adminId }: PromoCodeActionsProps) 
       <PromoCodeModal
         isOpen={showEditModal}
         onClose={() => setShowEditModal(false)}
-        adminId={adminId}
         promoCode={promoCode}
       />
 

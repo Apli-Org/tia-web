@@ -6,16 +6,15 @@ import { Download, Loader2 } from 'lucide-react'
 import { exportNewsletterSubscribersCSV } from '@/actions/admin/newsletter.action'
 
 interface NewsletterExportProps {
-  adminId: string
 }
 
-export function NewsletterExport({ adminId }: NewsletterExportProps) {
+export function NewsletterExport() {
   const [isExporting, setIsExporting] = useState(false)
 
   const handleExport = async () => {
     setIsExporting(true)
     try {
-      const result = await exportNewsletterSubscribersCSV(adminId)
+      const result = await exportNewsletterSubscribersCSV()
 
       if (!result.success || !result.data) {
         console.error('Export failed:', result.error)

@@ -31,11 +31,10 @@ import { AdMobilePreview } from "./ad-mobile-preview"
 type AdModalProps = {
   isOpen: boolean
   onClose: () => void
-  adminId: string
   ad?: Advertisement | null
 }
 
-export function AdModal({ isOpen, onClose, adminId, ad }: AdModalProps) {
+export function AdModal({ isOpen, onClose, ad }: AdModalProps) {
   const [isPending, startTransition] = useTransition()
   const [isUploading, setIsUploading] = useState(false)
   const [uploadError, setUploadError] = useState<string | null>(null)
@@ -103,7 +102,7 @@ export function AdModal({ isOpen, onClose, adminId, ad }: AdModalProps) {
         const formData = new FormData()
         formData.append("file", file)
 
-        const result = await uploadAdvertisementImage(formData, adminId)
+        const result = await uploadAdvertisementImage(formData)
 
         if (result.success && result.url) {
           setImageUrl(result.url)
@@ -125,7 +124,7 @@ export function AdModal({ isOpen, onClose, adminId, ad }: AdModalProps) {
         const formData = new FormData()
         formData.append("file", file)
 
-        const result = await uploadAdvertisementVideo(formData, adminId)
+        const result = await uploadAdvertisementVideo(formData)
 
         if (result.success && result.url) {
           setVideoUrl(result.url)
@@ -178,9 +177,9 @@ export function AdModal({ isOpen, onClose, adminId, ad }: AdModalProps) {
       try {
         let result
         if (isEditing && ad) {
-          result = await updateAdvertisement({ id: ad.id, ...data }, adminId)
+          result = await updateAdvertisement({ id: ad.id, ...data })
         } else {
-          result = await createAdvertisement(data, adminId)
+          result = await createAdvertisement(data)
         }
 
         if (result.success) {

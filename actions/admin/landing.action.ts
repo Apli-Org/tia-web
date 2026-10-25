@@ -1,8 +1,8 @@
 'use server'
 
+import { getAuthorizedAdmin, requireAdminAction, PERMISSION_DENIED } from '@/lib/auth/admin-guard'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { revalidatePath, revalidateTag } from 'next/cache'
-import { checkAdminAction } from './roles.action'
 import type {
   LandingSection,
   LandingSectionHistory,
@@ -12,6 +12,8 @@ import type {
 
 // Get all landing sections
 export async function getAllLandingSections(): Promise<LandingSection[]> {
+  await requireAdminAction('manage_landing_page')
+
   const supabase = createAdminClient()
 
   const { data, error } = await supabase
@@ -32,6 +34,8 @@ export async function getAllLandingSections(): Promise<LandingSection[]> {
 
 // Get a single landing section by key
 export async function getLandingSection(sectionKey: SectionKey): Promise<LandingSection | null> {
+  await requireAdminAction('manage_landing_page')
+
   const supabase = createAdminClient()
 
   const { data, error } = await supabase
@@ -52,16 +56,12 @@ export async function getLandingSection(sectionKey: SectionKey): Promise<Landing
 export async function updateLandingSection(
   sectionKey: SectionKey,
   content: LandingSectionContent,
-  adminId: string,
   reason?: string
 ): Promise<{ success: boolean; error?: string }> {
-  const supabase = createAdminClient()
+  const admin = await getAuthorizedAdmin('manage_landing_page')
+  if (!admin) return { success: false, error: PERMISSION_DENIED }
 
-  // Check permission
-  const hasPermission = await checkAdminAction(adminId, 'manage_landing_page')
-  if (!hasPermission) {
-    return { success: false, error: 'Permission insuffisante' }
-  }
+  const supabase = createAdminClient()
 
   // Get current content for history
   const { data: currentSection, error: fetchError } = await supabase
@@ -79,7 +79,7 @@ export async function updateLandingSection(
     .from('landing_sections')
     .update({
       content,
-      updated_by: adminId,
+      updated_by: admin.id,
       updated_at: new Date().toISOString(),
     })
     .eq('section_key', sectionKey)
@@ -94,13 +94,13 @@ export async function updateLandingSection(
     section_id: currentSection.id,
     previous_content: currentSection.content,
     new_content: content,
-    changed_by: adminId,
+    changed_by: admin.id,
     change_reason: reason || null,
   })
 
   // Log activity
   await supabase.from('admin_activity_logs').insert({
-    admin_id: adminId,
+    admin_id: admin.id,
     action: 'landing_section_updated',
     details: {
       section_key: sectionKey,
@@ -117,23 +117,19 @@ export async function updateLandingSection(
 
 // Publish a landing section
 export async function publishLandingSection(
-  sectionKey: SectionKey,
-  adminId: string
+  sectionKey: SectionKey
 ): Promise<{ success: boolean; error?: string }> {
-  const supabase = createAdminClient()
+  const admin = await getAuthorizedAdmin('manage_landing_page')
+  if (!admin) return { success: false, error: PERMISSION_DENIED }
 
-  // Check permission
-  const hasPermission = await checkAdminAction(adminId, 'manage_landing_page')
-  if (!hasPermission) {
-    return { success: false, error: 'Permission insuffisante' }
-  }
+  const supabase = createAdminClient()
 
   const { error } = await supabase
     .from('landing_sections')
     .update({
       is_published: true,
       published_at: new Date().toISOString(),
-      updated_by: adminId,
+      updated_by: admin.id,
     })
     .eq('section_key', sectionKey)
 
@@ -144,7 +140,7 @@ export async function publishLandingSection(
 
   // Log activity
   await supabase.from('admin_activity_logs').insert({
-    admin_id: adminId,
+    admin_id: admin.id,
     action: 'landing_section_published',
     details: { section_key: sectionKey },
   })
@@ -158,22 +154,18 @@ export async function publishLandingSection(
 
 // Unpublish a landing section
 export async function unpublishLandingSection(
-  sectionKey: SectionKey,
-  adminId: string
+  sectionKey: SectionKey
 ): Promise<{ success: boolean; error?: string }> {
-  const supabase = createAdminClient()
+  const admin = await getAuthorizedAdmin('manage_landing_page')
+  if (!admin) return { success: false, error: PERMISSION_DENIED }
 
-  // Check permission
-  const hasPermission = await checkAdminAction(adminId, 'manage_landing_page')
-  if (!hasPermission) {
-    return { success: false, error: 'Permission insuffisante' }
-  }
+  const supabase = createAdminClient()
 
   const { error } = await supabase
     .from('landing_sections')
     .update({
       is_published: false,
-      updated_by: adminId,
+      updated_by: admin.id,
     })
     .eq('section_key', sectionKey)
 
@@ -184,7 +176,7 @@ export async function unpublishLandingSection(
 
   // Log activity
   await supabase.from('admin_activity_logs').insert({
-    admin_id: adminId,
+    admin_id: admin.id,
     action: 'landing_section_unpublished',
     details: { section_key: sectionKey },
   })
@@ -201,6 +193,8 @@ export async function getLandingSectionHistory(
   sectionKey: SectionKey,
   limit: number = 10
 ): Promise<LandingSectionHistory[]> {
+  await requireAdminAction('manage_landing_page')
+
   const supabase = createAdminClient()
 
   // First get the section ID
@@ -236,16 +230,12 @@ export async function getLandingSectionHistory(
 // Revert to a previous version
 export async function revertLandingSection(
   sectionKey: SectionKey,
-  historyId: string,
-  adminId: string
+  historyId: string
 ): Promise<{ success: boolean; error?: string }> {
-  const supabase = createAdminClient()
+  const admin = await getAuthorizedAdmin('manage_landing_page')
+  if (!admin) return { success: false, error: PERMISSION_DENIED }
 
-  // Check permission
-  const hasPermission = await checkAdminAction(adminId, 'manage_landing_page')
-  if (!hasPermission) {
-    return { success: false, error: 'Permission insuffisante' }
-  }
+  const supabase = createAdminClient()
 
   // Get the history entry
   const { data: historyEntry, error: historyError } = await supabase
@@ -262,7 +252,6 @@ export async function revertLandingSection(
   return updateLandingSection(
     sectionKey,
     historyEntry.previous_content as LandingSectionContent,
-    adminId,
     `Restauration depuis la version ${historyId.slice(0, 8)}`
   )
 }
@@ -271,21 +260,17 @@ export async function revertLandingSection(
 export async function uploadLandingImage(
   formData: FormData
 ): Promise<{ success: boolean; url?: string; error?: string }> {
+  const admin = await getAuthorizedAdmin('manage_landing_page')
+  if (!admin) return { success: false, error: PERMISSION_DENIED }
+
   try {
     const file = formData.get('file') as File | null
-    const adminId = formData.get('adminId') as string | null
 
-    if (!file || !adminId) {
-      return { success: false, error: 'Fichier ou adminId manquant' }
+    if (!file) {
+      return { success: false, error: 'Aucun fichier fourni' }
     }
 
     const supabase = createAdminClient()
-
-    // Check permission
-    const hasPermission = await checkAdminAction(adminId, 'manage_landing_page')
-    if (!hasPermission) {
-      return { success: false, error: 'Permission insuffisante' }
-    }
 
     // Validate file type
     const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif']
@@ -357,7 +342,7 @@ export async function uploadLandingImage(
 
     // Log activity
     await supabase.from('admin_activity_logs').insert({
-      admin_id: adminId,
+      admin_id: admin.id,
       action: 'landing_image_uploaded',
       details: { filename },
     })
@@ -370,24 +355,22 @@ export async function uploadLandingImage(
 }
 
 // Check upload permission (lightweight action for client-side upload)
-export async function checkUploadPermission(
-  adminId: string
-): Promise<{ success: boolean; error?: string }> {
-  const hasPermission = await checkAdminAction(adminId, 'manage_landing_page')
-  if (!hasPermission) {
-    return { success: false, error: 'Permission insuffisante' }
-  }
+export async function checkUploadPermission(): Promise<{ success: boolean; error?: string }> {
+  const admin = await getAuthorizedAdmin('manage_landing_page')
+  if (!admin) return { success: false, error: PERMISSION_DENIED }
+
   return { success: true }
 }
 
 // Log image upload activity
 export async function logImageUpload(
-  adminId: string,
   filename: string
 ): Promise<void> {
+  const admin = await requireAdminAction('manage_landing_page')
+
   const supabase = createAdminClient()
   await supabase.from('admin_activity_logs').insert({
-    admin_id: adminId,
+    admin_id: admin.id,
     action: 'landing_image_uploaded',
     details: { filename },
   })
@@ -395,16 +378,12 @@ export async function logImageUpload(
 
 // Delete image from landing-images bucket
 export async function deleteLandingImage(
-  imageUrl: string,
-  adminId: string
+  imageUrl: string
 ): Promise<{ success: boolean; error?: string }> {
-  const supabase = createAdminClient()
+  const admin = await getAuthorizedAdmin('manage_landing_page')
+  if (!admin) return { success: false, error: PERMISSION_DENIED }
 
-  // Check permission
-  const hasPermission = await checkAdminAction(adminId, 'manage_landing_page')
-  if (!hasPermission) {
-    return { success: false, error: 'Permission insuffisante' }
-  }
+  const supabase = createAdminClient()
 
   // Extract filename from URL
   const filename = imageUrl.split('/').pop()

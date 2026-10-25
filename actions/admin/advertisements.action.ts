@@ -1,5 +1,6 @@
 'use server'
 
+import { getAuthorizedAdmin, requireAdminAction, PERMISSION_DENIED } from '@/lib/auth/admin-guard'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { revalidatePath } from 'next/cache'
 import type {
@@ -18,6 +19,8 @@ import type {
 export async function getAdvertisements(
   filters: AdvertisementFilters = {}
 ): Promise<AdvertisementListResult> {
+  await requireAdminAction('view_advertisements', 'manage_advertisements')
+
   const supabase = createAdminClient()
   const { search, status = 'all', page = 1, limit = 10 } = filters
   const offset = (page - 1) * limit
@@ -93,6 +96,8 @@ export async function getAdvertisements(
 
 // Get a single advertisement by ID
 export async function getAdvertisementById(id: string): Promise<Advertisement | null> {
+  await requireAdminAction('view_advertisements', 'manage_advertisements')
+
   const supabase = createAdminClient()
 
   const { data, error } = await supabase
@@ -111,6 +116,8 @@ export async function getAdvertisementById(id: string): Promise<Advertisement | 
 
 // Get detailed statistics for an advertisement
 export async function getAdvertisementStats(id: string): Promise<AdStats | null> {
+  await requireAdminAction('view_advertisements', 'manage_advertisements')
+
   const supabase = createAdminClient()
 
   // Get total counts
@@ -214,9 +221,11 @@ export async function getAdvertisementStats(id: string): Promise<AdStats | null>
 
 // Create a new advertisement
 export async function createAdvertisement(
-  data: CreateAdvertisementData,
-  adminId: string
+  data: CreateAdvertisementData
 ): Promise<{ success: boolean; error?: string; id?: string }> {
+  const admin = await getAuthorizedAdmin('manage_advertisements')
+  if (!admin) return { success: false, error: PERMISSION_DENIED }
+
   const supabase = createAdminClient()
 
   const { data: newAd, error } = await supabase
@@ -231,7 +240,7 @@ export async function createAdvertisement(
       is_active: data.is_active ?? true,
       start_date: data.start_date || null,
       end_date: data.end_date || null,
-      created_by: adminId,
+      created_by: admin.id,
     })
     .select('id')
     .single()
@@ -243,7 +252,7 @@ export async function createAdvertisement(
 
   // Log the action
   await supabase.from('admin_activity_logs').insert({
-    admin_id: adminId,
+    admin_id: admin.id,
     action: 'advertisement_created',
     details: {
       advertisement_id: newAd.id,
@@ -257,9 +266,11 @@ export async function createAdvertisement(
 
 // Update an advertisement
 export async function updateAdvertisement(
-  data: UpdateAdvertisementData,
-  adminId: string
+  data: UpdateAdvertisementData
 ): Promise<{ success: boolean; error?: string }> {
+  const admin = await getAuthorizedAdmin('manage_advertisements')
+  if (!admin) return { success: false, error: PERMISSION_DENIED }
+
   const supabase = createAdminClient()
 
   const { id, ...updates } = data
@@ -290,7 +301,7 @@ export async function updateAdvertisement(
 
   // Log the action
   await supabase.from('admin_activity_logs').insert({
-    admin_id: adminId,
+    admin_id: admin.id,
     action: 'advertisement_updated',
     details: {
       advertisement_id: id,
@@ -306,9 +317,11 @@ export async function updateAdvertisement(
 // Toggle advertisement active status
 export async function toggleAdvertisementStatus(
   id: string,
-  isActive: boolean,
-  adminId: string
+  isActive: boolean
 ): Promise<{ success: boolean; error?: string }> {
+  const admin = await getAuthorizedAdmin('manage_advertisements')
+  if (!admin) return { success: false, error: PERMISSION_DENIED }
+
   const supabase = createAdminClient()
 
   const { data: currentAd, error: fetchError } = await supabase
@@ -333,7 +346,7 @@ export async function toggleAdvertisementStatus(
 
   // Log the action
   await supabase.from('admin_activity_logs').insert({
-    admin_id: adminId,
+    admin_id: admin.id,
     action: isActive ? 'advertisement_activated' : 'advertisement_deactivated',
     details: {
       advertisement_id: id,
@@ -347,9 +360,11 @@ export async function toggleAdvertisementStatus(
 
 // Delete an advertisement
 export async function deleteAdvertisement(
-  id: string,
-  adminId: string
+  id: string
 ): Promise<{ success: boolean; error?: string }> {
+  const admin = await getAuthorizedAdmin('manage_advertisements')
+  if (!admin) return { success: false, error: PERMISSION_DENIED }
+
   try {
     const supabase = createAdminClient()
 
@@ -390,7 +405,7 @@ export async function deleteAdvertisement(
 
     // Log the action
     await supabase.from('admin_activity_logs').insert({
-      admin_id: adminId,
+      admin_id: admin.id,
       action: 'advertisement_deleted',
       details: {
         advertisement_id: id,
@@ -408,6 +423,8 @@ export async function deleteAdvertisement(
 
 // Get overall statistics for the dashboard
 export async function getAdvertisementDashboardStats(): Promise<AdvertisementStatsResult> {
+  await requireAdminAction('view_advertisements', 'manage_advertisements')
+
   const supabase = createAdminClient()
 
   const [
@@ -445,9 +462,11 @@ export async function getAdvertisementDashboardStats(): Promise<AdvertisementSta
 
 // Upload advertisement image
 export async function uploadAdvertisementImage(
-  formData: FormData,
-  adminId: string
+  formData: FormData
 ): Promise<{ success: boolean; url?: string; error?: string }> {
+  const admin = await getAuthorizedAdmin('manage_advertisements')
+  if (!admin) return { success: false, error: PERMISSION_DENIED }
+
   const supabase = createAdminClient()
 
   const file = formData.get('file') as File
@@ -493,7 +512,7 @@ export async function uploadAdvertisementImage(
 
   // Log the upload
   await supabase.from('admin_activity_logs').insert({
-    admin_id: adminId,
+    admin_id: admin.id,
     action: 'advertisement_image_uploaded',
     details: { filename, url: publicUrl },
   })
@@ -503,9 +522,11 @@ export async function uploadAdvertisementImage(
 
 // Delete advertisement image from storage
 export async function deleteAdvertisementImage(
-  imageUrl: string,
-  adminId: string
+  imageUrl: string
 ): Promise<{ success: boolean; error?: string }> {
+  const admin = await getAuthorizedAdmin('manage_advertisements')
+  if (!admin) return { success: false, error: PERMISSION_DENIED }
+
   const supabase = createAdminClient()
 
   // Extract filename from URL
@@ -523,7 +544,7 @@ export async function deleteAdvertisementImage(
 
   // Log the deletion
   await supabase.from('admin_activity_logs').insert({
-    admin_id: adminId,
+    admin_id: admin.id,
     action: 'advertisement_image_deleted',
     details: { filename },
   })
@@ -533,9 +554,11 @@ export async function deleteAdvertisementImage(
 
 // Upload advertisement video
 export async function uploadAdvertisementVideo(
-  formData: FormData,
-  adminId: string
+  formData: FormData
 ): Promise<{ success: boolean; url?: string; error?: string }> {
+  const admin = await getAuthorizedAdmin('manage_advertisements')
+  if (!admin) return { success: false, error: PERMISSION_DENIED }
+
   const supabase = createAdminClient()
 
   const file = formData.get('file') as File
@@ -581,7 +604,7 @@ export async function uploadAdvertisementVideo(
 
   // Log the upload
   await supabase.from('admin_activity_logs').insert({
-    admin_id: adminId,
+    admin_id: admin.id,
     action: 'advertisement_video_uploaded',
     details: { filename, url: publicUrl },
   })

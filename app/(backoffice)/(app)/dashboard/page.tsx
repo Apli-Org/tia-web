@@ -21,7 +21,7 @@ import {
   BreadcrumbPage,
 } from "@/components/ui/breadcrumb"
 import { getCurrentAdmin } from "@/actions/admin/auth.action"
-import { checkAdminAction } from "@/actions/admin/roles.action"
+import { checkAdminAction } from "@/lib/auth/admin-guard"
 import {
   Card,
   CardContent,

@@ -14,7 +14,6 @@ import type { LandingSection, TestimonialsContent, TestimonialItem } from '@/lib
 
 interface TestimonialsEditorProps {
   section: LandingSection
-  adminId: string
 }
 
 const defaultTestimonialsContent: TestimonialsContent = {
@@ -24,7 +23,7 @@ const defaultTestimonialsContent: TestimonialsContent = {
   testimonials: [],
 }
 
-export function TestimonialsEditor({ section, adminId }: TestimonialsEditorProps) {
+export function TestimonialsEditor({ section }: TestimonialsEditorProps) {
   const sectionContent = section.content as TestimonialsContent
   const [content, setContent] = useState<TestimonialsContent>({
     ...defaultTestimonialsContent,
@@ -57,7 +56,6 @@ export function TestimonialsEditor({ section, adminId }: TestimonialsEditorProps
   return (
     <EditorWrapper
       section={section}
-      adminId={adminId}
       content={content}
       onContentChange={(c) => setContent(c as TestimonialsContent)}
       previewComponent={<Testimonials content={content} />}
@@ -110,7 +108,6 @@ export function TestimonialsEditor({ section, adminId }: TestimonialsEditorProps
                       label="Avatar"
                       value={testimonial.avatar}
                       onChange={(url) => updateTestimonial(index, { avatar: url })}
-                      adminId={adminId}
                       className="[&>div]:h-32"
                     />
                   </div>

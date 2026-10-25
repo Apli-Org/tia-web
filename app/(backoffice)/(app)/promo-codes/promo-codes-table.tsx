@@ -18,7 +18,6 @@ type PromoCodesTableProps = {
     search?: string
     status?: "all" | "active" | "inactive" | "expired"
   }
-  adminId: string
 }
 
 function getStatusBadge(code: {
@@ -63,7 +62,6 @@ function formatDate(dateString: string | null): string {
 export async function PromoCodesTable({
   page,
   filters,
-  adminId,
 }: PromoCodesTableProps) {
   const queryFilters: PromoCodeFilters = {
     page,
@@ -136,7 +134,6 @@ export async function PromoCodesTable({
                     <TableCell className="text-right">
                       <PromoCodeActions
                         promoCode={code}
-                        adminId={adminId}
                       />
                     </TableCell>
                   </TableRow>

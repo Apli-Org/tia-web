@@ -20,10 +20,9 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { createRole, getActionsByCategory, type AdminAction } from "@/actions/admin/roles.action"
 
 type CreateRoleButtonProps = {
-  adminId: string
 }
 
-export function CreateRoleButton({ adminId }: CreateRoleButtonProps) {
+export function CreateRoleButton() {
   const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -66,8 +65,7 @@ export function CreateRoleButton({ adminId }: CreateRoleButtonProps) {
         name: name.trim(),
         description: description.trim() || undefined,
         actionIds: selectedActions,
-      },
-      adminId
+      }
     )
 
     setLoading(false)

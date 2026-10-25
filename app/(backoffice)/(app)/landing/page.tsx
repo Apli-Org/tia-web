@@ -30,7 +30,7 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { getAllLandingSections } from "@/actions/admin/landing.action"
 import { getCurrentAdmin } from "@/actions/admin/auth.action"
-import { checkAdminAction } from "@/actions/admin/roles.action"
+import { checkAdminAction } from "@/lib/auth/admin-guard"
 import type { SectionKey } from "@/lib/types/landing.types"
 import { RefreshButton } from "@/components/backoffice/refresh-button"
 

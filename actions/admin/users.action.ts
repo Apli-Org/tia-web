@@ -1,5 +1,6 @@
 "use server"
 
+import { requireAdminAction } from "@/lib/auth/admin-guard"
 import { createAdminClient } from "@/lib/supabase/admin"
 import { revalidatePath } from "next/cache"
 import { getCurrentAdmin } from "./auth.action"
@@ -44,6 +45,8 @@ export async function getUsers(
   pageSize: number = 20,
   filters: UsersFilter = {}
 ): Promise<PaginatedUsers> {
+  await requireAdminAction("view_users")
+
   const supabase = createAdminClient()
 
   const offset = (page - 1) * pageSize
@@ -128,6 +131,8 @@ export async function getUsers(
 }
 
 export async function getUserById(userId: string) {
+  await requireAdminAction("view_users")
+
   const supabase = createAdminClient()
 
   const { data, error } = await supabase
@@ -263,6 +268,8 @@ export async function deleteUser(userId: string) {
 }
 
 export async function getUserStats() {
+  await requireAdminAction("view_users")
+
   const supabase = createAdminClient()
 
   const [totalResult, activeResult, premiumResult, bannedResult] = await Promise.all([
@@ -281,6 +288,8 @@ export async function getUserStats() {
 }
 
 export async function exportUsersCSV(filters: UsersFilter = {}) {
+  await requireAdminAction("view_users")
+
   const supabase = createAdminClient()
 
   let query = supabase

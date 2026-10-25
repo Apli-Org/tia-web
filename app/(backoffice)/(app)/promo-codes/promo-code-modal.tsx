@@ -37,14 +37,12 @@ function generatePromoCode(length = 8): string {
 type PromoCodeModalProps = {
   isOpen: boolean
   onClose: () => void
-  adminId: string
   promoCode?: PromoCode | null
 }
 
 export function PromoCodeModal({
   isOpen,
   onClose,
-  adminId,
   promoCode,
 }: PromoCodeModalProps) {
   const [isPending, startTransition] = useTransition()
@@ -115,16 +113,15 @@ export function PromoCodeModal({
       description: description.trim() || null,
       is_active: isActive,
       applicable_products: null,
-      created_by: adminId,
     }
 
     startTransition(async () => {
       try {
         let result
         if (isEditing && promoCode) {
-          result = await updatePromoCode(promoCode.id, data, adminId)
+          result = await updatePromoCode(promoCode.id, data)
         } else {
-          result = await createPromoCode(data, adminId)
+          result = await createPromoCode(data)
         }
 
         if (result.success) {

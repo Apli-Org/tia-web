@@ -1,9 +1,8 @@
 "use server"
 
+import { requireAdminAction } from "@/lib/auth/admin-guard"
 import { createAdminClient } from "@/lib/supabase/admin"
 import { revalidatePath } from "next/cache"
-import { getCurrentAdmin } from "./auth.action"
-import { checkAdminAction } from "./roles.action"
 import type {
   VerificationRequest,
   VerificationFilter,
@@ -11,6 +10,8 @@ import type {
 } from "./moderation-types"
 
 export async function getVerificationStats() {
+  await requireAdminAction("view_reports", "view_verifications")
+
   const supabase = createAdminClient()
 
   const [pendingResult, approvedResult, rejectedResult] = await Promise.all([
@@ -41,6 +42,8 @@ export async function getVerificationRequests(
   pageSize: number = 20,
   filters: VerificationFilter = {}
 ): Promise<PaginatedVerifications> {
+  await requireAdminAction("view_reports", "view_verifications")
+
   const supabase = createAdminClient()
   const offset = (page - 1) * pageSize
 
@@ -83,6 +86,8 @@ export async function getVerificationRequests(
 }
 
 export async function getVerificationById(id: string): Promise<VerificationRequest | null> {
+  await requireAdminAction("view_reports", "view_verifications")
+
   const supabase = createAdminClient()
 
   const { data, error } = await supabase
@@ -106,15 +111,7 @@ export async function getVerificationById(id: string): Promise<VerificationReque
 }
 
 export async function approveVerification(id: string) {
-  const currentAdmin = await getCurrentAdmin()
-  if (!currentAdmin) {
-    throw new Error("Non authentifié")
-  }
-
-  const canModerate = await checkAdminAction(currentAdmin.id, "moderate_content")
-  if (!canModerate) {
-    throw new Error("Permission insuffisante")
-  }
+  const currentAdmin = await requireAdminAction("moderate_content")
 
   const supabase = createAdminClient()
 
@@ -161,15 +158,7 @@ export async function approveVerification(id: string) {
 }
 
 export async function rejectVerification(id: string, reason: string) {
-  const currentAdmin = await getCurrentAdmin()
-  if (!currentAdmin) {
-    throw new Error("Non authentifié")
-  }
-
-  const canModerate = await checkAdminAction(currentAdmin.id, "moderate_content")
-  if (!canModerate) {
-    throw new Error("Permission insuffisante")
-  }
+  const currentAdmin = await requireAdminAction("moderate_content")
 
   const supabase = createAdminClient()
 

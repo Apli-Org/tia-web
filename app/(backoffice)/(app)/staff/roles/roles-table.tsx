@@ -5,10 +5,9 @@ import { getAllRoles } from "@/actions/admin/roles.action"
 import { RoleRow } from "./role-row"
 
 type RolesTableProps = {
-  adminId: string
 }
 
-export async function RolesTable({ adminId }: RolesTableProps) {
+export async function RolesTable() {
   const roles = await getAllRoles()
 
   if (roles.length === 0) {
@@ -32,7 +31,7 @@ export async function RolesTable({ adminId }: RolesTableProps) {
       <CardContent>
         <div className="space-y-4">
           {roles.map((role) => (
-            <RoleRow key={role.id} role={role} adminId={adminId} />
+            <RoleRow key={role.id} role={role} />
           ))}
         </div>
       </CardContent>

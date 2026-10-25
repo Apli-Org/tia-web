@@ -10,7 +10,6 @@ import type { LandingSection, NewsletterContent } from '@/lib/types/landing.type
 
 interface NewsletterEditorProps {
   section: LandingSection
-  adminId: string
 }
 
 const defaultNewsletterContent: NewsletterContent = {
@@ -26,7 +25,7 @@ const defaultNewsletterContent: NewsletterContent = {
   disclaimer: '',
 }
 
-export function NewsletterEditor({ section, adminId }: NewsletterEditorProps) {
+export function NewsletterEditor({ section }: NewsletterEditorProps) {
   const sectionContent = section.content as NewsletterContent
   const [content, setContent] = useState<NewsletterContent>({
     ...defaultNewsletterContent,
@@ -40,7 +39,6 @@ export function NewsletterEditor({ section, adminId }: NewsletterEditorProps) {
   return (
     <EditorWrapper
       section={section}
-      adminId={adminId}
       content={content}
       onContentChange={(c) => setContent(c as NewsletterContent)}
       previewComponent={<Newsletter content={content} />}

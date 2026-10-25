@@ -13,7 +13,6 @@ import type { LandingSection, FAQContent, FAQItem } from '@/lib/types/landing.ty
 
 interface FAQEditorProps {
   section: LandingSection
-  adminId: string
 }
 
 const defaultFAQContent: FAQContent = {
@@ -22,7 +21,7 @@ const defaultFAQContent: FAQContent = {
   faqs: [],
 }
 
-export function FAQEditor({ section, adminId }: FAQEditorProps) {
+export function FAQEditor({ section }: FAQEditorProps) {
   const sectionContent = section.content as FAQContent
   const [content, setContent] = useState<FAQContent>({
     ...defaultFAQContent,
@@ -55,7 +54,6 @@ export function FAQEditor({ section, adminId }: FAQEditorProps) {
   return (
     <EditorWrapper
       section={section}
-      adminId={adminId}
       content={content}
       onContentChange={(c) => setContent(c as FAQContent)}
       previewComponent={<FAQ content={content} />}

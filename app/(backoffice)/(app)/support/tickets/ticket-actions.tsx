@@ -30,7 +30,7 @@ export function TicketActions({ ticket, canManage, currentAdminId }: TicketActio
 
   const handleAssignToMe = () => {
     startTransition(async () => {
-      const result = await assignTicket(ticket.id, currentAdminId, currentAdminId)
+      const result = await assignTicket(ticket.id, currentAdminId)
       if (!result.success) {
         alert(result.error)
       }
@@ -39,7 +39,7 @@ export function TicketActions({ ticket, canManage, currentAdminId }: TicketActio
 
   const handleUnassign = () => {
     startTransition(async () => {
-      const result = await assignTicket(ticket.id, null, currentAdminId)
+      const result = await assignTicket(ticket.id, null)
       if (!result.success) {
         alert(result.error)
       }
@@ -48,7 +48,7 @@ export function TicketActions({ ticket, canManage, currentAdminId }: TicketActio
 
   const handleMarkResolved = () => {
     startTransition(async () => {
-      const result = await updateTicketStatus(ticket.id, "resolved", currentAdminId)
+      const result = await updateTicketStatus(ticket.id, "resolved")
       if (!result.success) {
         alert(result.error)
       }

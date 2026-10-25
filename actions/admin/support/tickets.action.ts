@@ -1,8 +1,8 @@
 'use server'
 
+import { getAuthorizedAdmin, requireAdminAction, PERMISSION_DENIED } from '@/lib/auth/admin-guard'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { revalidatePath } from 'next/cache'
-import { checkAdminAction } from '../roles.action'
 import type {
   SupportTicket,
   TicketFilters,
@@ -11,19 +11,13 @@ import type {
   PaginatedTickets,
 } from './types'
 
-async function verifyPermission(adminId: string, actionCode: string): Promise<{ allowed: boolean; error?: string }> {
-  const hasPermission = await checkAdminAction(adminId, actionCode)
-  if (!hasPermission) {
-    return { allowed: false, error: 'Permission insuffisante' }
-  }
-  return { allowed: true }
-}
-
 export async function getTickets(
   page: number = 1,
   pageSize: number = 20,
   filters: TicketFilters = {}
 ): Promise<PaginatedTickets> {
+  await requireAdminAction('view_tickets', 'manage_tickets')
+
   const supabase = createAdminClient()
   const offset = (page - 1) * pageSize
 
@@ -110,6 +104,8 @@ export async function getTickets(
 }
 
 export async function getTicketById(id: string): Promise<SupportTicket | null> {
+  await requireAdminAction('view_tickets', 'manage_tickets')
+
   const supabase = createAdminClient()
 
   const { data: ticket, error } = await supabase
@@ -151,13 +147,10 @@ export async function getTicketById(id: string): Promise<SupportTicket | null> {
 
 export async function assignTicket(
   ticketId: string,
-  assigneeId: string | null,
-  assignedBy: string
+  assigneeId: string | null
 ): Promise<{ success: boolean; error?: string }> {
-  const permission = await verifyPermission(assignedBy, 'manage_tickets')
-  if (!permission.allowed) {
-    return { success: false, error: permission.error }
-  }
+  const admin = await getAuthorizedAdmin('manage_tickets')
+  if (!admin) return { success: false, error: PERMISSION_DENIED }
 
   const supabase = createAdminClient()
 
@@ -190,7 +183,7 @@ export async function assignTicket(
   }
 
   await supabase.from('admin_activity_logs').insert({
-    admin_id: assignedBy,
+    admin_id: admin.id,
     action: assigneeId ? 'assign_ticket' : 'unassign_ticket',
     details: { ticket_id: ticketId, assigned_to: assigneeId },
   })
@@ -203,13 +196,10 @@ export async function assignTicket(
 
 export async function updateTicketStatus(
   ticketId: string,
-  status: TicketStatus,
-  updatedBy: string
+  status: TicketStatus
 ): Promise<{ success: boolean; error?: string }> {
-  const permission = await verifyPermission(updatedBy, 'manage_tickets')
-  if (!permission.allowed) {
-    return { success: false, error: permission.error }
-  }
+  const admin = await getAuthorizedAdmin('manage_tickets')
+  if (!admin) return { success: false, error: PERMISSION_DENIED }
 
   const supabase = createAdminClient()
 
@@ -242,7 +232,7 @@ export async function updateTicketStatus(
   }
 
   await supabase.from('admin_activity_logs').insert({
-    admin_id: updatedBy,
+    admin_id: admin.id,
     action: 'update_ticket_status',
     details: { ticket_id: ticketId, previous_status: ticket.status, new_status: status },
   })
@@ -255,13 +245,10 @@ export async function updateTicketStatus(
 
 export async function updateTicketPriority(
   ticketId: string,
-  priority: TicketPriority,
-  updatedBy: string
+  priority: TicketPriority
 ): Promise<{ success: boolean; error?: string }> {
-  const permission = await verifyPermission(updatedBy, 'manage_tickets')
-  if (!permission.allowed) {
-    return { success: false, error: permission.error }
-  }
+  const admin = await getAuthorizedAdmin('manage_tickets')
+  if (!admin) return { success: false, error: PERMISSION_DENIED }
 
   const supabase = createAdminClient()
 
@@ -288,7 +275,7 @@ export async function updateTicketPriority(
   }
 
   await supabase.from('admin_activity_logs').insert({
-    admin_id: updatedBy,
+    admin_id: admin.id,
     action: 'update_ticket_priority',
     details: { ticket_id: ticketId, previous_priority: ticket.priority, new_priority: priority },
   })
@@ -300,6 +287,8 @@ export async function updateTicketPriority(
 }
 
 export async function getAssignableAdmins(): Promise<Array<{ id: string; full_name: string | null; email: string }>> {
+  await requireAdminAction('view_tickets', 'manage_tickets')
+
   const supabase = createAdminClient()
 
   const { data, error } = await supabase

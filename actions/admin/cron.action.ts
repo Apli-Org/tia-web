@@ -1,8 +1,8 @@
 'use server'
 
+import { getAuthorizedAdmin, requireAdminAction, PERMISSION_DENIED } from '@/lib/auth/admin-guard'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { revalidatePath } from 'next/cache'
-import { checkAdminAction } from './roles.action'
 
 export type CronSetting = {
   id: string
@@ -21,6 +21,8 @@ export type PassedProfilesStats = {
 }
 
 export async function getCronSettings(): Promise<CronSetting[]> {
+  await requireAdminAction('manage_cron_settings')
+
   const supabase = createAdminClient()
 
   const { data, error } = await supabase
@@ -37,15 +39,12 @@ export async function getCronSettings(): Promise<CronSetting[]> {
 }
 
 export async function updateCronSetting(
-  adminId: string,
   key: string,
   value: string,
   isEnabled?: boolean
 ): Promise<{ success: boolean; error?: string }> {
-  const hasPermission = await checkAdminAction(adminId, 'manage_cron_settings')
-  if (!hasPermission) {
-    return { success: false, error: 'Permission insuffisante' }
-  }
+  const admin = await getAuthorizedAdmin('manage_cron_settings')
+  if (!admin) return { success: false, error: PERMISSION_DENIED }
 
   const supabase = createAdminClient()
 
@@ -59,7 +58,7 @@ export async function updateCronSetting(
   const updateData: Record<string, unknown> = {
     value,
     updated_at: new Date().toISOString(),
-    updated_by: adminId,
+    updated_by: admin.id,
   }
 
   if (isEnabled !== undefined) {
@@ -78,7 +77,7 @@ export async function updateCronSetting(
 
   // Log activity
   await supabase.from('admin_activity_logs').insert({
-    admin_id: adminId,
+    admin_id: admin.id,
     action: 'cron_settings_updated',
     details: {
       key,
@@ -94,6 +93,8 @@ export async function updateCronSetting(
 }
 
 export async function getPassedProfilesStats(): Promise<PassedProfilesStats> {
+  await requireAdminAction('manage_cron_settings')
+
   const supabase = createAdminClient()
 
   // Get config
@@ -126,13 +127,9 @@ export async function getPassedProfilesStats(): Promise<PassedProfilesStats> {
   }
 }
 
-export async function runResetNow(
-  adminId: string
-): Promise<{ success: boolean; deletedCount?: number; error?: string }> {
-  const hasPermission = await checkAdminAction(adminId, 'manage_cron_settings')
-  if (!hasPermission) {
-    return { success: false, error: 'Permission insuffisante' }
-  }
+export async function runResetNow(): Promise<{ success: boolean; deletedCount?: number; error?: string }> {
+  const admin = await getAuthorizedAdmin('manage_cron_settings')
+  if (!admin) return { success: false, error: PERMISSION_DENIED }
 
   const supabase = createAdminClient()
 
@@ -156,7 +153,7 @@ export async function runResetNow(
 
   // Log activity
   await supabase.from('admin_activity_logs').insert({
-    admin_id: adminId,
+    admin_id: admin.id,
     action: 'cron_manual_reset_passed_profiles',
     details: {
       deleted_count: deletedCount,

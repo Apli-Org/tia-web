@@ -19,7 +19,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
 import { getAdvertisementDashboardStats } from "@/actions/admin/advertisements.action"
 import { getCurrentAdmin } from "@/actions/admin/auth.action"
-import { checkAdminAction } from "@/actions/admin/roles.action"
+import { checkAdminAction } from "@/lib/auth/admin-guard"
 import { AdsTable } from "./ads-table"
 import { AdsFilters } from "./ads-filters"
 import { CreateAdButton } from "./create-ad-button"
@@ -174,7 +174,7 @@ export default async function AdvertisementsPage({
                 Créez et gérez les publicités et leurs statistiques
               </p>
             </div>
-            {canManageAds && <CreateAdButton adminId={admin.id} />}
+            {canManageAds && <CreateAdButton />}
           </div>
 
           <Suspense fallback={<AdStatsSkeleton />}>
@@ -187,7 +187,7 @@ export default async function AdvertisementsPage({
         </div>
 
         <Suspense fallback={<AdsTableSkeleton />}>
-          <AdsTable page={page} filters={filters} adminId={admin.id} canManage={canManageAds} />
+          <AdsTable page={page} filters={filters} canManage={canManageAds} />
         </Suspense>
       </main>
     </>

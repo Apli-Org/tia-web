@@ -1,5 +1,6 @@
 'use server'
 
+import { getAuthorizedAdmin, requireAdminAction, PERMISSION_DENIED } from '@/lib/auth/admin-guard'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { revalidatePath } from 'next/cache'
 
@@ -58,6 +59,8 @@ export type PromoCodeFilters = {
 export async function getPromoCodes(
   filters: PromoCodeFilters = {}
 ): Promise<{ codes: PromoCode[]; total: number }> {
+  await requireAdminAction('manage_promo_codes')
+
   const supabase = createAdminClient()
   const { search, status = 'all', page = 1, limit = 10 } = filters
   const offset = (page - 1) * limit
@@ -104,6 +107,8 @@ export async function getPromoCodes(
 
 // Get a single promo code by ID
 export async function getPromoCodeById(id: string): Promise<PromoCode | null> {
+  await requireAdminAction('manage_promo_codes')
+
   const supabase = createAdminClient()
 
   const { data, error } = await supabase
@@ -128,6 +133,8 @@ export async function getPromoCodeUsages(
   promoCodeId: string,
   limit = 50
 ): Promise<PromoCodeUsage[]> {
+  await requireAdminAction('manage_promo_codes')
+
   const supabase = createAdminClient()
 
   const { data, error } = await supabase
@@ -150,9 +157,11 @@ export async function getPromoCodeUsages(
 
 // Create a new promo code
 export async function createPromoCode(
-  promoCode: Omit<PromoCode, 'id' | 'created_at' | 'updated_at' | 'current_uses' | 'creator'>,
-  adminId: string
+  promoCode: Omit<PromoCode, 'id' | 'created_at' | 'updated_at' | 'current_uses' | 'creator' | 'created_by'>
 ): Promise<{ success: boolean; error?: string; id?: string }> {
+  const admin = await getAuthorizedAdmin('manage_promo_codes')
+  if (!admin) return { success: false, error: PERMISSION_DENIED }
+
   const supabase = createAdminClient()
 
   // Check if code already exists
@@ -172,7 +181,7 @@ export async function createPromoCode(
       ...promoCode,
       code: promoCode.code.toUpperCase(),
       current_uses: 0,
-      created_by: adminId,
+      created_by: admin.id,
     })
     .select('id')
     .single()
@@ -183,7 +192,7 @@ export async function createPromoCode(
 
   // Log the action
   await supabase.from('admin_activity_logs').insert({
-    admin_id: adminId,
+    admin_id: admin.id,
     action: 'promo_code_created',
     details: {
       promo_code_id: data.id,
@@ -199,9 +208,11 @@ export async function createPromoCode(
 // Update a promo code
 export async function updatePromoCode(
   id: string,
-  updates: Partial<Omit<PromoCode, 'id' | 'created_at' | 'updated_at' | 'creator'>>,
-  adminId: string
+  updates: Partial<Omit<PromoCode, 'id' | 'created_at' | 'updated_at' | 'creator' | 'created_by'>>
 ): Promise<{ success: boolean; error?: string }> {
+  const admin = await getAuthorizedAdmin('manage_promo_codes')
+  if (!admin) return { success: false, error: PERMISSION_DENIED }
+
   const supabase = createAdminClient()
 
   // Get current values for logging
@@ -245,7 +256,7 @@ export async function updatePromoCode(
 
   // Log the action
   await supabase.from('admin_activity_logs').insert({
-    admin_id: adminId,
+    admin_id: admin.id,
     action: 'promo_code_updated',
     details: {
       promo_code_id: id,
@@ -262,9 +273,11 @@ export async function updatePromoCode(
 // Toggle promo code active status
 export async function togglePromoCodeStatus(
   id: string,
-  isActive: boolean,
-  adminId: string
+  isActive: boolean
 ): Promise<{ success: boolean; error?: string }> {
+  const admin = await getAuthorizedAdmin('manage_promo_codes')
+  if (!admin) return { success: false, error: PERMISSION_DENIED }
+
   const supabase = createAdminClient()
 
   const { data: currentCode, error: fetchError } = await supabase
@@ -288,7 +301,7 @@ export async function togglePromoCodeStatus(
 
   // Log the action
   await supabase.from('admin_activity_logs').insert({
-    admin_id: adminId,
+    admin_id: admin.id,
     action: isActive ? 'promo_code_activated' : 'promo_code_deactivated',
     details: {
       promo_code_id: id,
@@ -302,9 +315,11 @@ export async function togglePromoCodeStatus(
 
 // Delete a promo code (soft delete - deactivate)
 export async function deletePromoCode(
-  id: string,
-  adminId: string
+  id: string
 ): Promise<{ success: boolean; error?: string }> {
+  const admin = await getAuthorizedAdmin('manage_promo_codes')
+  if (!admin) return { success: false, error: PERMISSION_DENIED }
+
   const supabase = createAdminClient()
 
   const { data: currentCode, error: fetchError } = await supabase
@@ -341,7 +356,7 @@ export async function deletePromoCode(
 
   // Log the action
   await supabase.from('admin_activity_logs').insert({
-    admin_id: adminId,
+    admin_id: admin.id,
     action: 'promo_code_deleted',
     details: {
       promo_code_id: id,
@@ -356,6 +371,8 @@ export async function deletePromoCode(
 
 // Get promo code statistics
 export async function getPromoCodeStats(): Promise<PromoCodeStats> {
+  await requireAdminAction('manage_promo_codes')
+
   const supabase = createAdminClient()
   const now = new Date().toISOString()
 

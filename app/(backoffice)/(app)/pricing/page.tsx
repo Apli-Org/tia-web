@@ -23,7 +23,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { Button } from "@/components/ui/button"
 import { getPricingStats } from "@/actions/admin/pricing.action"
 import { getCurrentAdmin } from "@/actions/admin/auth.action"
-import { checkAdminAction } from "@/actions/admin/roles.action"
+import { checkAdminAction } from "@/lib/auth/admin-guard"
 import { formatPrice } from "@/lib/pricing-utils"
 import { RefreshButton } from "@/components/backoffice/refresh-button"
 

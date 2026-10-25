@@ -12,7 +12,6 @@ import type { LandingSection, HeaderContent, NavItem } from '@/lib/types/landing
 
 interface HeaderEditorProps {
   section: LandingSection
-  adminId: string
 }
 
 const defaultHeaderContent: HeaderContent = {
@@ -21,7 +20,7 @@ const defaultHeaderContent: HeaderContent = {
   ctaButton: { text: '', href: '' },
 }
 
-export function HeaderEditor({ section, adminId }: HeaderEditorProps) {
+export function HeaderEditor({ section }: HeaderEditorProps) {
   const sectionContent = section.content as HeaderContent
   const [content, setContent] = useState<HeaderContent>({
     ...defaultHeaderContent,
@@ -65,7 +64,6 @@ export function HeaderEditor({ section, adminId }: HeaderEditorProps) {
   return (
     <EditorWrapper
       section={section}
-      adminId={adminId}
       content={content}
       onContentChange={(c) => setContent(c as HeaderContent)}
       previewComponent={<Header content={content} />}
@@ -75,7 +73,6 @@ export function HeaderEditor({ section, adminId }: HeaderEditorProps) {
           label="Logo"
           value={content.logo}
           onChange={(url) => updateContent({ logo: url })}
-          adminId={adminId}
         />
 
         <div className="border rounded-lg p-4 space-y-4">

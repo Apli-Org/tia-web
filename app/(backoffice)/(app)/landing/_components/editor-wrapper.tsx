@@ -24,7 +24,6 @@ import type { LandingSection, LandingSectionContent, SectionKey } from '@/lib/ty
 
 interface EditorWrapperProps {
   section: LandingSection
-  adminId: string
   children: React.ReactNode
   content: LandingSectionContent
   onContentChange: (content: LandingSectionContent) => void
@@ -33,7 +32,6 @@ interface EditorWrapperProps {
 
 export function EditorWrapper({
   section,
-  adminId,
   children,
   content,
   onContentChange,
@@ -54,8 +52,7 @@ export function EditorWrapper({
 
     const result = await updateLandingSection(
       section.section_key as SectionKey,
-      content,
-      adminId
+      content
     )
 
     if (result.success) {
@@ -76,8 +73,7 @@ export function EditorWrapper({
     // First save the content, then publish
     const saveResult = await updateLandingSection(
       section.section_key as SectionKey,
-      content,
-      adminId
+      content
     )
 
     if (!saveResult.success) {
@@ -86,7 +82,7 @@ export function EditorWrapper({
       return
     }
 
-    const publishResult = await publishLandingSection(section.section_key as SectionKey, adminId)
+    const publishResult = await publishLandingSection(section.section_key as SectionKey)
 
     if (publishResult.success) {
       setShowSuccessDialog(true)
@@ -102,7 +98,7 @@ export function EditorWrapper({
     setError(null)
     setSuccess(null)
 
-    const result = await unpublishLandingSection(section.section_key as SectionKey, adminId)
+    const result = await unpublishLandingSection(section.section_key as SectionKey)
 
     if (result.success) {
       setSuccess('Section dépubliée')

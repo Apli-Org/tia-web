@@ -12,7 +12,7 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
 import { getCurrentAdmin } from '@/actions/admin/auth.action'
-import { checkAdminAction } from '@/actions/admin/roles.action'
+import { checkAdminAction } from '@/lib/auth/admin-guard'
 import { getNewsletterSubscriberCount } from '@/actions/admin/newsletter.action'
 import { NewsletterStats } from './newsletter-stats'
 import { NewsletterContent } from './newsletter-content'
@@ -63,10 +63,10 @@ async function NewsletterContentWrapper() {
   const admin = await getCurrentAdmin()
   if (!admin) return null
 
-  const result = await getNewsletterSubscriberCount(admin.id)
+  const result = await getNewsletterSubscriberCount()
   const count = result.success && result.count !== undefined ? result.count : 0
 
-  return <NewsletterContent adminId={admin.id} subscriberCount={count} />
+  return <NewsletterContent subscriberCount={count} />
 }
 
 export default async function NewsletterPage() {
@@ -104,7 +104,7 @@ export default async function NewsletterPage() {
                 Envoyez des emails personnalisés à vos abonnés
               </p>
             </div>
-            <NewsletterExport adminId={admin.id} />
+            <NewsletterExport />
           </div>
 
           <Suspense fallback={<StatsSkeleton />}>

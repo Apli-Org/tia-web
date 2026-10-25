@@ -1,16 +1,8 @@
 'use server'
 
+import { getAuthorizedAdmin, requireAdminAction, PERMISSION_DENIED } from '@/lib/auth/admin-guard'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { revalidatePath } from 'next/cache'
-import { checkAdminAction } from './roles.action'
-
-async function verifyActionPermission(adminId: string, actionCode: string): Promise<{ allowed: boolean; error?: string }> {
-  const hasPermission = await checkAdminAction(adminId, actionCode)
-  if (!hasPermission) {
-    return { allowed: false, error: 'Permission insuffisante' }
-  }
-  return { allowed: true }
-}
 
 export type StaffMember = {
   id: string
@@ -39,6 +31,8 @@ export type StaffFilters = {
 
 // Get all staff members with filters
 export async function getStaffMembers(filters?: StaffFilters): Promise<StaffMember[]> {
+  await requireAdminAction('view_staff', 'manage_staff')
+
   const supabase = createAdminClient()
 
   let query = supabase
@@ -87,6 +81,8 @@ export async function getStaffMembers(filters?: StaffFilters): Promise<StaffMemb
 
 // Get staff member by ID
 export async function getStaffById(id: string): Promise<StaffMember | null> {
+  await requireAdminAction('view_staff', 'manage_staff')
+
   const supabase = createAdminClient()
 
   const { data, error } = await supabase
@@ -118,6 +114,8 @@ export async function getStaffById(id: string): Promise<StaffMember | null> {
 
 // Get staff statistics
 export async function getStaffStats(): Promise<StaffStats> {
+  await requireAdminAction('view_staff', 'manage_staff')
+
   const supabase = createAdminClient()
 
   const { data, error } = await supabase
@@ -158,13 +156,10 @@ export async function createStaffMember(
     password: string
     full_name: string
     role_id: string
-  },
-  createdBy: string
-): Promise<{ success: boolean; error?: string; id?: string }> {
-  const permission = await verifyActionPermission(createdBy, 'manage_staff')
-  if (!permission.allowed) {
-    return { success: false, error: permission.error }
   }
+): Promise<{ success: boolean; error?: string; id?: string }> {
+  const admin = await getAuthorizedAdmin('manage_staff')
+  if (!admin) return { success: false, error: PERMISSION_DENIED }
 
   const supabase = createAdminClient()
 
@@ -217,7 +212,7 @@ export async function createStaffMember(
   }
 
   await supabase.from('admin_activity_logs').insert({
-    admin_id: createdBy,
+    admin_id: admin.id,
     action: 'create_staff',
     target_type: 'admin_user',
     target_id: newMember.id,
@@ -234,13 +229,10 @@ export async function updateStaffMember(
   updates: {
     full_name?: string
     role_id?: string
-  },
-  updatedBy: string
-): Promise<{ success: boolean; error?: string }> {
-  const permission = await verifyActionPermission(updatedBy, 'manage_staff')
-  if (!permission.allowed) {
-    return { success: false, error: permission.error }
   }
+): Promise<{ success: boolean; error?: string }> {
+  const admin = await getAuthorizedAdmin('manage_staff')
+  if (!admin) return { success: false, error: PERMISSION_DENIED }
 
   const supabase = createAdminClient()
 
@@ -308,7 +300,7 @@ export async function updateStaffMember(
   }
 
   await supabase.from('admin_activity_logs').insert({
-    admin_id: updatedBy,
+    admin_id: admin.id,
     action: 'update_staff',
     target_type: 'admin_user',
     target_id: id,
@@ -322,13 +314,10 @@ export async function updateStaffMember(
 // Toggle staff active status
 export async function toggleStaffStatus(
   id: string,
-  isActive: boolean,
-  toggledBy: string
+  isActive: boolean
 ): Promise<{ success: boolean; error?: string }> {
-  const permission = await verifyActionPermission(toggledBy, 'manage_staff')
-  if (!permission.allowed) {
-    return { success: false, error: permission.error }
-  }
+  const admin = await getAuthorizedAdmin('manage_staff')
+  if (!admin) return { success: false, error: PERMISSION_DENIED }
 
   const supabase = createAdminClient()
 
@@ -355,7 +344,7 @@ export async function toggleStaffStatus(
   }
 
   // Prevent self-deactivation
-  if (id === toggledBy && !isActive) {
+  if (id === admin.id && !isActive) {
     return { success: false, error: 'Vous ne pouvez pas vous désactiver vous-même' }
   }
 
@@ -370,7 +359,7 @@ export async function toggleStaffStatus(
 
   // Log the action
   await supabase.from('admin_activity_logs').insert({
-    admin_id: toggledBy,
+    admin_id: admin.id,
     action: isActive ? 'activate_staff' : 'deactivate_staff',
     target_type: 'admin_user',
     target_id: id,
@@ -382,11 +371,13 @@ export async function toggleStaffStatus(
 
 // Delete staff member (soft delete = deactivate)
 export async function deleteStaffMember(
-  id: string,
-  deletedBy: string
+  id: string
 ): Promise<{ success: boolean; error?: string }> {
+  const admin = await getAuthorizedAdmin('manage_staff')
+  if (!admin) return { success: false, error: PERMISSION_DENIED }
+
   // We use soft delete (deactivate) instead of hard delete
-  return toggleStaffStatus(id, false, deletedBy)
+  return toggleStaffStatus(id, false)
 }
 
 // Get staff activity logs
@@ -401,6 +392,8 @@ export async function getStaffActivityLogs(
   details: Record<string, unknown> | null
   created_at: string
 }>> {
+  await requireAdminAction('view_staff', 'manage_staff')
+
   const supabase = createAdminClient()
 
   const { data, error } = await supabase
@@ -421,13 +414,10 @@ export async function getStaffActivityLogs(
 // Reset staff password
 export async function resetStaffPassword(
   id: string,
-  newPassword: string,
-  resetBy: string
+  newPassword: string
 ): Promise<{ success: boolean; error?: string }> {
-  const permission = await verifyActionPermission(resetBy, 'reset_passwords')
-  if (!permission.allowed) {
-    return { success: false, error: permission.error }
-  }
+  const admin = await getAuthorizedAdmin('reset_passwords')
+  if (!admin) return { success: false, error: PERMISSION_DENIED }
 
   const supabase = createAdminClient()
 
@@ -440,7 +430,7 @@ export async function resetStaffPassword(
   }
 
   await supabase.from('admin_activity_logs').insert({
-    admin_id: resetBy,
+    admin_id: admin.id,
     action: 'reset_password',
     target_type: 'admin_user',
     target_id: id,

@@ -1,8 +1,8 @@
 'use server'
 
+import { getAuthorizedAdmin, PERMISSION_DENIED } from '@/lib/auth/admin-guard'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { revalidatePath } from 'next/cache'
-import { checkAdminAction } from './roles.action'
 import { render } from '@react-email/render'
 import { Resend } from 'resend'
 import NewsletterEmail from '@/emails/newsletter'
@@ -18,13 +18,9 @@ export type NewsletterResult = {
   error?: string
 }
 
-export async function getNewsletterSubscriberCount(
-  adminId: string
-): Promise<NewsletterResult> {
-  const hasPermission = await checkAdminAction(adminId, 'send_newsletter')
-  if (!hasPermission) {
-    return { success: false, error: 'Permission insuffisante' }
-  }
+export async function getNewsletterSubscriberCount(): Promise<NewsletterResult> {
+  const admin = await getAuthorizedAdmin('send_newsletter')
+  if (!admin) return { success: false, error: PERMISSION_DENIED }
 
   const supabase = createAdminClient()
 
@@ -41,14 +37,11 @@ export async function getNewsletterSubscriberCount(
 }
 
 export async function sendNewsletter(
-  adminId: string,
   subject: string,
   htmlContent: string
 ): Promise<NewsletterResult> {
-  const hasPermission = await checkAdminAction(adminId, 'send_newsletter')
-  if (!hasPermission) {
-    return { success: false, error: 'Permission insuffisante' }
-  }
+  const admin = await getAuthorizedAdmin('send_newsletter')
+  if (!admin) return { success: false, error: PERMISSION_DENIED }
 
   if (!subject || !subject.trim()) {
     return { success: false, error: 'Le sujet est requis' }
@@ -121,7 +114,7 @@ export async function sendNewsletter(
     }
 
     await supabase.from('admin_activity_logs').insert({
-      admin_id: adminId,
+      admin_id: admin.id,
       action: 'send_newsletter',
       details: {
         subject,
@@ -190,15 +183,12 @@ export type SendStatusResult = {
 }
 
 export async function getNewsletterSubscribers(
-  adminId: string,
   page: number,
   pageSize: number,
   search?: string
 ): Promise<SubscriberListResult> {
-  const hasPermission = await checkAdminAction(adminId, 'send_newsletter')
-  if (!hasPermission) {
-    return { success: false, error: 'Permission insuffisante' }
-  }
+  const admin = await getAuthorizedAdmin('send_newsletter')
+  if (!admin) return { success: false, error: PERMISSION_DENIED }
 
   const supabase = createAdminClient()
 
@@ -233,16 +223,13 @@ export async function getNewsletterSubscribers(
 }
 
 export async function initiateNewsletterSend(
-  adminId: string,
   subject: string,
   htmlContent: string,
   subscriberIds?: string[],
   simulation?: boolean
 ): Promise<InitiateSendResult> {
-  const hasPermission = await checkAdminAction(adminId, 'send_newsletter')
-  if (!hasPermission) {
-    return { success: false, error: 'Permission insuffisante' }
-  }
+  const admin = await getAuthorizedAdmin('send_newsletter')
+  if (!admin) return { success: false, error: PERMISSION_DENIED }
 
   if (!subject || !subject.trim()) {
     return { success: false, error: 'Le sujet est requis' }
@@ -283,7 +270,7 @@ export async function initiateNewsletterSend(
   const { data: insertedRecord, error: insertError } = await supabase
     .from('newsletter_sends')
     .insert({
-      admin_id: adminId,
+      admin_id: admin.id,
       subject,
       html_content: htmlContent,
       status: 'pending',
@@ -308,13 +295,10 @@ export async function initiateNewsletterSend(
 }
 
 export async function getNewsletterSendStatus(
-  adminId: string,
   sendId: string
 ): Promise<SendStatusResult> {
-  const hasPermission = await checkAdminAction(adminId, 'send_newsletter')
-  if (!hasPermission) {
-    return { success: false, error: 'Permission insuffisante' }
-  }
+  const admin = await getAuthorizedAdmin('send_newsletter')
+  if (!admin) return { success: false, error: PERMISSION_DENIED }
 
   const supabase = createAdminClient()
 
@@ -340,13 +324,9 @@ export async function getNewsletterSendStatus(
   }
 }
 
-export async function exportNewsletterSubscribersCSV(
-  adminId: string
-): Promise<{ success: boolean; data?: string; error?: string }> {
-  const hasPermission = await checkAdminAction(adminId, 'send_newsletter')
-  if (!hasPermission) {
-    return { success: false, error: 'Permission insuffisante' }
-  }
+export async function exportNewsletterSubscribersCSV(): Promise<{ success: boolean; data?: string; error?: string }> {
+  const admin = await getAuthorizedAdmin('send_newsletter')
+  if (!admin) return { success: false, error: PERMISSION_DENIED }
 
   const supabase = createAdminClient()
 

@@ -10,13 +10,12 @@ import { createClient } from '@/lib/supabase/client'
 interface ImageUploadProps {
   value: string
   onChange: (url: string) => void
-  adminId: string
   label?: string
   className?: string
   phoneFrame?: boolean // Afficher l'image dans un cadre de téléphone
 }
 
-export function ImageUpload({ value, onChange, adminId, label, className, phoneFrame }: ImageUploadProps) {
+export function ImageUpload({ value, onChange, label, className, phoneFrame }: ImageUploadProps) {
   const [isUploading, setIsUploading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
@@ -43,7 +42,7 @@ export function ImageUpload({ value, onChange, adminId, label, className, phoneF
       }
 
       // Check permission via server action
-      const permResult = await checkUploadPermission(adminId)
+      const permResult = await checkUploadPermission()
       if (!permResult.success) {
         setError(permResult.error || 'Permission refusée')
         return
@@ -81,7 +80,7 @@ export function ImageUpload({ value, onChange, adminId, label, className, phoneF
         .getPublicUrl(filename)
 
       // Log activity via server action
-      await logImageUpload(adminId, filename)
+      await logImageUpload(filename)
 
       onChange(urlData.publicUrl)
     } catch (err) {

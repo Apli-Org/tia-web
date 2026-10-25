@@ -21,7 +21,6 @@ type AdsTableProps = {
     search?: string
     status?: "all" | "active" | "inactive"
   }
-  adminId: string
   canManage: boolean
 }
 
@@ -53,7 +52,6 @@ function formatDate(dateString: string | null): string {
 export async function AdsTable({
   page,
   filters,
-  adminId,
   canManage,
 }: AdsTableProps) {
   const queryFilters: AdvertisementFilters = {
@@ -167,7 +165,6 @@ export async function AdsTable({
                     <TableCell className="text-right">
                       <AdActions
                         ad={ad}
-                        adminId={adminId}
                         canManage={canManage}
                       />
                     </TableCell>

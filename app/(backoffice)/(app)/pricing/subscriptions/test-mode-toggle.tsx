@@ -9,17 +9,16 @@ import { toggleTestMode } from '@/actions/admin/pricing.action'
 
 interface TestModeToggleProps {
   initialEnabled: boolean
-  adminId: string
 }
 
-export function TestModeToggle({ initialEnabled, adminId }: TestModeToggleProps) {
+export function TestModeToggle({ initialEnabled }: TestModeToggleProps) {
   const [enabled, setEnabled] = useState(initialEnabled)
   const [isLoading, setIsLoading] = useState(false)
 
   const handleToggle = async (checked: boolean) => {
     setIsLoading(true)
 
-    const result = await toggleTestMode(checked, adminId)
+    const result = await toggleTestMode(checked)
 
     if (result.success) {
       setEnabled(checked)

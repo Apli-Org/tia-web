@@ -19,7 +19,7 @@ import { getCronSettings, getPassedProfilesStats } from "@/actions/admin/cron.ac
 import { CronConfigForm } from "./cron-config-form"
 import { RefreshButton } from "@/components/backoffice/refresh-button"
 
-async function CronStats({ adminId }: { adminId: string }) {
+async function CronStats() {
   const [settings, stats] = await Promise.all([
     getCronSettings(),
     getPassedProfilesStats(),
@@ -62,7 +62,7 @@ async function CronStats({ adminId }: { adminId: string }) {
         </Card>
       </div>
 
-      <CronConfigForm settings={settings} stats={stats} adminId={adminId} />
+      <CronConfigForm settings={settings} stats={stats} />
     </>
   )
 }
@@ -126,7 +126,7 @@ export default async function CronPage() {
           </div>
 
           <Suspense fallback={<CronStatsSkeleton />}>
-            <CronStats adminId={admin.id} />
+            <CronStats />
           </Suspense>
         </div>
       </main>

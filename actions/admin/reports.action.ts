@@ -1,9 +1,8 @@
 "use server"
 
+import { requireAdminAction } from "@/lib/auth/admin-guard"
 import { createAdminClient } from "@/lib/supabase/admin"
 import { revalidatePath } from "next/cache"
-import { getCurrentAdmin } from "./auth.action"
-import { checkAdminAction } from "./roles.action"
 import type {
   ReportedContent,
   ReportFilter,
@@ -15,6 +14,8 @@ import type {
 } from "./moderation-types"
 
 export async function getModerationStats(): Promise<ModerationStats> {
+  await requireAdminAction("view_reports")
+
   const supabase = createAdminClient()
   const today = new Date()
   today.setHours(0, 0, 0, 0)
@@ -66,6 +67,8 @@ export async function getReportedContent(
   pageSize: number = 20,
   filters: ReportFilter = {}
 ): Promise<PaginatedReports> {
+  await requireAdminAction("view_reports")
+
   const supabase = createAdminClient()
   const offset = (page - 1) * pageSize
 
@@ -126,6 +129,8 @@ export async function getReportsByType(
 }
 
 export async function getReportById(id: string): Promise<ReportedContent | null> {
+  await requireAdminAction("view_reports")
+
   const supabase = createAdminClient()
 
   const { data, error } = await supabase
@@ -155,15 +160,7 @@ export async function reviewReport(
   notes?: string,
   banDays?: number
 ) {
-  const currentAdmin = await getCurrentAdmin()
-  if (!currentAdmin) {
-    throw new Error("Non authentifié")
-  }
-
-  const canModerate = await checkAdminAction(currentAdmin.id, "moderate_content")
-  if (!canModerate) {
-    throw new Error("Permission insuffisante")
-  }
+  const currentAdmin = await requireAdminAction("moderate_content")
 
   const supabase = createAdminClient()
 
@@ -250,6 +247,8 @@ export async function reviewReport(
 }
 
 export async function getReportStats(contentType?: ContentType) {
+  await requireAdminAction("view_reports")
+
   const supabase = createAdminClient()
 
   const buildQuery = (status: ReportStatus) => {

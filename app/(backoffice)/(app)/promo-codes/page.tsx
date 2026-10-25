@@ -19,7 +19,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
 import { getPromoCodeStats } from "@/actions/admin/promo-codes.action"
 import { getCurrentAdmin } from "@/actions/admin/auth.action"
-import { checkAdminAction } from "@/actions/admin/roles.action"
+import { checkAdminAction } from "@/lib/auth/admin-guard"
 import { formatPrice } from "@/lib/pricing-utils"
 import { PromoCodesTable } from "./promo-codes-table"
 import { PromoCodesFilters } from "./promo-codes-filters"
@@ -169,7 +169,7 @@ export default async function PromoCodesPage({
                 Créez et gérez les codes promotionnels pour vos utilisateurs
               </p>
             </div>
-            <CreatePromoCodeButton adminId={admin.id} />
+            <CreatePromoCodeButton />
           </div>
 
           <Suspense fallback={<PromoCodeStatsSkeleton />}>
@@ -183,7 +183,7 @@ export default async function PromoCodesPage({
         </div>
 
         <Suspense fallback={<PromoCodesTableSkeleton />}>
-          <PromoCodesTable page={page} filters={filters} adminId={admin.id} />
+          <PromoCodesTable page={page} filters={filters} />
         </Suspense>
       </main>
     </>

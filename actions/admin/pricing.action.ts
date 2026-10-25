@@ -1,5 +1,6 @@
 'use server'
 
+import { getAuthorizedAdmin, requireAdminAction, PERMISSION_DENIED } from '@/lib/auth/admin-guard'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { revalidatePath } from 'next/cache'
 
@@ -57,6 +58,8 @@ export type PricingStats = {
 
 // Get all subscription pricing
 export async function getSubscriptionPricing(): Promise<PricingConfig[]> {
+  await requireAdminAction('view_pricing', 'manage_pricing')
+
   const supabase = createAdminClient()
 
   const { data, error } = await supabase
@@ -76,6 +79,8 @@ export async function getSubscriptionPricing(): Promise<PricingConfig[]> {
 
 // Get all consumable pricing
 export async function getConsumablePricing(): Promise<PricingConfig[]> {
+  await requireAdminAction('view_pricing', 'manage_pricing')
+
   const supabase = createAdminClient()
 
   const { data, error } = await supabase
@@ -95,6 +100,8 @@ export async function getConsumablePricing(): Promise<PricingConfig[]> {
 
 // Get a single pricing config by ID
 export async function getPricingById(id: string): Promise<PricingConfig | null> {
+  await requireAdminAction('view_pricing', 'manage_pricing')
+
   const supabase = createAdminClient()
 
   const { data, error } = await supabase
@@ -115,9 +122,11 @@ export async function getPricingById(id: string): Promise<PricingConfig | null> 
 export async function updatePricing(
   id: string,
   updates: Partial<Omit<PricingConfig, 'id' | 'created_at' | 'updated_at'>>,
-  adminId: string,
   reason?: string
 ): Promise<{ success: boolean; error?: string }> {
+  const admin = await getAuthorizedAdmin('manage_pricing')
+  if (!admin) return { success: false, error: PERMISSION_DENIED }
+
   const supabase = createAdminClient()
 
   // Get current values for history
@@ -149,7 +158,7 @@ export async function updatePricing(
     new_price: updates.price ?? currentPricing.price,
     previous_values: currentPricing,
     new_values: { ...currentPricing, ...updates },
-    changed_by: adminId,
+    changed_by: admin.id,
     change_reason: reason,
   })
 
@@ -162,16 +171,18 @@ export async function updatePricing(
 
 // Create new pricing config
 export async function createPricing(
-  pricing: Omit<PricingConfig, 'id' | 'created_at' | 'updated_at'>,
-  adminId: string
+  pricing: Omit<PricingConfig, 'id' | 'created_at' | 'updated_at'>
 ): Promise<{ success: boolean; error?: string; id?: string }> {
+  const admin = await getAuthorizedAdmin('manage_pricing')
+  if (!admin) return { success: false, error: PERMISSION_DENIED }
+
   const supabase = createAdminClient()
 
   const { data, error } = await supabase
     .from('pricing_config')
     .insert({
       ...pricing,
-      created_by: adminId,
+      created_by: admin.id,
     })
     .select('id')
     .single()
@@ -186,7 +197,7 @@ export async function createPricing(
     action: 'created',
     new_price: pricing.price,
     new_values: pricing,
-    changed_by: adminId,
+    changed_by: admin.id,
   })
 
   revalidatePath('/pricing')
@@ -200,9 +211,11 @@ export async function createPricing(
 export async function togglePricingStatus(
   id: string,
   isActive: boolean,
-  adminId: string,
   reason?: string
 ): Promise<{ success: boolean; error?: string }> {
+  const admin = await getAuthorizedAdmin('manage_pricing')
+  if (!admin) return { success: false, error: PERMISSION_DENIED }
+
   const supabase = createAdminClient()
 
   const { error } = await supabase
@@ -218,7 +231,7 @@ export async function togglePricingStatus(
   await supabase.from('pricing_history').insert({
     pricing_config_id: id,
     action: isActive ? 'activated' : 'deactivated',
-    changed_by: adminId,
+    changed_by: admin.id,
     change_reason: reason,
   })
 
@@ -232,9 +245,11 @@ export async function togglePricingStatus(
 // Delete pricing config (soft delete - just deactivate)
 export async function deletePricing(
   id: string,
-  adminId: string,
   reason?: string
 ): Promise<{ success: boolean; error?: string }> {
+  const admin = await getAuthorizedAdmin('manage_pricing')
+  if (!admin) return { success: false, error: PERMISSION_DENIED }
+
   const supabase = createAdminClient()
 
   // We don't actually delete, just deactivate
@@ -251,7 +266,7 @@ export async function deletePricing(
   await supabase.from('pricing_history').insert({
     pricing_config_id: id,
     action: 'deleted',
-    changed_by: adminId,
+    changed_by: admin.id,
     change_reason: reason,
   })
 
@@ -267,6 +282,8 @@ export async function getPricingHistory(
   pricingId: string,
   limit = 50
 ): Promise<PricingHistory[]> {
+  await requireAdminAction('view_pricing', 'manage_pricing')
+
   const supabase = createAdminClient()
 
   const { data, error } = await supabase
@@ -292,6 +309,8 @@ export async function getAllPricingHistory(
   page = 1,
   limit = 20
 ): Promise<{ history: PricingHistory[]; total: number }> {
+  await requireAdminAction('view_pricing', 'manage_pricing')
+
   const supabase = createAdminClient()
   const offset = (page - 1) * limit
 
@@ -318,6 +337,8 @@ export async function getAllPricingHistory(
 
 // Get pricing statistics
 export async function getPricingStats(): Promise<PricingStats> {
+  await requireAdminAction('view_pricing', 'manage_pricing')
+
   const supabase = createAdminClient()
 
   // Use current calendar month (same as dashboard)
@@ -381,6 +402,8 @@ export async function getPricingStats(): Promise<PricingStats> {
 }
 
 export async function getTestMode(): Promise<boolean> {
+  await requireAdminAction('view_pricing', 'manage_pricing')
+
   const supabase = createAdminClient()
 
   const { data, error } = await supabase
@@ -398,9 +421,11 @@ export async function getTestMode(): Promise<boolean> {
 }
 
 export async function toggleTestMode(
-  enabled: boolean,
-  adminId: string
+  enabled: boolean
 ): Promise<{ success: boolean; error?: string }> {
+  const admin = await getAuthorizedAdmin('manage_pricing')
+  if (!admin) return { success: false, error: PERMISSION_DENIED }
+
   const supabase = createAdminClient()
 
   const { error } = await supabase
@@ -413,7 +438,7 @@ export async function toggleTestMode(
   }
 
   await supabase.from('admin_activity_logs').insert({
-    admin_id: adminId,
+    admin_id: admin.id,
     action: enabled ? 'test_mode_enabled' : 'test_mode_disabled',
     details: { test_mode_enabled: enabled },
   })

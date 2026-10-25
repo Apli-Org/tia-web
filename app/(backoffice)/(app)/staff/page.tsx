@@ -16,7 +16,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { Button } from "@/components/ui/button"
 import { getStaffStats } from "@/actions/admin/staff.action"
 import { getCurrentAdmin } from "@/actions/admin/auth.action"
-import { checkAdminAction } from "@/actions/admin/roles.action"
+import { checkAdminAction } from "@/lib/auth/admin-guard"
 import { StaffTable } from "./staff-table"
 import { StaffFilters } from "./staff-filters"
 import { CreateStaffButton } from "./create-staff-button"
@@ -176,7 +176,7 @@ export default async function StaffPage({
                   </Link>
                 </Button>
               )}
-              <CreateStaffButton adminId={admin.id} />
+              <CreateStaffButton />
             </div>
           </div>
 

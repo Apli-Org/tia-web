@@ -19,7 +19,7 @@ import { Badge } from "@/components/ui/badge"
 import { Skeleton } from "@/components/ui/skeleton"
 import { getAllPricingHistory } from "@/actions/admin/pricing.action"
 import { getCurrentAdmin } from "@/actions/admin/auth.action"
-import { checkAdminAction } from "@/actions/admin/roles.action"
+import { checkAdminAction } from "@/lib/auth/admin-guard"
 import { formatPrice } from "@/lib/pricing-utils"
 import { RefreshButton } from "@/components/backoffice/refresh-button"
 

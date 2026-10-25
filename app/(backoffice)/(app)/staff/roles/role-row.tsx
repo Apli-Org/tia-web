@@ -27,10 +27,9 @@ import { EditRoleModal } from "./edit-role-modal"
 
 type RoleRowProps = {
   role: AdminRole
-  adminId: string
 }
 
-export function RoleRow({ role, adminId }: RoleRowProps) {
+export function RoleRow({ role }: RoleRowProps) {
   const [showEditModal, setShowEditModal] = useState(false)
   const [showDeleteDialog, setShowDeleteDialog] = useState(false)
   const [isDeleting, setIsDeleting] = useState(false)
@@ -39,7 +38,7 @@ export function RoleRow({ role, adminId }: RoleRowProps) {
   const handleDelete = async () => {
     setIsDeleting(true)
     setError(null)
-    const result = await deleteRole(role.id, adminId)
+    const result = await deleteRole(role.id)
     setIsDeleting(false)
     if (!result.success) {
       setError(result.error || "Une erreur est survenue")
@@ -112,7 +111,6 @@ export function RoleRow({ role, adminId }: RoleRowProps) {
 
       <EditRoleModal
         role={role}
-        adminId={adminId}
         open={showEditModal}
         onClose={() => setShowEditModal(false)}
       />

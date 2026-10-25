@@ -26,10 +26,9 @@ import { createStaffMember } from "@/actions/admin/staff.action"
 import { getAllRoles, type AdminRole } from "@/actions/admin/roles.action"
 
 type CreateStaffButtonProps = {
-  adminId: string
 }
 
-export function CreateStaffButton({ adminId }: CreateStaffButtonProps) {
+export function CreateStaffButton() {
   const [open, setOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -71,8 +70,7 @@ export function CreateStaffButton({ adminId }: CreateStaffButtonProps) {
     }
 
     const result = await createStaffMember(
-      { email, password, full_name: fullName, role_id: roleId },
-      adminId
+      { email, password, full_name: fullName, role_id: roleId }
     )
 
     if (result.success) {

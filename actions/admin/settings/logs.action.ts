@@ -1,9 +1,12 @@
 'use server'
 
+import { requireSignedInAdmin } from '@/lib/auth/admin-guard'
 import { createAdminClient } from '@/lib/supabase/admin'
 import type { ActivityLog, ActivityFilters, ActivityStats, PaginatedLogs } from './types'
 
 export async function getActivityStats(): Promise<ActivityStats> {
+  await requireSignedInAdmin()
+
   const supabase = createAdminClient()
 
   const now = new Date()
@@ -61,6 +64,8 @@ export async function getActivityLogs(
   pageSize: number = 50,
   filters: ActivityFilters = {}
 ): Promise<PaginatedLogs> {
+  await requireSignedInAdmin()
+
   const supabase = createAdminClient()
   const offset = (page - 1) * pageSize
 
@@ -128,6 +133,8 @@ export async function getActivityLogs(
 }
 
 export async function getDistinctActions(): Promise<string[]> {
+  await requireSignedInAdmin()
+
   const supabase = createAdminClient()
 
   const { data, error } = await supabase
@@ -144,6 +151,8 @@ export async function getDistinctActions(): Promise<string[]> {
 }
 
 export async function getAdminsForFilter(): Promise<Array<{ id: string; name: string }>> {
+  await requireSignedInAdmin()
+
   const supabase = createAdminClient()
 
   const { data, error } = await supabase

@@ -31,7 +31,6 @@ type TicketHeaderProps = {
   ticket: SupportTicket
   admins: Array<{ id: string; full_name: string | null; email: string }>
   canManage: boolean
-  currentAdminId: string
 }
 
 function getStatusVariant(status: TicketStatus): "default" | "secondary" | "destructive" | "outline" {
@@ -64,12 +63,12 @@ function getPriorityVariant(priority: TicketPriority): "default" | "secondary" |
   }
 }
 
-export function TicketHeader({ ticket, admins, canManage, currentAdminId }: TicketHeaderProps) {
+export function TicketHeader({ ticket, admins, canManage }: TicketHeaderProps) {
   const [isPending, startTransition] = useTransition()
 
   const handleStatusChange = (value: string) => {
     startTransition(async () => {
-      const result = await updateTicketStatus(ticket.id, value as TicketStatus, currentAdminId)
+      const result = await updateTicketStatus(ticket.id, value as TicketStatus)
       if (!result.success) {
         alert(result.error)
       }
@@ -78,7 +77,7 @@ export function TicketHeader({ ticket, admins, canManage, currentAdminId }: Tick
 
   const handlePriorityChange = (value: string) => {
     startTransition(async () => {
-      const result = await updateTicketPriority(ticket.id, value as TicketPriority, currentAdminId)
+      const result = await updateTicketPriority(ticket.id, value as TicketPriority)
       if (!result.success) {
         alert(result.error)
       }
@@ -88,7 +87,7 @@ export function TicketHeader({ ticket, admins, canManage, currentAdminId }: Tick
   const handleAssigneeChange = (value: string) => {
     startTransition(async () => {
       const assigneeId = value === "unassigned" ? null : value
-      const result = await assignTicket(ticket.id, assigneeId, currentAdminId)
+      const result = await assignTicket(ticket.id, assigneeId)
       if (!result.success) {
         alert(result.error)
       }

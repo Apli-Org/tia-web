@@ -32,12 +32,11 @@ import { initiateNewsletterSend } from '@/actions/admin/newsletter.action'
 import { SendProgress } from './send-progress'
 
 type NewsletterFormProps = {
-  adminId: string
   subscriberCount: number
   selectedSubscriberIds: string[]
 }
 
-export function NewsletterForm({ adminId, subscriberCount, selectedSubscriberIds }: NewsletterFormProps) {
+export function NewsletterForm({ subscriberCount, selectedSubscriberIds }: NewsletterFormProps) {
   const [subject, setSubject] = useState('')
   const [content, setContent] = useState('<p>Écrivez votre newsletter ici...</p>')
   const [isLoading, setIsLoading] = useState(false)
@@ -84,7 +83,6 @@ export function NewsletterForm({ adminId, subscriberCount, selectedSubscriberIds
     setSuccess(null)
 
     const result = await initiateNewsletterSend(
-      adminId,
       subject,
       content,
       selectedSubscriberIds.length > 0 ? selectedSubscriberIds : undefined,
@@ -213,7 +211,6 @@ export function NewsletterForm({ adminId, subscriberCount, selectedSubscriberIds
 
         {activeSendId && (
           <SendProgress
-            adminId={adminId}
             sendId={activeSendId}
             onComplete={handleSendComplete}
           />

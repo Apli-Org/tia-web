@@ -31,11 +31,10 @@ type EditStaffModalProps = {
   member: StaffMember
   open: boolean
   onClose: () => void
-  adminId: string
   isSelf?: boolean
 }
 
-export function EditStaffModal({ member, open, onClose, adminId, isSelf }: EditStaffModalProps) {
+export function EditStaffModal({ member, open, onClose, isSelf }: EditStaffModalProps) {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [roles, setRoles] = useState<AdminRole[]>([])
@@ -63,8 +62,7 @@ export function EditStaffModal({ member, open, onClose, adminId, isSelf }: EditS
 
     const result = await updateStaffMember(
       member.id,
-      { full_name: fullName, role_id: roleId },
-      adminId
+      { full_name: fullName, role_id: roleId }
     )
 
     if (result.success) {

@@ -23,10 +23,9 @@ import { updateCronSetting, runResetNow, type CronSetting, type PassedProfilesSt
 interface CronConfigFormProps {
   settings: CronSetting[]
   stats: PassedProfilesStats
-  adminId: string
 }
 
-export function CronConfigForm({ settings, stats, adminId }: CronConfigFormProps) {
+export function CronConfigForm({ settings, stats }: CronConfigFormProps) {
   const initialDays = parseInt(
     settings.find((s) => s.key === "reset_passed_profiles_days")?.value ?? "30"
   )
@@ -44,7 +43,6 @@ export function CronConfigForm({ settings, stats, adminId }: CronConfigFormProps
 
     try {
       const result = await updateCronSetting(
-        adminId,
         'reset_passed_profiles_days',
         days.toString(),
         isEnabled
@@ -68,7 +66,7 @@ export function CronConfigForm({ settings, stats, adminId }: CronConfigFormProps
     setMessage(null)
 
     try {
-      const result = await runResetNow(adminId)
+      const result = await runResetNow()
 
       if (result.success) {
         setMessage("Réinitialisation exécutée avec succès")

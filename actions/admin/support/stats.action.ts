@@ -1,9 +1,12 @@
 'use server'
 
+import { requireAdminAction } from '@/lib/auth/admin-guard'
 import { createAdminClient } from '@/lib/supabase/admin'
 import type { SupportStats } from './types'
 
 export async function getSupportStats(): Promise<SupportStats> {
+  await requireAdminAction('view_tickets', 'manage_tickets')
+
   const supabase = createAdminClient()
 
   const { data: tickets, error } = await supabase

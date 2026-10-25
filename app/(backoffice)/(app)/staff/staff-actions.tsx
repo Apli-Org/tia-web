@@ -42,8 +42,7 @@ export function StaffActions({ member, currentAdminId }: StaffActionsProps) {
     setIsToggling(true)
     const result = await toggleStaffStatus(
       member.id,
-      !member.is_active,
-      currentAdminId
+      !member.is_active
     )
     if (!result.success) {
       alert(result.error)
@@ -100,7 +99,6 @@ export function StaffActions({ member, currentAdminId }: StaffActionsProps) {
         member={member}
         open={isEditOpen}
         onClose={() => setIsEditOpen(false)}
-        adminId={currentAdminId}
         isSelf={isSelf}
       />
 
@@ -108,7 +106,6 @@ export function StaffActions({ member, currentAdminId }: StaffActionsProps) {
         member={member}
         open={isResetOpen}
         onClose={() => setIsResetOpen(false)}
-        adminId={currentAdminId}
       />
     </>
   )

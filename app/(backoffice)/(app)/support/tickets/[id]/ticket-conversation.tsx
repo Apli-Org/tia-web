@@ -20,7 +20,6 @@ type TicketConversationProps = {
   ticket: SupportTicket
   messages: TicketMessage[]
   canManage: boolean
-  currentAdminId: string
 }
 
 function getInitials(name: string | null | undefined, email: string): string {
@@ -39,7 +38,6 @@ export function TicketConversation({
   ticket,
   messages,
   canManage,
-  currentAdminId,
 }: TicketConversationProps) {
   const [isPending, startTransition] = useTransition()
   const [newMessage, setNewMessage] = useState("")
@@ -58,7 +56,7 @@ export function TicketConversation({
     if (!newMessage.trim() || !canManage) return
 
     startTransition(async () => {
-      const result = await addTicketMessage(ticket.id, newMessage.trim(), currentAdminId)
+      const result = await addTicketMessage(ticket.id, newMessage.trim())
       if (result.success) {
         setNewMessage("")
       } else {

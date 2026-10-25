@@ -7,10 +7,9 @@ import { Button } from "@/components/ui/button"
 import { PromoCodeModal } from "./promo-code-modal"
 
 type CreatePromoCodeButtonProps = {
-  adminId: string
 }
 
-export function CreatePromoCodeButton({ adminId }: CreatePromoCodeButtonProps) {
+export function CreatePromoCodeButton() {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
@@ -23,7 +22,6 @@ export function CreatePromoCodeButton({ adminId }: CreatePromoCodeButtonProps) {
       <PromoCodeModal
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
-        adminId={adminId}
       />
     </>
   )

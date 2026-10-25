@@ -26,12 +26,11 @@ import {
 
 type EditRoleModalProps = {
   role: AdminRole
-  adminId: string
   open: boolean
   onClose: () => void
 }
 
-export function EditRoleModal({ role, adminId, open, onClose }: EditRoleModalProps) {
+export function EditRoleModal({ role, open, onClose }: EditRoleModalProps) {
   const [loading, setLoading] = useState(false)
   const [loadingData, setLoadingData] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -73,8 +72,7 @@ export function EditRoleModal({ role, adminId, open, onClose }: EditRoleModalPro
         name: name.trim(),
         description: description.trim() || undefined,
         actionIds: selectedActions,
-      },
-      adminId
+      }
     )
 
     setLoading(false)

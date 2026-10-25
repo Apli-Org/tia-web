@@ -19,7 +19,6 @@ type Subscriber = {
 type SendMode = 'all' | 'selection'
 
 type SubscribersTableProps = {
-  adminId: string
   subscriberCount: number
   selectedIds: string[]
   onSelectionChange: (ids: string[]) => void
@@ -30,7 +29,6 @@ type SubscribersTableProps = {
 const PAGE_SIZE = 20
 
 export function SubscribersTable({
-  adminId,
   subscriberCount,
   selectedIds,
   onSelectionChange,
@@ -47,14 +45,14 @@ export function SubscribersTable({
 
   const fetchSubscribers = useCallback(async () => {
     setIsLoading(true)
-    const result = await getNewsletterSubscribers(adminId, page, PAGE_SIZE, searchQuery || undefined)
+    const result = await getNewsletterSubscribers(page, PAGE_SIZE, searchQuery || undefined)
     if (result.success) {
       setSubscribers(result.subscribers ?? [])
       setTotal(result.total ?? 0)
       setTotalPages(result.totalPages ?? 0)
     }
     setIsLoading(false)
-  }, [adminId, page, searchQuery])
+  }, [page, searchQuery])
 
   useEffect(() => {
     if (sendMode === 'selection') {

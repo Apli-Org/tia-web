@@ -11,7 +11,6 @@ import type { LandingSection, CTAContent } from '@/lib/types/landing.types'
 
 interface CTAEditorProps {
   section: LandingSection
-  adminId: string
 }
 
 const defaultCTAContent: CTAContent = {
@@ -28,7 +27,7 @@ const defaultCTAContent: CTAContent = {
   stats: { users: '', usersLabel: '', status: '' },
 }
 
-export function CTAEditor({ section, adminId }: CTAEditorProps) {
+export function CTAEditor({ section }: CTAEditorProps) {
   const sectionContent = section.content as CTAContent
   const [content, setContent] = useState<CTAContent>({
     ...defaultCTAContent,
@@ -54,7 +53,6 @@ export function CTAEditor({ section, adminId }: CTAEditorProps) {
   return (
     <EditorWrapper
       section={section}
-      adminId={adminId}
       content={content}
       onContentChange={(c) => setContent(c as CTAContent)}
       previewComponent={<CTA content={content} />}
@@ -107,13 +105,11 @@ export function CTAEditor({ section, adminId }: CTAEditorProps) {
             label="Badge Google Play"
             value={content.googlePlayBadge}
             onChange={(url) => updateContent({ googlePlayBadge: url })}
-            adminId={adminId}
           />
           <ImageUpload
             label="Badge App Store"
             value={content.appStoreBadge}
             onChange={(url) => updateContent({ appStoreBadge: url })}
-            adminId={adminId}
           />
         </div>
 

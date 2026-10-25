@@ -8,12 +8,11 @@ import { Alert, AlertDescription } from '@/components/ui/alert'
 import { getNewsletterSendStatus } from '@/actions/admin/newsletter.action'
 
 type SendProgressProps = {
-  adminId: string
   sendId: string
   onComplete: () => void
 }
 
-export function SendProgress({ adminId, sendId, onComplete }: SendProgressProps) {
+export function SendProgress({ sendId, onComplete }: SendProgressProps) {
   const [status, setStatus] = useState<string>('pending')
   const [totalRecipients, setTotalRecipients] = useState(0)
   const [sentCount, setSentCount] = useState(0)
@@ -23,7 +22,7 @@ export function SendProgress({ adminId, sendId, onComplete }: SendProgressProps)
 
   useEffect(() => {
     const poll = async () => {
-      const result = await getNewsletterSendStatus(adminId, sendId)
+      const result = await getNewsletterSendStatus(sendId)
       if (!result.success) return
 
       setStatus(result.status ?? 'pending')
@@ -49,7 +48,7 @@ export function SendProgress({ adminId, sendId, onComplete }: SendProgressProps)
         clearInterval(intervalRef.current)
       }
     }
-  }, [adminId, sendId, onComplete])
+  }, [sendId, onComplete])
 
   const progress = totalRecipients > 0
     ? Math.round(((sentCount + failedCount) / totalRecipients) * 100)

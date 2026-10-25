@@ -1,19 +1,13 @@
 'use server'
 
+import { getAuthorizedAdmin, requireAdminAction, PERMISSION_DENIED } from '@/lib/auth/admin-guard'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { revalidatePath } from 'next/cache'
-import { checkAdminAction } from '../roles.action'
 import type { TicketMessage } from './types'
 
-async function verifyPermission(adminId: string, actionCode: string): Promise<{ allowed: boolean; error?: string }> {
-  const hasPermission = await checkAdminAction(adminId, actionCode)
-  if (!hasPermission) {
-    return { allowed: false, error: 'Permission insuffisante' }
-  }
-  return { allowed: true }
-}
-
 export async function getTicketMessages(ticketId: string): Promise<TicketMessage[]> {
+  await requireAdminAction('view_tickets', 'manage_tickets')
+
   const supabase = createAdminClient()
 
   const { data: messages, error } = await supabase
@@ -71,13 +65,10 @@ export async function getTicketMessages(ticketId: string): Promise<TicketMessage
 
 export async function addTicketMessage(
   ticketId: string,
-  content: string,
-  adminId: string
+  content: string
 ): Promise<{ success: boolean; error?: string; messageId?: string }> {
-  const permission = await verifyPermission(adminId, 'manage_tickets')
-  if (!permission.allowed) {
-    return { success: false, error: permission.error }
-  }
+  const admin = await getAuthorizedAdmin('manage_tickets')
+  if (!admin) return { success: false, error: PERMISSION_DENIED }
 
   const supabase = createAdminClient()
 
@@ -95,7 +86,7 @@ export async function addTicketMessage(
     .from('ticket_messages')
     .insert({
       ticket_id: ticketId,
-      sender_id: adminId,
+      sender_id: admin.id,
       sender_type: 'admin',
       content,
     })
@@ -120,7 +111,7 @@ export async function addTicketMessage(
     .eq('id', ticketId)
 
   await supabase.from('admin_activity_logs').insert({
-    admin_id: adminId,
+    admin_id: admin.id,
     action: 'reply_ticket',
     details: { ticket_id: ticketId, message_id: message.id },
   })

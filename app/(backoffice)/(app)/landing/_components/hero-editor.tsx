@@ -14,7 +14,6 @@ import type { LandingSection, HeroContent, FloatingBadge, SocialProofItem } from
 
 interface HeroEditorProps {
   section: LandingSection
-  adminId: string
 }
 
 const defaultHeroContent: HeroContent = {
@@ -33,7 +32,7 @@ const defaultHeroContent: HeroContent = {
   scrollIndicatorText: '',
 }
 
-export function HeroEditor({ section, adminId }: HeroEditorProps) {
+export function HeroEditor({ section }: HeroEditorProps) {
   const sectionContent = section.content as HeroContent
   const [content, setContent] = useState<HeroContent>({
     ...defaultHeroContent,
@@ -126,7 +125,6 @@ export function HeroEditor({ section, adminId }: HeroEditorProps) {
   return (
     <EditorWrapper
       section={section}
-      adminId={adminId}
       content={content}
       onContentChange={(c) => setContent(c as HeroContent)}
       previewComponent={<Hero content={content} />}
@@ -216,7 +214,6 @@ export function HeroEditor({ section, adminId }: HeroEditorProps) {
           label="Image du téléphone"
           value={content.phoneImage}
           onChange={(url) => updateContent({ phoneImage: url })}
-          adminId={adminId}
           phoneFrame
         />
 
@@ -228,7 +225,6 @@ export function HeroEditor({ section, adminId }: HeroEditorProps) {
                 label="Image Google Play"
                 value={content.appStoreBadges?.googlePlay?.image || ''}
                 onChange={(url) => updateAppStoreBadge('googlePlay', { image: url })}
-                adminId={adminId}
               />
               <div className="space-y-2">
                 <Label>Tooltip Google Play</Label>
@@ -253,7 +249,6 @@ export function HeroEditor({ section, adminId }: HeroEditorProps) {
                 label="Image App Store"
                 value={content.appStoreBadges?.appStore?.image || ''}
                 onChange={(url) => updateAppStoreBadge('appStore', { image: url })}
-                adminId={adminId}
               />
               <div className="space-y-2">
                 <Label>Tooltip App Store</Label>

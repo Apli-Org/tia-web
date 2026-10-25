@@ -1,5 +1,6 @@
 'use server'
 
+import { getAuthorizedAdmin, requireAdminAction, PERMISSION_DENIED } from '@/lib/auth/admin-guard'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { revalidatePath } from 'next/cache'
 
@@ -26,43 +27,9 @@ export type RoleWithActions = AdminRole & {
   actions: AdminAction[]
 }
 
-async function verifyManageRolesPermission(adminId: string): Promise<{ allowed: boolean; error?: string }> {
-  const supabase = createAdminClient()
-
-  const { data: admin } = await supabase
-    .from('admin_users')
-    .select(`
-      is_active,
-      role_id,
-      admin_roles!inner (
-        admin_role_actions!inner (
-          admin_actions!inner (code)
-        )
-      )
-    `)
-    .eq('id', adminId)
-    .single()
-
-  if (!admin) {
-    return { allowed: false, error: 'Admin non trouvé' }
-  }
-
-  if (!admin.is_active) {
-    return { allowed: false, error: 'Compte désactivé' }
-  }
-
-  const actions = (admin.admin_roles as any)?.admin_role_actions?.map(
-    (ra: any) => ra.admin_actions?.code
-  ) || []
-
-  if (!actions.includes('manage_roles')) {
-    return { allowed: false, error: 'Permission insuffisante' }
-  }
-
-  return { allowed: true }
-}
-
 export async function getAllActions(): Promise<AdminAction[]> {
+  await requireAdminAction('manage_roles')
+
   const supabase = createAdminClient()
 
   const { data, error } = await supabase
@@ -80,6 +47,8 @@ export async function getAllActions(): Promise<AdminAction[]> {
 }
 
 export async function getActionsByCategory(): Promise<Record<string, AdminAction[]>> {
+  await requireAdminAction('manage_roles')
+
   const actions = await getAllActions()
   return actions.reduce((acc, action) => {
     if (!acc[action.category]) {
@@ -91,6 +60,8 @@ export async function getActionsByCategory(): Promise<Record<string, AdminAction
 }
 
 export async function getAllRoles(): Promise<AdminRole[]> {
+  await requireAdminAction('view_staff', 'manage_staff', 'manage_roles')
+
   const supabase = createAdminClient()
 
   const { data: roles, error } = await supabase
@@ -122,6 +93,8 @@ export async function getAllRoles(): Promise<AdminRole[]> {
 }
 
 export async function getRoleWithActions(roleId: string): Promise<RoleWithActions | null> {
+  await requireAdminAction('manage_roles')
+
   const supabase = createAdminClient()
 
   const { data: role, error: roleError } = await supabase
@@ -153,13 +126,10 @@ export async function getRoleWithActions(roleId: string): Promise<RoleWithAction
 }
 
 export async function createRole(
-  data: { code: string; name: string; description?: string; actionIds: string[] },
-  createdBy: string
+  data: { code: string; name: string; description?: string; actionIds: string[] }
 ): Promise<{ success: boolean; error?: string; id?: string }> {
-  const permission = await verifyManageRolesPermission(createdBy)
-  if (!permission.allowed) {
-    return { success: false, error: permission.error }
-  }
+  const admin = await getAuthorizedAdmin('manage_roles')
+  if (!admin) return { success: false, error: PERMISSION_DENIED }
 
   const supabase = createAdminClient()
 
@@ -205,7 +175,7 @@ export async function createRole(
   }
 
   await supabase.from('admin_activity_logs').insert({
-    admin_id: createdBy,
+    admin_id: admin.id,
     action: 'create_role',
     target_type: 'admin_role',
     target_id: newRole.id,
@@ -218,13 +188,10 @@ export async function createRole(
 
 export async function updateRole(
   roleId: string,
-  data: { name?: string; description?: string; actionIds?: string[] },
-  updatedBy: string
+  data: { name?: string; description?: string; actionIds?: string[] }
 ): Promise<{ success: boolean; error?: string }> {
-  const permission = await verifyManageRolesPermission(updatedBy)
-  if (!permission.allowed) {
-    return { success: false, error: permission.error }
-  }
+  const admin = await getAuthorizedAdmin('manage_roles')
+  if (!admin) return { success: false, error: PERMISSION_DENIED }
 
   const supabase = createAdminClient()
 
@@ -271,7 +238,7 @@ export async function updateRole(
   }
 
   await supabase.from('admin_activity_logs').insert({
-    admin_id: updatedBy,
+    admin_id: admin.id,
     action: 'update_role',
     target_type: 'admin_role',
     target_id: roleId,
@@ -283,13 +250,10 @@ export async function updateRole(
 }
 
 export async function deleteRole(
-  roleId: string,
-  deletedBy: string
+  roleId: string
 ): Promise<{ success: boolean; error?: string }> {
-  const permission = await verifyManageRolesPermission(deletedBy)
-  if (!permission.allowed) {
-    return { success: false, error: permission.error }
-  }
+  const admin = await getAuthorizedAdmin('manage_roles')
+  if (!admin) return { success: false, error: PERMISSION_DENIED }
 
   const supabase = createAdminClient()
 
@@ -326,7 +290,7 @@ export async function deleteRole(
   }
 
   await supabase.from('admin_activity_logs').insert({
-    admin_id: deletedBy,
+    admin_id: admin.id,
     action: 'delete_role',
     target_type: 'admin_role',
     target_id: roleId,
@@ -343,6 +307,8 @@ export async function getRolesStats(): Promise<{
   custom: number
   totalActions: number
 }> {
+  await requireAdminAction('manage_roles')
+
   const supabase = createAdminClient()
 
   const [rolesResult, actionsResult] = await Promise.all([
@@ -359,56 +325,4 @@ export async function getRolesStats(): Promise<{
     custom: roles.length - systemCount,
     totalActions: actionsResult.count || 0,
   }
-}
-
-export async function checkAdminAction(adminId: string, actionCode: string): Promise<boolean> {
-  const supabase = createAdminClient()
-
-  const { data } = await supabase
-    .from('admin_users')
-    .select(`
-      is_active,
-      admin_roles!inner (
-        admin_role_actions!inner (
-          admin_actions!inner (code)
-        )
-      )
-    `)
-    .eq('id', adminId)
-    .single()
-
-  if (!data || !data.is_active) {
-    return false
-  }
-
-  const actions = (data.admin_roles as any)?.admin_role_actions?.map(
-    (ra: any) => ra.admin_actions?.code
-  ) || []
-
-  return actions.includes(actionCode)
-}
-
-export async function getAdminActions(adminId: string): Promise<string[]> {
-  const supabase = createAdminClient()
-
-  const { data } = await supabase
-    .from('admin_users')
-    .select(`
-      is_active,
-      admin_roles!inner (
-        admin_role_actions!inner (
-          admin_actions!inner (code)
-        )
-      )
-    `)
-    .eq('id', adminId)
-    .single()
-
-  if (!data || !data.is_active) {
-    return []
-  }
-
-  return (data.admin_roles as any)?.admin_role_actions?.map(
-    (ra: any) => ra.admin_actions?.code
-  ) || []
 }

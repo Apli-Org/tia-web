@@ -39,11 +39,10 @@ import { toast } from "sonner"
 
 type AdActionsProps = {
   ad: AdvertisementWithStats
-  adminId: string
   canManage: boolean
 }
 
-export function AdActions({ ad, adminId, canManage }: AdActionsProps) {
+export function AdActions({ ad, canManage }: AdActionsProps) {
   const [isPending, startTransition] = useTransition()
   const [showEditModal, setShowEditModal] = useState(false)
   const [showDeleteDialog, setShowDeleteDialog] = useState(false)
@@ -53,8 +52,7 @@ export function AdActions({ ad, adminId, canManage }: AdActionsProps) {
     startTransition(async () => {
       const result = await toggleAdvertisementStatus(
         ad.id,
-        !ad.is_active,
-        adminId
+        !ad.is_active
       )
 
       if (result.success) {
@@ -73,7 +71,7 @@ export function AdActions({ ad, adminId, canManage }: AdActionsProps) {
     e.preventDefault()
     startTransition(async () => {
       try {
-        const result = await deleteAdvertisement(ad.id, adminId)
+        const result = await deleteAdvertisement(ad.id)
 
         if (result.success) {
           toast.success("Publicité supprimée")
@@ -139,7 +137,6 @@ export function AdActions({ ad, adminId, canManage }: AdActionsProps) {
         <AdModal
           isOpen={showEditModal}
           onClose={() => setShowEditModal(false)}
-          adminId={adminId}
           ad={ad}
         />
       )}

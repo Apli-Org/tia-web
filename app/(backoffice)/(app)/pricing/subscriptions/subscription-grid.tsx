@@ -58,14 +58,14 @@ export function SubscriptionGrid({
   const handleToggleStatus = async (item: PricingConfig) => {
     setTogglingId(item.id)
     // TODO: Get actual admin ID from session
-    await togglePricingStatus(item.id, !item.is_active, "172c82e4-f915-4f76-802b-2032e26db300")
+    await togglePricingStatus(item.id, !item.is_active)
     setTogglingId(null)
   }
 
   const handleSave = async (updates: Partial<PricingConfig>) => {
     if (!editingPricing) return
     // TODO: Get actual admin ID from session
-    await updatePricing(editingPricing.id, updates, "172c82e4-f915-4f76-802b-2032e26db300")
+    await updatePricing(editingPricing.id, updates)
     setEditingPricing(null)
   }
 

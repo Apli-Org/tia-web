@@ -14,7 +14,6 @@ import type { LandingSection, FeaturesContent, FeatureItem } from '@/lib/types/l
 
 interface FeaturesEditorProps {
   section: LandingSection
-  adminId: string
 }
 
 const iconOptions = [
@@ -32,7 +31,7 @@ const defaultFeaturesContent: FeaturesContent = {
   features: [],
 }
 
-export function FeaturesEditor({ section, adminId }: FeaturesEditorProps) {
+export function FeaturesEditor({ section }: FeaturesEditorProps) {
   const sectionContent = section.content as FeaturesContent
   const [content, setContent] = useState<FeaturesContent>({
     ...defaultFeaturesContent,
@@ -67,7 +66,6 @@ export function FeaturesEditor({ section, adminId }: FeaturesEditorProps) {
   return (
     <EditorWrapper
       section={section}
-      adminId={adminId}
       content={content}
       onContentChange={(c) => setContent(c as FeaturesContent)}
       previewComponent={<Features content={content} />}

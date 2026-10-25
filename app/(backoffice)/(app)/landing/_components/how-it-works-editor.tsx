@@ -14,7 +14,6 @@ import type { LandingSection, HowItWorksContent, HowItWorksStep } from '@/lib/ty
 
 interface HowItWorksEditorProps {
   section: LandingSection
-  adminId: string
 }
 
 const defaultHowItWorksContent: HowItWorksContent = {
@@ -23,7 +22,7 @@ const defaultHowItWorksContent: HowItWorksContent = {
   steps: [],
 }
 
-export function HowItWorksEditor({ section, adminId }: HowItWorksEditorProps) {
+export function HowItWorksEditor({ section }: HowItWorksEditorProps) {
   const sectionContent = section.content as HowItWorksContent
   const [content, setContent] = useState<HowItWorksContent>({
     ...defaultHowItWorksContent,
@@ -58,7 +57,6 @@ export function HowItWorksEditor({ section, adminId }: HowItWorksEditorProps) {
   return (
     <EditorWrapper
       section={section}
-      adminId={adminId}
       content={content}
       onContentChange={(c) => setContent(c as HowItWorksContent)}
       previewComponent={<HowItWorks content={content} />}
@@ -132,7 +130,6 @@ export function HowItWorksEditor({ section, adminId }: HowItWorksEditorProps) {
                       label="Screenshot de l'écran"
                       value={step.image}
                       onChange={(url) => updateStep(index, { image: url })}
-                      adminId={adminId}
                       phoneFrame
                     />
                   </div>

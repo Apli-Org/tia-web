@@ -1,5 +1,6 @@
 "use server"
 
+import { requireAdminAction } from "@/lib/auth/admin-guard"
 import { createAdminClient } from "@/lib/supabase/admin"
 
 export type DashboardKPIs = {
@@ -40,6 +41,8 @@ export type RecentActivity = {
 }
 
 export async function getDashboardKPIs(): Promise<DashboardKPIs> {
+  await requireAdminAction("view_dashboard")
+
   const supabase = createAdminClient()
 
   // Use UTC dates to avoid timezone issues
@@ -166,6 +169,8 @@ export async function getDashboardKPIs(): Promise<DashboardKPIs> {
 }
 
 export async function getGrowthData(): Promise<GrowthData[]> {
+  await requireAdminAction("view_dashboard")
+
   const supabase = createAdminClient()
 
   const months: GrowthData[] = []
@@ -217,6 +222,8 @@ export async function getGrowthData(): Promise<GrowthData[]> {
 }
 
 export async function getRecentActivity(): Promise<RecentActivity[]> {
+  await requireAdminAction("view_dashboard")
+
   const supabase = createAdminClient()
 
   const activities: RecentActivity[] = []
@@ -435,6 +442,8 @@ function getRelativeTime(dateString: string): string {
 }
 
 export async function getTierDistribution() {
+  await requireAdminAction("view_dashboard")
+
   const supabase = createAdminClient()
 
   const { data } = await supabase

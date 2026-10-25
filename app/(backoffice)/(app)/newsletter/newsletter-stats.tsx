@@ -7,7 +7,7 @@ export async function NewsletterStats() {
   const admin = await getCurrentAdmin()
   if (!admin) return null
 
-  const result = await getNewsletterSubscriberCount(admin.id)
+  const result = await getNewsletterSubscriberCount()
   const count = result.success && result.count !== undefined ? result.count : 0
 
   return (

@@ -18,7 +18,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { Button } from "@/components/ui/button"
 import { getCurrentAdmin } from "@/actions/admin/auth.action"
 import { getRolesStats } from "@/actions/admin/roles.action"
-import { checkAdminAction } from "@/actions/admin/roles.action"
+import { checkAdminAction } from "@/lib/auth/admin-guard"
 import { RolesTable } from "./roles-table"
 import { CreateRoleButton } from "./create-role-button"
 import { RefreshButton } from "@/components/backoffice/refresh-button"
@@ -166,7 +166,7 @@ export default async function RolesPage() {
                 Créez et gérez les rôles et leurs permissions
               </p>
             </div>
-            <CreateRoleButton adminId={admin.id} />
+            <CreateRoleButton />
           </div>
 
           <Suspense fallback={<StatsSkeleton />}>
@@ -174,7 +174,7 @@ export default async function RolesPage() {
           </Suspense>
 
           <Suspense fallback={<TableSkeleton />}>
-            <RolesTable adminId={admin.id} />
+            <RolesTable />
           </Suspense>
         </div>
       </main>
