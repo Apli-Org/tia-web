@@ -45,7 +45,8 @@ components/
   ui/               shadcn/ui primitives
   backoffice/       Back office shell (sidebar, login form, navigation progress)
   home/             Home page sections (navbar, hero, bento, marquees, footer)
-  landing/          Previous landing sections: legal page header/footer, /landing editor previews
+  landing/          Previous landing sections: /inscription-newsletter header/footer, /landing editor previews
+  legal/            Legal page shell (home navbar and footer) and text blocks
   newsletter/       Newsletter editor and preview
 content/            Home page data (site.ts, countries.ts, testimonials.ts) and copy (copy/fr.ts, copy/en.ts)
 design/reference/   Validated home page mockup, the visual source of truth
@@ -162,7 +163,7 @@ The schema is **owned by the mobile repo**. Migrations live in `tia/supabase/mig
 - No emojis in new UI.
 - The home page matches `design/reference/tia-meet-site/index.html` at 1440 and 390 px. Its components hold no copy: shared data comes from `content/site.ts`, text from `content/copy/fr.ts` and `content/copy/en.ts` (both typed by `HomeCopy`), so a new string goes into both. Testimonials are real Google Play reviews in `content/testimonials.ts`, with an English translation flagged as such. Colors are the `tia-*` tokens in `app/globals.css` (flag colors excepted), gradients are limited to the phone photo scrim and the marquee edge masks, and Borel is only used for the two highlighted words.
 - The `components/landing/` sections read their published content from `landing_sections` and fall back on the `defaultContent` declared in the component. A new field means updating `lib/types/landing.types.ts`, the section editor in `app/(backoffice)/(app)/landing/_components/` and the default content together.
-- Legal pages must keep working with `?embed=true` (no header, no back link): the app opens them in a web view. Wrap `useSearchParams` in `Suspense`.
+- Legal pages are Server Components built from `components/legal/` (`LegalPage`, `LegalSection`, `LegalItem` …). They must keep working with `?embed=true` (no navbar, no footer): the app opens them in a web view, and `LegalPage` reads `embed` from `searchParams`.
 
 ## Contracts with the mobile app (do not break)
 

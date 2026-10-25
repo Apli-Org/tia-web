@@ -220,7 +220,7 @@ export const FR: HomeCopy = {
           { label: 'Confidentialité', href: '/privacy' },
           { label: 'Conditions d’utilisation', href: '/terms' },
           { label: 'Protection des enfants', href: '/child-safety' },
-          { label: 'Sécurité', href: `#${SECTION_IDS.safety}` },
+          { label: 'Sécurité', href: '/dating-safety' },
         ],
       },
       {

@@ -218,7 +218,7 @@ export const EN: HomeCopy = {
           { label: 'Privacy', href: '/privacy' },
           { label: 'Terms of use', href: '/terms' },
           { label: 'Child safety', href: '/child-safety' },
-          { label: 'Safety', href: `#${SECTION_IDS.safety}` },
+          { label: 'Safety', href: '/dating-safety' },
         ],
       },
       {
