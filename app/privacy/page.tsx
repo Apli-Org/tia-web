@@ -24,8 +24,8 @@ export default function PrivacyPage({ searchParams }: PrivacyPageProps) {
   return (
     <LegalPage
       title="Politique de Confidentialité"
-      version="2.1"
-      updatedAt="19 octobre 2026"
+      version="2.2"
+      updatedAt="25 octobre 2026"
       searchParams={searchParams}
     >
       <LegalCallout>
@@ -115,11 +115,10 @@ export default function PrivacyPage({ searchParams }: PrivacyPageProps) {
         <LegalSubheading>
           4.1 Données de Compte obligatoires ou nécessaires
         </LegalSubheading>
-        <p>Selon le mode d'inscription utilisé, Tia peut collecter :</p>
+        <p>Selon le mode d'inscription utilisé (email, Google ou Apple), Tia peut collecter :</p>
         <LegalList>
           <LegalItem>prénom, nom ou pseudonyme affiché ;</LegalItem>
           <LegalItem>adresse email ;</LegalItem>
-          <LegalItem>numéro de téléphone ;</LegalItem>
           <LegalItem>date de naissance et âge calculé ;</LegalItem>
           <LegalItem>identifiants de connexion ou jetons d'authentification ;</LegalItem>
           <LegalItem>pays ou région ;</LegalItem>
@@ -142,6 +141,7 @@ export default function PrivacyPage({ searchParams }: PrivacyPageProps) {
           <LegalItem>préférences de rencontre ;</LegalItem>
           <LegalItem>tranche d'âge recherchée ;</LegalItem>
           <LegalItem>distance ou zone recherchée ;</LegalItem>
+          <LegalItem>religion, si l'Utilisateur choisit de l'indiquer ;</LegalItem>
           <LegalItem>informations facultatives sur le mode de vie, les goûts ou attentes relationnelles.</LegalItem>
         </LegalList>
 
@@ -154,11 +154,12 @@ export default function PrivacyPage({ searchParams }: PrivacyPageProps) {
             constituer des <strong>données sensibles</strong>, notamment lorsqu'elles révèlent ou permettent
             raisonnablement d'inférer des informations relatives à la vie sexuelle, aux préférences de
             rencontre, à l'orientation sexuelle, à la santé, aux convictions religieuses ou à d'autres
-            catégories protégées par la loi. Lorsque le traitement d'une donnée sensible repose sur le
-            consentement exprès, Tia recueille un consentement spécifique, libre et informé conformément à la
-            réglementation applicable. L'Utilisateur peut retirer ce consentement lorsqu'il constitue la base
-            du traitement ; le retrait n'affecte pas la licéité du traitement effectué avant le retrait, mais
-            peut rendre certaines fonctionnalités indisponibles.
+            catégories protégées par la loi. Ces informations sont fournies volontairement par l'Utilisateur ;
+            celles qui ne sont pas nécessaires à la mise en relation, comme la religion, sont facultatives. En
+            les ajoutant à son profil, l'Utilisateur consent expressément à leur traitement pour les finalités
+            du Service et à leur affichage aux autres Utilisateurs lorsqu'elles figurent sur le profil. Il peut
+            les modifier ou les retirer à tout moment depuis son profil ; le retrait n'affecte pas la licéité
+            du traitement effectué avant le retrait, mais peut rendre certaines fonctionnalités indisponibles.
           </p>
         </LegalCard>
 
@@ -194,32 +195,37 @@ export default function PrivacyPage({ searchParams }: PrivacyPageProps) {
         <LegalNote>
           Les messages peuvent être analysés par des systèmes automatisés et/ou examinés par une personne
           autorisée lorsqu'il existe un signalement, un risque de sécurité, une obligation légale ou un motif
-          légitime de modération conformément à la réglementation applicable.
+          légitime de modération conformément à la réglementation applicable. Lorsque l'Utilisateur utilise le
+          coach T.IA, des extraits de ses conversations sont transmis au prestataire d'intelligence
+          artificielle décrit à l'article 19.1.
         </LegalNote>
 
         <LegalSubheading>
           4.6 Données de vérification d'identité ou de photo
         </LegalSubheading>
         <p>
-          Tia peut proposer ou demander une vérification de photo, de selfie, d'âge ou d'identité. Selon le
-          mécanisme utilisé, les données peuvent inclure :
+          Tia propose deux vérifications facultatives, réalisées par son prestataire <strong>Didit</strong> :
         </p>
         <LegalList>
-          <LegalItem>selfie ou courte séquence vidéo ;</LegalItem>
-          <LegalItem>photographie d'un document d'identité ;</LegalItem>
-          <LegalItem>informations figurant sur le document strictement nécessaires au contrôle ;</LegalItem>
-          <LegalItem>résultats d'une comparaison automatisée ;</LegalItem>
-          <LegalItem>données techniques relatives à la vérification ;</LegalItem>
+          <LegalItem>la vérification de photo : un selfie vidéo est comparé à la photo principale du profil ;</LegalItem>
           <LegalItem>
-            lorsque la technologie utilisée l'implique, <strong>données biométriques ou géométrie faciale</strong>.
+            la vérification d'identité : une pièce d'identité et un selfie vidéo sont contrôlés, et la date de
+            naissance du document est comparée à celle du profil.
           </LegalItem>
         </LegalList>
+        <p>
+          Didit traite le selfie, l'image du document et les <strong>données biométriques</strong> (géométrie
+          faciale) nécessaires au contrôle. Tia ne conserve que le résultat : statut de chaque étape, scores
+          de correspondance et de détection du vivant, type et pays d'émission du document, alertes
+          éventuelles. Tia ne conserve ni le selfie, ni l'image du document, ni le nom ou le numéro qui y
+          figurent.
+        </p>
         <LegalCard>
           <p>
-            Les données biométriques sont considérées comme sensibles par la loi malgache. Lorsqu'un tel
-            traitement est mis en œuvre, Tia applique les formalités, garanties et bases légales requises et
-            recueille un consentement exprès lorsqu'il constitue le fondement légal applicable. Tia n'utilise
-            pas une vérification comme une certification de moralité ou d'absence d'antécédents.
+            Les données biométriques sont considérées comme sensibles par la loi malgache. La vérification est
+            facultative et lancée par l'Utilisateur lui-même, après avoir été informé de son fonctionnement ;
+            ce choix constitue son consentement exprès au traitement biométrique réalisé par Didit. Tia
+            n'utilise pas une vérification comme une certification de moralité ou d'absence d'antécédents.
           </p>
         </LegalCard>
 
@@ -241,9 +247,10 @@ export default function PrivacyPage({ searchParams }: PrivacyPageProps) {
         <LegalSubheading>4.8 Données de paiement et d'abonnement</LegalSubheading>
         <LegalCard>
           <p>
-            Lorsque l'achat est traité par Apple, Google ou un autre prestataire de paiement, ce prestataire
-            collecte les données de paiement conformément à sa propre politique. Tia ne conserve pas le numéro
-            complet de carte bancaire lorsque celui-ci est traité exclusivement par un prestataire tiers.
+            Les achats effectués via l'App Store ou Google Play sont traités par Apple ou Google, qui
+            collectent les données de paiement conformément à leur propre politique ; Tia suit ces abonnements
+            avec son prestataire RevenueCat. Les paiements par mobile money (Orange Money, MVola, Airtel Money)
+            sont traités par Vanilla Pay. Tia ne reçoit jamais de numéro de carte bancaire.
           </p>
         </LegalCard>
         <p>Tia peut toutefois recevoir et conserver :</p>
@@ -252,6 +259,7 @@ export default function PrivacyPage({ searchParams }: PrivacyPageProps) {
           <LegalItem>produit acheté ;</LegalItem>
           <LegalItem>date et montant ;</LegalItem>
           <LegalItem>statut de paiement ;</LegalItem>
+          <LegalItem>numéro de téléphone utilisé pour un paiement par mobile money ;</LegalItem>
           <LegalItem>historique d'abonnement ;</LegalItem>
           <LegalItem>informations nécessaires au support, à la comptabilité ou à la lutte contre la fraude.</LegalItem>
         </LegalList>
@@ -275,7 +283,7 @@ export default function PrivacyPage({ searchParams }: PrivacyPageProps) {
           Lorsque l'Utilisateur choisit une connexion via Apple, Google ou un autre fournisseur d'identité,
           Tia peut recevoir les données que ce fournisseur autorise à transmettre, par exemple nom, adresse
           email, identifiant ou jeton d'authentification. Tia peut également recevoir des informations de
-          prestataires de sécurité, d'anti-fraude, de paiement ou de support nécessaires à la fourniture du
+          prestataires de vérification d'identité, de sécurité, d'anti-fraude, de paiement ou de support nécessaires à la fourniture du
           Service.
         </p>
       </LegalSection>
@@ -413,6 +421,33 @@ export default function PrivacyPage({ searchParams }: PrivacyPageProps) {
           <LegalItem>support client ;</LegalItem>
           <LegalItem>vérification de photo ou d'identité.</LegalItem>
         </LegalList>
+        <p>Les prestataires suivants reçoivent des données pour des traitements spécifiques :</p>
+        <LegalList>
+          <LegalItem>
+            <strong>Mistral AI</strong> : réponses du coach T.IA (article 19.1) ;
+          </LegalItem>
+          <LegalItem>
+            <strong>OpenAI</strong> : analyse automatique des photos de profil (article 19.2) ;
+          </LegalItem>
+          <LegalItem>
+            <strong>Didit</strong> : vérification de photo et d'identité (article 4.6) ;
+          </LegalItem>
+          <LegalItem>
+            <strong>Google AdMob</strong> : diffusion de publicités (article 14.2) ;
+          </LegalItem>
+          <LegalItem>
+            <strong>Meta</strong> : mesure publicitaire (article 14.1) ;
+          </LegalItem>
+          <LegalItem>
+            <strong>PostHog</strong> : mesure d'audience (article 14.4) ;
+          </LegalItem>
+          <LegalItem>
+            <strong>RevenueCat</strong> : suivi des abonnements App Store et Google Play (article 4.8) ;
+          </LegalItem>
+          <LegalItem>
+            <strong>Vanilla Pay</strong> : paiements par mobile money (article 4.8).
+          </LegalItem>
+        </LegalList>
         <LegalNote>
           Ces prestataires doivent traiter les données selon les instructions contractuelles applicables et
           mettre en œuvre des garanties de confidentialité et de sécurité appropriées.
@@ -442,7 +477,9 @@ export default function PrivacyPage({ searchParams }: PrivacyPageProps) {
 
       <LegalSection title="9. Transferts internationaux">
         <p>
-          Les prestataires de Tia peuvent être établis à Madagascar ou dans d'autres pays.
+          Les prestataires de Tia peuvent être établis à Madagascar ou dans d'autres pays : plusieurs des
+          prestataires cités à l'article 8.2 traitent des données hors de Madagascar, notamment aux
+          États-Unis et dans l'Union européenne.
         </p>
         <p>
           Conformément à la loi malgache, Tia veille à ce qu'un transfert vers l'étranger repose sur un niveau
@@ -470,17 +507,29 @@ export default function PrivacyPage({ searchParams }: PrivacyPageProps) {
         </p>
 
         <LegalSubheading>10.2 Suppression volontaire du Compte</LegalSubheading>
-        <p>Lorsque l'Utilisateur demande la suppression :</p>
+        <p>L'Utilisateur choisit dans l'Application entre deux options :</p>
         <LegalList>
-          <LegalItem>le profil est rendu inaccessible aux autres Utilisateurs dans un délai raisonnable ;</LegalItem>
           <LegalItem>
-            les données actives destinées au fonctionnement courant sont supprimées ou dissociées du Compte
-            dans un délai cible maximal de trente (30) jours, sauf exception justifiée ;
+            <strong>suppression différée :</strong> le Compte est désactivé et le profil masqué immédiatement,
+            puis le Compte est supprimé au bout de trente (30) jours ; se reconnecter avant cette date annule
+            la demande. Si un abonnement est encore en cours au terme de ce délai, la suppression intervient à
+            la fin de l'abonnement ;
           </LegalItem>
+          <LegalItem>
+            <strong>suppression immédiate :</strong> le Compte, le profil, les photos, les matchs, les likes et
+            les messages envoyés sont supprimés immédiatement.
+          </LegalItem>
+        </LegalList>
+        <p>Après la suppression :</p>
+        <LegalList>
           <LegalItem>
             des copies résiduelles peuvent subsister temporairement dans les sauvegardes jusqu'à leur rotation
             normale, généralement pour une période supplémentaire pouvant aller jusqu'à quatre-vingt-dix (90)
             jours ;
+          </LegalItem>
+          <LegalItem>
+            les enregistrements de paiement sont conservés de façon anonymisée pour les obligations
+            comptables : ils ne sont plus rattachés au Compte et le numéro de téléphone payeur en est retiré ;
           </LegalItem>
           <LegalItem>
             certaines informations peuvent être conservées séparément lorsqu'une obligation légale, une
@@ -501,28 +550,33 @@ export default function PrivacyPage({ searchParams }: PrivacyPageProps) {
         <p>
           Les dossiers de signalement, preuves, décisions de modération et informations associées peuvent être
           conservés au-delà de la fermeture d'un Compte lorsqu'ils sont nécessaires à la protection des
-          Utilisateurs, à une procédure, à une enquête, à une obligation légale ou à la défense de Tia.
+          Utilisateurs, à une procédure, à une enquête, à une obligation légale ou à la défense de Tia. Un
+          signalement envoyé par un Utilisateur qui supprime ensuite son Compte est conservé sans être rattaché
+          à son auteur.
         </p>
 
         <LegalSubheading>10.5 Données de paiement</LegalSubheading>
         <p>
           Les informations transactionnelles et comptables peuvent être conservées pendant la durée imposée
-          par les obligations fiscales, comptables ou de preuve applicables.
+          par les obligations fiscales, comptables ou de preuve applicables. Le numéro de téléphone utilisé
+          pour un paiement par mobile money est conservé jusqu'à la suppression du Compte.
         </p>
 
         <LegalSubheading>10.6 Données de vérification</LegalSubheading>
         <p>
-          Les selfies, documents et éventuelles données biométriques sont conservés pendant la durée annoncée
-          au moment de la vérification et strictement nécessaire aux finalités de sécurité ou de vérification,
-          sous réserve des exigences légales applicables. La durée exacte dépend du mécanisme de vérification
-          utilisé et peut être précisée au moment de la collecte ou dans un avis spécifique.
+          Tia ne conserve ni les selfies, ni les images de documents, ni les données biométriques. Seul le
+          résultat de la vérification décrit à l'article 4.6 est conservé, jusqu'à la suppression du Compte.
+          Didit conserve les données qu'il traite selon sa propre politique de confidentialité.
         </p>
       </LegalSection>
 
       <LegalSection id="delete-data" title="11. Suppression du Compte et des données">
         <p>L'Utilisateur peut demander la suppression de son Compte :</p>
         <LegalList>
-          <LegalItem>depuis les paramètres de l'Application lorsque la fonctionnalité est disponible ; et/ou</LegalItem>
+          <LegalItem>
+            depuis l'Application, dans Paramètres, section Zone de danger, Supprimer mon compte, en choisissant
+            une suppression immédiate ou différée de trente (30) jours (article 10.2) ; ou
+          </LegalItem>
           <LegalItem>
             en écrivant à{" "}
             <LegalLink href="mailto:info@tia-meet.com">
@@ -612,7 +666,7 @@ export default function PrivacyPage({ searchParams }: PrivacyPageProps) {
           <LegalItem>strictement nécessaires au fonctionnement ou à la sécurité ;</LegalItem>
           <LegalItem>mesure d'audience et diagnostic ;</LegalItem>
           <LegalItem>personnalisation ;</LegalItem>
-          <LegalItem>marketing ou publicité, si ces fonctions sont utilisées.</LegalItem>
+          <LegalItem>publicité.</LegalItem>
         </LegalList>
         <LegalNote>
           Lorsqu'un consentement est requis pour une technologie non essentielle, Tia le recueille avant son
@@ -625,6 +679,33 @@ export default function PrivacyPage({ searchParams }: PrivacyPageProps) {
           membres (installation et ouverture de l'Application). Sur iOS, l'identifiant publicitaire n'est
           partagé qu'avec l'accord de l'Utilisateur, donné via la demande de suivi d'Apple. Le profil, les
           photos et les messages ne sont jamais transmis à Meta.
+        </p>
+        <LegalSubheading>14.2 Publicité (Google AdMob)</LegalSubheading>
+        <p>
+          L'Application affiche des publicités fournies par Google AdMob : des vidéos que l'Utilisateur choisit
+          de regarder pour obtenir un avantage, comme des swipes supplémentaires, et, pour les membres sans
+          abonnement, des publicités en plein écran. Pour diffuser ces publicités, en limiter la fréquence et
+          en mesurer les performances, AdMob utilise notamment l'adresse IP, l'identifiant publicitaire et des
+          informations techniques sur l'appareil.
+        </p>
+        <p>
+          Lorsque la loi l'exige, l'Application affiche le formulaire de consentement de Google avant toute
+          publicité personnalisée ; ce choix peut ensuite être modifié dans Paramètres, section Sécurité &amp;
+          Confidentialité, Préférences publicitaires. Sur iOS, l'identifiant publicitaire n'est utilisé
+          qu'avec l'accord donné via la demande de suivi d'Apple.
+        </p>
+        <LegalSubheading>14.3 Annonces de Tia</LegalSubheading>
+        <p>
+          L'Application affiche aussi des annonces gérées directement par Tia. Tia enregistre les affichages
+          et les clics sur ces annonces, rattachés au Compte, afin d'en mesurer les performances.
+        </p>
+        <LegalSubheading>14.4 Mesure d'audience (PostHog)</LegalSubheading>
+        <p>
+          Tia utilise PostHog pour comprendre l'utilisation de l'Application : ouvertures de l'Application et
+          actions réalisées, rattachées à l'identifiant du Compte, à quelques caractéristiques du profil
+          (genre, âge, offre souscrite, nombre de photos et de centres d'intérêt) et à des informations
+          techniques sur l'appareil. La position de l'appareil, l'adresse email, le nom, les photos et les
+          messages ne sont pas transmis à PostHog.
         </p>
       </LegalSection>
 
@@ -688,16 +769,40 @@ export default function PrivacyPage({ searchParams }: PrivacyPageProps) {
       </LegalSection>
 
       <LegalSection title="19. Traitements automatisés et intelligence artificielle">
+        <LegalSubheading>19.1 Coach T.IA</LegalSubheading>
         <p>
-          Tia utilise des traitements algorithmiques et des fonctionnalités d'intelligence artificielle pour
-          proposer des suggestions de mise en relation et améliorer l'expérience utilisateur. Ces traitements
-          ne produisent pas de décision entièrement automatisée ayant des effets juridiques ou des effets
-          significatifs similaires sur l'Utilisateur sans les garanties requises par la loi applicable.
-          L'Utilisateur peut à tout moment demander des informations sur leur logique en écrivant à{" "}
-          <LegalLink href="mailto:info@tia-meet.com">
-            info@tia-meet.com
-          </LegalLink>
-          .
+          T.IA est un assistant conversationnel que l'Utilisateur choisit d'utiliser pour obtenir des conseils
+          de rencontre et d'écriture. Ses réponses sont générées par un modèle de Mistral AI. Pour les
+          personnaliser, chaque échange transmet à Mistral AI les messages écrits à T.IA, le prénom de
+          l'Utilisateur, son nombre de matchs et, pour chaque conversation, le prénom du match, le dernier
+          message échangé et le nombre de messages non lus.
+        </p>
+        <LegalCallout>
+          <p>
+            Le dernier message d'une conversation peut avoir été écrit par le match : en utilisant T.IA, un
+            Utilisateur transmet donc aussi à Mistral AI des extraits de messages reçus d'autres Utilisateurs.
+            Tia transmet ces informations uniquement pour générer la réponse de T.IA.
+          </p>
+        </LegalCallout>
+
+        <LegalSubheading>19.2 Analyse automatique des photos</LegalSubheading>
+        <p>
+          Chaque photo ajoutée au profil est analysée automatiquement par des modèles d'OpenAI afin de
+          détecter les contenus interdits et les photos contraires aux règles, par exemple une image générée
+          par intelligence artificielle, la photo d'une autre personne ou d'une célébrité, un mème, une
+          capture d'écran ou un numéro de téléphone. Une photo non conforme peut être retirée et compter comme
+          un avertissement ; au troisième avertissement, le profil est masqué jusqu'à l'ajout d'une nouvelle
+          photo conforme. En cas de doute, la photo est examinée par l'équipe de modération.
+        </p>
+
+        <LegalSubheading>19.3 Recommandations et garanties</LegalSubheading>
+        <p>
+          Tia utilise également des traitements algorithmiques pour proposer des suggestions de mise en
+          relation (article 6). Ces traitements ne produisent pas de décision entièrement automatisée ayant
+          des effets juridiques ou des effets significatifs similaires sur l'Utilisateur sans les garanties
+          requises par la loi applicable. L'Utilisateur peut contester une décision, demander l'intervention
+          d'une personne ou obtenir des informations sur la logique de ces traitements en écrivant à{" "}
+          <LegalLink href="mailto:info@tia-meet.com">info@tia-meet.com</LegalLink>.
         </p>
       </LegalSection>
 

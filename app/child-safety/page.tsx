@@ -23,8 +23,8 @@ export default function ChildSafetyPage({ searchParams }: ChildSafetyPageProps) 
   return (
     <LegalPage
       title="Politique de Protection des Mineurs et de Lutte contre l'Exploitation Sexuelle des Enfants"
-      version="2.0"
-      updatedAt="11 août 2026"
+      version="2.1"
+      updatedAt="25 octobre 2026"
       searchParams={searchParams}
     >
       <LegalCallout tone="alert">
@@ -84,9 +84,10 @@ export default function ChildSafetyPage({ searchParams }: ChildSafetyPageProps) 
         <LegalList>
           <LegalItem marker="check">blocage de l'inscription des dates de naissance indiquant un âge inférieur à 18 ans ;</LegalItem>
           <LegalItem marker="check">contrôles de cohérence ;</LegalItem>
-          <LegalItem marker="check">vérification de téléphone ou email ;</LegalItem>
-          <LegalItem marker="check">vérification de photo ou selfie ;</LegalItem>
-          <LegalItem marker="check">vérification documentaire ;</LegalItem>
+          <LegalItem marker="check">vérification de photo par selfie vidéo, comparé à la photo de profil ;</LegalItem>
+          <LegalItem marker="check">
+            vérification d'identité par pièce d'identité et selfie vidéo, avec contrôle de la date de naissance ;
+          </LegalItem>
           <LegalItem marker="check">demande de justificatif en cas de doute ;</LegalItem>
           <LegalItem marker="check">suspension conservatoire d'un Compte suspecté d'appartenir à un mineur.</LegalItem>
         </LegalList>
@@ -132,14 +133,12 @@ export default function ChildSafetyPage({ searchParams }: ChildSafetyPageProps) 
         <LegalCard>
           <LegalList>
             <LegalItem marker="check">
-              Bouton « Signaler » disponible sur les profils et/ou conversations lorsque cette fonctionnalité
-              est prévue
+              Dans une conversation : le menu en haut à droite de la conversation, puis « Signaler » (ou « Bloquer »)
             </LegalItem>
             <LegalItem marker="check">
-              Signalement également possible à{" "}
-              <LegalLink href="mailto:info@tia-meet.com">
-                info@tia-meet.com
-              </LegalLink>
+              Pour tout autre profil, ou en complément :{" "}
+              <LegalLink href="mailto:info@tia-meet.com">info@tia-meet.com</LegalLink>, en indiquant le prénom
+              et l'âge affichés sur le profil
             </LegalItem>
             <LegalItem marker="check">Les signalements concernant la sécurité d'un enfant sont traités en priorité</LegalItem>
           </LegalList>

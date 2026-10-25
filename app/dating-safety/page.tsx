@@ -21,8 +21,8 @@ export default function DatingSafetyPage({ searchParams }: DatingSafetyPageProps
   return (
     <LegalPage
       title="Charte de Sécurité des Rencontres"
-      version="1.0"
-      updatedAt="11 août 2026"
+      version="1.1"
+      updatedAt="25 octobre 2026"
       searchParams={searchParams}
     >
       <LegalCallout>
@@ -36,8 +36,8 @@ export default function DatingSafetyPage({ searchParams }: DatingSafetyPageProps
 
       <LegalSection title="1. Une vérification n'est pas une garantie de sécurité">
         <p>
-          Un badge, un selfie vérifié, une validation de téléphone ou un contrôle d'identité signifie
-          uniquement qu'un processus technique a été satisfait. Cela ne signifie pas que Tia garantit :
+          Un badge, un selfie vérifié ou un contrôle d'identité signifie uniquement qu'un processus technique
+          a été satisfait. Cela ne signifie pas que Tia garantit :
         </p>
         <LegalList>
           <LegalItem>la moralité de la personne ;</LegalItem>
@@ -137,7 +137,9 @@ export default function DatingSafetyPage({ searchParams }: DatingSafetyPageProps
           <LegalItem>prétend avoir moins de 18 ans ;</LegalItem>
           <LegalItem>vous demande de garder secrète une situation dangereuse.</LegalItem>
         </LegalList>
-        <p className="font-semibold">Utilisez les fonctions Bloquer et Signaler.</p>
+        <p className="font-semibold">
+          Utilisez les fonctions Bloquer et Signaler, accessibles depuis le menu en haut à droite de la conversation.
+        </p>
       </LegalSection>
 
       <LegalSection title="9. Mineurs">
@@ -164,12 +166,9 @@ export default function DatingSafetyPage({ searchParams }: DatingSafetyPageProps
 
       <LegalSection title="11. Signaler un incident">
         <p>
-          Vous pouvez signaler un profil ou une conversation dans l'Application lorsque la fonctionnalité est
-          disponible, ou écrire à{" "}
-          <LegalLink href="mailto:info@tia-meet.com">
-            info@tia-meet.com
-          </LegalLink>
-          . Tia peut suspendre un Compte, préserver des éléments et coopérer avec les autorités lorsque la
+          Vous pouvez signaler une personne depuis votre conversation, via le menu en haut à droite de la conversation, ou écrire à{" "}
+          <LegalLink href="mailto:info@tia-meet.com">info@tia-meet.com</LegalLink>, notamment pour un profil
+          avec lequel vous n'avez pas de conversation. Tia peut suspendre un Compte, préserver des éléments et coopérer avec les autorités lorsque la
           situation le justifie.
         </p>
         <LegalCallout tone="alert">

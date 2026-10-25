@@ -23,8 +23,8 @@ export default function AccountDeletionPage({ searchParams }: AccountDeletionPag
   return (
     <LegalPage
       title="Suppression du Compte et des Données"
-      version="1.0"
-      updatedAt="11 août 2026"
+      version="1.1"
+      updatedAt="25 octobre 2026"
       searchParams={searchParams}
     >
       <LegalCallout>
@@ -35,16 +35,18 @@ export default function AccountDeletionPage({ searchParams }: AccountDeletionPag
       </LegalCallout>
 
       <LegalSection title="1. Supprimer son Compte depuis l'Application">
-        <p>
-          Lorsque cette fonctionnalité est disponible dans votre version de Tia :
-        </p>
+        <p>Dans l'Application :</p>
         <LegalCard>
           <ol className="flex list-decimal flex-col gap-2.5 pl-5 marker:font-bold marker:text-tia-violet-500">
-            <li>ouvrez <strong>Tia</strong> ;</li>
-            <li>accédez à <strong>Paramètres</strong> ;</li>
-            <li>ouvrez <strong>Compte</strong> ;</li>
-            <li>choisissez <strong>Supprimer mon compte</strong> ;</li>
-            <li>confirmez la demande selon les étapes affichées.</li>
+            <li>ouvrez <strong>Paramètres</strong> ;</li>
+            <li>
+              dans la section <strong>Zone de danger</strong>, choisissez <strong>Supprimer mon compte</strong> ;
+            </li>
+            <li>choisissez la suppression différée ou la suppression immédiate (voir l'article 3) ;</li>
+            <li>
+              confirmez avec votre mot de passe ou, si vous vous connectez avec Google ou Apple, avec le code
+              reçu par email.
+            </li>
           </ol>
         </LegalCard>
         <LegalNote>
@@ -59,24 +61,41 @@ export default function AccountDeletionPage({ searchParams }: AccountDeletionPag
           <LegalLink href="mailto:info@tia-meet.com">info@tia-meet.com</LegalLink>
         </LegalContact>
         <p>
-          Indiquez l'adresse email ou le numéro de téléphone utilisé pour votre Compte afin que nous puissions
-          identifier votre demande. Tia peut demander une vérification raisonnable afin d'éviter qu'un tiers
+          Indiquez l'adresse email utilisée pour votre Compte afin que nous puissions identifier votre
+          demande. Tia peut demander une vérification raisonnable afin d'éviter qu'un tiers
           tente de supprimer frauduleusement votre Compte.
         </p>
       </LegalSection>
 
       <LegalSection title="3. Ce qui se passe après la demande">
-        <p>Lorsque la demande est validée :</p>
+        <p>L'Application propose deux options :</p>
         <LegalList>
-          <LegalItem>votre profil est rendu inaccessible aux autres Utilisateurs dans un délai raisonnable ;</LegalItem>
           <LegalItem>
-            les données utilisées pour le fonctionnement courant du Compte sont supprimées ou dissociées dans
-            un délai cible maximal de trente (30) jours, sauf exception justifiée ;
+            <strong>Suppression différée (30 jours) :</strong> votre Compte est désactivé et votre profil
+            masqué immédiatement, puis le Compte est supprimé définitivement au bout de trente (30) jours. Si
+            vous vous reconnectez avant cette date, la demande est annulée et votre Compte est réactivé. Si un
+            abonnement est encore en cours au terme de ces trente jours, la suppression a lieu à la fin de
+            l'abonnement.
           </LegalItem>
+          <LegalItem>
+            <strong>Suppression immédiate :</strong> votre Compte, votre profil, vos photos, vos matchs, vos
+            likes et les messages que vous avez envoyés sont supprimés immédiatement et définitivement. Cette
+            action est irréversible.
+          </LegalItem>
+        </LegalList>
+        <p>
+          Une demande envoyée par email est traitée dans un délai maximal de trente (30) jours. Après la
+          suppression définitive :
+        </p>
+        <LegalList>
           <LegalItem>
             certaines copies techniques peuvent rester temporairement dans les sauvegardes jusqu'à leur
             rotation normale, généralement pour une période supplémentaire pouvant aller jusqu'à
             quatre-vingt-dix (90) jours ;
+          </LegalItem>
+          <LegalItem>
+            les enregistrements de paiement sont conservés pour les obligations comptables, sans lien avec
+            votre Compte et sans le numéro de téléphone utilisé pour un paiement par mobile money ;
           </LegalItem>
           <LegalItem>
             certaines informations peuvent être conservées séparément lorsqu'une obligation légale, une
@@ -85,8 +104,8 @@ export default function AccountDeletionPage({ searchParams }: AccountDeletionPag
           </LegalItem>
         </LegalList>
         <LegalNote>
-          Les données conservées après suppression ne sont pas utilisées pour réactiver le profil ou
-          poursuivre l'usage ordinaire du Service.
+          Un Compte définitivement supprimé ne peut plus être réactivé : les informations éventuellement
+          conservées ne servent pas à reconstituer le profil ni à poursuivre l'usage ordinaire du Service.
         </LegalNote>
       </LegalSection>
 
@@ -107,7 +126,7 @@ export default function AccountDeletionPage({ searchParams }: AccountDeletionPag
         </LegalNote>
       </LegalSection>
 
-      <LegalSection title="5. Abonnements Apple et Google">
+      <LegalSection title="5. Abonnements en cours">
         <LegalCallout tone="alert">
           <p className="font-semibold">
             La suppression du Compte Tia ne résilie pas automatiquement un abonnement géré par l'App Store ou
@@ -117,6 +136,10 @@ export default function AccountDeletionPage({ searchParams }: AccountDeletionPag
         <p>
           Si vous avez un abonnement actif, vous devez également l'annuler dans les paramètres d'abonnement de
           la plateforme par laquelle vous avez souscrit.
+        </p>
+        <p>
+          Un abonnement payé par mobile money (Orange Money, MVola, Airtel Money) n'est jamais renouvelé
+          automatiquement : il n'y a rien à résilier.
         </p>
       </LegalSection>
 
