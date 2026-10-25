@@ -48,7 +48,6 @@ export type HomeCopy = {
     subtitle: string
     note: string
     scrollLabel: string
-    disclaimer: string
   }
   whyTia: {
     eyebrow: string

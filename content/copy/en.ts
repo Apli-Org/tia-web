@@ -43,7 +43,6 @@ export const EN: HomeCopy = {
     subtitle: 'Verified profiles, real people near you. One swipe is all it takes to get started.',
     note: 'Free · iPhone and Android',
     scrollLabel: 'Discover',
-    disclaimer: 'Model photos, for illustration only.',
   },
   whyTia: {
     eyebrow: 'Why Tia',

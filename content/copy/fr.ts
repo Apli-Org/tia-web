@@ -45,7 +45,6 @@ export const FR: HomeCopy = {
       'Des profils vérifiés, des vrais gens près de chez toi. Il suffit d’un swipe pour commencer.',
     note: 'Gratuit · iPhone et Android',
     scrollLabel: 'Découvrir',
-    disclaimer: 'Photos de modèles, à titre d’illustration.',
   },
   whyTia: {
     eyebrow: 'Pourquoi Tia',

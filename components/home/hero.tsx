@@ -76,9 +76,6 @@ export function Hero({ locale, copy, storesCopy, statusLabels }: HeroProps) {
       >
         {SCROLL_ARROW}
       </a>
-      <p className="absolute right-6 bottom-4 z-2 text-[12px] text-tia-plum-50/55 @max-[640px]:right-auto @max-[640px]:left-0 @max-[640px]:w-full @max-[640px]:text-center">
-        {copy.disclaimer}
-      </p>
     </header>
   )
 }
