@@ -17,9 +17,10 @@ type NavbarProps = {
   locale: Locale
   copy: HomeCopy['nav']
   languageCopy: HomeCopy['language']
+  homeHref?: string
 }
 
-export function Navbar({ locale, copy, languageCopy }: NavbarProps) {
+export function Navbar({ locale, copy, languageCopy, homeHref = '#top' }: NavbarProps) {
   const capsuleRef = useRef<HTMLDivElement>(null)
   const [indicatorIndex, setIndicatorIndex] = useState(0)
   const [isIndicatorVisible, setIsIndicatorVisible] = useState(false)
@@ -47,7 +48,7 @@ export function Navbar({ locale, copy, languageCopy }: NavbarProps) {
         className="pointer-events-auto flex h-[calc(68px_-_8px_*_var(--nav-shrink,0))] w-full max-w-[calc(1180px_-_140px_*_var(--nav-shrink,0))] animate-tia-nav-in items-center gap-4 rounded-full border border-tia-plum-700 bg-tia-plum-900 pr-2.5 pl-6 text-tia-plum-50 max-[640px]:h-15 max-[640px]:pr-1.5 max-[640px]:pl-4.5"
       >
         <a
-          href="#top"
+          href={homeHref}
           aria-label={copy.homeLabel}
           className="flex items-center transition-[rotate,scale] duration-500 ease-tia-spring hover:scale-[1.06] hover:-rotate-6"
         >
