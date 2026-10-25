@@ -66,7 +66,8 @@ docs/               Original specification and implementation notes (French, his
 | Where                | Local dev (`.env.local`)    | Vercel production (`main`)    |
 | URL                  | `http://localhost:3000`     | `https://www.tia-meet.com`    |
 
-- **Hosting** — Vercel builds `main` from GitLab (`gitlab.com/apli1/tia-web`). The repo stays on GitLab: Vercel Hobby cannot deploy a private repo owned by a GitHub organization.
+- **Hosting** — Vercel builds `main` from GitHub ([Apli-Org/tia-web](https://github.com/Apli-Org/tia-web)). The repo is public because Vercel Hobby cannot deploy a private repo owned by a GitHub organization.
+- **Public repo** — everything committed is world-readable, history included. Never commit secrets, env files, real member data, or ids and emails of real accounts; use placeholders in docs and fixtures.
 - **Local data** — `.env.local` points at preprod. Never point a local back office at prod, and never copy `.env.local` to Vercel.
 - **Supabase MCP** — `.mcp.json` targets the **prod** project. Use it for reads; never write to prod through it without asking the user first.
 
@@ -123,7 +124,11 @@ The schema is **owned by the mobile repo**. Migrations live in `tia/supabase/mig
 ### Server actions
 
 - Server actions live in `actions/`, start with `'use server'` and are named `<domain>.action.ts`. A `'use server'` file may only export async functions (and types): constants and sync helpers shared with the client go in a sibling file such as `moderation-types.ts`.
-- **Every back office action authorizes itself.** Start with `getCurrentAdmin()` from `actions/admin/auth.action.ts`, check the action it needs (`admin.actions.includes('send_push')`), and return an error otherwise. Never trust an admin id, role or permission sent from the client — Server Actions are public POST endpoints.
+- **Every back office action authorizes itself** from the session, through `lib/auth/admin-guard.ts`. Server Actions are public POST endpoints: anyone can call them with any arguments.
+  - Reads start with `await requireAdminAction('view_pricing', 'manage_pricing')`, which throws unless the signed-in admin holds one of the actions.
+  - Mutations start with `const admin = await getAuthorizedAdmin('manage_pricing')` and `if (!admin) return { success: false, error: PERMISSION_DENIED }`.
+  - Never take an admin id, role or permission as a parameter: use `admin.id` from the guard for `admin_id`, `created_by` and `changed_by`.
+- Permission codes live in `admin_actions` (`view_*` to read, `manage_*` to change, plus `send_push`, `send_newsletter`, `reset_passwords` …) and are granted to roles through `admin_role_actions`.
 - Return a discriminated result the UI can switch on: `{ success: true; data: T } | { success: false; error: string }`. The `error` is a short French message for the UI; log the technical error on the server.
 - Record every back office mutation in `admin_activity_logs`.
 - Call `revalidatePath` for the pages a mutation affects.
@@ -142,7 +147,7 @@ The schema is **owned by the mobile repo**. Migrations live in `tia/supabase/mig
 ### Pages and components
 
 - Server Components by default. Add `'use client'` only where state, effects or event handlers are needed, and push it down to the smallest component.
-- Back office pages resolve the admin with `getCurrentAdmin()` and `checkAdminAction()` and `redirect()` when access is missing. The `(app)` layout and the middleware are not enough on their own.
+- Back office pages resolve the admin with `getCurrentAdmin()`, check access with `checkAdminAction()` from `lib/auth/admin-guard.ts` and `redirect()` when it is missing. The `(app)` layout and the middleware are not enough on their own.
 - Keep filters, search and pagination in the URL (`searchParams`) so pages stay shareable and refreshable.
 - Every section with slow data gets a `loading.tsx` skeleton.
 
@@ -170,14 +175,14 @@ The schema is **owned by the mobile repo**. Migrations live in `tia/supabase/mig
 - One logical change per commit. No `wip`, `debug` or "fix build" chains: squash them before merging.
 - Do **not** append a `Co-Authored-By: Claude …` trailer. Commit messages end at the body.
 - Never amend or force-push published commits. Create a new commit to fix a mistake.
-- Work on `feat/<topic>` or `fix/<topic>` branches and merge into `main` through GitLab merge requests, rebased first so the history stays linear.
+- Work on `feat/<topic>` or `fix/<topic>` branches and merge into `main` through GitHub pull requests, rebased first so the history stays linear.
 
 ## Known issues (raise with the user before touching)
 
-1. **Unauthorized admin actions** — `pricing`, `promo-codes`, `advertisements`, `dashboard`, `activity`, `support/stats` and `settings/logs` actions use the service-role client without calling `getCurrentAdmin()`, and some take the admin id as a parameter. They must authorize themselves (see Server actions).
-2. **Middleware route list** — `lib/supabase/proxy.ts` only guards `/dashboard`, `/users`, `/moderation`, `/subscriptions`, `/analytics`, `/support` and `/settings`; the other back office sections rely on their page checks.
-3. **ESLint** — `pnpm lint` crashes while loading `eslint-config-next` 16 through `FlatCompat` ("Converting circular structure to JSON"). `pnpm typecheck` is the working check until the config moves to the native flat presets.
-4. **Stale database types** — `lib/database.types.ts` predates most back office tables (no `push_campaigns`, for instance), so many actions type their rows by hand. Regenerate it before relying on it.
+1. **Middleware route list** — `lib/supabase/proxy.ts` only guards `/dashboard`, `/users`, `/moderation`, `/subscriptions`, `/analytics`, `/support` and `/settings`; the other back office sections rely on their page checks and on the action guards.
+2. **ESLint** — `pnpm lint` crashes while loading `eslint-config-next` 16 through `FlatCompat` ("Converting circular structure to JSON"). `pnpm typecheck` is the working check until the config moves to the native flat presets.
+3. **Stale database types** — `lib/database.types.ts` predates most back office tables (no `push_campaigns`, for instance), so many actions type their rows by hand. Regenerate it before relying on it.
+4. **Newsletter without Resend** — `actions/admin/newsletter.action.ts` builds the Resend client when the module loads, so `/newsletter` crashes when `RESEND_API_KEY` is missing, as it is in a fresh `.env.local`.
 5. **Images on preprod** — `next.config.ts` only allows the prod Supabase host for `next/image`, so preprod storage images do not render through it locally.
 
 ## Running the project

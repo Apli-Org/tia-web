@@ -131,13 +131,13 @@ The Supabase schema is shared with the mobile app and **managed from the mobile 
 
 ## Deployment
 
-Vercel builds and deploys `main` to production at **www.tia-meet.com**. The repository is hosted on GitLab (`gitlab.com/apli1/tia-web`); changes land on `main` through merge requests.
+Vercel builds and deploys `main` to production at **www.tia-meet.com**. Changes land on `main` through GitHub pull requests.
 
 ## Coding Conventions
 
 - **Language:** TypeScript (strict mode); code in English, UI copy in French
 - **Comments:** None by default; a single English JSDoc only on hard-to-follow functions
-- **Server actions:** Every back office action checks the signed-in admin and its permission
+- **Server actions:** Every back office action checks the signed-in admin and its permission through `lib/auth/admin-guard.ts`
 - **Supabase:** Service-role client in server code only, after the admin check
 - **Styling:** shadcn/ui primitives and theme tokens; no hardcoded colors
 - **Commits:** Conventional Commits in English (`feat(scope):`, `fix(scope):`, `chore(scope):`)
@@ -161,4 +161,4 @@ Vercel builds and deploys `main` to production at **www.tia-meet.com**. The repo
 
 ## License
 
-Private project of APLI SARLU. No open-source license is granted.
+© APLI SARLU. All rights reserved. The source is public for reference only; no license is granted to use, copy or redistribute it.
