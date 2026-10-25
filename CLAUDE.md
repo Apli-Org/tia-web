@@ -8,7 +8,7 @@ The repo serves three surfaces:
 
 | Surface      | Routes                                                                                                         | Audience                     |
 | ------------ | -------------------------------------------------------------------------------------------------------------- | ---------------------------- |
-| Landing page | `/`, `/inscription-newsletter`                                                                                 | Visitors                     |
+| Landing page | `/`, `/en`, `/inscription-newsletter`                                                                          | Visitors                     |
 | Public pages | `/terms`, `/privacy`, `/child-safety`, `/community-guidelines`, `/dating-safety`, `/account-deletion`, `/payment/redirect`, `/.well-known/*`, `/app-ads.txt` | Visitors, stores, the app    |
 | Back office  | `/login`, `/dashboard`, `/users`, `/moderation`, `/pricing`, `/promo-codes`, `/advertisements`, `/newsletter`, `/notifications`, `/landing`, `/staff`, `/support`, `/settings`, `/activity` | Tia staff                    |
 
@@ -34,7 +34,7 @@ actions/
   admin/            Back office server actions, one file per domain (<domain>.action.ts)
   *.action.ts       Public server actions (newsletter signup, published landing content)
 app/
-  (landing)/        Landing page and newsletter signup page
+  (landing)/        Home page (French at /, English at /en) and newsletter signup page
   (backoffice)/
     login/          Staff sign-in
     (app)/          Authenticated back office, one folder per section
@@ -47,7 +47,7 @@ components/
   home/             Home page sections (navbar, hero, bento, marquees, footer)
   landing/          Previous landing sections: legal page header/footer, /landing editor previews
   newsletter/       Newsletter editor and preview
-content/            Home page copy and data (site.ts, countries.ts, testimonials.ts)
+content/            Home page data (site.ts, countries.ts, testimonials.ts) and copy (copy/fr.ts, copy/en.ts)
 design/reference/   Validated home page mockup, the visual source of truth
 emails/             React Email templates
 hooks/              Client hooks
@@ -88,7 +88,7 @@ The schema is **owned by the mobile repo**. Migrations live in `tia/supabase/mig
 ### General
 
 - **No inline comments.** Default to zero comments in new code. If a function is genuinely hard to follow, add a single English JSDoc above it — never annotate lines inside the body. Do not strip existing comments from code you are not otherwise changing.
-- **English code, French copy.** Identifiers, comments, commit messages and docs are in English. User-facing copy (landing, back office, legal pages, emails) is in French; push notifications carry both French and English.
+- **English code, French copy.** Identifiers, comments, commit messages and docs are in English. User-facing copy (landing, back office, legal pages, emails) is in French; the home page also exists in English at `/en`, and push notifications carry both French and English.
 - **Brand.** Write "Tia", never "TIA". "T.IA" is the AI coach in the app.
 - **Scope.** Do not add features, refactor or introduce abstractions beyond what the task requires.
 - **Boundaries.** Validate input at system boundaries (server actions, route handlers, forms) and nowhere else. Do not add error handling for scenarios that cannot happen.
@@ -160,7 +160,7 @@ The schema is **owned by the mobile repo**. Migrations live in `tia/supabase/mig
 - Colors come from the theme tokens in `app/globals.css` (`primary`, `muted`, `destructive` …). Never hardcode hex values in components.
 - Tailwind 4 syntax: `bg-linear-to-r`, not `bg-gradient-to-r`.
 - No emojis in new UI.
-- The home page matches `design/reference/tia-meet-site/index.html` at 1440 and 390 px. Its components hold no copy: text, links and data come from `content/`. Colors are the `tia-*` tokens in `app/globals.css` (flag colors excepted), gradients are limited to the phone photo scrim and the marquee edge masks, and Borel is only used for the two highlighted words.
+- The home page matches `design/reference/tia-meet-site/index.html` at 1440 and 390 px. Its components hold no copy: shared data comes from `content/site.ts`, text from `content/copy/fr.ts` and `content/copy/en.ts` (both typed by `HomeCopy`), so a new string goes into both. Testimonials are real Google Play reviews in `content/testimonials.ts`, with an English translation flagged as such. Colors are the `tia-*` tokens in `app/globals.css` (flag colors excepted), gradients are limited to the phone photo scrim and the marquee edge masks, and Borel is only used for the two highlighted words.
 - The `components/landing/` sections read their published content from `landing_sections` and fall back on the `defaultContent` declared in the component. A new field means updating `lib/types/landing.types.ts`, the section editor in `app/(backoffice)/(app)/landing/_components/` and the default content together.
 - Legal pages must keep working with `?embed=true` (no header, no back link): the app opens them in a web view. Wrap `useSearchParams` in `Suspense`.
 
@@ -188,7 +188,7 @@ The schema is **owned by the mobile repo**. Migrations live in `tia/supabase/mig
 3. **Stale database types** — `lib/database.types.ts` predates most back office tables (no `push_campaigns`, for instance), so many actions type their rows by hand. Regenerate it before relying on it.
 4. **Newsletter without Resend** — `actions/admin/newsletter.action.ts` builds the Resend client when the module loads, so `/newsletter` crashes when `RESEND_API_KEY` is missing, as it is in a fresh `.env.local`.
 5. **Images on preprod** — `next.config.ts` only allows the prod Supabase host for `next/image`, so preprod storage images do not render through it locally.
-6. **Landing editor detached from the home page** — since the home redesign, `/` reads `content/` and no longer `landing_sections`. The `/landing` editor still publishes, but only `/inscription-newsletter` uses its content.
+6. **Landing editor detached from the home page** — since the home redesign, `/` and `/en` read `content/` and no longer `landing_sections`. The `/landing` editor still publishes, but only `/inscription-newsletter` uses its content.
 7. **Root layout fonts** — `app/layout.tsx` preloads Inter and Geist Mono on every page, the home page included, which does not use them (about 72 KB on the critical path).
 
 ## Running the project

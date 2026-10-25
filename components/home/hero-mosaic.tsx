@@ -1,4 +1,4 @@
-import { HERO } from '@/content/site'
+import { HERO_MOSAIC } from '@/content/site'
 import { cn } from '@/lib/utils'
 import { Photo } from './photo'
 
@@ -17,7 +17,7 @@ export function HeroMosaic() {
       aria-hidden="true"
       className="absolute -inset-x-5 -inset-y-10 grid scale-[1.12] -rotate-6 grid-cols-5 gap-4 opacity-95 @max-[1080px]:grid-cols-4 @max-[640px]:grid-cols-3 @max-[640px]:gap-2.5"
     >
-      {HERO.mosaic.map((column, columnIndex) => {
+      {HERO_MOSAIC.map((column, columnIndex) => {
         const isReversed = columnIndex % 2 === 1
 
         return (

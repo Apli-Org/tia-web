@@ -1,4 +1,3 @@
-import { WHY_TIA } from '@/content/site'
 import { cn } from '@/lib/utils'
 import { Marquee } from './marquee'
 
@@ -11,13 +10,17 @@ const CHIP_TONES = [
   'bg-tia-violet-200 text-tia-violet-800',
 ]
 
-export function InterestsMarquee() {
+type InterestsMarqueeProps = {
+  rows: string[][]
+}
+
+export function InterestsMarquee({ rows }: InterestsMarqueeProps) {
   return (
     <div className="absolute inset-x-0 top-8 z-3 flex flex-col gap-3 [mask-image:linear-gradient(90deg,transparent,black_10%,black_90%,transparent)]">
-      {WHY_TIA.interests.map((row, rowIndex) => (
+      {rows.map((row, rowIndex) => (
         <Marquee
           key={row[0]}
-          duration={ROW_DURATIONS[rowIndex]}
+          duration={ROW_DURATIONS[rowIndex % ROW_DURATIONS.length]}
           isReversed={rowIndex % 2 === 1}
           groupClassName="gap-2.5 pr-2.5"
         >

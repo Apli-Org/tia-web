@@ -42,7 +42,7 @@ app/
   payment/        Vanilla Pay return page
   terms/ …        Legal pages
 components/       UI primitives, home and landing sections, back office shell
-content/          Home page copy and data (site, countries, testimonials)
+content/          Home page data and French/English copy
 design/reference/ Validated home page mockup (static HTML)
 emails/           React Email templates
 hooks/            Client hooks
@@ -83,7 +83,7 @@ pnpm lint         # ESLint
 
 ## Landing Page
 
-The home page (`/`) reproduces the validated mockup in `design/reference/tia-meet-site/`. Its sections live in `components/home/` and read their copy from `content/`: `site.ts` (links, sections, FAQ, offers), `countries.ts` (hero chips and the countries section) and `testimonials.ts`. Changing the copy means editing these files and deploying.
+The home page reproduces the validated mockup in `design/reference/tia-meet-site/`, in French at `/` and in English at `/en` (language menu in the navbar, link in the footer, `hreflang` alternates). Its sections live in `components/home/` and read from `content/`: `site.ts` (links, photos, section ids), `copy/fr.ts` and `copy/en.ts` (all the text), `countries.ts` (hero chips and the countries section) and `testimonials.ts` (Google Play reviews). Changing the copy means editing these files and deploying.
 
 The older sections in `components/landing/` still provide the header and footer of the legal pages and `/inscription-newsletter`, and the previews of the back office `/landing` editor, which writes the `landing_sections` table.
 

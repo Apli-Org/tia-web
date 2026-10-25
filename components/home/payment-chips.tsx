@@ -1,12 +1,17 @@
-import { WHY_TIA } from '@/content/site'
+import type { HomeCopy } from '@/content/home-copy'
 import { cn } from '@/lib/utils'
 
 const CHIP_DELAYS = ['delay-0', 'delay-40', 'delay-80']
+const DOT_TONES = ['bg-tia-violet-500', 'bg-tia-coral-500']
 
-export function PaymentChips() {
+type PaymentChipsProps = {
+  payments: HomeCopy['whyTia']['payments']
+}
+
+export function PaymentChips({ payments }: PaymentChipsProps) {
   return (
     <div className="absolute inset-x-7 top-7 z-3 grid grid-cols-2 gap-5 @max-[640px]:static @max-[640px]:mb-6 @max-[640px]:grid-cols-1 @max-[640px]:gap-3">
-      {WHY_TIA.payments.map((payment) => (
+      {payments.map((payment, paymentIndex) => (
         <div key={payment.region} className="flex flex-wrap content-start items-center gap-2">
           <small className="w-full text-[11px] font-bold tracking-[.08em] text-tia-violet-700 uppercase">
             {payment.region}
@@ -19,7 +24,7 @@ export function PaymentChips() {
                 CHIP_DELAYS[index],
               )}
             >
-              <i className={cn('size-2 rounded-full', payment.isLocal ? 'bg-tia-violet-500' : 'bg-tia-coral-500')} />
+              <i className={cn('size-2 rounded-full', DOT_TONES[paymentIndex % DOT_TONES.length])} />
               {method}
             </span>
           ))}
