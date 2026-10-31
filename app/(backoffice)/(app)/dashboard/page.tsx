@@ -10,6 +10,7 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
 } from "@/components/ui/breadcrumb"
+import { LiveRefresh } from "@/components/backoffice/live-refresh"
 import { getCurrentAdmin } from "@/actions/admin/auth.action"
 import { checkAdminAction } from "@/lib/auth/admin-guard"
 import { roleLabels } from "@/lib/staff-utils"
@@ -134,6 +135,7 @@ export default async function DashboardPage() {
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
+        <LiveRefresh className="ml-auto" />
       </header>
 
       <main className="flex-1 p-3 sm:p-4 lg:p-6">
