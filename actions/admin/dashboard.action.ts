@@ -2,6 +2,18 @@
 
 import { requireAdminAction } from "@/lib/auth/admin-guard"
 import { createAdminClient } from "@/lib/supabase/admin"
+import { isInReunion } from "@/lib/territories"
+
+const STORE_PAYMENT_METHODS = ["apple_iap", "google_iap"]
+const NOT_STORE_PAYMENT = `payment_method.is.null,payment_method.not.in.(${STORE_PAYMENT_METHODS.join(",")})`
+const CENTS_PER_UNIT = 100
+
+type AdminClient = ReturnType<typeof createAdminClient>
+
+type StorePurchaseRow = {
+  price_paid: number | null
+  user: { latitude: number | null; longitude: number | null } | null
+}
 
 export type DashboardKPIs = {
   activeUsers: {
@@ -15,6 +27,11 @@ export type DashboardKPIs = {
     trend: "up" | "down"
   }
   monthlyRevenue: {
+    total: number
+    change: number
+    trend: "up" | "down"
+  }
+  reunionMonthlyRevenue: {
     total: number
     change: number
     trend: "up" | "down"
@@ -65,6 +82,8 @@ export async function getDashboardKPIs(): Promise<DashboardKPIs> {
     lastMonthSubRevenueResult,
     monthlyMicroRevenueResult,
     lastMonthMicroRevenueResult,
+    reunionMonthlyRevenue,
+    reunionLastMonthRevenue,
     pendingReportsResult,
   ] = await Promise.all([
     supabase
@@ -91,11 +110,13 @@ export async function getDashboardKPIs(): Promise<DashboardKPIs> {
     supabase
       .from("subscriptions")
       .select("amount_paid")
+      .or(NOT_STORE_PAYMENT)
       .gte("created_at", startOfMonth.toISOString()),
     // Subscription revenue last month
     supabase
       .from("subscriptions")
       .select("amount_paid")
+      .or(NOT_STORE_PAYMENT)
       .gte("created_at", startOfLastMonth.toISOString())
       .lt("created_at", startOfMonth.toISOString()),
     // Micro-purchases revenue this month (excluding subscriptions)
@@ -104,6 +125,7 @@ export async function getDashboardKPIs(): Promise<DashboardKPIs> {
       .select("price_paid")
       .eq("status", "completed")
       .neq("product_type", "subscription")
+      .or(NOT_STORE_PAYMENT)
       .gte("created_at", startOfMonth.toISOString()),
     // Micro-purchases revenue last month (excluding subscriptions)
     supabase
@@ -111,8 +133,11 @@ export async function getDashboardKPIs(): Promise<DashboardKPIs> {
       .select("price_paid")
       .eq("status", "completed")
       .neq("product_type", "subscription")
+      .or(NOT_STORE_PAYMENT)
       .gte("created_at", startOfLastMonth.toISOString())
       .lt("created_at", startOfMonth.toISOString()),
+    getReunionStoreRevenue(supabase, startOfMonth),
+    getReunionStoreRevenue(supabase, startOfLastMonth, startOfMonth),
     supabase
       .from("reported_content")
       .select("id", { count: "exact", head: true })
@@ -144,6 +169,8 @@ export async function getDashboardKPIs(): Promise<DashboardKPIs> {
     ? Math.round(((monthlyRevenue - lastMonthRevenue) / lastMonthRevenue) * 100)
     : 0
 
+  const reunionRevenueChange = getChangePercent(reunionMonthlyRevenue, reunionLastMonthRevenue)
+
   const pendingReports = pendingReportsResult.count ?? 0
 
   return {
@@ -162,10 +189,42 @@ export async function getDashboardKPIs(): Promise<DashboardKPIs> {
       change: Math.abs(revenueChange),
       trend: revenueChange >= 0 ? "up" : "down",
     },
+    reunionMonthlyRevenue: {
+      total: reunionMonthlyRevenue,
+      change: Math.abs(reunionRevenueChange),
+      trend: reunionRevenueChange >= 0 ? "up" : "down",
+    },
     pendingReports: {
       total: pendingReports,
     },
   }
+}
+
+/**
+ * Store revenue in euros paid by members located in La Réunion. Store
+ * payments carry no region, so the member's current coordinates decide it.
+ */
+async function getReunionStoreRevenue(supabase: AdminClient, from: Date, to?: Date): Promise<number> {
+  let query = supabase
+    .from("micro_purchases")
+    .select("price_paid, user:user_id(latitude, longitude)")
+    .eq("status", "completed")
+    .in("payment_method", STORE_PAYMENT_METHODS)
+    .gte("created_at", from.toISOString())
+
+  if (to) query = query.lt("created_at", to.toISOString())
+
+  const { data } = await query.returns<StorePurchaseRow[]>()
+
+  const cents = (data ?? [])
+    .filter((purchase) => isInReunion(purchase.user?.latitude ?? null, purchase.user?.longitude ?? null))
+    .reduce((sum, purchase) => sum + (purchase.price_paid ?? 0), 0)
+
+  return cents / CENTS_PER_UNIT
+}
+
+function getChangePercent(current: number, previous: number): number {
+  return previous > 0 ? Math.round(((current - previous) / previous) * 100) : 0
 }
 
 export async function getGrowthData(): Promise<GrowthData[]> {

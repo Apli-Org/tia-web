@@ -13,6 +13,7 @@ import {
 import { LiveRefresh } from "@/components/backoffice/live-refresh"
 import { getCurrentAdmin } from "@/actions/admin/auth.action"
 import { checkAdminAction } from "@/lib/auth/admin-guard"
+import { formatPrice } from "@/lib/pricing-utils"
 import { roleLabels } from "@/lib/staff-utils"
 import {
   getDashboardKPIs,
@@ -31,6 +32,7 @@ import { WelcomeTile } from "./_components/welcome-tile"
 const ROLE_LABELS: Record<string, string> = roleLabels
 const REPORTS_ALERT_THRESHOLD = 10
 const FALLBACK_FIRST_NAME = "l'équipe"
+const REUNION_CURRENCY = "EUR"
 
 const KPI_STYLES: Record<"users" | "matches" | "revenue" | "reports", KpiTileStyle> = {
   users: { tone: "light", chip: "bg-tia-violet-100 text-tia-violet-600" },
@@ -79,6 +81,11 @@ async function KpiTiles() {
         icon={Wallet}
         tileStyle={KPI_STYLES.revenue}
         trend={{ direction: kpis.monthlyRevenue.trend, change: kpis.monthlyRevenue.change }}
+        detail={{
+          label: "La Réunion",
+          value: formatPrice(kpis.reunionMonthlyRevenue.total, REUNION_CURRENCY),
+          trend: { direction: kpis.reunionMonthlyRevenue.trend, change: kpis.reunionMonthlyRevenue.change },
+        }}
         delayStep={3}
       />
       <KpiTile

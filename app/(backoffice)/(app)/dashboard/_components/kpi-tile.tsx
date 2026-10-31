@@ -20,6 +20,12 @@ export type KpiTrend = {
   change: number
 }
 
+export type KpiDetail = {
+  label: string
+  value: string
+  trend?: KpiTrend
+}
+
 type KpiTileProps = {
   label: string
   value: number
@@ -28,16 +34,21 @@ type KpiTileProps = {
   icon: LucideIcon
   tileStyle: KpiTileStyle
   trend?: KpiTrend
+  detail?: KpiDetail
   href?: string
   isUrgent?: boolean
   delayStep: number
 }
 
-const TONES: Record<KpiTileTone, { tile: string; label: string; caption: string; up: string; down: string }> = {
+const TONES: Record<
+  KpiTileTone,
+  { tile: string; label: string; caption: string; divider: string; up: string; down: string }
+> = {
   light: {
     tile: "bg-card text-tia-plum-800",
     label: "text-tia-plum-600",
     caption: "text-tia-plum-500",
+    divider: "border-tia-plum-200",
     up: "bg-tia-violet-100 text-tia-violet-700",
     down: "bg-tia-coral-50 text-tia-coral-700",
   },
@@ -45,6 +56,7 @@ const TONES: Record<KpiTileTone, { tile: string; label: string; caption: string;
     tile: "bg-tia-violet-900 text-tia-plum-50",
     label: "text-tia-violet-200",
     caption: "text-tia-plum-50/70",
+    divider: "border-tia-plum-50/15",
     up: "bg-tia-plum-50/12 text-tia-violet-200",
     down: "bg-tia-coral-500/20 text-tia-coral-100",
   },
@@ -58,6 +70,7 @@ export function KpiTile({
   icon: Icon,
   tileStyle,
   trend,
+  detail,
   href,
   isUrgent = false,
   delayStep,
@@ -117,6 +130,25 @@ export function KpiTile({
           className="mt-1 block text-[32px]/[38px] font-bold tracking-[-.03em] tabular-nums"
         />
         <p className={cn("mt-1 text-[12px]", tone.caption)}>{caption}</p>
+        {detail && (
+          <div className={cn("mt-3 flex items-center justify-between gap-2 border-t pt-3", tone.divider)}>
+            <span className={cn("text-[12px] font-semibold", tone.label)}>{detail.label}</span>
+            <span className="flex items-center gap-2">
+              <span className="text-[15px] font-bold tabular-nums">{detail.value}</span>
+              {detail.trend && (
+                <span
+                  className={cn(
+                    "rounded-full px-2 py-0.5 text-[11px] font-bold",
+                    detail.trend.direction === "up" ? tone.up : tone.down
+                  )}
+                >
+                  {detail.trend.direction === "up" ? "+" : "-"}
+                  {detail.trend.change}%
+                </span>
+              )}
+            </span>
+          </div>
+        )}
       </div>
     </article>
   )
