@@ -1,32 +1,21 @@
 "use client";
 
-import {
-  Activity,
-  BellRing,
-  ChevronDown,
-  ChevronUp,
-  CreditCard,
-  Headphones,
-  Layout,
-  LayoutDashboard,
-  Loader2,
-  LogOut,
-  Mail,
-  Megaphone,
-  Settings,
-  Shield,
-  Tag,
-  Ticket,
-  Timer,
-  Users,
-  UsersRound,
-} from "lucide-react";
+import { ChevronDown, ChevronUp, Loader2, LogOut, Settings } from "lucide-react";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { logoutAdmin, type CurrentAdmin } from "@/actions/admin/auth.action";
+import {
+  getActiveNavItem,
+  NAV_ITEMS,
+  NAV_SECTIONS,
+  type SectionKey,
+} from "@/components/backoffice/nav-items";
+import { Logo } from "@/components/home/logo";
+import { SPRING_TRANSITION } from "@/components/home/motion";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   Collapsible,
@@ -56,126 +45,7 @@ import {
   SidebarMenuSubItem,
   SidebarRail,
 } from "@/components/ui/sidebar";
-
-type SectionKey = 'overview' | 'management' | 'moderation' | 'finance' | 'communication' | 'content';
-
-type NavItem = {
-  title: string;
-  url: string;
-  icon: typeof LayoutDashboard;
-  action: string;
-  section: SectionKey;
-};
-
-const sections: Record<SectionKey, { label: string; icon: typeof LayoutDashboard; order: number }> = {
-  overview: { label: "Vue d'ensemble", icon: LayoutDashboard, order: 1 },
-  management: { label: "Gestion", icon: Users, order: 2 },
-  moderation: { label: "Modération", icon: Shield, order: 3 },
-  finance: { label: "Finance", icon: CreditCard, order: 4 },
-  communication: { label: "Communication", icon: Mail, order: 5 },
-  content: { label: "Contenu & Support", icon: Layout, order: 6 },
-};
-
-const navItems: NavItem[] = [
-  {
-    title: "Dashboard",
-    url: "/dashboard",
-    icon: LayoutDashboard,
-    action: "view_dashboard",
-    section: "overview",
-  },
-  {
-    title: "Activité",
-    url: "/activity",
-    icon: Activity,
-    action: "view_dashboard",
-    section: "overview",
-  },
-  {
-    title: "Utilisateurs",
-    url: "/users",
-    icon: Users,
-    action: "view_users",
-    section: "management",
-  },
-  {
-    title: "Personnel",
-    url: "/staff",
-    icon: UsersRound,
-    action: "view_staff",
-    section: "management",
-  },
-  {
-    title: "Modération",
-    url: "/moderation",
-    icon: Shield,
-    action: "view_reports",
-    section: "moderation",
-  },
-  {
-    title: "Gestion dislike",
-    url: "/moderation/passed-profiles",
-    icon: Timer,
-    action: "manage_cron_settings",
-    section: "moderation",
-  },
-  {
-    title: "Tarification",
-    url: "/pricing",
-    icon: Tag,
-    action: "view_pricing",
-    section: "finance",
-  },
-  {
-    title: "Abonnements",
-    url: "/pricing/subscriptions",
-    icon: CreditCard,
-    action: "view_pricing",
-    section: "finance",
-  },
-  {
-    title: "Codes Promo",
-    url: "/promo-codes",
-    icon: Ticket,
-    action: "manage_promo_codes",
-    section: "finance",
-  },
-  {
-    title: "Newsletter",
-    url: "/newsletter",
-    icon: Mail,
-    action: "send_newsletter",
-    section: "communication",
-  },
-  {
-    title: "Notifications push",
-    url: "/notifications",
-    icon: BellRing,
-    action: "send_push",
-    section: "communication",
-  },
-  {
-    title: "Publicités",
-    url: "/advertisements",
-    icon: Megaphone,
-    action: "view_advertisements",
-    section: "communication",
-  },
-  {
-    title: "Landing Page",
-    url: "/landing",
-    icon: Layout,
-    action: "manage_landing_page",
-    section: "content",
-  },
-  {
-    title: "Support",
-    url: "/support",
-    icon: Headphones,
-    action: "view_tickets",
-    section: "content",
-  },
-];
+import { cn } from "@/lib/utils";
 
 type AppSidebarProps = {
   admin: CurrentAdmin | null;
@@ -197,13 +67,11 @@ export function AppSidebar({ admin }: AppSidebarProps) {
   const pathname = usePathname();
   const [navigatingTo, setNavigatingTo] = useState<string | null>(null);
 
+  const activeUrl = getActiveNavItem(pathname)?.url;
+
   // Find the active section based on current pathname
   const getActiveSection = (): SectionKey | null => {
-    const activeItem = navItems.find(
-      (item) =>
-        pathname === item.url || pathname.startsWith(item.url + "/")
-    );
-    return activeItem?.section || null;
+    return getActiveNavItem(pathname)?.section || null;
   };
 
   const [openSection, setOpenSection] = useState<SectionKey | null>(getActiveSection);
@@ -227,21 +95,21 @@ export function AppSidebar({ admin }: AppSidebarProps) {
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton size="lg" asChild>
-              <Link href="/dashboard">
+            <SidebarMenuButton size="lg" asChild className="hover:bg-transparent active:bg-transparent">
+              <Link href="/dashboard" className="group/brand">
                 <Image
                   src="/images/TiaApp.png"
-                  alt="Tia Logo"
+                  alt="Tia"
                   width={32}
                   height={32}
-                  className="size-8 rounded-lg"
+                  className="size-8 rounded-[10px] transition-[rotate,scale] duration-500 ease-tia-spring group-hover/brand:scale-[1.06] group-hover/brand:-rotate-6"
                 />
-                <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold">Tia</span>
-                  <span className="truncate text-xs text-muted-foreground">
-                    Back Office
-                  </span>
-                </div>
+                <span className="flex">
+                  <Logo ink height={24} />
+                </span>
+                <span className="ml-auto inline-flex h-6 items-center rounded-full bg-tia-plum-800 px-2.5 text-[11px] font-bold tracking-[.04em] text-tia-violet-200">
+                  Back office
+                </span>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -250,26 +118,24 @@ export function AppSidebar({ admin }: AppSidebarProps) {
 
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Navigation</SidebarGroupLabel>
+          <SidebarGroupLabel className="text-[11px] font-bold tracking-[.08em] text-tia-plum-300 uppercase">
+            Navigation
+          </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {(Object.keys(sections) as SectionKey[])
-                .sort((a, b) => sections[a].order - sections[b].order)
+              {(Object.keys(NAV_SECTIONS) as SectionKey[])
+                .sort((a, b) => NAV_SECTIONS[a].order - NAV_SECTIONS[b].order)
                 .map((sectionKey) => {
-                  const sectionItems = navItems.filter(
+                  const sectionItems = NAV_ITEMS.filter(
                     (item) =>
                       item.section === sectionKey &&
                       admin?.actions?.includes(item.action)
                   );
                   if (sectionItems.length === 0) return null;
-                  const section = sections[sectionKey];
+                  const section = NAV_SECTIONS[sectionKey];
                   const SectionIcon = section.icon;
                   const isOpen = openSection === sectionKey;
-                  const hasActiveItem = sectionItems.some(
-                    (item) =>
-                      pathname === item.url ||
-                      pathname.startsWith(item.url + "/")
-                  );
+                  const hasActiveItem = sectionItems.some((item) => item.url === activeUrl);
                   return (
                     <Collapsible
                       key={sectionKey}
@@ -281,51 +147,63 @@ export function AppSidebar({ admin }: AppSidebarProps) {
                         <CollapsibleTrigger asChild>
                           <SidebarMenuButton
                             tooltip={section.label}
-                            className={`${hasActiveItem ? "font-semibold text-foreground" : ""} ${hasActiveItem && !isOpen ? "bg-sidebar-accent/50" : ""}`}
+                            className={cn(
+                              "h-9 rounded-xl text-tia-plum-200 transition-colors duration-200 hover:text-tia-plum-50",
+                              hasActiveItem && "font-bold text-tia-plum-50",
+                              hasActiveItem && !isOpen && "bg-sidebar-accent"
+                            )}
                           >
-                            <SectionIcon className="transition-colors duration-200" />
+                            <SectionIcon className={cn("transition-colors duration-200", hasActiveItem && "text-tia-violet-300")} />
                             <span className="transition-colors duration-200">{section.label}</span>
                             <ChevronDown className="ml-auto size-4 transition-transform duration-300 ease-out group-data-[state=open]/collapsible:rotate-180" />
                           </SidebarMenuButton>
                         </CollapsibleTrigger>
                         <CollapsibleContent className="overflow-hidden data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down">
-                          <SidebarMenuSub className="transition-all duration-300">
-                            {sectionItems.map((item, index) => (
-                              <SidebarMenuSubItem
-                                key={item.title}
-                                className="animate-in fade-in-0 slide-in-from-left-2"
-                                style={{ animationDelay: `${index * 50}ms`, animationFillMode: "backwards" }}
-                              >
-                                <SidebarMenuSubButton
-                                  asChild
-                                  isActive={
-                                    pathname === item.url ||
-                                    pathname.startsWith(item.url + "/")
-                                  }
+                          <SidebarMenuSub className="mr-0 pr-0">
+                            {sectionItems.map((item, index) => {
+                              const isActive = item.url === activeUrl;
+                              return (
+                                <SidebarMenuSubItem
+                                  key={item.title}
+                                  className="relative animate-in fade-in-0 slide-in-from-left-2"
+                                  style={{ animationDelay: `${index * 50}ms`, animationFillMode: "backwards" }}
                                 >
-                                  <Link
-                                    href={item.url}
-                                    onClick={() => {
-                                      if (pathname !== item.url) {
-                                        setNavigatingTo(item.url);
-                                      }
-                                    }}
-                                    className={`transition-all duration-200 hover:translate-x-1 ${
-                                      pathname === item.url || pathname.startsWith(item.url + "/")
-                                        ? "font-bold text-foreground"
-                                        : ""
-                                    } ${navigatingTo === item.url ? "opacity-70" : ""}`}
+                                  {isActive && (
+                                    <motion.span
+                                      layoutId="sidebar-active-item"
+                                      transition={SPRING_TRANSITION}
+                                      className="absolute inset-0 rounded-[10px] bg-tia-violet-500 shadow-[0_8px_20px_-10px] shadow-tia-violet-500"
+                                    />
+                                  )}
+                                  <SidebarMenuSubButton
+                                    asChild
+                                    isActive={isActive}
+                                    className="relative h-8 rounded-[10px] text-tia-plum-200 hover:bg-tia-plum-800 hover:text-tia-plum-50 data-[active=true]:bg-transparent data-[active=true]:text-tia-plum-50 [&>svg]:text-current"
                                   >
-                                    {navigatingTo === item.url ? (
-                                      <Loader2 className="size-4 animate-spin" />
-                                    ) : (
-                                      <item.icon className="size-4" />
-                                    )}
-                                    <span>{item.title}</span>
-                                  </Link>
-                                </SidebarMenuSubButton>
-                              </SidebarMenuSubItem>
-                            ))}
+                                    <Link
+                                      href={item.url}
+                                      onClick={() => {
+                                        if (pathname !== item.url) {
+                                          setNavigatingTo(item.url);
+                                        }
+                                      }}
+                                      className={cn(
+                                        "transition-[translate,opacity] duration-300 ease-tia-spring hover:translate-x-1",
+                                        isActive && "font-bold",
+                                        navigatingTo === item.url && "opacity-70"
+                                      )}
+                                    >
+                                      {navigatingTo === item.url ? (
+                                        <Loader2 className="size-4 animate-spin" />
+                                      ) : (
+                                        <item.icon className="size-4" />
+                                      )}
+                                      <span>{item.title}</span>
+                                    </Link>
+                                  </SidebarMenuSubButton>
+                                </SidebarMenuSubItem>
+                              );
+                            })}
                           </SidebarMenuSub>
                         </CollapsibleContent>
                       </SidebarMenuItem>
@@ -337,25 +215,25 @@ export function AppSidebar({ admin }: AppSidebarProps) {
         </SidebarGroup>
       </SidebarContent>
 
-      <SidebarFooter>
+      <SidebarFooter className="border-t border-sidebar-border">
         <SidebarMenu>
           <SidebarMenuItem>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <SidebarMenuButton
                   size="lg"
-                  className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+                  className="rounded-2xl data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
                 >
-                  <Avatar className="size-8">
-                    <AvatarFallback className="bg-primary/10 text-primary">
+                  <Avatar className="size-8 rounded-[10px]">
+                    <AvatarFallback className="rounded-[10px] bg-tia-violet-500 text-[12px] font-bold text-tia-plum-50">
                       {admin ? getInitials(admin.full_name, admin.email) : "?"}
                     </AvatarFallback>
                   </Avatar>
                   <div className="grid flex-1 text-left text-sm leading-tight">
-                    <span className="truncate font-semibold">
+                    <span className="truncate font-bold text-tia-plum-50">
                       {admin?.full_name || "Admin"}
                     </span>
-                    <span className="truncate text-xs text-muted-foreground">
+                    <span className="truncate text-xs text-tia-plum-300">
                       {admin?.email || "Non connecté"}
                     </span>
                   </div>
@@ -363,7 +241,7 @@ export function AppSidebar({ admin }: AppSidebarProps) {
                 </SidebarMenuButton>
               </DropdownMenuTrigger>
               <DropdownMenuContent
-                className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
+                className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-2xl"
                 side="top"
                 align="end"
                 sideOffset={4}

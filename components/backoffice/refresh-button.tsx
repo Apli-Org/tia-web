@@ -10,12 +10,14 @@ type RefreshButtonProps = {
   variant?: "default" | "outline" | "ghost"
   size?: "default" | "sm" | "lg" | "icon"
   showLabel?: boolean
+  className?: string
 }
 
 export function RefreshButton({
   variant = "outline",
   size = "sm",
   showLabel = true,
+  className,
 }: RefreshButtonProps) {
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
@@ -36,6 +38,7 @@ export function RefreshButton({
       size={size}
       onClick={handleRefresh}
       disabled={isPending}
+      className={className}
     >
       <RefreshCw
         className={`h-4 w-4 ${showLabel ? "mr-2" : ""} ${isSpinning ? "animate-spin" : ""}`}

@@ -1,12 +1,20 @@
 "use client"
 
+import { usePathname } from "next/navigation"
+
 type PageTransitionProps = {
   children: React.ReactNode
 }
 
 export function PageTransition({ children }: PageTransitionProps) {
-  // Simplified: removed framer-motion animations that were causing
-  // navigation delays (200ms entrance + 200ms exit = 400ms blocked)
-  // Navigation feedback is now handled by NProgress bar
-  return <>{children}</>
+  const pathname = usePathname()
+
+  return (
+    <div
+      key={pathname}
+      className="flex flex-1 flex-col animate-in fade-in-0 slide-in-from-bottom-2 duration-500 ease-out motion-reduce:animate-none"
+    >
+      {children}
+    </div>
+  )
 }
