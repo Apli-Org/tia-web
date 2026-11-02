@@ -1,5 +1,6 @@
 'use server'
 
+import { cache } from 'react'
 import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { revalidatePath } from 'next/cache'
@@ -109,6 +110,14 @@ export type CurrentAdmin = {
 }
 
 export async function getCurrentAdmin(): Promise<CurrentAdmin | null> {
+  return resolveCurrentAdmin()
+}
+
+/**
+ * Resolves the signed-in admin once per request: a page and every action it
+ * renders share the same session lookup instead of hitting Supabase Auth each.
+ */
+const resolveCurrentAdmin = cache(async (): Promise<CurrentAdmin | null> => {
   const supabase = await createClient()
 
   const {
@@ -146,4 +155,4 @@ export async function getCurrentAdmin(): Promise<CurrentAdmin | null> {
     role_id: adminUser.role_id,
     actions,
   }
-}
+})

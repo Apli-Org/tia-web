@@ -23,10 +23,11 @@ import {
 } from "@/actions/admin/dashboard.action"
 import { ChartTileSkeleton, KpiTilesSkeleton, ListTileSkeleton } from "./_components/dashboard-skeletons"
 import { GrowthChart } from "./_components/growth-chart"
-import { KpiTile, type KpiTileStyle } from "./_components/kpi-tile"
+import { KpiTile, UNAVAILABLE_VALUE, type KpiTileStyle } from "./_components/kpi-tile"
 import { QuickAccess } from "./_components/quick-access"
 import { RecentActivity } from "./_components/recent-activity"
 import { TierDistribution } from "./_components/tier-distribution"
+import { UnavailableTile } from "./_components/unavailable-tile"
 import { WelcomeTile } from "./_components/welcome-tile"
 
 const ROLE_LABELS: Record<string, string> = roleLabels
@@ -60,7 +61,7 @@ async function KpiTiles() {
         caption="vs mois dernier"
         icon={Users}
         tileStyle={KPI_STYLES.users}
-        trend={{ direction: kpis.activeUsers.trend, change: kpis.activeUsers.change }}
+        trend={kpis.activeUsers.trend}
         delayStep={1}
       />
       <KpiTile
@@ -70,7 +71,7 @@ async function KpiTiles() {
         caption="vs hier"
         icon={Heart}
         tileStyle={KPI_STYLES.matches}
-        trend={{ direction: kpis.matchesToday.trend, change: kpis.matchesToday.change }}
+        trend={kpis.matchesToday.trend}
         delayStep={2}
       />
       <KpiTile
@@ -80,11 +81,14 @@ async function KpiTiles() {
         caption="vs mois dernier"
         icon={Wallet}
         tileStyle={KPI_STYLES.revenue}
-        trend={{ direction: kpis.monthlyRevenue.trend, change: kpis.monthlyRevenue.change }}
+        trend={kpis.monthlyRevenue.trend}
         detail={{
           label: "La Réunion",
-          value: formatPrice(kpis.reunionMonthlyRevenue.total, REUNION_CURRENCY),
-          trend: { direction: kpis.reunionMonthlyRevenue.trend, change: kpis.reunionMonthlyRevenue.change },
+          value:
+            kpis.reunionMonthlyRevenue.total === null
+              ? UNAVAILABLE_VALUE
+              : formatPrice(kpis.reunionMonthlyRevenue.total, REUNION_CURRENCY),
+          trend: kpis.reunionMonthlyRevenue.trend,
         }}
         delayStep={3}
       />
@@ -95,7 +99,7 @@ async function KpiTiles() {
         icon={AlertTriangle}
         tileStyle={KPI_STYLES.reports}
         href="/moderation"
-        isUrgent={kpis.pendingReports.total > REPORTS_ALERT_THRESHOLD}
+        isUrgent={(kpis.pendingReports.total ?? 0) > REPORTS_ALERT_THRESHOLD}
         delayStep={4}
       />
     </>
@@ -104,11 +108,13 @@ async function KpiTiles() {
 
 async function GrowthTile() {
   const data = await getGrowthData()
+  if (!data) return <UnavailableTile title="Croissance" delayStep={5} className={GRID_SPANS.chart} />
   return <GrowthChart data={data} delayStep={5} className={GRID_SPANS.chart} />
 }
 
 async function TiersTile() {
   const counts = await getTierDistribution()
+  if (!counts) return <UnavailableTile title="Offres" delayStep={6} className={GRID_SPANS.tiers} />
   return <TierDistribution counts={counts} delayStep={6} className={GRID_SPANS.tiers} />
 }
 
