@@ -1,5 +1,7 @@
 "use server"
 
+import { unstable_cache } from "next/cache"
+import type { PostgrestError } from "@supabase/supabase-js"
 import { requireAdminAction } from "@/lib/auth/admin-guard"
 import { createAdminClient } from "@/lib/supabase/admin"
 import { isInReunion } from "@/lib/territories"
@@ -7,6 +9,8 @@ import { isInReunion } from "@/lib/territories"
 const STORE_PAYMENT_METHODS = ["apple_iap", "google_iap"]
 const NOT_STORE_PAYMENT = `payment_method.is.null,payment_method.not.in.(${STORE_PAYMENT_METHODS.join(",")})`
 const CENTS_PER_UNIT = 100
+const SLOW_DATA_REVALIDATE_SECONDS = 300
+const TIERS = ["base", "silver", "gold", "elite"] as const
 
 type AdminClient = ReturnType<typeof createAdminClient>
 
@@ -15,31 +19,23 @@ type StorePurchaseRow = {
   user: { latitude: number | null; longitude: number | null } | null
 }
 
-export type DashboardKPIs = {
-  activeUsers: {
-    total: number
-    change: number
-    trend: "up" | "down"
-  }
-  matchesToday: {
-    total: number
-    change: number
-    trend: "up" | "down"
-  }
-  monthlyRevenue: {
-    total: number
-    change: number
-    trend: "up" | "down"
-  }
-  reunionMonthlyRevenue: {
-    total: number
-    change: number
-    trend: "up" | "down"
-  }
-  pendingReports: {
-    total: number
-  }
+type CountResult = { count: number | null; error: PostgrestError | null }
+type RowsResult<T> = { data: T[] | null; error: PostgrestError | null }
+
+export type KpiValue = {
+  total: number | null
+  trend?: { direction: "up" | "down"; change: number }
 }
+
+export type DashboardKPIs = {
+  activeUsers: KpiValue
+  matchesToday: KpiValue
+  monthlyRevenue: KpiValue
+  reunionMonthlyRevenue: KpiValue
+  pendingReports: KpiValue
+}
+
+export type TierCounts = Record<(typeof TIERS)[number], number>
 
 export type GrowthData = {
   month: string
@@ -144,67 +140,62 @@ export async function getDashboardKPIs(): Promise<DashboardKPIs> {
       .eq("status", "pending"),
   ])
 
-  const activeUsers = activeUsersResult.count ?? 0
-  const lastMonthUsers = lastMonthUsersResult.count ?? 0
-  const userChange = lastMonthUsers > 0
-    ? Math.round(((activeUsers - lastMonthUsers) / lastMonthUsers) * 100)
-    : 0
-
-  const matchesToday = matchesTodayResult.count ?? 0
-  const matchesYesterday = matchesYesterdayResult.count ?? 0
-  const matchChange = matchesYesterday > 0
-    ? Math.round(((matchesToday - matchesYesterday) / matchesYesterday) * 100)
-    : 0
-
-  // Total revenue = subscriptions + micro-purchases
-  const monthlySubRevenue = monthlySubRevenueResult.data?.reduce((sum, s) => sum + (s.amount_paid || 0), 0) ?? 0
-  const monthlyMicroRevenue = monthlyMicroRevenueResult.data?.reduce((sum, m) => sum + (m.price_paid || 0), 0) ?? 0
-  const monthlyRevenue = monthlySubRevenue + monthlyMicroRevenue
-
-  const lastMonthSubRevenue = lastMonthSubRevenueResult.data?.reduce((sum, s) => sum + (s.amount_paid || 0), 0) ?? 0
-  const lastMonthMicroRevenue = lastMonthMicroRevenueResult.data?.reduce((sum, m) => sum + (m.price_paid || 0), 0) ?? 0
-  const lastMonthRevenue = lastMonthSubRevenue + lastMonthMicroRevenue
-
-  const revenueChange = lastMonthRevenue > 0
-    ? Math.round(((monthlyRevenue - lastMonthRevenue) / lastMonthRevenue) * 100)
-    : 0
-
-  const reunionRevenueChange = getChangePercent(reunionMonthlyRevenue, reunionLastMonthRevenue)
-
-  const pendingReports = pendingReportsResult.count ?? 0
+  const monthlyRevenue = addAvailable(
+    sumRows(monthlySubRevenueResult, (s) => s.amount_paid, "monthly subscription revenue"),
+    sumRows(monthlyMicroRevenueResult, (m) => m.price_paid, "monthly micro-purchase revenue")
+  )
+  const lastMonthRevenue = addAvailable(
+    sumRows(lastMonthSubRevenueResult, (s) => s.amount_paid, "last month subscription revenue"),
+    sumRows(lastMonthMicroRevenueResult, (m) => m.price_paid, "last month micro-purchase revenue")
+  )
 
   return {
-    activeUsers: {
-      total: activeUsers,
-      change: Math.abs(userChange),
-      trend: userChange >= 0 ? "up" : "down",
-    },
-    matchesToday: {
-      total: matchesToday,
-      change: Math.abs(matchChange),
-      trend: matchChange >= 0 ? "up" : "down",
-    },
-    monthlyRevenue: {
-      total: monthlyRevenue,
-      change: Math.abs(revenueChange),
-      trend: revenueChange >= 0 ? "up" : "down",
-    },
-    reunionMonthlyRevenue: {
-      total: reunionMonthlyRevenue,
-      change: Math.abs(reunionRevenueChange),
-      trend: reunionRevenueChange >= 0 ? "up" : "down",
-    },
-    pendingReports: {
-      total: pendingReports,
-    },
+    activeUsers: toKpi(
+      readCount(activeUsersResult, "members"),
+      readCount(lastMonthUsersResult, "members last month")
+    ),
+    matchesToday: toKpi(
+      readCount(matchesTodayResult, "matches today"),
+      readCount(matchesYesterdayResult, "matches yesterday")
+    ),
+    monthlyRevenue: toKpi(monthlyRevenue, lastMonthRevenue),
+    reunionMonthlyRevenue: toKpi(reunionMonthlyRevenue, reunionLastMonthRevenue),
+    pendingReports: { total: readCount(pendingReportsResult, "pending reports") },
   }
+}
+
+function readCount(result: CountResult, label: string): number | null {
+  if (result.error) {
+    console.error(`Dashboard query failed: ${label}`, result.error)
+    return null
+  }
+  return result.count ?? 0
+}
+
+function sumRows<T>(result: RowsResult<T>, pick: (row: T) => number | null, label: string): number | null {
+  if (result.error) {
+    console.error(`Dashboard query failed: ${label}`, result.error)
+    return null
+  }
+  return (result.data ?? []).reduce((sum, row) => sum + (pick(row) ?? 0), 0)
+}
+
+function addAvailable(first: number | null, second: number | null): number | null {
+  return first === null || second === null ? null : first + second
+}
+
+function toKpi(current: number | null, previous: number | null): KpiValue {
+  if (current === null || previous === null) return { total: current }
+
+  const change = getChangePercent(current, previous)
+  return { total: current, trend: { direction: change >= 0 ? "up" : "down", change: Math.abs(change) } }
 }
 
 /**
  * Store revenue in euros paid by members located in La Réunion. Store
  * payments carry no region, so the member's current coordinates decide it.
  */
-async function getReunionStoreRevenue(supabase: AdminClient, from: Date, to?: Date): Promise<number> {
+async function getReunionStoreRevenue(supabase: AdminClient, from: Date, to?: Date): Promise<number | null> {
   let query = supabase
     .from("micro_purchases")
     .select("price_paid, user:user_id(latitude, longitude)")
@@ -214,7 +205,11 @@ async function getReunionStoreRevenue(supabase: AdminClient, from: Date, to?: Da
 
   if (to) query = query.lt("created_at", to.toISOString())
 
-  const { data } = await query.returns<StorePurchaseRow[]>()
+  const { data, error } = await query.returns<StorePurchaseRow[]>()
+  if (error) {
+    console.error("Dashboard query failed: La Réunion store revenue", error)
+    return null
+  }
 
   const cents = (data ?? [])
     .filter((purchase) => isInReunion(purchase.user?.latitude ?? null, purchase.user?.longitude ?? null))
@@ -227,9 +222,22 @@ function getChangePercent(current: number, previous: number): number {
   return previous > 0 ? Math.round(((current - previous) / previous) * 100) : 0
 }
 
-export async function getGrowthData(): Promise<GrowthData[]> {
+export async function getGrowthData(): Promise<GrowthData[] | null> {
   await requireAdminAction("view_dashboard")
 
+  try {
+    return await getCachedGrowthData()
+  } catch (error) {
+    console.error("Dashboard query failed: growth", error)
+    return null
+  }
+}
+
+const getCachedGrowthData = unstable_cache(fetchGrowthData, ["dashboard-growth"], {
+  revalidate: SLOW_DATA_REVALIDATE_SECONDS,
+})
+
+async function fetchGrowthData(): Promise<GrowthData[]> {
   const supabase = createAdminClient()
 
   const months: GrowthData[] = []
@@ -269,6 +277,9 @@ export async function getGrowthData(): Promise<GrowthData[]> {
         .gte("created_at", startOfMonth.toISOString())
         .lt("created_at", new Date(Date.UTC(targetYear, targetMonth + 1, 1, 0, 0, 0)).toISOString()),
     ])
+
+    if (usersResult.error) throw usersResult.error
+    if (matchesResult.error) throw matchesResult.error
 
     months.push({
       month: monthName,
@@ -500,33 +511,39 @@ function getRelativeTime(dateString: string): string {
   return date.toLocaleDateString("fr-FR")
 }
 
-export async function getTierDistribution() {
+export async function getTierDistribution(): Promise<TierCounts | null> {
   await requireAdminAction("view_dashboard")
 
+  try {
+    return await getCachedTierDistribution()
+  } catch (error) {
+    console.error("Dashboard query failed: tier distribution", error)
+    return null
+  }
+}
+
+const getCachedTierDistribution = unstable_cache(fetchTierDistribution, ["dashboard-tiers"], {
+  revalidate: SLOW_DATA_REVALIDATE_SECONDS,
+})
+
+async function fetchTierDistribution(): Promise<TierCounts> {
   const supabase = createAdminClient()
 
-  const { data } = await supabase
-    .from("users")
-    .select("current_tier")
-    .eq("is_active", true)
-    .not("birthdate", "is", null)
-    .not("gender", "is", null)
+  const results = await Promise.all(
+    TIERS.map((tier) =>
+      supabase
+        .from("users")
+        .select("id", { count: "exact", head: true })
+        .eq("is_active", true)
+        .eq("current_tier", tier)
+        .not("birthdate", "is", null)
+        .not("gender", "is", null)
+    )
+  )
 
-  const distribution = {
-    base: 0,
-    silver: 0,
-    gold: 0,
-    elite: 0,
-  }
+  const failed = results.find((result) => result.error)
+  if (failed?.error) throw failed.error
 
-  if (data) {
-    for (const user of data) {
-      const tier = user.current_tier as keyof typeof distribution
-      if (tier in distribution) {
-        distribution[tier]++
-      }
-    }
-  }
-
-  return distribution
+  const [base, silver, gold, elite] = results.map((result) => result.count ?? 0)
+  return { base, silver, gold, elite }
 }

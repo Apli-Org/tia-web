@@ -7,6 +7,10 @@ import { AnimatedNumber } from "./animated-number"
 
 const ENTRANCE_STEP_MS = 80
 const COUNT_DELAY_STEP = 0.08
+const VALUE_CLASS = "mt-1 block text-[32px]/[38px] font-bold tracking-[-.03em] tabular-nums"
+const UNAVAILABLE_CAPTION = "Indisponible, nouvel essai au prochain rafraîchissement"
+
+export const UNAVAILABLE_VALUE = "—"
 
 export type KpiTileTone = "light" | "ink"
 
@@ -28,7 +32,7 @@ export type KpiDetail = {
 
 type KpiTileProps = {
   label: string
-  value: number
+  value: number | null
   format?: NumberFormat
   caption: string
   icon: LucideIcon
@@ -123,13 +127,12 @@ export function KpiTile({
       </div>
       <div className="relative mt-auto pt-6">
         <p className={cn("text-[13px] font-semibold", tone.label)}>{label}</p>
-        <AnimatedNumber
-          value={value}
-          format={format}
-          delay={delayStep * COUNT_DELAY_STEP}
-          className="mt-1 block text-[32px]/[38px] font-bold tracking-[-.03em] tabular-nums"
-        />
-        <p className={cn("mt-1 text-[12px]", tone.caption)}>{caption}</p>
+        {value === null ? (
+          <span className={VALUE_CLASS}>{UNAVAILABLE_VALUE}</span>
+        ) : (
+          <AnimatedNumber value={value} format={format} delay={delayStep * COUNT_DELAY_STEP} className={VALUE_CLASS} />
+        )}
+        <p className={cn("mt-1 text-[12px]", tone.caption)}>{value === null ? UNAVAILABLE_CAPTION : caption}</p>
         {detail && (
           <div className={cn("mt-3 flex items-center justify-between gap-2 border-t pt-3", tone.divider)}>
             <span className={cn("text-[12px] font-semibold", tone.label)}>{detail.label}</span>
