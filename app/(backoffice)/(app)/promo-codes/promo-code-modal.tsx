@@ -16,11 +16,19 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Switch } from "@/components/ui/switch"
+import { Checkbox } from "@/components/ui/checkbox"
 import {
   createPromoCode,
   updatePromoCode,
   type PromoCode,
 } from "@/actions/admin/promo-codes.action"
+import {
+  isDiscountPercent,
+  PROMO_TIERS,
+  type PromoTier,
+  type TierDiscounts,
+} from "@/actions/admin/promo-codes-types"
+import { getTierInfo } from "@/lib/pricing-utils"
 
 import { toast } from "sonner"
 
@@ -32,6 +40,35 @@ function generatePromoCode(length = 8): string {
     code += chars.charAt(Math.floor(Math.random() * chars.length))
   }
   return code
+}
+
+type TierPercents = Record<PromoTier, string>
+
+const EMPTY_TIER_PERCENTS: TierPercents = { silver: "", gold: "", elite: "" }
+
+function toTierPercents(tierDiscounts: TierDiscounts | null): TierPercents {
+  return {
+    silver: tierDiscounts?.silver?.toString() ?? "",
+    gold: tierDiscounts?.gold?.toString() ?? "",
+    elite: tierDiscounts?.elite?.toString() ?? "",
+  }
+}
+
+/** Resolves the percentage of each targeted tier, falling back on the general discount; null when a value is invalid. */
+function buildTierDiscounts(
+  targetedTiers: PromoTier[],
+  tierPercents: TierPercents,
+  defaultPercent: number
+): TierDiscounts | null {
+  if (targetedTiers.length === 0) return null
+
+  const discounts: TierDiscounts = {}
+  for (const tier of targetedTiers) {
+    const percent = tierPercents[tier] ? parseInt(tierPercents[tier]) : defaultPercent
+    if (!isDiscountPercent(percent)) return null
+    discounts[tier] = percent
+  }
+  return discounts
 }
 
 type PromoCodeModalProps = {
@@ -57,6 +94,9 @@ export function PromoCodeModal({
   const [minAmount, setMinAmount] = useState("")
   const [description, setDescription] = useState("")
   const [isActive, setIsActive] = useState(true)
+  const [isTierTargeted, setIsTierTargeted] = useState(false)
+  const [targetedTiers, setTargetedTiers] = useState<PromoTier[]>([])
+  const [tierPercents, setTierPercents] = useState<TierPercents>(EMPTY_TIER_PERCENTS)
 
   // Reset form when modal opens/closes or promo code changes
   useEffect(() => {
@@ -70,6 +110,9 @@ export function PromoCodeModal({
         setMinAmount(promoCode.min_amount?.toString() || "")
         setDescription(promoCode.description || "")
         setIsActive(promoCode.is_active)
+        setIsTierTargeted(promoCode.tier_discounts !== null)
+        setTargetedTiers(PROMO_TIERS.filter((tier) => promoCode.tier_discounts?.[tier] !== undefined))
+        setTierPercents(toTierPercents(promoCode.tier_discounts))
       } else {
         // Reset for new code
         setCode("")
@@ -80,12 +123,25 @@ export function PromoCodeModal({
         setMinAmount("")
         setDescription("")
         setIsActive(true)
+        setIsTierTargeted(false)
+        setTargetedTiers([])
+        setTierPercents(EMPTY_TIER_PERCENTS)
       }
     }
   }, [isOpen, promoCode])
 
   const handleGenerateCode = () => {
     setCode(generatePromoCode(8))
+  }
+
+  const toggleTier = (tier: PromoTier, checked: boolean) => {
+    setTargetedTiers((tiers) =>
+      checked ? [...tiers, tier] : tiers.filter((value) => value !== tier)
+    )
+  }
+
+  const changeTierPercent = (tier: PromoTier, value: string) => {
+    setTierPercents((percents) => ({ ...percents, [tier]: value }))
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -103,6 +159,14 @@ export function PromoCodeModal({
       return
     }
 
+    const tierDiscounts = isTierTargeted
+      ? buildTierDiscounts(targetedTiers, tierPercents, discount)
+      : null
+    if (isTierTargeted && !tierDiscounts) {
+      toast.error("Cochez au moins un abonnement, avec une réduction entre 1 et 100%")
+      return
+    }
+
     const data = {
       code: code.trim().toUpperCase(),
       discount_percent: discount,
@@ -113,6 +177,7 @@ export function PromoCodeModal({
       description: description.trim() || null,
       is_active: isActive,
       applicable_products: null,
+      tier_discounts: tierDiscounts,
     }
 
     startTransition(async () => {
@@ -236,6 +301,56 @@ export function PromoCodeModal({
                 placeholder="0"
               />
             </div>
+          </div>
+
+          <div className="space-y-3 rounded-lg border p-3">
+            <div className="flex items-center justify-between gap-4">
+              <div className="space-y-1">
+                <Label htmlFor="tierTargeted">Limiter à certains abonnements</Label>
+                <p className="text-xs text-muted-foreground">
+                  Le code ne vaut que pour les abonnements cochés, chacun avec sa réduction.
+                  Les consommables sont exclus.
+                </p>
+              </div>
+              <Switch
+                id="tierTargeted"
+                checked={isTierTargeted}
+                onCheckedChange={setIsTierTargeted}
+              />
+            </div>
+
+            {isTierTargeted && (
+              <div className="space-y-2">
+                {PROMO_TIERS.map((tier) => {
+                  const isSelected = targetedTiers.includes(tier)
+                  const label = getTierInfo(tier).label
+                  return (
+                    <div key={tier} className="flex items-center gap-3">
+                      <Checkbox
+                        id={`tier-${tier}`}
+                        checked={isSelected}
+                        onCheckedChange={(checked) => toggleTier(tier, checked === true)}
+                      />
+                      <Label htmlFor={`tier-${tier}`} className="w-16">
+                        {label}
+                      </Label>
+                      <Input
+                        type="number"
+                        min="1"
+                        max="100"
+                        value={tierPercents[tier]}
+                        onChange={(e) => changeTierPercent(tier, e.target.value)}
+                        disabled={!isSelected}
+                        placeholder={discountPercent || "%"}
+                        aria-label={`Réduction ${label} (%)`}
+                        className="w-24"
+                      />
+                      <span className="text-sm text-muted-foreground">%</span>
+                    </div>
+                  )
+                })}
+              </div>
+            )}
           </div>
 
           <div className="space-y-2">

@@ -3,6 +3,9 @@
 import { getAuthorizedAdmin, requireAdminAction, PERMISSION_DENIED } from '@/lib/auth/admin-guard'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { revalidatePath } from 'next/cache'
+import { isValidTierDiscounts, type TierDiscounts } from './promo-codes-types'
+
+const INVALID_TIER_DISCOUNTS = 'Les réductions par abonnement sont invalides'
 
 // Types
 export type PromoCode = {
@@ -16,6 +19,7 @@ export type PromoCode = {
   is_active: boolean
   min_amount: number | null
   applicable_products: string[] | null
+  tier_discounts: TierDiscounts | null
   description: string | null
   created_at: string
   updated_at: string
@@ -162,6 +166,10 @@ export async function createPromoCode(
   const admin = await getAuthorizedAdmin('manage_promo_codes')
   if (!admin) return { success: false, error: PERMISSION_DENIED }
 
+  if (promoCode.tier_discounts !== null && !isValidTierDiscounts(promoCode.tier_discounts)) {
+    return { success: false, error: INVALID_TIER_DISCOUNTS }
+  }
+
   const supabase = createAdminClient()
 
   // Check if code already exists
@@ -198,6 +206,7 @@ export async function createPromoCode(
       promo_code_id: data.id,
       code: promoCode.code.toUpperCase(),
       discount_percent: promoCode.discount_percent,
+      tier_discounts: promoCode.tier_discounts,
     },
   })
 
@@ -212,6 +221,10 @@ export async function updatePromoCode(
 ): Promise<{ success: boolean; error?: string }> {
   const admin = await getAuthorizedAdmin('manage_promo_codes')
   if (!admin) return { success: false, error: PERMISSION_DENIED }
+
+  if (updates.tier_discounts != null && !isValidTierDiscounts(updates.tier_discounts)) {
+    return { success: false, error: INVALID_TIER_DISCOUNTS }
+  }
 
   const supabase = createAdminClient()
 

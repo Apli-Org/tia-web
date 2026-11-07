@@ -1,4 +1,6 @@
-import { getPromoCodes, type PromoCodeFilters } from "@/actions/admin/promo-codes.action"
+import { getPromoCodes, type PromoCode, type PromoCodeFilters } from "@/actions/admin/promo-codes.action"
+import { PROMO_TIERS } from "@/actions/admin/promo-codes-types"
+import { getTierInfo } from "@/lib/pricing-utils"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import {
   Table,
@@ -47,6 +49,27 @@ function getStatusBadge(code: {
     <Badge variant="secondary" className="bg-red-100 text-red-700">
       Inactif
     </Badge>
+  )
+}
+
+function DiscountBadges({ code }: { code: PromoCode }) {
+  const tierDiscounts = code.tier_discounts
+  if (!tierDiscounts) {
+    return (
+      <Badge variant="outline" className="font-mono">
+        -{code.discount_percent}%
+      </Badge>
+    )
+  }
+
+  return (
+    <div className="flex flex-wrap gap-1">
+      {PROMO_TIERS.filter((tier) => tierDiscounts[tier] !== undefined).map((tier) => (
+        <Badge key={tier} variant="outline" className="font-mono">
+          {getTierInfo(tier).label} -{tierDiscounts[tier]}%
+        </Badge>
+      ))}
+    </div>
   )
 }
 
@@ -112,9 +135,7 @@ export async function PromoCodesTable({
                       </div>
                     </TableCell>
                     <TableCell>
-                      <Badge variant="outline" className="font-mono">
-                        -{code.discount_percent}%
-                      </Badge>
+                      <DiscountBadges code={code} />
                     </TableCell>
                     <TableCell>
                       <div className="flex flex-col text-sm">
