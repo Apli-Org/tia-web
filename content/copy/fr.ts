@@ -3,7 +3,7 @@ import { CONTACT_HREF, SECTION_IDS } from '../site'
 
 export const FR: HomeCopy = {
   metadata: {
-    title: 'Tia · L’appli de rencontre à Madagascar et à La Réunion',
+    title: 'Tia · L’appli de rencontre à Madagascar, La Réunion et Maurice',
     description:
       'Des profils vérifiés, des vrais gens près de chez toi. Télécharge Tia gratuitement sur iPhone et Android.',
     openGraphTitle: 'Tia · Trouve ta moitié',
@@ -83,7 +83,7 @@ export const FR: HomeCopy = {
       payment: {
         kicker: 'Paiement',
         title: 'Paie comme tu veux',
-        description: 'Mobile money à Madagascar, carte et stores à La Réunion.',
+        description: 'Mobile money à Madagascar, carte et stores à La Réunion et à Maurice.',
       },
     },
     likeStamp: 'J’aime',
@@ -98,7 +98,7 @@ export const FR: HomeCopy = {
     ],
     payments: [
       { region: 'Madagascar', methods: ['MVola', 'Orange Money', 'Airtel Money'] },
-      { region: 'La Réunion', methods: ['Carte bancaire', 'App Store', 'Google Play'] },
+      { region: 'La Réunion · Maurice', methods: ['Carte bancaire', 'App Store', 'Google Play'] },
     ],
   },
   steps: {
@@ -150,7 +150,7 @@ export const FR: HomeCopy = {
       gold: { name: 'Gold', features: ['Vois qui t’a liké', 'Likes illimités', '5 Cœurs Tia par semaine'] },
       elite: { name: 'Elite', features: ['Tout Gold', 'Profil mis en avant', 'Révélations illimitées'] },
     },
-    note: 'Prix affichés dans l’appli, en monnaie locale\u00a0: ariary à Madagascar, euro à La Réunion.',
+    note: 'Prix affichés dans l’appli\u00a0: ariary à Madagascar, euro à La Réunion, dollar US à Maurice.',
   },
   countries: {
     eyebrow: 'Où trouver Tia',
@@ -194,7 +194,7 @@ export const FR: HomeCopy = {
       },
       {
         question: 'Dans quels pays\u00a0?',
-        answer: 'Madagascar et La Réunion. Maurice et l’Afrique du Sud arrivent bientôt.',
+        answer: 'Madagascar, La Réunion et Maurice. L’Afrique du Sud arrive bientôt.',
       },
     ],
   },
@@ -237,7 +237,7 @@ export const FR: HomeCopy = {
     socialTitle: 'Réseaux',
     instagramLabel: 'Instagram de Tia',
     appTitle: 'Télécharge l’appli',
-    seo: 'Célibataire à Antananarivo, à Saint-Denis ou ailleurs sur l’île\u00a0? Tia est l’appli de rencontre pensée pour Madagascar et La Réunion. Crée ton profil, vérifie-le en une minute et découvre des gens près de chez toi, avec de vraies photos et des centres d’intérêt en commun. Que tu cherches une histoire sérieuse, de nouvelles rencontres ou simplement quelqu’un avec qui partager un café, tout commence par un swipe. Tia est gratuite sur iPhone et Android.',
+    seo: 'Célibataire à Antananarivo, à Saint-Denis, à Port-Louis ou ailleurs sur l’île\u00a0? Tia est l’appli de rencontre pensée pour Madagascar, La Réunion et Maurice. Crée ton profil, vérifie-le en une minute et découvre des gens près de chez toi, avec de vraies photos et des centres d’intérêt en commun. Que tu cherches une histoire sérieuse, de nouvelles rencontres ou simplement quelqu’un avec qui partager un café, tout commence par un swipe. Tia est gratuite sur iPhone et Android.',
     bottomLinks: [
       { label: 'FAQ', href: `#${SECTION_IDS.faq}` },
       { label: 'Sécurité', href: `#${SECTION_IDS.safety}` },
@@ -249,6 +249,6 @@ export const FR: HomeCopy = {
       { label: 'Confidentialité', href: '/privacy' },
       { label: 'Conditions', href: '/terms' },
     ],
-    locales: 'FR · Madagascar · La Réunion',
+    locales: 'FR · Madagascar · La Réunion · Maurice',
   },
 }

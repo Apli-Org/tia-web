@@ -3,7 +3,7 @@ import { CONTACT_HREF, SECTION_IDS } from '../site'
 
 export const EN: HomeCopy = {
   metadata: {
-    title: 'Tia · The dating app for Madagascar and Réunion',
+    title: 'Tia · The dating app for Madagascar, Réunion and Mauritius',
     description:
       'Verified profiles, real people near you. Download Tia for free on iPhone and Android.',
     openGraphTitle: 'Tia · Find your better half',
@@ -81,7 +81,7 @@ export const EN: HomeCopy = {
       payment: {
         kicker: 'Payment',
         title: 'Pay your way',
-        description: 'Mobile money in Madagascar, card and app stores in Réunion.',
+        description: 'Mobile money in Madagascar, card and app stores in Réunion and Mauritius.',
       },
     },
     likeStamp: 'Like',
@@ -96,7 +96,7 @@ export const EN: HomeCopy = {
     ],
     payments: [
       { region: 'Madagascar', methods: ['MVola', 'Orange Money', 'Airtel Money'] },
-      { region: 'Réunion', methods: ['Bank card', 'App Store', 'Google Play'] },
+      { region: 'Réunion · Mauritius', methods: ['Bank card', 'App Store', 'Google Play'] },
     ],
   },
   steps: {
@@ -148,7 +148,7 @@ export const EN: HomeCopy = {
       gold: { name: 'Gold', features: ['See who liked you', 'Unlimited likes', '5 Tia Hearts a week'] },
       elite: { name: 'Elite', features: ['Everything in Gold', 'Featured profile', 'Unlimited reveals'] },
     },
-    note: 'Prices are shown in the app in your local currency: ariary in Madagascar, euro in Réunion.',
+    note: 'Prices are shown in the app: ariary in Madagascar, euro in Réunion, US dollar in Mauritius.',
   },
   countries: {
     eyebrow: 'Where to find Tia',
@@ -192,7 +192,7 @@ export const EN: HomeCopy = {
       },
       {
         question: 'Which countries?',
-        answer: 'Madagascar and Réunion. Mauritius and South Africa are coming soon.',
+        answer: 'Madagascar, Réunion and Mauritius. South Africa is coming soon.',
       },
     ],
   },
@@ -235,7 +235,7 @@ export const EN: HomeCopy = {
     socialTitle: 'Social',
     instagramLabel: 'Tia on Instagram',
     appTitle: 'Get the app',
-    seo: 'Single in Antananarivo, Saint-Denis or elsewhere on the island? Tia is the dating app built for Madagascar and Réunion. Create your profile, verify it in a minute and meet people near you, with real photos and shared interests. Whether you’re looking for something serious, new people to meet or just someone to share a coffee with, it all starts with a swipe. Tia is free on iPhone and Android.',
+    seo: 'Single in Antananarivo, Saint-Denis, Port Louis or elsewhere on the island? Tia is the dating app built for Madagascar, Réunion and Mauritius. Create your profile, verify it in a minute and meet people near you, with real photos and shared interests. Whether you’re looking for something serious, new people to meet or just someone to share a coffee with, it all starts with a swipe. Tia is free on iPhone and Android.',
     bottomLinks: [
       { label: 'FAQ', href: `#${SECTION_IDS.faq}` },
       { label: 'Safety', href: `#${SECTION_IDS.safety}` },
@@ -247,6 +247,6 @@ export const EN: HomeCopy = {
       { label: 'Privacy', href: '/privacy' },
       { label: 'Terms', href: '/terms' },
     ],
-    locales: 'EN · Madagascar · Réunion',
+    locales: 'EN · Madagascar · Réunion · Mauritius',
   },
 }

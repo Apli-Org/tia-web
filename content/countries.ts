@@ -29,10 +29,10 @@ export const COUNTRIES: Country[] = [
   },
   {
     flag: 'mu',
-    status: 'soon',
+    status: 'available',
     name: { fr: 'Maurice', en: 'Mauritius' },
     chipLabel: { fr: 'Maurice', en: 'Mauritius' },
-    description: { fr: 'On arrive', en: 'On our way' },
+    description: { fr: 'Depuis novembre 2026', en: 'Since November 2026' },
   },
   {
     flag: 'za',
