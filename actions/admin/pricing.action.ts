@@ -2,6 +2,7 @@
 
 import { getAuthorizedAdmin, requireAdminAction, PERMISSION_DENIED } from '@/lib/auth/admin-guard'
 import { createAdminClient } from '@/lib/supabase/admin'
+import { NOT_STORE_PAYMENT } from '@/lib/pricing-utils'
 import { revalidatePath } from 'next/cache'
 
 // Types
@@ -374,17 +375,19 @@ export async function getPricingStats(): Promise<PricingStats> {
       .eq('status', 'completed')
       .neq('product_type', 'subscription')
       .gte('created_at', startOfMonth.toISOString()),
-    // Subscription revenue (this month)
+    // Subscription revenue in Ariary (this month); store amounts are cents of another currency
     supabase
       .from('subscriptions')
       .select('amount_paid')
+      .or(NOT_STORE_PAYMENT)
       .gte('created_at', startOfMonth.toISOString()),
-    // Micro purchases revenue (this month) - excluding subscriptions
+    // Micro purchases revenue in Ariary (this month) - excluding subscriptions and store payments
     supabase
       .from('micro_purchases')
       .select('price_paid')
       .eq('status', 'completed')
       .neq('product_type', 'subscription')
+      .or(NOT_STORE_PAYMENT)
       .gte('created_at', startOfMonth.toISOString()),
   ])
 

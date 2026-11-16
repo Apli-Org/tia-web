@@ -4,20 +4,25 @@ import { unstable_cache } from "next/cache"
 import type { PostgrestError } from "@supabase/supabase-js"
 import { requireAdminAction } from "@/lib/auth/admin-guard"
 import { createAdminClient } from "@/lib/supabase/admin"
-import { isInReunion } from "@/lib/territories"
+import { formatPaidAmount, NOT_STORE_PAYMENT, STORE_PAYMENT_METHODS } from "@/lib/pricing-utils"
+import { storeTerritoryForCoordinates, type StoreTerritory } from "@/lib/territories"
 
-const STORE_PAYMENT_METHODS = ["apple_iap", "google_iap"]
-const NOT_STORE_PAYMENT = `payment_method.is.null,payment_method.not.in.(${STORE_PAYMENT_METHODS.join(",")})`
 const CENTS_PER_UNIT = 100
 const SLOW_DATA_REVALIDATE_SECONDS = 300
 const TIERS = ["base", "silver", "gold", "elite"] as const
 
 type AdminClient = ReturnType<typeof createAdminClient>
 
+type MemberCoordinates = { latitude: number | null; longitude: number | null }
+
+type MemberWithCoordinates = MemberCoordinates & { firstName: string }
+
 type StorePurchaseRow = {
   price_paid: number | null
-  user: { latitude: number | null; longitude: number | null } | null
+  user: MemberCoordinates | null
 }
+
+type StoreRevenue = Record<StoreTerritory, number> | null
 
 type CountResult = { count: number | null; error: PostgrestError | null }
 type RowsResult<T> = { data: T[] | null; error: PostgrestError | null }
@@ -31,7 +36,7 @@ export type DashboardKPIs = {
   activeUsers: KpiValue
   matchesToday: KpiValue
   monthlyRevenue: KpiValue
-  reunionMonthlyRevenue: KpiValue
+  storeMonthlyRevenue: Record<StoreTerritory, KpiValue>
   pendingReports: KpiValue
 }
 
@@ -78,8 +83,8 @@ export async function getDashboardKPIs(): Promise<DashboardKPIs> {
     lastMonthSubRevenueResult,
     monthlyMicroRevenueResult,
     lastMonthMicroRevenueResult,
-    reunionMonthlyRevenue,
-    reunionLastMonthRevenue,
+    storeMonthlyRevenue,
+    storeLastMonthRevenue,
     pendingReportsResult,
   ] = await Promise.all([
     supabase
@@ -132,8 +137,8 @@ export async function getDashboardKPIs(): Promise<DashboardKPIs> {
       .or(NOT_STORE_PAYMENT)
       .gte("created_at", startOfLastMonth.toISOString())
       .lt("created_at", startOfMonth.toISOString()),
-    getReunionStoreRevenue(supabase, startOfMonth),
-    getReunionStoreRevenue(supabase, startOfLastMonth, startOfMonth),
+    getStoreRevenue(supabase, startOfMonth),
+    getStoreRevenue(supabase, startOfLastMonth, startOfMonth),
     supabase
       .from("reported_content")
       .select("id", { count: "exact", head: true })
@@ -159,7 +164,10 @@ export async function getDashboardKPIs(): Promise<DashboardKPIs> {
       readCount(matchesYesterdayResult, "matches yesterday")
     ),
     monthlyRevenue: toKpi(monthlyRevenue, lastMonthRevenue),
-    reunionMonthlyRevenue: toKpi(reunionMonthlyRevenue, reunionLastMonthRevenue),
+    storeMonthlyRevenue: {
+      RE: toKpi(storeMonthlyRevenue?.RE ?? null, storeLastMonthRevenue?.RE ?? null),
+      MU: toKpi(storeMonthlyRevenue?.MU ?? null, storeLastMonthRevenue?.MU ?? null),
+    },
     pendingReports: { total: readCount(pendingReportsResult, "pending reports") },
   }
 }
@@ -192,10 +200,11 @@ function toKpi(current: number | null, previous: number | null): KpiValue {
 }
 
 /**
- * Store revenue in euros paid by members located in La Réunion. Store
- * payments carry no region, so the member's current coordinates decide it.
+ * Store revenue per territory in its store currency: euros for La Réunion,
+ * dollars for Mauritius. Store payments carry no region, so the member's
+ * current coordinates decide it.
  */
-async function getReunionStoreRevenue(supabase: AdminClient, from: Date, to?: Date): Promise<number | null> {
+async function getStoreRevenue(supabase: AdminClient, from: Date, to?: Date): Promise<StoreRevenue> {
   let query = supabase
     .from("micro_purchases")
     .select("price_paid, user:user_id(latitude, longitude)")
@@ -207,15 +216,17 @@ async function getReunionStoreRevenue(supabase: AdminClient, from: Date, to?: Da
 
   const { data, error } = await query.returns<StorePurchaseRow[]>()
   if (error) {
-    console.error("Dashboard query failed: La Réunion store revenue", error)
+    console.error("Dashboard query failed: store revenue", error)
     return null
   }
 
-  const cents = (data ?? [])
-    .filter((purchase) => isInReunion(purchase.user?.latitude ?? null, purchase.user?.longitude ?? null))
-    .reduce((sum, purchase) => sum + (purchase.price_paid ?? 0), 0)
+  const cents: Record<StoreTerritory, number> = { RE: 0, MU: 0 }
+  for (const purchase of data ?? []) {
+    const territory = storeTerritoryForCoordinates(purchase.user?.latitude ?? null, purchase.user?.longitude ?? null)
+    if (territory) cents[territory] += purchase.price_paid ?? 0
+  }
 
-  return cents / CENTS_PER_UNIT
+  return { RE: cents.RE / CENTS_PER_UNIT, MU: cents.MU / CENTS_PER_UNIT }
 }
 
 function getChangePercent(current: number, previous: number): number {
@@ -318,8 +329,9 @@ export async function getRecentActivity(): Promise<RecentActivity[]> {
         status,
         created_at,
         amount_paid,
+        payment_method,
         user_id,
-        user:user_id(firstName)
+        user:user_id(firstName, latitude, longitude)
       `)
       .eq("status", "active")
       .order("created_at", { ascending: false })
@@ -337,9 +349,10 @@ export async function getRecentActivity(): Promise<RecentActivity[]> {
         product_name,
         quantity,
         price_paid,
+        payment_method,
         status,
         created_at,
-        user:user_id(firstName)
+        user:user_id(firstName, latitude, longitude)
       `)
       .eq("status", "completed")
       .neq("product_type", "subscription")
@@ -364,7 +377,7 @@ export async function getRecentActivity(): Promise<RecentActivity[]> {
 
   if (subscriptionsResult.data) {
     for (const sub of subscriptionsResult.data) {
-      const user = sub.user as unknown as { firstName: string } | null
+      const user = sub.user as unknown as MemberWithCoordinates | null
       const currentTier = sub.tier
       const tierName = translateTier(currentTier)
 
@@ -397,7 +410,7 @@ export async function getRecentActivity(): Promise<RecentActivity[]> {
         action: isUpgrade
           ? `Upgrade ${previousTierName} → ${tierName}`
           : `Abonnement ${tierName}`,
-        target: `${sub.amount_paid?.toLocaleString("fr-FR")} MGA`,
+        target: formatPaidAmount(sub.amount_paid, sub.payment_method, user),
         status: "Complété",
         time: getRelativeTime(sub.created_at),
         created_at: sub.created_at ?? "",
@@ -407,13 +420,13 @@ export async function getRecentActivity(): Promise<RecentActivity[]> {
 
   if (microPurchasesResult.data) {
     for (const purchase of microPurchasesResult.data) {
-      const user = purchase.user as unknown as { firstName: string } | null
+      const user = purchase.user as unknown as MemberWithCoordinates | null
       const consumableName = translateConsumable(purchase.product_type)
       activities.push({
         id: purchase.id,
         user: user?.firstName ?? "Utilisateur",
         action: `Achat ${consumableName}`,
-        target: `${purchase.quantity}x - ${purchase.price_paid?.toLocaleString("fr-FR")} MGA`,
+        target: `${purchase.quantity}x - ${formatPaidAmount(purchase.price_paid, purchase.payment_method, user)}`,
         status: "Complété",
         time: getRelativeTime(purchase.created_at),
         created_at: purchase.created_at ?? "",

@@ -14,6 +14,7 @@ import { LiveRefresh } from "@/components/backoffice/live-refresh"
 import { getCurrentAdmin } from "@/actions/admin/auth.action"
 import { checkAdminAction } from "@/lib/auth/admin-guard"
 import { formatPrice } from "@/lib/pricing-utils"
+import { STORE_TERRITORY_CURRENCY, type StoreTerritory } from "@/lib/territories"
 import { roleLabels } from "@/lib/staff-utils"
 import {
   getDashboardKPIs,
@@ -33,7 +34,10 @@ import { WelcomeTile } from "./_components/welcome-tile"
 const ROLE_LABELS: Record<string, string> = roleLabels
 const REPORTS_ALERT_THRESHOLD = 10
 const FALLBACK_FIRST_NAME = "l'équipe"
-const REUNION_CURRENCY = "EUR"
+const STORE_REVENUE_LINES: { territory: StoreTerritory; label: string }[] = [
+  { territory: "RE", label: "La Réunion" },
+  { territory: "MU", label: "Maurice" },
+]
 
 const KPI_STYLES: Record<"users" | "matches" | "revenue" | "reports", KpiTileStyle> = {
   users: { tone: "light", chip: "bg-tia-violet-100 text-tia-violet-600" },
@@ -82,14 +86,17 @@ async function KpiTiles() {
         icon={Wallet}
         tileStyle={KPI_STYLES.revenue}
         trend={kpis.monthlyRevenue.trend}
-        detail={{
-          label: "La Réunion",
-          value:
-            kpis.reunionMonthlyRevenue.total === null
-              ? UNAVAILABLE_VALUE
-              : formatPrice(kpis.reunionMonthlyRevenue.total, REUNION_CURRENCY),
-          trend: kpis.reunionMonthlyRevenue.trend,
-        }}
+        details={STORE_REVENUE_LINES.map(({ territory, label }) => {
+          const revenue = kpis.storeMonthlyRevenue[territory]
+          return {
+            label,
+            value:
+              revenue.total === null
+                ? UNAVAILABLE_VALUE
+                : formatPrice(revenue.total, STORE_TERRITORY_CURRENCY[territory]),
+            trend: revenue.trend,
+          }
+        })}
         delayStep={3}
       />
       <KpiTile

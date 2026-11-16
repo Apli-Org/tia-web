@@ -2,6 +2,9 @@
 
 import { requireAdminAction } from "@/lib/auth/admin-guard"
 import { createAdminClient } from "@/lib/supabase/admin"
+import { formatPaidAmount } from "@/lib/pricing-utils"
+
+type MemberWithCoordinates = { firstName: string; latitude: number | null; longitude: number | null }
 
 export type ActivityType =
   | "subscription"
@@ -202,8 +205,9 @@ export async function getAllUserActivities(
             status,
             created_at,
             amount_paid,
+            payment_method,
             user_id,
-            user:user_id(firstName)
+            user:user_id(firstName, latitude, longitude)
           `)
           .eq("status", "active")
           .order("created_at", { ascending: false })
@@ -216,7 +220,7 @@ export async function getAllUserActivities(
 
         if (data) {
           for (const sub of data) {
-            const user = sub.user as unknown as { firstName: string } | null
+            const user = sub.user as unknown as MemberWithCoordinates | null
             const userName = user?.firstName ?? "Utilisateur"
 
             if (filters.search && !userName.toLowerCase().includes(filters.search.toLowerCase())) {
@@ -254,7 +258,7 @@ export async function getAllUserActivities(
               user_name: userName,
               type: isUpgrade ? "upgrade" : "subscription",
               action: isUpgrade ? `Upgrade ${previousTierName} → ${tierName}` : `Abonnement ${tierName}`,
-              details: `${sub.amount_paid?.toLocaleString("fr-FR")} MGA`,
+              details: formatPaidAmount(sub.amount_paid, sub.payment_method, user),
               amount: sub.amount_paid,
               status: "Complete",
               created_at: sub.created_at ?? "",
@@ -277,10 +281,11 @@ export async function getAllUserActivities(
             product_name,
             quantity,
             price_paid,
+            payment_method,
             status,
             created_at,
             user_id,
-            user:user_id(firstName)
+            user:user_id(firstName, latitude, longitude)
           `)
           .eq("status", "completed")
           .neq("product_type", "subscription")
@@ -293,7 +298,7 @@ export async function getAllUserActivities(
 
         if (data) {
           for (const purchase of data) {
-            const user = purchase.user as unknown as { firstName: string } | null
+            const user = purchase.user as unknown as MemberWithCoordinates | null
             const userName = user?.firstName ?? "Utilisateur"
 
             if (filters.search && !userName.toLowerCase().includes(filters.search.toLowerCase())) {
@@ -308,7 +313,7 @@ export async function getAllUserActivities(
               user_name: userName,
               type: "purchase",
               action: `Achat ${consumableName}`,
-              details: `${purchase.quantity}x - ${purchase.price_paid?.toLocaleString("fr-FR")} MGA`,
+              details: `${purchase.quantity}x - ${formatPaidAmount(purchase.price_paid, purchase.payment_method, user)}`,
               amount: purchase.price_paid,
               status: "Complete",
               created_at: purchase.created_at ?? "",
