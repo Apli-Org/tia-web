@@ -146,7 +146,8 @@ export async function getUserById(userId: string) {
         status,
         start_date,
         end_date,
-        amount_paid
+        amount_paid,
+        payment_method
       )
     `
     )

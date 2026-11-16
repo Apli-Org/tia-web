@@ -26,6 +26,7 @@ import { Separator } from "@/components/ui/separator"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { getUserById } from "@/actions/admin/users.action"
+import { formatPaidAmount } from "@/lib/pricing-utils"
 
 type UserDetailModalProps = {
   userId: string
@@ -294,7 +295,7 @@ export function UserDetailModal({
                           )}
                           <p>
                             Montant :{" "}
-                            {sub.amount_paid?.toLocaleString("fr-FR")} MGA
+                            {formatPaidAmount(sub.amount_paid, sub.payment_method, user)}
                           </p>
                         </div>
                       </div>

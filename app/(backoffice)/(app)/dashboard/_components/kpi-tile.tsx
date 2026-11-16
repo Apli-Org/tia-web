@@ -38,7 +38,7 @@ type KpiTileProps = {
   icon: LucideIcon
   tileStyle: KpiTileStyle
   trend?: KpiTrend
-  detail?: KpiDetail
+  details?: KpiDetail[]
   href?: string
   isUrgent?: boolean
   delayStep: number
@@ -74,7 +74,7 @@ export function KpiTile({
   icon: Icon,
   tileStyle,
   trend,
-  detail,
+  details = [],
   href,
   isUrgent = false,
   delayStep,
@@ -133,23 +133,27 @@ export function KpiTile({
           <AnimatedNumber value={value} format={format} delay={delayStep * COUNT_DELAY_STEP} className={VALUE_CLASS} />
         )}
         <p className={cn("mt-1 text-[12px]", tone.caption)}>{value === null ? UNAVAILABLE_CAPTION : caption}</p>
-        {detail && (
-          <div className={cn("mt-3 flex items-center justify-between gap-2 border-t pt-3", tone.divider)}>
-            <span className={cn("text-[12px] font-semibold", tone.label)}>{detail.label}</span>
-            <span className="flex items-center gap-2">
-              <span className="text-[15px] font-bold tabular-nums">{detail.value}</span>
-              {detail.trend && (
-                <span
-                  className={cn(
-                    "rounded-full px-2 py-0.5 text-[11px] font-bold",
-                    detail.trend.direction === "up" ? tone.up : tone.down
+        {details.length > 0 && (
+          <div className={cn("mt-3 flex flex-col gap-2 border-t pt-3", tone.divider)}>
+            {details.map((detail) => (
+              <div key={detail.label} className="flex items-center justify-between gap-2">
+                <span className={cn("text-[12px] font-semibold", tone.label)}>{detail.label}</span>
+                <span className="flex items-center gap-2">
+                  <span className="text-[15px] font-bold tabular-nums">{detail.value}</span>
+                  {detail.trend && (
+                    <span
+                      className={cn(
+                        "rounded-full px-2 py-0.5 text-[11px] font-bold",
+                        detail.trend.direction === "up" ? tone.up : tone.down
+                      )}
+                    >
+                      {detail.trend.direction === "up" ? "+" : "-"}
+                      {detail.trend.change}%
+                    </span>
                   )}
-                >
-                  {detail.trend.direction === "up" ? "+" : "-"}
-                  {detail.trend.change}%
                 </span>
-              )}
-            </span>
+              </div>
+            ))}
           </div>
         )}
       </div>

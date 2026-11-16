@@ -1,5 +1,16 @@
 // Pricing utility functions (non-server actions)
 
+import { STORE_TERRITORY_CURRENCY, storeTerritoryForCoordinates } from './territories'
+
+export const STORE_PAYMENT_METHODS = ['apple_iap', 'google_iap']
+
+/** PostgREST `or` filter keeping mobile money payments, the only ones stored in Ariary. */
+export const NOT_STORE_PAYMENT = `payment_method.is.null,payment_method.not.in.(${STORE_PAYMENT_METHODS.join(',')})`
+
+const CENTS_PER_UNIT = 100
+
+type Coordinates = { latitude: number | null; longitude: number | null }
+
 // Format price for display
 export function formatPrice(price: number, currency = 'MGA'): string {
   if (currency === 'MGA') {
@@ -13,6 +24,30 @@ export function formatPrice(price: number, currency = 'MGA'): string {
     style: 'currency',
     currency,
   }).format(price)
+}
+
+export function isStorePayment(paymentMethod: string | null | undefined): boolean {
+  return paymentMethod != null && STORE_PAYMENT_METHODS.includes(paymentMethod)
+}
+
+/**
+ * Formats an amount as stored in subscriptions and micro_purchases: Ariary for
+ * mobile money, cents of the store currency for App Store and Google Play.
+ * Store payments carry no currency, so the member's territory decides it.
+ */
+export function formatPaidAmount(
+  amount: number | null,
+  paymentMethod: string | null | undefined,
+  coordinates: Coordinates | null
+): string {
+  if (amount === null) return '-'
+  if (!isStorePayment(paymentMethod)) return formatPrice(amount)
+
+  const units = amount / CENTS_PER_UNIT
+  const territory = storeTerritoryForCoordinates(coordinates?.latitude ?? null, coordinates?.longitude ?? null)
+  if (territory) return formatPrice(units, STORE_TERRITORY_CURRENCY[territory])
+
+  return `${new Intl.NumberFormat('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(units)} (store)`
 }
 
 // Get tier display info
