@@ -5,10 +5,11 @@ import type { PostgrestError } from "@supabase/supabase-js"
 import { requireAdminAction } from "@/lib/auth/admin-guard"
 import { createAdminClient } from "@/lib/supabase/admin"
 import { formatPaidAmount, NOT_STORE_PAYMENT, STORE_PAYMENT_METHODS } from "@/lib/pricing-utils"
-import { storeTerritoryForCoordinates, type StoreTerritory } from "@/lib/territories"
+import { STORE_TERRITORY_CURRENCY, storeTerritoryForCoordinates, type StoreTerritory } from "@/lib/territories"
 
 const CENTS_PER_UNIT = 100
 const SLOW_DATA_REVALIDATE_SECONDS = 300
+const STORE_TERRITORIES: StoreTerritory[] = ["RE", "MU"]
 const TIERS = ["base", "silver", "gold", "elite"] as const
 
 type AdminClient = ReturnType<typeof createAdminClient>
@@ -19,10 +20,13 @@ type MemberWithCoordinates = MemberCoordinates & { firstName: string }
 
 type StorePurchaseRow = {
   price_paid: number | null
+  currency: string | null
   user: MemberCoordinates | null
 }
 
-type StoreRevenue = Record<StoreTerritory, number> | null
+type StoreRevenue = Record<StoreTerritory, Record<string, number>> | null
+
+export type StoreRevenueLine = KpiValue & { territory: StoreTerritory; currency: string }
 
 type CountResult = { count: number | null; error: PostgrestError | null }
 type RowsResult<T> = { data: T[] | null; error: PostgrestError | null }
@@ -36,7 +40,7 @@ export type DashboardKPIs = {
   activeUsers: KpiValue
   matchesToday: KpiValue
   monthlyRevenue: KpiValue
-  storeMonthlyRevenue: Record<StoreTerritory, KpiValue>
+  storeMonthlyRevenue: StoreRevenueLine[]
   pendingReports: KpiValue
 }
 
@@ -164,10 +168,7 @@ export async function getDashboardKPIs(): Promise<DashboardKPIs> {
       readCount(matchesYesterdayResult, "matches yesterday")
     ),
     monthlyRevenue: toKpi(monthlyRevenue, lastMonthRevenue),
-    storeMonthlyRevenue: {
-      RE: toKpi(storeMonthlyRevenue?.RE ?? null, storeLastMonthRevenue?.RE ?? null),
-      MU: toKpi(storeMonthlyRevenue?.MU ?? null, storeLastMonthRevenue?.MU ?? null),
-    },
+    storeMonthlyRevenue: toStoreRevenueLines(storeMonthlyRevenue, storeLastMonthRevenue),
     pendingReports: { total: readCount(pendingReportsResult, "pending reports") },
   }
 }
@@ -200,14 +201,14 @@ function toKpi(current: number | null, previous: number | null): KpiValue {
 }
 
 /**
- * Store revenue per territory in its store currency: euros for La Réunion,
- * dollars for Mauritius. Store payments carry no region, so the member's
- * current coordinates decide it.
+ * Store revenue per territory and currency. Store payments carry no region,
+ * so the member's current coordinates decide it. Rows older than the currency
+ * column count in the territory's historical store currency.
  */
 async function getStoreRevenue(supabase: AdminClient, from: Date, to?: Date): Promise<StoreRevenue> {
   let query = supabase
     .from("micro_purchases")
-    .select("price_paid, user:user_id(latitude, longitude)")
+    .select("price_paid, currency, user:user_id(latitude, longitude)")
     .eq("status", "completed")
     .in("payment_method", STORE_PAYMENT_METHODS)
     .gte("created_at", from.toISOString())
@@ -220,13 +221,36 @@ async function getStoreRevenue(supabase: AdminClient, from: Date, to?: Date): Pr
     return null
   }
 
-  const cents: Record<StoreTerritory, number> = { RE: 0, MU: 0 }
+  const revenue: Record<StoreTerritory, Record<string, number>> = { RE: {}, MU: {} }
   for (const purchase of data ?? []) {
     const territory = storeTerritoryForCoordinates(purchase.user?.latitude ?? null, purchase.user?.longitude ?? null)
-    if (territory) cents[territory] += purchase.price_paid ?? 0
+    if (!territory) continue
+
+    const currency = purchase.currency ?? STORE_TERRITORY_CURRENCY[territory]
+    revenue[territory][currency] = (revenue[territory][currency] ?? 0) + (purchase.price_paid ?? 0) / CENTS_PER_UNIT
   }
 
-  return { RE: cents.RE / CENTS_PER_UNIT, MU: cents.MU / CENTS_PER_UNIT }
+  return revenue
+}
+
+/**
+ * One line per territory and currency charged this month or the last one,
+ * falling back to the territory's historical currency when there is none.
+ */
+function toStoreRevenueLines(current: StoreRevenue, previous: StoreRevenue): StoreRevenueLine[] {
+  return STORE_TERRITORIES.flatMap((territory) => {
+    const charged = new Set([...Object.keys(current?.[territory] ?? {}), ...Object.keys(previous?.[territory] ?? {})])
+    const currencies = charged.size > 0 ? [...charged].sort() : [STORE_TERRITORY_CURRENCY[territory]]
+
+    return currencies.map((currency) => ({
+      territory,
+      currency,
+      ...toKpi(
+        current ? (current[territory][currency] ?? 0) : null,
+        previous ? (previous[territory][currency] ?? 0) : null
+      ),
+    }))
+  })
 }
 
 function getChangePercent(current: number, previous: number): number {
@@ -329,6 +353,7 @@ export async function getRecentActivity(): Promise<RecentActivity[]> {
         status,
         created_at,
         amount_paid,
+        currency,
         payment_method,
         user_id,
         user:user_id(firstName, latitude, longitude)
@@ -349,6 +374,7 @@ export async function getRecentActivity(): Promise<RecentActivity[]> {
         product_name,
         quantity,
         price_paid,
+        currency,
         payment_method,
         status,
         created_at,
@@ -410,7 +436,7 @@ export async function getRecentActivity(): Promise<RecentActivity[]> {
         action: isUpgrade
           ? `Upgrade ${previousTierName} → ${tierName}`
           : `Abonnement ${tierName}`,
-        target: formatPaidAmount(sub.amount_paid, sub.payment_method, user),
+        target: formatPaidAmount(sub.amount_paid, sub.payment_method, sub.currency, user),
         status: "Complété",
         time: getRelativeTime(sub.created_at),
         created_at: sub.created_at ?? "",
@@ -426,7 +452,7 @@ export async function getRecentActivity(): Promise<RecentActivity[]> {
         id: purchase.id,
         user: user?.firstName ?? "Utilisateur",
         action: `Achat ${consumableName}`,
-        target: `${purchase.quantity}x - ${formatPaidAmount(purchase.price_paid, purchase.payment_method, user)}`,
+        target: `${purchase.quantity}x - ${formatPaidAmount(purchase.price_paid, purchase.payment_method, purchase.currency, user)}`,
         status: "Complété",
         time: getRelativeTime(purchase.created_at),
         created_at: purchase.created_at ?? "",

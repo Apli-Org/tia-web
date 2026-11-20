@@ -147,6 +147,7 @@ export async function getUserById(userId: string) {
         start_date,
         end_date,
         amount_paid,
+        currency,
         payment_method
       )
     `
