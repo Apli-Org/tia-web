@@ -14,7 +14,7 @@ import { LiveRefresh } from "@/components/backoffice/live-refresh"
 import { getCurrentAdmin } from "@/actions/admin/auth.action"
 import { checkAdminAction } from "@/lib/auth/admin-guard"
 import { formatPrice } from "@/lib/pricing-utils"
-import { STORE_TERRITORY_CURRENCY, type StoreTerritory } from "@/lib/territories"
+import type { StoreTerritory } from "@/lib/territories"
 import { roleLabels } from "@/lib/staff-utils"
 import {
   getDashboardKPIs,
@@ -34,10 +34,10 @@ import { WelcomeTile } from "./_components/welcome-tile"
 const ROLE_LABELS: Record<string, string> = roleLabels
 const REPORTS_ALERT_THRESHOLD = 10
 const FALLBACK_FIRST_NAME = "l'équipe"
-const STORE_REVENUE_LINES: { territory: StoreTerritory; label: string }[] = [
-  { territory: "RE", label: "La Réunion" },
-  { territory: "MU", label: "Maurice" },
-]
+const STORE_TERRITORY_LABELS: Record<StoreTerritory, string> = {
+  RE: "La Réunion",
+  MU: "Maurice",
+}
 
 const KPI_STYLES: Record<"users" | "matches" | "revenue" | "reports", KpiTileStyle> = {
   users: { tone: "light", chip: "bg-tia-violet-100 text-tia-violet-600" },
@@ -86,17 +86,13 @@ async function KpiTiles() {
         icon={Wallet}
         tileStyle={KPI_STYLES.revenue}
         trend={kpis.monthlyRevenue.trend}
-        details={STORE_REVENUE_LINES.map(({ territory, label }) => {
-          const revenue = kpis.storeMonthlyRevenue[territory]
-          return {
-            label,
-            value:
-              revenue.total === null
-                ? UNAVAILABLE_VALUE
-                : formatPrice(revenue.total, STORE_TERRITORY_CURRENCY[territory]),
-            trend: revenue.trend,
-          }
-        })}
+        details={kpis.storeMonthlyRevenue.map((revenue, _, lines) => ({
+          label: lines.some((line) => line !== revenue && line.territory === revenue.territory)
+            ? `${STORE_TERRITORY_LABELS[revenue.territory]} · ${revenue.currency}`
+            : STORE_TERRITORY_LABELS[revenue.territory],
+          value: revenue.total === null ? UNAVAILABLE_VALUE : formatPrice(revenue.total, revenue.currency),
+          trend: revenue.trend,
+        }))}
         delayStep={3}
       />
       <KpiTile

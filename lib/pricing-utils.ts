@@ -8,6 +8,7 @@ export const STORE_PAYMENT_METHODS = ['apple_iap', 'google_iap']
 export const NOT_STORE_PAYMENT = `payment_method.is.null,payment_method.not.in.(${STORE_PAYMENT_METHODS.join(',')})`
 
 const CENTS_PER_UNIT = 100
+const PENDING_STORE_AMOUNT = 'Montant en attente'
 
 type Coordinates = { latitude: number | null; longitude: number | null }
 
@@ -33,17 +34,22 @@ export function isStorePayment(paymentMethod: string | null | undefined): boolea
 /**
  * Formats an amount as stored in subscriptions and micro_purchases: Ariary for
  * mobile money, cents of the store currency for App Store and Google Play.
- * Store payments carry no currency, so the member's territory decides it.
+ * A store payment is recorded at 0 until RevenueCat reports its price. Rows
+ * older than the currency column carry none, so the member's territory decides it.
  */
 export function formatPaidAmount(
   amount: number | null,
   paymentMethod: string | null | undefined,
+  currency: string | null | undefined,
   coordinates: Coordinates | null
 ): string {
   if (amount === null) return '-'
   if (!isStorePayment(paymentMethod)) return formatPrice(amount)
+  if (amount === 0) return PENDING_STORE_AMOUNT
 
   const units = amount / CENTS_PER_UNIT
+  if (currency) return formatPrice(units, currency)
+
   const territory = storeTerritoryForCoordinates(coordinates?.latitude ?? null, coordinates?.longitude ?? null)
   if (territory) return formatPrice(units, STORE_TERRITORY_CURRENCY[territory])
 

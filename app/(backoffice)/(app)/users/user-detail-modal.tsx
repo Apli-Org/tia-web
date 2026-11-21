@@ -295,7 +295,7 @@ export function UserDetailModal({
                           )}
                           <p>
                             Montant :{" "}
-                            {formatPaidAmount(sub.amount_paid, sub.payment_method, user)}
+                            {formatPaidAmount(sub.amount_paid, sub.payment_method, sub.currency, user)}
                           </p>
                         </div>
                       </div>
