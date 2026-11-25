@@ -1,10 +1,30 @@
 "use server"
 
+import type { PostgrestError } from "@supabase/supabase-js"
+
 import { requireAdminAction } from "@/lib/auth/admin-guard"
 import { createAdminClient } from "@/lib/supabase/admin"
 import { formatPaidAmount } from "@/lib/pricing-utils"
 
+const PAGE_ROWS = 1000
+
 type MemberWithCoordinates = { firstName: string; latitude: number | null; longitude: number | null }
+
+type SubscriptionActivityRow = {
+  id: string
+  tier: string | null
+  status: string | null
+  created_at: string | null
+  amount_paid: number | null
+  currency: string | null
+  payment_method: string | null
+  user_id: string | null
+  user: MemberWithCoordinates | null
+}
+
+type TierHistoryRow = { id: string; user_id: string; tier: string | null; created_at: string | null }
+
+type TierHistory = Map<string, TierHistoryRow[]>
 
 export type ActivityType =
   | "subscription"
@@ -69,6 +89,16 @@ function translateTier(tier: string | null): string {
   return translations[tier ?? ""] ?? "Premium"
 }
 
+function translateSubscriptionStatus(status: string | null): string {
+  const translations: Record<string, string> = {
+    active: "Actif",
+    cancelled: "Résilié",
+    expired: "Expiré",
+    paused: "En pause",
+  }
+  return translations[status ?? ""] ?? "Complete"
+}
+
 function translateConsumable(type: string): string {
   const translations: Record<string, string> = {
     tia_heart: "TIA Hearts",
@@ -104,6 +134,47 @@ function translateReportStatus(status: string): string {
   return translations[status] ?? status
 }
 
+/** Reads every row of a query, past the 1000 rows PostgREST returns at once. */
+async function fetchAllRows<T>(
+  fetchPage: (from: number, to: number) => PromiseLike<{ data: T[] | null; error: PostgrestError | null }>
+): Promise<T[]> {
+  const rows: T[] = []
+
+  for (;;) {
+    const { data, error } = await fetchPage(rows.length, rows.length + PAGE_ROWS - 1)
+    if (error) throw error
+    rows.push(...(data ?? []))
+    if (!data || data.length < PAGE_ROWS) return rows
+  }
+}
+
+/** Every subscription of every member, oldest first. */
+async function getTierHistory(supabase: ReturnType<typeof createAdminClient>): Promise<TierHistory> {
+  const rows = await fetchAllRows<TierHistoryRow>((from, to) =>
+    supabase
+      .from("subscriptions")
+      .select("id, user_id, tier, created_at")
+      .not("user_id", "is", null)
+      .order("created_at")
+      .order("id")
+      .range(from, to)
+      .returns<TierHistoryRow[]>()
+  )
+
+  const history: TierHistory = new Map()
+  for (const row of rows) {
+    history.set(row.user_id, [...(history.get(row.user_id) ?? []), row])
+  }
+  return history
+}
+
+/** Tier of the member's subscription just before this one, null for the first. */
+function getPreviousTier(history: TierHistory, sub: SubscriptionActivityRow): string | null {
+  const memberHistory = history.get(sub.user_id ?? "") ?? []
+  const index = memberHistory.findIndex((row) => row.id === sub.id)
+  return index > 0 ? memberHistory[index - 1].tier : null
+}
+
 export async function getUserActivityStats(): Promise<UserActivityStats> {
   await requireAdminAction("view_dashboard")
 
@@ -127,9 +198,9 @@ export async function getUserActivityStats(): Promise<UserActivityStats> {
     reportsToday,
     reportsWeek,
   ] = await Promise.all([
-    supabase.from("subscriptions").select("id", { count: "exact", head: true }).eq("status", "active"),
-    supabase.from("subscriptions").select("id", { count: "exact", head: true }).eq("status", "active").gte("created_at", todayStart),
-    supabase.from("subscriptions").select("id", { count: "exact", head: true }).eq("status", "active").gte("created_at", weekStart),
+    supabase.from("subscriptions").select("id", { count: "exact", head: true }),
+    supabase.from("subscriptions").select("id", { count: "exact", head: true }).gte("created_at", todayStart),
+    supabase.from("subscriptions").select("id", { count: "exact", head: true }).gte("created_at", weekStart),
     supabase.from("micro_purchases").select("id", { count: "exact", head: true }).eq("status", "completed").neq("product_type", "subscription"),
     supabase.from("micro_purchases").select("id", { count: "exact", head: true }).eq("status", "completed").neq("product_type", "subscription").gte("created_at", todayStart),
     supabase.from("micro_purchases").select("id", { count: "exact", head: true }).eq("status", "completed").neq("product_type", "subscription").gte("created_at", weekStart),
@@ -197,74 +268,54 @@ export async function getAllUserActivities(
   if (shouldFetchSubs) {
     promises.push(
       (async () => {
-        let query = supabase
-          .from("subscriptions")
-          .select(`
-            id,
-            tier,
-            status,
-            created_at,
-            amount_paid,
-            currency,
-            payment_method,
-            user_id,
-            user:user_id(firstName, latitude, longitude)
-          `)
-          .eq("status", "active")
-          .order("created_at", { ascending: false })
+        const [subscriptions, tierHistory] = await Promise.all([
+          fetchAllRows<SubscriptionActivityRow>((from, to) => {
+            let query = supabase
+              .from("subscriptions")
+              .select(`
+                id,
+                tier,
+                status,
+                created_at,
+                amount_paid,
+                currency,
+                payment_method,
+                user_id,
+                user:user_id(firstName, latitude, longitude)
+              `)
+              .order("created_at", { ascending: false })
+              .order("id")
 
-        if (dateFilters.from) query = query.gte("created_at", dateFilters.from)
-        if (dateFilters.to) query = query.lte("created_at", dateFilters.to)
-        if (filters.search) query = query.ilike("user.firstName", `%${filters.search}%`)
+            if (dateFilters.from) query = query.gte("created_at", dateFilters.from)
+            if (dateFilters.to) query = query.lte("created_at", dateFilters.to)
 
-        const { data } = await query
+            return query.range(from, to).returns<SubscriptionActivityRow[]>()
+          }),
+          getTierHistory(supabase),
+        ])
 
-        if (data) {
-          for (const sub of data) {
-            const user = sub.user as unknown as MemberWithCoordinates | null
-            const userName = user?.firstName ?? "Utilisateur"
+        for (const sub of subscriptions) {
+          const userName = sub.user?.firstName ?? "Utilisateur"
 
-            if (filters.search && !userName.toLowerCase().includes(filters.search.toLowerCase())) {
-              continue
-            }
-
-            const currentTier = sub.tier
-            const tierName = translateTier(currentTier)
-
-            // Check for upgrade
-            let isUpgrade = false
-            let previousTierName = ""
-
-            if (sub.user_id) {
-              const { data: previousSubs } = await supabase
-                .from("subscriptions")
-                .select("tier, created_at")
-                .eq("user_id", sub.user_id)
-                .neq("id", sub.id)
-                .order("created_at", { ascending: false })
-                .limit(1)
-
-              if (previousSubs && previousSubs.length > 0) {
-                const previousTier = previousSubs[0].tier
-                if (previousTier !== currentTier && isTierUpgrade(previousTier, currentTier)) {
-                  isUpgrade = true
-                  previousTierName = translateTier(previousTier)
-                }
-              }
-            }
-
-            activities.push({
-              id: sub.id,
-              user_id: sub.user_id ?? "",
-              user_name: userName,
-              type: isUpgrade ? "upgrade" : "subscription",
-              action: isUpgrade ? `Upgrade ${previousTierName} → ${tierName}` : `Abonnement ${tierName}`,
-              details: formatPaidAmount(sub.amount_paid, sub.payment_method, sub.currency, user),
-              amount: sub.amount_paid,
-              status: "Complete",
-              created_at: sub.created_at ?? "",
-            })
+          if (filters.search && !userName.toLowerCase().includes(filters.search.toLowerCase())) {
+            continue
           }
+
+          const tierName = translateTier(sub.tier)
+          const previousTier = getPreviousTier(tierHistory, sub)
+          const isUpgrade = previousTier !== null && isTierUpgrade(previousTier, sub.tier)
+
+          activities.push({
+            id: sub.id,
+            user_id: sub.user_id ?? "",
+            user_name: userName,
+            type: isUpgrade ? "upgrade" : "subscription",
+            action: isUpgrade ? `Upgrade ${translateTier(previousTier)} → ${tierName}` : `Abonnement ${tierName}`,
+            details: formatPaidAmount(sub.amount_paid, sub.payment_method, sub.currency, sub.user),
+            amount: sub.amount_paid,
+            status: translateSubscriptionStatus(sub.status),
+            created_at: sub.created_at ?? "",
+          })
         }
       })()
     )

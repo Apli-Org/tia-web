@@ -13,14 +13,14 @@ import {
 import { LiveRefresh } from "@/components/backoffice/live-refresh"
 import { getCurrentAdmin } from "@/actions/admin/auth.action"
 import { checkAdminAction } from "@/lib/auth/admin-guard"
-import { formatPrice } from "@/lib/pricing-utils"
-import type { StoreTerritory } from "@/lib/territories"
+import { formatStoreTotal } from "@/lib/pricing-utils"
 import { roleLabels } from "@/lib/staff-utils"
 import {
   getDashboardKPIs,
   getGrowthData,
   getRecentActivity,
   getTierDistribution,
+  type StoreRevenueArea,
 } from "@/actions/admin/dashboard.action"
 import { ChartTileSkeleton, KpiTilesSkeleton, ListTileSkeleton } from "./_components/dashboard-skeletons"
 import { GrowthChart } from "./_components/growth-chart"
@@ -34,10 +34,12 @@ import { WelcomeTile } from "./_components/welcome-tile"
 const ROLE_LABELS: Record<string, string> = roleLabels
 const REPORTS_ALERT_THRESHOLD = 10
 const FALLBACK_FIRST_NAME = "l'équipe"
-const STORE_TERRITORY_LABELS: Record<StoreTerritory, string> = {
+const STORE_AREA_LABELS: Record<StoreRevenueArea, string> = {
   RE: "La Réunion",
   MU: "Maurice",
+  OTHER: "Autres (stores)",
 }
+const UNKNOWN_CURRENCY_LABEL = "devise inconnue"
 
 const KPI_STYLES: Record<"users" | "matches" | "revenue" | "reports", KpiTileStyle> = {
   users: { tone: "light", chip: "bg-tia-violet-100 text-tia-violet-600" },
@@ -82,15 +84,16 @@ async function KpiTiles() {
         label="Revenus du mois"
         value={kpis.monthlyRevenue.total}
         format="price"
-        caption="vs mois dernier"
+        caption="vs mois dernier, à date"
         icon={Wallet}
         tileStyle={KPI_STYLES.revenue}
         trend={kpis.monthlyRevenue.trend}
         details={kpis.storeMonthlyRevenue.map((revenue, _, lines) => ({
-          label: lines.some((line) => line !== revenue && line.territory === revenue.territory)
-            ? `${STORE_TERRITORY_LABELS[revenue.territory]} · ${revenue.currency}`
-            : STORE_TERRITORY_LABELS[revenue.territory],
-          value: revenue.total === null ? UNAVAILABLE_VALUE : formatPrice(revenue.total, revenue.currency),
+          label:
+            revenue.currency === null || lines.some((line) => line !== revenue && line.area === revenue.area)
+              ? `${STORE_AREA_LABELS[revenue.area]} · ${revenue.currency ?? UNKNOWN_CURRENCY_LABEL}`
+              : STORE_AREA_LABELS[revenue.area],
+          value: revenue.total === null ? UNAVAILABLE_VALUE : formatStoreTotal(revenue.total, revenue.currency),
           trend: revenue.trend,
         }))}
         delayStep={3}
