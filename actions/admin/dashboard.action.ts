@@ -10,6 +10,7 @@ import { STORE_TERRITORY_CURRENCY, storeTerritoryForCoordinates, type StoreTerri
 const CENTS_PER_UNIT = 100
 const SLOW_DATA_REVALIDATE_SECONDS = 300
 const STORE_TERRITORIES: StoreTerritory[] = ["RE", "MU"]
+const UNKNOWN_CURRENCY = ""
 const TIERS = ["base", "silver", "gold", "elite"] as const
 
 type AdminClient = ReturnType<typeof createAdminClient>
@@ -24,9 +25,11 @@ type StorePurchaseRow = {
   user: MemberCoordinates | null
 }
 
-type StoreRevenue = Record<StoreTerritory, Record<string, number>> | null
+export type StoreRevenueArea = StoreTerritory | "OTHER"
 
-export type StoreRevenueLine = KpiValue & { territory: StoreTerritory; currency: string }
+type StoreRevenue = Record<StoreRevenueArea, Record<string, number>> | null
+
+export type StoreRevenueLine = KpiValue & { area: StoreRevenueArea; currency: string | null }
 
 type CountResult = { count: number | null; error: PostgrestError | null }
 type RowsResult<T> = { data: T[] | null; error: PostgrestError | null }
@@ -77,6 +80,9 @@ export async function getDashboardKPIs(): Promise<DashboardKPIs> {
   const startOfYesterday = new Date(Date.UTC(year, month, day - 1, 0, 0, 0))
   const startOfMonth = new Date(Date.UTC(year, month, 1, 0, 0, 0))
   const startOfLastMonth = new Date(Date.UTC(year, month - 1, 1, 0, 0, 0))
+  const lastMonthToDate = new Date(
+    Math.min(startOfLastMonth.getTime() + (now.getTime() - startOfMonth.getTime()), startOfMonth.getTime())
+  )
 
   const [
     activeUsersResult,
@@ -117,13 +123,13 @@ export async function getDashboardKPIs(): Promise<DashboardKPIs> {
       .select("amount_paid")
       .or(NOT_STORE_PAYMENT)
       .gte("created_at", startOfMonth.toISOString()),
-    // Subscription revenue last month
+    // Subscription revenue last month, up to the same point of the month
     supabase
       .from("subscriptions")
       .select("amount_paid")
       .or(NOT_STORE_PAYMENT)
       .gte("created_at", startOfLastMonth.toISOString())
-      .lt("created_at", startOfMonth.toISOString()),
+      .lt("created_at", lastMonthToDate.toISOString()),
     // Micro-purchases revenue this month (excluding subscriptions)
     supabase
       .from("micro_purchases")
@@ -132,7 +138,7 @@ export async function getDashboardKPIs(): Promise<DashboardKPIs> {
       .neq("product_type", "subscription")
       .or(NOT_STORE_PAYMENT)
       .gte("created_at", startOfMonth.toISOString()),
-    // Micro-purchases revenue last month (excluding subscriptions)
+    // Micro-purchases revenue last month, up to the same point of the month (excluding subscriptions)
     supabase
       .from("micro_purchases")
       .select("price_paid")
@@ -140,9 +146,9 @@ export async function getDashboardKPIs(): Promise<DashboardKPIs> {
       .neq("product_type", "subscription")
       .or(NOT_STORE_PAYMENT)
       .gte("created_at", startOfLastMonth.toISOString())
-      .lt("created_at", startOfMonth.toISOString()),
+      .lt("created_at", lastMonthToDate.toISOString()),
     getStoreRevenue(supabase, startOfMonth),
-    getStoreRevenue(supabase, startOfLastMonth, startOfMonth),
+    getStoreRevenue(supabase, startOfLastMonth, lastMonthToDate),
     supabase
       .from("reported_content")
       .select("id", { count: "exact", head: true })
@@ -201,9 +207,11 @@ function toKpi(current: number | null, previous: number | null): KpiValue {
 }
 
 /**
- * Store revenue per territory and currency. Store payments carry no region,
- * so the member's current coordinates decide it. Rows older than the currency
- * column count in the territory's historical store currency.
+ * Store revenue per area and currency. Store payments carry no region, so the
+ * member's current coordinates decide it; everything outside La Réunion and
+ * Mauritius, deleted members included, counts as OTHER. Rows older than the
+ * currency column count in the territory's historical store currency, unknown
+ * for OTHER.
  */
 async function getStoreRevenue(supabase: AdminClient, from: Date, to?: Date): Promise<StoreRevenue> {
   let query = supabase
@@ -221,36 +229,43 @@ async function getStoreRevenue(supabase: AdminClient, from: Date, to?: Date): Pr
     return null
   }
 
-  const revenue: Record<StoreTerritory, Record<string, number>> = { RE: {}, MU: {} }
+  const revenue: Record<StoreRevenueArea, Record<string, number>> = { RE: {}, MU: {}, OTHER: {} }
   for (const purchase of data ?? []) {
     const territory = storeTerritoryForCoordinates(purchase.user?.latitude ?? null, purchase.user?.longitude ?? null)
-    if (!territory) continue
-
-    const currency = purchase.currency ?? STORE_TERRITORY_CURRENCY[territory]
-    revenue[territory][currency] = (revenue[territory][currency] ?? 0) + (purchase.price_paid ?? 0) / CENTS_PER_UNIT
+    const area = territory ?? "OTHER"
+    const currency = purchase.currency ?? (territory ? STORE_TERRITORY_CURRENCY[territory] : UNKNOWN_CURRENCY)
+    revenue[area][currency] = (revenue[area][currency] ?? 0) + (purchase.price_paid ?? 0) / CENTS_PER_UNIT
   }
 
   return revenue
 }
 
 /**
- * One line per territory and currency charged this month or the last one,
- * falling back to the territory's historical currency when there is none.
+ * One line per area and currency charged this month or the last one. La Réunion
+ * and Mauritius always have a line, in their historical currency when nothing
+ * was charged; OTHER only has the currencies that brought an amount.
  */
 function toStoreRevenueLines(current: StoreRevenue, previous: StoreRevenue): StoreRevenueLine[] {
-  return STORE_TERRITORIES.flatMap((territory) => {
-    const charged = new Set([...Object.keys(current?.[territory] ?? {}), ...Object.keys(previous?.[territory] ?? {})])
-    const currencies = charged.size > 0 ? [...charged].sort() : [STORE_TERRITORY_CURRENCY[territory]]
-
-    return currencies.map((currency) => ({
-      territory,
-      currency,
-      ...toKpi(
-        current ? (current[territory][currency] ?? 0) : null,
-        previous ? (previous[territory][currency] ?? 0) : null
-      ),
-    }))
+  const toLine = (area: StoreRevenueArea, currency: string): StoreRevenueLine => ({
+    area,
+    currency: currency === UNKNOWN_CURRENCY ? null : currency,
+    ...toKpi(current ? (current[area][currency] ?? 0) : null, previous ? (previous[area][currency] ?? 0) : null),
   })
+
+  const chargedCurrencies = (area: StoreRevenueArea) =>
+    [...new Set([...Object.keys(current?.[area] ?? {}), ...Object.keys(previous?.[area] ?? {})])].sort()
+
+  const territoryLines = STORE_TERRITORIES.flatMap((territory) => {
+    const charged = chargedCurrencies(territory)
+    const currencies = charged.length > 0 ? charged : [STORE_TERRITORY_CURRENCY[territory]]
+    return currencies.map((currency) => toLine(territory, currency))
+  })
+
+  const otherLines = chargedCurrencies("OTHER")
+    .filter((currency) => (current?.OTHER[currency] ?? 0) > 0 || (previous?.OTHER[currency] ?? 0) > 0)
+    .map((currency) => toLine("OTHER", currency))
+
+  return [...territoryLines, ...otherLines]
 }
 
 function getChangePercent(current: number, previous: number): number {
@@ -358,7 +373,6 @@ export async function getRecentActivity(): Promise<RecentActivity[]> {
         user_id,
         user:user_id(firstName, latitude, longitude)
       `)
-      .eq("status", "active")
       .order("created_at", { ascending: false })
       .limit(3),
     supabase
@@ -417,6 +431,7 @@ export async function getRecentActivity(): Promise<RecentActivity[]> {
           .select("tier, created_at")
           .eq("user_id", sub.user_id)
           .neq("id", sub.id)
+          .lt("created_at", sub.created_at ?? "")
           .order("created_at", { ascending: false })
           .limit(1)
 

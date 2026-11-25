@@ -27,6 +27,12 @@ export function formatPrice(price: number, currency = 'MGA'): string {
   }).format(price)
 }
 
+/** A store total whose currency is unknown is shown as a bare amount. */
+export function formatStoreTotal(units: number, currency: string | null): string {
+  if (currency) return formatPrice(units, currency)
+  return new Intl.NumberFormat('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(units)
+}
+
 export function isStorePayment(paymentMethod: string | null | undefined): boolean {
   return paymentMethod != null && STORE_PAYMENT_METHODS.includes(paymentMethod)
 }
@@ -53,7 +59,7 @@ export function formatPaidAmount(
   const territory = storeTerritoryForCoordinates(coordinates?.latitude ?? null, coordinates?.longitude ?? null)
   if (territory) return formatPrice(units, STORE_TERRITORY_CURRENCY[territory])
 
-  return `${new Intl.NumberFormat('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(units)} (store)`
+  return `${formatStoreTotal(units, null)} (store)`
 }
 
 // Get tier display info
